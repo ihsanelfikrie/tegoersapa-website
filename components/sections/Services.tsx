@@ -77,7 +77,7 @@ export default function Services() {
           {
             clipPath: "inset(0% 0 0 0 round 16px)",
             opacity: 1,
-            stagger: 0.18,
+            stagger: 0.08,
             duration: 0.9,
             ease: "expo.out",
             scrollTrigger: {
@@ -132,27 +132,27 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Services Cards Grid */}
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Services Cards Grid — 4 kolom di desktop, 2 di tablet, 1 di mobile */}
+        <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
             <Link
               key={service.id}
               href={service.href}
-              className="group flex flex-col justify-between p-8 rounded-2xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/20 transition-colors duration-300 hover:shadow-xl hover:shadow-brand-green/5"
+              className="group flex flex-col justify-between p-6 sm:p-7 rounded-2xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/20 transition-colors duration-300 hover:shadow-xl hover:shadow-brand-green/5"
             >
               <div>
-                <span className="font-black text-4xl text-brand-green/20 group-hover:text-brand-green/40 transition-colors duration-300">
-                  0{index + 1}
+                <span className="font-black text-3xl sm:text-4xl text-brand-green/20 group-hover:text-brand-green/40 transition-colors duration-300">
+                  {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-6 text-xl font-bold text-brand-dark tracking-wide">
+                <h3 className="mt-5 text-lg sm:text-xl font-bold text-brand-dark tracking-wide leading-snug">
                   {service.title}
                 </h3>
-                <p className="mt-3 text-sm text-gray-500 leading-relaxed font-medium">
+                <p className="mt-2.5 text-sm text-gray-500 leading-relaxed font-medium">
                   {service.description}
                 </p>
               </div>
 
-              <div className="mt-8 flex items-center gap-2 text-sm font-bold text-brand-green group-hover:text-brand-dark transition-colors duration-300">
+              <div className="mt-6 pt-4 border-t border-gray-100/80 flex items-center justify-between text-sm font-bold text-brand-green group-hover:text-brand-dark transition-colors duration-300">
                 <span>Selengkapnya</span>
                 <svg
                   className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5"

@@ -44,11 +44,4 @@ body {
   }
 }
 
-/* ── Custom cursor: sembunyikan kursor native di device pointer (mouse/trackpad) */
-@media (hover: hover) and (pointer: fine) {
-  *,
-  *::before,
-  *::after {
-    cursor: none !important;
-  }
-}
+

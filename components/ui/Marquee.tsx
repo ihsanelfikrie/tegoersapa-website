@@ -41,7 +41,9 @@ export default function Marquee() {
       wrapper.addEventListener("mouseleave", () => anim.timeScale(1));
     }
 
-    return () => anim.kill();
+    return () => {
+      anim.kill();
+    };
   }, []);
 
   return (

@@ -97,14 +97,20 @@ export default function Navbar() {
     return pathname.startsWith(href);
   }
 
+  const isHome = pathname === "/";
+  // Background gelap jika sedang di-scroll (karena header pakai bg-brand-dark), atau saat di homepage (ada Hero dark green)
+  const isDarkNav = isScrolled || isHome;
+
   return (
     <header
       ref={navbarRef}
       className={[
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-brand-dark/95 backdrop-blur-md shadow-lg"
-          : "bg-transparent",
+          ? "bg-brand-dark/95 backdrop-blur-md shadow-lg border-b border-white/5"
+          : isHome
+          ? "bg-transparent"
+          : "bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100",
       ].join(" ")}
     >
       <nav
@@ -112,15 +118,17 @@ export default function Navbar() {
         aria-label="Navigasi utama"
       >
         <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* Logo / Brand name */}
+          {/* Logo / Brand name — adaptif kontras warna */}
           <Link
             href="/"
             className="flex items-center gap-2 group"
             aria-label={`${brand.name} — kembali ke beranda`}
           >
             <span
-              className="font-black text-xl lg:text-2xl tracking-widest text-white
-                         transition-colors duration-200 group-hover:text-brand-green"
+              className={[
+                "font-black text-xl lg:text-2xl tracking-widest transition-colors duration-200 group-hover:text-brand-green",
+                isDarkNav ? "text-white" : "text-brand-dark",
+              ].join(" ")}
             >
               TEGOER
             </span>
@@ -143,7 +151,9 @@ export default function Navbar() {
                     "after:transition-transform after:duration-200 after:origin-left",
                     isActive(link.href)
                       ? "text-brand-green after:bg-brand-green after:scale-x-100"
-                      : "text-white/80 hover:text-white after:bg-brand-green after:scale-x-0 hover:after:scale-x-100",
+                      : isDarkNav
+                      ? "text-white/80 hover:text-white after:bg-brand-green after:scale-x-0 hover:after:scale-x-100"
+                      : "text-gray-700 hover:text-brand-dark after:bg-brand-green after:scale-x-0 hover:after:scale-x-100",
                   ].join(" ")}
                   aria-current={isActive(link.href) ? "page" : undefined}
                 >
@@ -183,15 +193,24 @@ export default function Navbar() {
             >
               <span
                 ref={hamburgerTopRef}
-                className="block w-6 h-0.5 bg-white rounded-full mb-1.5"
+                className={[
+                  "block w-6 h-0.5 rounded-full mb-1.5 transition-colors duration-200",
+                  isDarkNav ? "bg-white" : "bg-brand-dark",
+                ].join(" ")}
               />
               <span
                 ref={hamburgerMidRef}
-                className="block w-6 h-0.5 bg-white rounded-full mb-1.5"
+                className={[
+                  "block w-6 h-0.5 rounded-full mb-1.5 transition-colors duration-200",
+                  isDarkNav ? "bg-white" : "bg-brand-dark",
+                ].join(" ")}
               />
               <span
                 ref={hamburgerBotRef}
-                className="block w-6 h-0.5 bg-white rounded-full"
+                className={[
+                  "block w-6 h-0.5 rounded-full transition-colors duration-200",
+                  isDarkNav ? "bg-white" : "bg-brand-dark",
+                ].join(" ")}
               />
             </button>
           </div>
@@ -201,7 +220,12 @@ export default function Navbar() {
         <div
           ref={mobileMenuRef}
           id="mobile-menu"
-          className="md:hidden overflow-hidden bg-brand-dark/98 backdrop-blur-md rounded-b-2xl"
+          className={[
+            "md:hidden overflow-hidden backdrop-blur-md rounded-b-2xl transition-colors duration-200",
+            isDarkNav
+              ? "bg-brand-dark/98 border-t border-white/10"
+              : "bg-white/98 border border-gray-100 shadow-xl",
+          ].join(" ")}
           aria-hidden={!isOpen}
         >
           <div className="px-4 pt-3 pb-5 flex flex-col gap-1">
@@ -213,7 +237,9 @@ export default function Navbar() {
                   "px-4 py-3 rounded-xl text-sm font-semibold tracking-wide transition-colors duration-150",
                   isActive(link.href)
                     ? "bg-brand-green/15 text-brand-green"
-                    : "text-white/80 hover:text-white hover:bg-white/5",
+                    : isDarkNav
+                    ? "text-white/80 hover:text-white hover:bg-white/5"
+                    : "text-gray-700 hover:text-brand-dark hover:bg-gray-50",
                 ].join(" ")}
                 aria-current={isActive(link.href) ? "page" : undefined}
               >

@@ -93,25 +93,60 @@ export const heroPhotos: HeroPhoto[] = [
 // ─── Layanan ─────────────────────────────────────────────────────────────────
 export const services = [
   {
+    id: "traditional-photography",
+    title: "Traditional Photography",
+    description:
+      "Dokumentasi prosesi adat dan tradisi budaya dengan sentuhan fotografi yang autentik dan penuh makna.",
+    href: "/gallery?kategori=traditional",
+  },
+  {
+    id: "wedding-documentation",
+    title: "Wedding Documentation",
+    description:
+      "Abadikan setiap detik sakral dan momen romantis pernikahan Anda dengan visual sinematik dan berkelas.",
+    href: "/gallery?kategori=wedding",
+  },
+  {
+    id: "graduation",
+    title: "Graduation",
+    description:
+      "Rayakan kelulusan dan kebanggaan momen wisuda bersama keluarga dan sahabat dengan hasil foto yang memukau.",
+    href: "/gallery?kategori=graduation",
+  },
+  {
+    id: "studio-professional",
+    title: "Studio Professional",
+    description:
+      "Sesi foto studio berkualitas tinggi dengan tata cahaya presisi dan pengarahan gaya profesional.",
+    href: "/gallery?kategori=professional",
+  },
+  {
     id: "photobooth",
     title: "Photobooth",
     description:
-      "Foto instan di acara dengan properti lucu dan kamera otomatis.",
-    href: "/gallery/photobooth",
+      "Layanan photo booth interaktif di lokasi acara dengan cetak instan, properti seru, dan desain frame kustom.",
+    href: "/gallery?kategori=photobooth",
   },
   {
     id: "photobox",
     title: "Photobox",
     description:
-      "Mesin foto di tempat umum yang mencetak foto secara instan dengan berbagai pilihan frame.",
-    href: "/gallery/photobox",
+      "Mesin foto mandiri modern yang mencetak foto secara instan dengan berbagai pilihan template frame kekinian.",
+    href: "/gallery?kategori=photobox",
   },
   {
-    id: "professional",
-    title: "Professional Photo",
+    id: "mingle-photobooth",
+    title: "Mingle Photobooth",
     description:
-      "Profesional photographer dengan hasil premium yang ditata dengan gaya.",
-    href: "/gallery/professional",
+      "Fotografer keliling interaktif di tengah tamu undangan dengan cetak instan atau digital sharing langsung di tempat.",
+    href: "/gallery?kategori=mingle-photobooth",
+  },
+  {
+    id: "photo-barcode",
+    title: "Photo Barcode",
+    description:
+      "Solusi akses dan unduh hasil foto acara secara cepat, praktis, dan instan via scan barcode personal.",
+    href: "/gallery?kategori=photo-barcode",
   },
 ] as const;
 
