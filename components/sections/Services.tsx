@@ -91,16 +91,15 @@ export default function Services() {
         // ── 4. GSAP hover lift per card ─────────────────────────────────
         const cards = cardsRef.current.querySelectorAll<HTMLAnchorElement>("a");
         cards.forEach((card) => {
-          const yTo    = gsap.quickTo(card, "y",     { duration: 0.35, ease: "power2.out" });
-          const scaleTo = gsap.quickTo(card, "scale", { duration: 0.35, ease: "power2.out" });
+          const yTo = gsap.quickTo(card, "y", { duration: 0.35, ease: "power2.out" });
 
           card.addEventListener("mouseenter", () => {
             yTo(-8);
-            scaleTo(1.01);
+            gsap.to(card, { scale: 1.01, duration: 0.35, ease: "power2.out", overwrite: "auto" });
           });
           card.addEventListener("mouseleave", () => {
             yTo(0);
-            scaleTo(1);
+            gsap.to(card, { scale: 1, duration: 0.35, ease: "power2.out", overwrite: "auto" });
           });
         });
       }

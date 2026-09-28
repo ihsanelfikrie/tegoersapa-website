@@ -14,8 +14,73 @@ export const brand = {
 } as const;
 
 // ─── Navbar ──────────────────────────────────────────────────────────────────
-export const navLinks = [
+// ─── Navbar ──────────────────────────────────────────────────────────────────
+export type NavSubItem = {
+  label: string;
+  href: string;
+  description: string;
+};
+
+export type NavItem = {
+  label: string;
+  href: string;
+  subItems?: readonly NavSubItem[];
+};
+
+export const navLinks: readonly NavItem[] = [
   { label: "Home", href: "/" },
+  {
+    label: "Photography",
+    href: "/photography",
+    subItems: [
+      {
+        label: "Traditional Photography",
+        href: "/photography#traditional",
+        description: "Dokumentasi prosesi adat & tradisi budaya autentik",
+      },
+      {
+        label: "Wedding Documentation",
+        href: "/photography#wedding",
+        description: "Visual sinematik & sakral untuk hari pernikahan",
+      },
+      {
+        label: "Graduation",
+        href: "/photography#graduation",
+        description: "Abadikan momen kelulusan indoor & outdoor kampus",
+      },
+      {
+        label: "Studio Professional",
+        href: "/photography#studio",
+        description: "Sesi foto studio eksklusif dengan tata cahaya presisi",
+      },
+    ],
+  },
+  {
+    label: "Photobooth",
+    href: "/photobooth",
+    subItems: [
+      {
+        label: "Photobooth",
+        href: "/photobooth#photobooth",
+        description: "Cetak instan & properti seru di lokasi acara",
+      },
+      {
+        label: "Photobox",
+        href: "/photobooth#photobox",
+        description: "Mesin foto mandiri modern dengan frame kekinian",
+      },
+      {
+        label: "Mingle Photobooth",
+        href: "/photobooth#mingle",
+        description: "Fotografer keliling dengan cetak & sharing langsung",
+      },
+      {
+        label: "Photo Barcode",
+        href: "/photobooth#barcode",
+        description: "Scan barcode instan untuk unduh foto acara",
+      },
+    ],
+  },
   { label: "Pricelist", href: "/pricelist" },
   { label: "Gallery", href: "/gallery" },
   { label: "Tentang", href: "/tentang" },
@@ -97,58 +162,226 @@ export const services = [
     title: "Traditional Photography",
     description:
       "Dokumentasi prosesi adat dan tradisi budaya dengan sentuhan fotografi yang autentik dan penuh makna.",
-    href: "/gallery?kategori=traditional",
+    href: "/photography#traditional",
   },
   {
     id: "wedding-documentation",
     title: "Wedding Documentation",
     description:
       "Abadikan setiap detik sakral dan momen romantis pernikahan Anda dengan visual sinematik dan berkelas.",
-    href: "/gallery?kategori=wedding",
+    href: "/photography#wedding",
   },
   {
     id: "graduation",
     title: "Graduation",
     description:
       "Rayakan kelulusan dan kebanggaan momen wisuda bersama keluarga dan sahabat dengan hasil foto yang memukau.",
-    href: "/gallery?kategori=graduation",
+    href: "/photography#graduation",
   },
   {
     id: "studio-professional",
     title: "Studio Professional",
     description:
       "Sesi foto studio berkualitas tinggi dengan tata cahaya presisi dan pengarahan gaya profesional.",
-    href: "/gallery?kategori=professional",
+    href: "/photography#studio",
   },
   {
     id: "photobooth",
     title: "Photobooth",
     description:
       "Layanan photo booth interaktif di lokasi acara dengan cetak instan, properti seru, dan desain frame kustom.",
-    href: "/gallery?kategori=photobooth",
+    href: "/photobooth#photobooth",
   },
   {
     id: "photobox",
     title: "Photobox",
     description:
       "Mesin foto mandiri modern yang mencetak foto secara instan dengan berbagai pilihan template frame kekinian.",
-    href: "/gallery?kategori=photobox",
+    href: "/photobooth#photobox",
   },
   {
     id: "mingle-photobooth",
     title: "Mingle Photobooth",
     description:
       "Fotografer keliling interaktif di tengah tamu undangan dengan cetak instan atau digital sharing langsung di tempat.",
-    href: "/gallery?kategori=mingle-photobooth",
+    href: "/photobooth#mingle",
   },
   {
     id: "photo-barcode",
     title: "Photo Barcode",
     description:
       "Solusi akses dan unduh hasil foto acara secara cepat, praktis, dan instan via scan barcode personal.",
-    href: "/gallery?kategori=photo-barcode",
+    href: "/photobooth#barcode",
   },
 ] as const;
+
+// ─── Detail Kategori Photography & Documentation ─────────────────────────────
+export type PhotographyCategoryDetail = {
+  id: string;
+  tag: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  highlights: string[];
+  galleryFilter: { kategori: string; sub?: string };
+  pricelistFilter?: string;
+  whatsappMessage: string;
+};
+
+export const photographyDetails: PhotographyCategoryDetail[] = [
+  {
+    id: "traditional",
+    tag: "Adat & Budaya",
+    title: "Traditional Photography",
+    subtitle: "Dokumentasi Prosesi Adat yang Autentik & Khidmat",
+    description:
+      "Setiap tradisi menyimpan nilai sakral dan cerita turun-temurun. Kami mendokumentasikan setiap prosesi adat nusantara dengan kepekaan budaya tinggi, menangkap detail busana tradisional, ekspresi penuh makna, dan kebersamaan keluarga besar.",
+    highlights: [
+      "Dokumentasi urutan prosesi adat secara menyeluruh tanpa terlewat",
+      "Penangkapan detail ornamen, motif busana adat, dan tata rias",
+      "Fotografer berpengalaman mendampingi prosesi budaya di Medan & sekitarnya",
+      "Color grading elegan yang mempertahankan keaslian warna busana tradisional",
+    ],
+    galleryFilter: { kategori: "professional" },
+    pricelistFilter: "Profesional Studio",
+    whatsappMessage: "Halo kak, saya ingin konsultasi dokumentasi Traditional Photography",
+  },
+  {
+    id: "wedding",
+    tag: "Pernikahan & Prewed",
+    title: "Wedding Documentation",
+    subtitle: "Visual Sinematik Mengabadikan Hari Paling Bersejarah",
+    description:
+      "Pernikahan adalah momen sekali seumur hidup yang penuh keharuan dan kebahagiaan. Melalui pendekatan foto jurnalistik dan arahan portrait sinematik, kami mengabadikan tatapan cinta, tangisan haru orang tua, serta kemeriahan resepsi Anda.",
+    highlights: [
+      "Liputan lengkap mulai dari persiapan, akad nikah/pemberkatan, hingga resepsi",
+      "Sentuhan foto candid emosional dan pose romantis yang natural",
+      "Seluruh file foto resolusi tinggi melalui link download cepat",
+      "Tersedia opsi cetak foto 5R, album kolase eksklusif, dan cetak kanvas",
+    ],
+    galleryFilter: { kategori: "photobooth", sub: "wedding" },
+    pricelistFilter: "Profesional Studio",
+    whatsappMessage: "Halo kak, saya ingin tanya paket Wedding Documentation / Prewedding",
+  },
+  {
+    id: "graduation",
+    tag: "Kelulusan & Wisuda",
+    title: "Graduation Photography",
+    subtitle: "Abadikan Momen Kelulusan & Kebanggaan Bersama",
+    description:
+      "Pencapaian wisuda adalah buah dari kerja keras dan kebanggaan keluarga. Kami menghadirkan sesi foto wisuda outdoor di lingkungan kampus maupun indoor studio ber-AC dengan berbagai pilihan paket personal, bestie, maupun keluarga besar.",
+    highlights: [
+      "Pilihan sesi Outdoor Kampus dan Indoor Studio",
+      "Bisa foto individual, bersama bestie, sahabat satu kelompok, hingga keluarga",
+      "Unlimited shoot selama durasi sesi dengan retouched photos berkualitas",
+      "Paket harga terjangkau mulai dari Basic, Premium, Homie, Bestie, hingga Framely",
+    ],
+    galleryFilter: { kategori: "professional", sub: "outdoor-graduation" },
+    pricelistFilter: "Outdoor Graduation",
+    whatsappMessage: "Halo kak, saya mau booking sesi Foto Wisuda / Graduation",
+  },
+  {
+    id: "studio",
+    tag: "Studio Portrait",
+    title: "Studio Professional",
+    subtitle: "Pencahayaan Presisi & Sesi Foto Studio Berkualitas Tinggi",
+    description:
+      "Studio foto Tegoer Sapa dilengkapi peralatan lighting modern dan backdrop pilihan untuk kebutuhan personal branding, foto wisuda indoor, maternity, portrait keluarga, maupun photoshoot grup dengan pengarahan gaya yang profesional dan nyaman.",
+    highlights: [
+      "Lighting studio terstandar untuk hasil gambar tajam berdimensi",
+      "Pilihan background studio elegan dan minimalis",
+      "Pengarahan pose yang santai untuk hasil ekspresi natural dan percaya diri",
+      "Cetak foto 5R berkualitas lab dan soft file lengkap",
+    ],
+    galleryFilter: { kategori: "professional", sub: "indoor-graduation" },
+    pricelistFilter: "Profesional Studio",
+    whatsappMessage: "Halo kak, saya ingin booking sesi Studio Professional Photo",
+  },
+];
+
+// ─── Detail Kategori Photobooth & Interactive Experience ─────────────────────
+export type PhotoboothCategoryDetail = {
+  id: string;
+  tag: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  highlights: string[];
+  galleryFilter: { kategori: string; sub?: string };
+  whatsappMessage: string;
+  waNumber: string;
+};
+
+export const photoboothDetails: PhotoboothCategoryDetail[] = [
+  {
+    id: "photobooth",
+    tag: "Event & Party",
+    title: "Photobooth Event",
+    subtitle: "Foto Instan Seru & Souvenir Berkesan untuk Para Tamu",
+    description:
+      "Hadirkan keseruan di pesta pernikahan, ulang tahun, gathering perusahaan, atau konser dengan layanan photobooth instan kami. Tamu berpose dengan properti menarik dan langsung membawa pulang hasil cetak foto berkualitas tinggi dalam hitungan detik.",
+    highlights: [
+      "Printer dye-sublimation super cepat dengan kualitas warna tajam dan anti luntur",
+      "Desain template frame kustom bertuliskan nama acara, logo, atau tema perayaan",
+      "Pilihan properti lucu, kacamata unik, bando, dan fun signage",
+      "Crew dan operator profesional yang siap memandu tamu selama acara",
+    ],
+    galleryFilter: { kategori: "photobooth" },
+    whatsappMessage: "Halo kak, mau tanya informasi paket Photobooth untuk acara",
+    waNumber: "628810805188087",
+  },
+  {
+    id: "photobox",
+    tag: "Self-Studio Box",
+    title: "Photobox",
+    subtitle: "Mesin Foto Mandiri Modern dengan Template Frame Kekinian",
+    description:
+      "Photobox mandiri dengan sentuhan teknologi modern yang memudahkan siapa saja berfoto bebas tanpa rasa canggung. Lengkap dengan wireless shutter clicker, monitor preview real-time, dan ragam frame desain kolaborasi unik yang estetik.",
+    highlights: [
+      "Self-timer atau remote clicker untuk kontrol foto mandiri yang leluasa",
+      "Pilihan ukuran cetak strip 2x6 dan 4R dengan layout kekinian",
+      "Filter warna estetik: natural, black & white, vintage warm, dan vibrant",
+      "Soft file langsung dikirim ke smartphone melalui scan QR code instan",
+    ],
+    galleryFilter: { kategori: "photobox" },
+    whatsappMessage: "Halo kak, mau tanya informasi Photobox Tegoer Sapa",
+    waNumber: "628810805188087",
+  },
+  {
+    id: "mingle",
+    tag: "Roaming Photo",
+    title: "Mingle Photobooth",
+    subtitle: "Fotografer Keliling Aktif Menjangkau Setiap Sudut Acara",
+    description:
+      "Fotografer keliling yang menyapa tamu langsung di meja atau area standing party. Mengabadikan momen interaksi spontan tanpa membuat tamu harus mengantre di satu titik booth tertentu.",
+    highlights: [
+      "Fotografer mobile menjelajah ke seluruh area tamu undangan",
+      "Tangkap momen candid, tawa ceria, dan interaksi hangat tanpa jeda",
+      "Dukungan mobile printer nirkabel untuk cetak cepat di lokasi",
+      "Sangat ideal untuk resepsi pernikahan besar, gala dinner, dan corporate gathering",
+    ],
+    galleryFilter: { kategori: "photobooth", sub: "event" },
+    whatsappMessage: "Halo kak, mau konsultasi Mingle Photobooth untuk event",
+    waNumber: "628810805188087",
+  },
+  {
+    id: "barcode",
+    tag: "Digital Live Sharing",
+    title: "Photo Barcode",
+    subtitle: "Unduh Soft File Foto Acara Secara Real-Time via Scan Barcode",
+    description:
+      "Solusi praktis dan ramah lingkungan bagi tamu acara untuk mengakses seluruh dokumentasi foto mereka. Cukup arahkan kamera smartphone ke QR barcode personal atau display banner untuk mengunduh foto beresolusi tinggi langsung.",
+    highlights: [
+      "Sistem cloud hosting live yang langsung update begitu foto diambil",
+      "Scan QR barcode cepat dari kamera ponsel tanpa perlu download aplikasi",
+      "Kualitas file asli (high-definition) siap untuk diunggah ke Instagram Story / Feed",
+      "Dashboard gallery acara yang rapi, aman, dan mudah dibagikan",
+    ],
+    galleryFilter: { kategori: "photobooth" },
+    whatsappMessage: "Halo kak, mau tanya layanan Photo Barcode untuk acara kami",
+    waNumber: "628810805188087",
+  },
+];
 
 // ─── Kontak ──────────────────────────────────────────────────────────────────
 export const contact = {
