@@ -630,7 +630,25 @@ export const galleryCategories = [
   },
 ] as const;
 
-// ─── Portfolio Preview (Homepage) ────────────────────────────────────────────
+// ─── Portfolio Preview & Gallery Photos ─────────────────────────────────────
+import rawGalleryPhotos from "./galleryData.json";
+
+export type GalleryPhotoItem = {
+  id: string;
+  category: "Professional" | "Photobooth" | "Photobox";
+  subCategory: string;
+  categorySlug: "professional" | "photobooth" | "photobox";
+  subCategorySlug: string;
+  title: string;
+  image: string; // path relatif dari public, contoh: /images/gallery/inGraduation/INGRAD-1.webp
+  width: number;
+  height: number;
+  aspectRatio: "portrait" | "landscape" | "square";
+  alt: string;
+};
+
+export const galleryPhotos = rawGalleryPhotos as GalleryPhotoItem[];
+
 export type PortfolioPreviewItem = {
   id: string;
   category: string;
@@ -638,138 +656,24 @@ export type PortfolioPreviewItem = {
   title: string;
   image: string; // path relatif dari public
   href: string; // link internal ke gallery dengan filter query param
+  width?: number;
+  height?: number;
+  aspectRatio?: "portrait" | "landscape" | "square";
+  alt?: string;
 };
 
-export const portfolioPreview: PortfolioPreviewItem[] = [
-  {
-    id: "pv-pf-outdoor-grad-framely",
-    category: "Professional",
-    subCategory: "Outdoor Graduation",
-    title: "Framely Creative Star Formation",
-    image: "/images/pricelist/outdoor-framely.webp",
-    href: "/gallery?kategori=professional&sub=outdoor-graduation",
-  },
-  {
-    id: "pv-pf-prewed",
-    category: "Professional",
-    subCategory: "Pre-Wedding",
-    title: "Pre-Wedding & Couple Story",
-    image: "/images/pricelist/prewed-poswed.webp",
-    href: "/gallery?kategori=professional&sub=prewedding",
-  },
-  {
-    id: "pv-pb-open-space",
-    category: "Photobooth",
-    subCategory: "Event",
-    title: "Photobooth Open Space Event",
-    image: "/images/pricelist/photobooth-open-space.webp",
-    href: "/gallery?kategori=photobooth&sub=event",
-  },
-  {
-    id: "pv-pf-indoor-grad",
-    category: "Professional",
-    subCategory: "Indoor Graduation",
-    title: "Indoor Graduation Studio",
-    image: "/images/pricelist/indoor-graduation.webp",
-    href: "/gallery?kategori=professional&sub=indoor-graduation",
-  },
-  {
-    id: "pv-pf-outdoor-grad-bestie",
-    category: "Professional",
-    subCategory: "Outdoor Graduation",
-    title: "Bestie Outdoor Graduation",
-    image: "/images/pricelist/outdoor-bestie.webp",
-    href: "/gallery?kategori=professional&sub=outdoor-graduation",
-  },
-  {
-    id: "pv-px-3d-circle",
-    category: "Photobox",
-    subCategory: "3D Circle",
-    title: "Photobox 3D Circle Series",
-    image: "/images/pricelist/photobox-3d-circle.webp",
-    href: "/gallery?kategori=photobox",
-  },
-  {
-    id: "pv-pf-family",
-    category: "Professional",
-    subCategory: "Studio",
-    title: "Family Studio & Birthday Moment",
-    image: "/images/pricelist/family.webp",
-    href: "/gallery?kategori=professional",
-  },
-  {
-    id: "pv-pf-group",
-    category: "Professional",
-    subCategory: "Indoor Graduation",
-    title: "Kebaya Squad Studio Photoshoot",
-    image: "/images/pricelist/group.webp",
-    href: "/gallery?kategori=professional&sub=indoor-graduation",
-  },
-  {
-    id: "pv-pf-personal",
-    category: "Professional",
-    subCategory: "Studio",
-    title: "Personal Studio & Executive Portrait",
-    image: "/images/pricelist/personal.webp",
-    href: "/gallery?kategori=professional",
-  },
-  {
-    id: "pv-px-flat-box",
-    category: "Photobox",
-    subCategory: "Flat Box",
-    title: "Photobox Flat Box Experience",
-    image: "/images/pricelist/photobox-flat-box.webp",
-    href: "/gallery?kategori=photobox",
-  },
-  {
-    id: "pv-px-red-curtain",
-    category: "Photobox",
-    subCategory: "Red Curtain",
-    title: "Photobox Red Curtain Duo",
-    image: "/images/pricelist/photobox-red-curtain.webp",
-    href: "/gallery?kategori=photobox",
-  },
-  {
-    id: "pv-px-reguler",
-    category: "Photobox",
-    subCategory: "Reguler",
-    title: "Photobox Reguler Self-Studio",
-    image: "/images/pricelist/photobox-reguler.webp",
-    href: "/gallery?kategori=photobox",
-  },
-  {
-    id: "pv-pf-outdoor-grad-basic",
-    category: "Professional",
-    subCategory: "Outdoor Graduation",
-    title: "Basic Solo Campus Graduation",
-    image: "/images/pricelist/outdoor-basic.webp",
-    href: "/gallery?kategori=professional&sub=outdoor-graduation",
-  },
-  {
-    id: "pv-pf-outdoor-grad-premium",
-    category: "Professional",
-    subCategory: "Outdoor Graduation",
-    title: "Premium Campus Staircase Walk",
-    image: "/images/pricelist/outdoor-premium.webp",
-    href: "/gallery?kategori=professional&sub=outdoor-graduation",
-  },
-  {
-    id: "pv-pf-outdoor-grad-homie",
-    category: "Professional",
-    subCategory: "Outdoor Graduation",
-    title: "Homie Graduation Sash & Ornaments",
-    image: "/images/pricelist/outdoor-homie.webp",
-    href: "/gallery?kategori=professional&sub=outdoor-graduation",
-  },
-  {
-    id: "pv-pf-outdoor-grad-unity",
-    category: "Professional",
-    subCategory: "Outdoor Graduation",
-    title: "Unity Graduation Besties Walk",
-    image: "/images/pricelist/outdoor-unity.webp",
-    href: "/gallery?kategori=professional&sub=outdoor-graduation",
-  },
-];
+export const portfolioPreview: PortfolioPreviewItem[] = galleryPhotos.map((photo) => ({
+  id: photo.id,
+  category: photo.category,
+  subCategory: photo.subCategory,
+  title: photo.title,
+  image: photo.image,
+  href: `/gallery?kategori=${photo.categorySlug}&sub=${photo.subCategorySlug}`,
+  width: photo.width,
+  height: photo.height,
+  aspectRatio: photo.aspectRatio,
+  alt: photo.alt,
+}));
 
 // ─── Data Khusus Halaman Detail Layanan Photography ─────────────────────────
 export type ServicePagePackage = {
