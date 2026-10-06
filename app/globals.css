@@ -91,15 +91,17 @@ body {
 
 .hero-char {
   display: inline-block;
-  transform-style: preserve-3d;
   will-change: transform;
-  transform-origin: center center;
+  transform-origin: center bottom;
+  cursor: pointer;
 }
 
 /* ── Efek Cahaya / Shimmer Masking Teks Hero ── */
 .hero-shimmer-char {
   display: inline-block;
   will-change: transform;
+  transform-origin: center bottom;
+  pointer-events: none;
 }
 
 .hero-shimmer-word {

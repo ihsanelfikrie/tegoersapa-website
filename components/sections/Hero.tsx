@@ -167,6 +167,79 @@ export default function Hero() {
           repeat: -1,
         });
       });
+
+      // ── 2. Animasi Loop Lompat Per-Teks Setiap 5 Detik Sekali ────────────
+      const charKeys = [
+        "t-0", "t-1", "t-2", "t-3", "t-4", "t-5",
+        "s-0", "s-1", "s-2", "s-3"
+      ];
+
+      const jumpTl = gsap.timeline({
+        repeat: -1,
+        repeatDelay: 5,
+        delay: 2.2, // Mulai setelah animasi entrance selesai
+      });
+
+      charKeys.forEach((key, index) => {
+        const base = containerRef.current?.querySelector<HTMLElement>(`[data-char="${key}"]`);
+        const shim = containerRef.current?.querySelector<HTMLElement>(`[data-char-shim="${key}"]`);
+        if (!base) return;
+        const targets = shim ? [base, shim] : [base];
+
+        // Gelombang lompatan ceria (wave jump) berurutan
+        jumpTl
+          .to(
+            targets,
+            {
+              y: -24,
+              scaleY: 1.15,
+              scaleX: 0.92,
+              duration: 0.22,
+              ease: "power2.out",
+            },
+            index * 0.075
+          )
+          .to(
+            targets,
+            {
+              y: 0,
+              scaleY: 1,
+              scaleX: 1,
+              duration: 0.45,
+              ease: "bounce.out",
+            },
+            index * 0.075 + 0.22
+          );
+
+        // ── 3. Efek Interaktif Hover & Touch pada Teks ────────────────────
+        const onEnter = () => {
+          gsap.killTweensOf(targets);
+          gsap.to(targets, {
+            y: -26,
+            scale: 1.2,
+            rotation: (index % 2 === 0 ? 1 : -1) * 7,
+            duration: 0.2,
+            ease: "back.out(3)",
+            overwrite: "auto",
+          });
+        };
+
+        const onLeave = () => {
+          gsap.to(targets, {
+            y: 0,
+            scale: 1,
+            rotation: 0,
+            duration: 0.5,
+            ease: "elastic.out(1.2, 0.4)",
+            overwrite: "auto",
+          });
+        };
+
+        base.addEventListener("mouseenter", onEnter);
+        base.addEventListener("mouseleave", onLeave);
+        base.addEventListener("touchstart", onEnter, { passive: true });
+        base.addEventListener("touchend", onLeave, { passive: true });
+      });
     },
     { scope: containerRef },
   );
@@ -224,7 +297,11 @@ export default function Hero() {
                 <span className="relative inline-block">
                   <span ref={word1Ref} className="hero-word">
                     {"Tegoer".split("").map((c, i) => (
-                      <span key={i} className="hero-char">
+                      <span
+                        key={i}
+                        className="hero-char cursor-pointer hover:brightness-110 select-none"
+                        data-char={`t-${i}`}
+                      >
                         {c}
                       </span>
                     ))}
@@ -236,7 +313,11 @@ export default function Hero() {
                     className="hero-word hero-shimmer-word hero-shimmer-line1"
                   >
                     {"Tegoer".split("").map((c, i) => (
-                      <span key={i} className="hero-shimmer-char">
+                      <span
+                        key={i}
+                        className="hero-shimmer-char"
+                        data-char-shim={`t-${i}`}
+                      >
                         {c}
                       </span>
                     ))}
@@ -249,7 +330,11 @@ export default function Hero() {
                 <span className="relative inline-block">
                   <span ref={word2Ref} className="hero-word hero-word-green">
                     {"Sapa".split("").map((c, i) => (
-                      <span key={i} className="hero-char">
+                      <span
+                        key={i}
+                        className="hero-char cursor-pointer hover:brightness-110 select-none"
+                        data-char={`s-${i}`}
+                      >
                         {c}
                       </span>
                     ))}
@@ -261,7 +346,11 @@ export default function Hero() {
                     className="hero-word hero-word-green hero-shimmer-word hero-shimmer-line2"
                   >
                     {"Sapa".split("").map((c, i) => (
-                      <span key={i} className="hero-shimmer-char">
+                      <span
+                        key={i}
+                        className="hero-shimmer-char"
+                        data-char-shim={`s-${i}`}
+                      >
                         {c}
                       </span>
                     ))}
