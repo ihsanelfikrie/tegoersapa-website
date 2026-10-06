@@ -52,7 +52,7 @@ export default function TentangPage() {
           </div>
 
           <div className="lg:col-span-5 flex flex-col gap-5">
-            <div className="p-8 rounded-3xl bg-brand-dark text-white shadow-xl">
+            <div className="p-8 rounded-3xl bg-brand-dark text-white">
               <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green">
                 Nilai Utama Kami
               </span>

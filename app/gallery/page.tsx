@@ -76,7 +76,7 @@ function GalleryContent() {
             className={[
               "px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 cursor-pointer",
               activeCategory === "all"
-                ? "bg-brand-dark text-white shadow-md shadow-brand-dark/20"
+                ? "bg-brand-dark text-white"
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-brand-dark",
             ].join(" ")}
           >
@@ -93,7 +93,7 @@ function GalleryContent() {
               className={[
                 "px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 cursor-pointer",
                 activeCategory === cat.id
-                  ? "bg-brand-dark text-white shadow-md shadow-brand-dark/20"
+                  ? "bg-brand-dark text-white"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-brand-dark",
               ].join(" ")}
             >
@@ -142,7 +142,7 @@ function GalleryContent() {
               className="group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-brand-dark cursor-pointer ring-1 ring-black/5"
             >
               <div
-                className="absolute inset-0 bg-gradient-to-br from-brand-dark via-brand-dark/95 to-brand-green/20
+                className="absolute inset-0 bg-brand-dark
                             flex flex-col items-center justify-center p-6 text-center select-none"
               >
                 <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-3">
@@ -160,7 +160,7 @@ function GalleryContent() {
 
               {/* Hover overlay */}
               <div className="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                <div className="flex items-center gap-2 text-white font-bold text-xs bg-brand-green px-3.5 py-1.5 rounded-full shadow-lg">
+                <div className="flex items-center gap-2 text-white font-bold text-xs bg-brand-green px-3.5 py-1.5 rounded-full">
                   <span>Lihat Preview</span>
                   <span>🔍</span>
                 </div>
@@ -191,11 +191,11 @@ function GalleryContent() {
       {activeImage && (
         <div
           onClick={() => setActiveImage(null)}
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 sm:p-6"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-brand-dark border border-white/10 rounded-3xl max-w-lg w-full p-6 sm:p-8 text-white relative shadow-2xl"
+            className="bg-brand-dark border border-white/10 rounded-3xl max-w-lg w-full p-6 sm:p-8 text-white relative"
           >
             <button
               onClick={() => setActiveImage(null)}

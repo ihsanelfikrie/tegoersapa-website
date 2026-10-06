@@ -92,7 +92,7 @@ export default function AboutPreview() {
             </p>
             <Link
               href="/tentang"
-              className="group inline-flex items-center gap-2.5 bg-brand-dark text-white hover:bg-brand-green font-bold tracking-wide text-sm px-6 py-3.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-brand-green/10"
+              className="group inline-flex items-center gap-2.5 bg-brand-dark text-white hover:bg-brand-green font-bold tracking-wide text-sm px-6 py-3.5 rounded-full transition-all duration-300"
             >
               <span>Selengkapnya Tentang Kami</span>
               <svg
@@ -121,7 +121,7 @@ export default function AboutPreview() {
               </p>
               
               {/* Subtle background decoration */}
-              <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-brand-green/10 blur-xl" />
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-brand-green/10" />
             </div>
 
             {/* Quick trust metrics */}

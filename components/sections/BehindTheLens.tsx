@@ -138,21 +138,21 @@ export default function BehindTheLens() {
           
           {/* 1. VISUAL UTAMA BESAR (7 Kolom di Desktop) */}
           <div ref={mainVisualRef} className="lg:col-span-7 flex flex-col">
-            <div className="group relative h-full flex flex-col justify-between p-7 sm:p-9 rounded-3xl overflow-hidden bg-brand-dark text-white border border-white/10 shadow-2xl transition-all duration-300 hover:border-brand-green/40">
+            <div className="group relative h-full flex flex-col justify-between p-7 sm:p-9 rounded-3xl overflow-hidden bg-brand-dark text-white border border-white/10 transition-all duration-300 hover:border-brand-green/40">
               
               {/* Background Glow & Subtle Texture */}
               <div
                 aria-hidden="true"
-                className="absolute -top-20 -right-20 w-80 h-80 bg-brand-green/15 rounded-full blur-3xl pointer-events-none"
+                className="absolute -top-20 -right-20 w-80 h-80 bg-brand-green/15 rounded-full pointer-events-none"
               />
               <div
                 aria-hidden="true"
-                className="absolute -bottom-20 -left-20 w-72 h-72 bg-brand-dark rounded-full blur-2xl pointer-events-none"
+                className="absolute -bottom-20 -left-20 w-72 h-72 bg-brand-dark rounded-full pointer-events-none"
               />
 
               {/* Visual Frame Slot Utama */}
               <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-black/40 ring-1 ring-white/10 mb-7">
-                <div className="absolute inset-0 bg-gradient-to-br from-brand-dark via-brand-dark/95 to-brand-green/20 flex flex-col items-center justify-center p-8 text-center select-none">
+                <div className="absolute inset-0 bg-brand-dark flex flex-col items-center justify-center p-8 text-center select-none">
                   <div className="w-14 h-14 rounded-full bg-white/5 border border-white/15 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:border-brand-green/50 transition-all duration-300">
                     <svg className="w-7 h-7 text-white/50 group-hover:text-brand-green transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
@@ -168,7 +168,7 @@ export default function BehindTheLens() {
                 </div>
 
                 {/* Badge Top Left */}
-                <span className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-brand-green text-white text-[10px] font-bold tracking-wider uppercase shadow-md">
+                <span className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-brand-green text-white text-[10px] font-bold tracking-wider uppercase">
                   Main Focus
                 </span>
               </div>
@@ -190,7 +190,7 @@ export default function BehindTheLens() {
               <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
                 <Link
                   href="/tentang"
-                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-wide bg-brand-green hover:bg-brand-green/90 text-white px-6 py-3 rounded-full transition-all duration-200 shadow-lg shadow-brand-green/25 hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-wide bg-brand-green hover:bg-brand-green/90 text-white px-6 py-3 rounded-full transition-all duration-200 hover:-translate-y-0.5"
                 >
                   <span>See More</span>
                   <span aria-hidden="true">→</span>
@@ -208,11 +208,11 @@ export default function BehindTheLens() {
           <div ref={subVisualsRef} className="lg:col-span-5 flex flex-col gap-6 justify-between">
             
             {/* Visual Pendukung 1: Lighting & Setup */}
-            <div className="group flex-1 p-6 sm:p-7 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300 hover:shadow-xl hover:shadow-brand-green/5 flex flex-col justify-between">
+            <div className="group flex-1 p-6 sm:p-7 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300 flex flex-col justify-between">
               <div>
                 {/* Visual Thumbnail */}
                 <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-brand-dark ring-1 ring-black/5 mb-5">
-                  <div className="absolute inset-0 bg-gradient-to-br from-brand-dark via-brand-dark/95 to-brand-green/25 flex flex-col items-center justify-center p-4 text-center select-none">
+                  <div className="absolute inset-0 bg-brand-dark flex flex-col items-center justify-center p-4 text-center select-none">
                     <span className="text-brand-green font-bold text-lg leading-none">
                       01
                     </span>
@@ -240,11 +240,11 @@ export default function BehindTheLens() {
             </div>
 
             {/* Visual Pendukung 2: Post-Processing & Grading */}
-            <div className="group flex-1 p-6 sm:p-7 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300 hover:shadow-xl hover:shadow-brand-green/5 flex flex-col justify-between">
+            <div className="group flex-1 p-6 sm:p-7 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300 flex flex-col justify-between">
               <div>
                 {/* Visual Thumbnail */}
                 <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-brand-dark ring-1 ring-black/5 mb-5">
-                  <div className="absolute inset-0 bg-gradient-to-br from-brand-dark via-brand-dark/95 to-brand-green/25 flex flex-col items-center justify-center p-4 text-center select-none">
+                  <div className="absolute inset-0 bg-brand-dark flex flex-col items-center justify-center p-4 text-center select-none">
                     <span className="text-brand-green font-bold text-lg leading-none">
                       02
                     </span>

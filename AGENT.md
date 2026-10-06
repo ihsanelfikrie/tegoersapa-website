@@ -147,12 +147,17 @@ tegoersapa-redesign/
 
 ## 5. Navigasi — Aturan Wajib
 
-- Navbar global muncul di semua halaman, berisi link ke semua halaman di Bagian 2, plus tombol CTA (misal "Booking Sekarang" → WhatsApp/kontak).
-- Navbar harus **responsive**: hamburger menu di mobile, animasi buka/tutup halus (boleh pakai GSAP timeline sederhana).
-- Aktifkan **active state** pada link navbar sesuai halaman yang sedang dibuka.
-- Setiap preview section di homepage **harus punya link yang benar-benar berfungsi** ke halaman detailnya — jangan buat tombol dummy/`href="#"`.
-- Footer juga memuat sitemap ringkas + sosial media + kontak cepat.
-- Gunakan `next/link` untuk semua navigasi internal (bukan `<a>` biasa), supaya transisi antar halaman cepat (client-side routing).
+- **Style Floating Pill Navbar:**
+  - Navbar berkonsep **floating pill** melayang di atas konten (`fixed top-0`, container `pointer-events-none`, elemen interaktif `pointer-events-auto`).
+  - **Pill Kiri:** Pill hijau tua (`bg-brand-dark`) berisi logo 1 baris warna krem (`public/brand/logo-1-baris.svg`).
+  - **Pill Tengah:** Pill putih (`bg-white border border-gray-200 border-b-[3px] border-b-gray-300`) berisi tautan navigasi. Tautan aktif menggunakan pill hijau tua (`bg-brand-dark text-white`), hover menggunakan highlight hijau muda.
+  - **Pill Kanan:** Tombol CTA WhatsApp berbentuk pill hijau (`bg-brand-green border-b-[3px] border-black/20`).
+  - **Mobile:** Pill logo di kiri dan tombol hamburger berbentuk pill bulat di kanan; drawer menu dropdown putih bersih.
+  - **Desain Flat Tactile:** Hindari drop-shadow/blur; gunakan border bawah tebal 3px solid (`border-b-[3px]`) untuk memberikan kedalaman visual yang flat dan tegas.
+- Tautan & Aksi:
+  - Aktifkan **active state** pada link navbar sesuai halaman yang sedang dibuka via `usePathname()`.
+  - Gunakan `next/link` untuk semua navigasi internal, dan `rel="noopener noreferrer"` untuk link eksternal (WhatsApp).
+  - Footer memuat logo 2 baris (`public/brand/logo-2-baris.svg`), sitemap ringkas, informasi kontak, dan tautan sosial media resmi.
 
 ---
 
@@ -160,43 +165,77 @@ tegoersapa-redesign/
 
 - Registrasi plugin **hanya sekali** di `lib/gsap.ts`, lalu import dari situ — jangan register ulang di tiap komponen.
 - Gunakan hook `useGSAP()` dari `@gsap/react` di dalam komponen React (bukan `useEffect` manual), supaya animasi otomatis di-cleanup saat komponen unmount — mencegah memory leak & animasi "nyangkut" saat pindah halaman.
-- Pola animasi per section (acuan dari demo sebelumnya):
-  - **Hero (tiap halaman):** `gsap.timeline()` — text reveal + fade in, jalan sekali saat halaman dimuat.
+- Pola animasi per section:
+  - **Hero Entrance:** `gsap.timeline()` — line reveal slide-up teks judul, fade in statistik counter, dan reveal mosaic foto.
+  - **Animasi Teks Berulang (Looping Backflip Hero):**
+    - Teks judul utama hero (`.hero-char`) menjalankan animasi akrobatik **3D backflip** berurutan (*staggered wave*) setiap **5 detik** (`repeat: -1, repeatDelay: 5`).
+    - Nilai transform: `rotateX: -360`, `y: -24`, `scale: 1.14` dengan easing pegas `ease: "back.out(2)"`.
+    - Setelah animasi entrance selesai, wrapper baris teks dibuka menjadi `overflow: visible` agar lompatan 3D huruf tidak terpotong.
   - **Section list/grid (Layanan, Gallery preview, dll):** `ScrollTrigger` + `stagger` fade-up.
   - **Gallery filter (`/gallery`):** gunakan plugin `Flip` saat user ganti kategori filter, supaya transisi grid halus.
   - **Hover interaktif:** kartu/gambar di-scale sedikit saat hover (`gsap.to` simple, tanpa ScrollTrigger).
-  - **Navbar:** shrink atau ubah background saat scroll (`ScrollTrigger` dengan `toggleClass`).
-- Semua ScrollTrigger **wajib** dibersihkan/di-refresh dengan benar saat navigasi antar halaman (App Router bisa unmount/remount komponen) — pastikan tidak ada trigger "hantu" yang nempel ke elemen yang sudah tidak ada.
-- Hormati preferensi `prefers-reduced-motion`: jika user OS mengaktifkan reduce motion, animasi kompleks (parallax, pin, dsb) diperlembut/dinonaktifkan.
-- Jangan overuse animasi — ikuti prinsip "satu momen orkestrasi yang kuat lebih baik daripada banyak efek kecil yang berantakan".
+- Semua ScrollTrigger **wajib** dibersihkan/di-refresh dengan benar saat navigasi antar halaman.
+- **Aksesibilitas (Reduced Motion):** Selalu cek `prefers-reduced-motion`. Jika aktif, nonaktifkan looping animasi akrobatik dan tampilkan elemen dalam posisi statis yang sempurna.
 
 ---
 
-## 7. Design Tokens (FINAL — dari user)
+## 7. Design Tokens & Styling (FINAL)
 
 ### Palet Warna
 
 | Token | Hex | Peran yang disarankan |
 |---|---|---|
 | `brand-green` | `#3aaa35` | Warna aksen utama — CTA button, highlight, ikon aktif, link hover |
-| `brand-dark` | `#014126` | Hijau tua — background section gelap, footer, navbar solid, atau teks di atas putih |
-| `white` | `#ffffff` | Background terang, teks di atas warna gelap |
-| `black` | `#000000` | Teks utama di atas background terang, elemen kontras tinggi |
-
-**Panduan pemakaian (agar tidak sembarang campur):**
-- Jangan pakai `brand-green` sebagai warna background besar (section penuh) — terlalu terang untuk area luas, bisa melelahkan mata. Gunakan sebagai aksen: tombol, garis bawah, ikon, badge, hover state.
-- `brand-dark` (`#014126`) cocok jadi warna dominan section gelap (hero, footer, navbar) — beri kontras nyaman dengan teks putih di atasnya.
-- Section terang gunakan `white` sebagai background dan `black`/`brand-dark` untuk teks, dengan `brand-green` sebagai aksen kecil (CTA, ikon, garis).
-- Pastikan kontras teks-background selalu lolos WCAG AA (khususnya teks hijau `#3aaa35` di atas putih — kontrasnya pas-pasan, sebaiknya dipakai untuk elemen besar/bold, bukan body text kecil).
+| `brand-dark` | `#014126` | Hijau tua — background footer, pill logo navbar, teks kontras di atas latar terang |
+| `brand-sky` | `#c3f4f7` | Biru langit muda — background hero section homepage |
+| `brand-cream` | `#fffbe2` | Krem — warna logo 1 baris dan section bernuansa hangat |
+| `mascot-orange` | `#fe6239` | Coral orange — warna kata "Tegoer" pada judul stiker hero |
+| `mascot-green` | `#1fae77` | Hijau segar — warna kata "Sapa" pada judul stiker hero |
+| `white` | `#ffffff` | Background terang, awan dekorasi, teks di atas warna gelap |
+| `black` | `#000000` | Teks utama, outline stiker, border tebal tactile |
 
 ### Tipografi
-- **Font tunggal:** [Montserrat](https://fonts.google.com/specimen/Montserrat) (Google Fonts) — dipakai untuk heading maupun body, dibedakan lewat **weight**, bukan ganti font:
-  - Heading/Hero: `Montserrat` weight 700–800 (Bold/ExtraBold)
-  - Subheading: `Montserrat` weight 600 (SemiBold)
-  - Body text: `Montserrat` weight 400–500 (Regular/Medium)
-- Load via `next/font/google` (bukan `<link>` manual) supaya optimal untuk performa Next.js.
+- **Font tunggal:** **Hoss Round** (file lokal di `public/fonts/HossRound-*.otf`) — dipakai untuk heading maupun body, dibedakan lewat **weight**, bukan ganti font:
+  - Heading/Hero: weight 700–900 (Bold/Heavy/Black)
+  - Subheading: weight 500–600 (Medium)
+  - Body text: weight 300–400 (Light/Regular)
+- Load via `next/font/local` di `app/layout.tsx` dengan CSS variable `--font-montserrat` (dipertahankan agar token `--font-sans` di seluruh Tailwind tetap sinkron).
 
-### Implementasi di `tailwind.config.ts`
+### Aturan Style Teks Bold / Stiker Hero (WAJIB)
+- **Karakter Desain:** Bergaya stiker kartun maskot (*chunky bubble text*) yang bulat, tebal, ceria, dan bersih.
+- **Formula Outline & Drop-Shadow:**
+  ```css
+  .hero-word {
+    font-weight: 900;
+    -webkit-text-stroke: 0.15em #000000;
+    paint-order: stroke fill;
+    filter: drop-shadow(0.04em 0.06em 0px #000000);
+    perspective: 800px;
+  }
+  ```
+  - `paint-order: stroke fill` **wajib** digunakan agar garis tepi hitam berada di belakang huruf, sehingga bentuk huruf tidak termakan atau menjadi kurus.
+  - `filter: drop-shadow(...)` menghasilkan bayangan 3D solid hitam tanpa blur.
+- **Warna Solid Murni:** "Tegoer" memakai `#fe6239` (coral orange), "Sapa" memakai `#1fae77` (hijau miring/italic).
+- **DILARANG KERAS:** Memakai gradient garis tajam (`linear-gradient` knife-cut) yang membelah huruf secara acak. Warna huruf harus solid dan utuh.
+- **Struktur Karakter:** Huruf dipisah per karakter (`.hero-char`) dengan `display: inline-block` dan `transform-style: preserve-3d` untuk mendukung animasi GSAP.
+
+### Elemen Atmosfer Hero (Awan & Langit)
+- Latar belakang hero menggunakan `#c3f4f7` (`brand-sky`).
+- Awan (`public/brand/awan.svg`) ditampilkan **minimalis dan berukuran besar**:
+  - Cukup **2 awan besar utama** (lebar ~700px hingga ~860px / `w-[44rem]` - `w-[54rem]`).
+  - **Dilarang menumpuk banyak awan kecil** yang membuat tampilan sempit dan berantakan.
+  - Gerakan awan melayang dari kiri ke kanan secara konstan dan halus (`cloudFlow` linear infinite, durasi 65s & 85s).
+
+### Aturan Anti-Slop (WAJIB)
+Tampilan harus **flat, berkarakter, dan bersih**, bukan gaya "AI generik":
+- **Warna flat saja:** dilarang memakai gradient (`bg-gradient-*`, `from-*`, `via-*`, `to-*`, `linear-gradient`, `radial-gradient`, gradient text). Gunakan warna solid dari token.
+- **Tanpa efek dekoratif berlebihan:** dilarang `shadow-*`, `backdrop-blur-*`, `blur-*`, glassmorphism, glow, dan blob/lingkaran blur dekoratif. Kedalaman elemen dicapai lewat border tegas 2px-3px atau flat drop-shadow solid.
+- **Satu font saja:** Hoss Round di semua halaman.
+- **Tanpa placeholder & konten karangan:** jangan pakai lorem ipsum, emoji sebagai ikon, atau data palsu. Gunakan konten di Bagian 9.
+- **Hierarki fungsional:** setiap elemen harus memiliki tujuan yang jelas, bukan sekadar ornamen pengisi ruang.
+- **Copywriting natural:** hindari kalimat klise ala AI ("unleash", "elevate", "seamless", "journey"). Tulis ringkas, spesifik, ramah, dan sesuai tone brand lokal.
+
+### Implementasi Desain Token
 ```ts
 theme: {
   extend: {
@@ -204,10 +243,12 @@ theme: {
       brand: {
         green: "#3aaa35",
         dark: "#014126",
+        sky: "#c3f4f7",
+        cream: "#fffbe2",
       },
     },
     fontFamily: {
-      sans: ["var(--font-montserrat)", "sans-serif"],
+      sans: ["var(--font-montserrat)", "Hoss Round", "sans-serif"],
     },
   },
 }

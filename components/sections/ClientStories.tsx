@@ -131,7 +131,7 @@ export default function ClientStories() {
           {clientStories.map((item) => (
             <div
               key={item.id}
-              className="group flex flex-col justify-between p-8 sm:p-9 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300 hover:shadow-2xl hover:shadow-brand-green/10"
+              className="group flex flex-col justify-between p-8 sm:p-9 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300"
             >
               <div>
                 {/* Service Tag + Rating Stars */}

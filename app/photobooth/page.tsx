@@ -136,11 +136,11 @@ export default function PhotoboothPage() {
         {/* Subtle Ambient Glow */}
         <div
           aria-hidden="true"
-          className="absolute top-1/4 right-0 w-96 h-96 bg-brand-green/10 rounded-full blur-3xl pointer-events-none"
+          className="absolute top-1/4 right-0 w-96 h-96 bg-brand-green/10 rounded-full pointer-events-none"
         />
         <div
           aria-hidden="true"
-          className="absolute -bottom-10 left-10 w-72 h-72 bg-brand-green/5 rounded-full blur-2xl pointer-events-none"
+          className="absolute -bottom-10 left-10 w-72 h-72 bg-brand-green/5 rounded-full pointer-events-none"
         />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -166,7 +166,7 @@ export default function PhotoboothPage() {
               <div className="hero-anim mt-8 flex flex-wrap items-center gap-3">
                 <Link
                   href="/pricelist"
-                  className="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-green/90 text-white font-bold text-xs tracking-wide px-6 py-3.5 rounded-full transition-all duration-200 shadow-lg shadow-brand-green/25 hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-green/90 text-white font-bold text-xs tracking-wide px-6 py-3.5 rounded-full transition-all duration-200 hover:-translate-y-0.5"
                 >
                   <span>Lihat Pricelist</span>
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -242,12 +242,12 @@ export default function PhotoboothPage() {
             {photoboothServices.map((service, index) => (
               <div
                 key={service.id}
-                className="service-card group flex flex-col justify-between p-7 sm:p-8 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300 hover:shadow-xl hover:shadow-brand-green/5"
+                className="service-card group flex flex-col justify-between p-7 sm:p-8 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300"
               >
                 <div>
                   {/* Photo Visual Slot (Konsisten dengan style existing) */}
                   <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-brand-dark ring-1 ring-black/5 mb-6">
-                    <div className="absolute inset-0 bg-gradient-to-br from-brand-dark via-brand-dark/95 to-brand-green/20 flex flex-col items-center justify-center p-6 text-center select-none">
+                    <div className="absolute inset-0 bg-brand-dark flex flex-col items-center justify-center p-6 text-center select-none">
                       <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-2">
                         <svg className="w-5 h-5 text-white/40 group-hover:text-brand-green transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
@@ -262,7 +262,7 @@ export default function PhotoboothPage() {
                       </h4>
                     </div>
 
-                    <span className="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-brand-green/90 backdrop-blur-sm text-white text-[10px] font-bold tracking-wider uppercase z-10">
+                    <span className="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-brand-green/90 text-white text-[10px] font-bold tracking-wider uppercase z-10">
                       {service.categoryLabel}
                     </span>
                   </div>
@@ -289,7 +289,7 @@ export default function PhotoboothPage() {
                 <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
                   <Link
                     href={service.exploreHref}
-                    className="inline-flex items-center gap-2 text-xs font-bold tracking-wide bg-brand-dark group-hover:bg-brand-green text-white px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-md hover:shadow-brand-green/20"
+                    className="inline-flex items-center gap-2 text-xs font-bold tracking-wide bg-brand-dark group-hover:bg-brand-green text-white px-5 py-2.5 rounded-full transition-all duration-300"
                   >
                     <span>Explore Work</span>
                     <svg
@@ -366,7 +366,7 @@ export default function PhotoboothPage() {
                 className="featured-item group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-brand-dark ring-1 ring-black/5"
               >
                 {/* Visual Placeholder Frame Bergaya Elegan */}
-                <div className="absolute inset-0 bg-gradient-to-br from-brand-dark/95 via-brand-dark/90 to-brand-green/25 flex flex-col items-center justify-center p-6 text-center select-none">
+                <div className="absolute inset-0 bg-brand-dark flex flex-col items-center justify-center p-6 text-center select-none">
                   <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-3">
                     <svg className="w-5 h-5 text-white/40 group-hover:text-brand-green/80 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
@@ -385,7 +385,7 @@ export default function PhotoboothPage() {
                   className="absolute inset-0 bg-brand-dark/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6"
                   aria-hidden="true"
                 >
-                  <div className="flex items-center gap-2 text-white font-bold text-xs bg-brand-green px-3 py-1.5 rounded-full shadow-lg">
+                  <div className="flex items-center gap-2 text-white font-bold text-xs bg-brand-green px-3 py-1.5 rounded-full">
                     <span>Explore Work</span>
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -419,7 +419,7 @@ export default function PhotoboothPage() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/pricelist"
-              className="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-green/90 text-white font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-all duration-200 shadow-lg shadow-brand-green/30 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-green/90 text-white font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-all duration-200 hover:-translate-y-0.5"
             >
               <span>View Pricelist</span>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

@@ -99,7 +99,7 @@ export default function OurStory() {
 
             <Link
               href="/tentang"
-              className="group inline-flex items-center gap-2.5 bg-brand-dark hover:bg-brand-green text-white font-bold tracking-wide text-xs sm:text-sm px-7 py-3.5 rounded-full transition-all duration-300 shadow-xl shadow-brand-dark/10 hover:shadow-brand-green/25 hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2.5 bg-brand-dark hover:bg-brand-green text-white font-bold tracking-wide text-xs sm:text-sm px-7 py-3.5 rounded-full transition-all duration-300 hover:-translate-y-0.5"
             >
               <span>Selengkapnya Tentang Kami</span>
               <svg
@@ -118,11 +118,11 @@ export default function OurStory() {
           <div ref={visualRef} className="lg:col-span-5 flex flex-col gap-5">
             
             {/* Visi Card */}
-            <div className="p-8 sm:p-9 rounded-3xl bg-brand-dark text-white relative overflow-hidden shadow-2xl border border-white/10">
+            <div className="p-8 sm:p-9 rounded-3xl bg-brand-dark text-white relative overflow-hidden border border-white/10">
               {/* Subtle ambient glow */}
               <div
                 aria-hidden="true"
-                className="absolute -bottom-10 -right-10 w-44 h-44 rounded-full bg-brand-green/20 blur-2xl pointer-events-none"
+                className="absolute -bottom-10 -right-10 w-44 h-44 rounded-full bg-brand-green/20 pointer-events-none"
               />
 
               <span className="text-brand-green text-[10px] font-bold tracking-[0.2em] uppercase">
@@ -145,7 +145,7 @@ export default function OurStory() {
 
             {/* 2 Core Highlights Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-5 sm:p-6 rounded-2xl bg-white border border-gray-100 shadow-sm flex flex-col justify-between">
+              <div className="p-5 sm:p-6 rounded-2xl bg-white border border-gray-100 flex flex-col justify-between">
                 <div>
                   <span className="w-8 h-8 rounded-xl bg-brand-green/10 text-brand-green flex items-center justify-center text-sm font-bold mb-3">
                     ✦
@@ -159,7 +159,7 @@ export default function OurStory() {
                 </div>
               </div>
 
-              <div className="p-5 sm:p-6 rounded-2xl bg-white border border-gray-100 shadow-sm flex flex-col justify-between">
+              <div className="p-5 sm:p-6 rounded-2xl bg-white border border-gray-100 flex flex-col justify-between">
                 <div>
                   <span className="w-8 h-8 rounded-xl bg-brand-green/10 text-brand-green flex items-center justify-center text-sm font-bold mb-3">
                     ★

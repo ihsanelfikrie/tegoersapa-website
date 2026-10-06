@@ -184,11 +184,11 @@ export default function GalleryPreview() {
             <Link
               key={item.id}
               href={item.href}
-              className="group relative block aspect-[4/3] overflow-hidden rounded-3xl bg-brand-dark ring-1 ring-black/5 transition-all duration-300 hover:shadow-2xl hover:shadow-brand-green/10 hover:-translate-y-1"
+              className="group relative block aspect-[4/3] overflow-hidden rounded-3xl bg-brand-dark ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1"
             >
               {/* Visual Frame Slot dengan Gradient Elegan */}
               <div
-                className="absolute inset-0 bg-gradient-to-br from-brand-dark via-brand-dark/95 to-brand-green/25
+                className="absolute inset-0 bg-brand-dark
                             flex flex-col items-center justify-center p-6 sm:p-7 text-center select-none"
               >
                 <div className="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:border-brand-green/40 transition-all duration-300">
@@ -226,7 +226,7 @@ export default function GalleryPreview() {
               </div>
 
               {/* Tag Badge Top Left */}
-              <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white/90 text-[10px] font-bold tracking-wider uppercase z-10">
+              <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/10 border border-white/10 text-white/90 text-[10px] font-bold tracking-wider uppercase z-10">
                 {item.category}
               </span>
 
@@ -235,7 +235,7 @@ export default function GalleryPreview() {
                 className="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex items-end justify-between p-6"
                 aria-hidden="true"
               >
-                <div className="flex items-center gap-2 text-white font-bold text-xs bg-brand-green px-4 py-2 rounded-full shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                <div className="flex items-center gap-2 text-white font-bold text-xs bg-brand-green px-4 py-2 rounded-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                   <span>View Work</span>
                   <span aria-hidden="true">→</span>
                 </div>
@@ -252,7 +252,7 @@ export default function GalleryPreview() {
         <div ref={footerCtaRef} className="mt-14 text-center">
           <Link
             href="/gallery"
-            className="inline-flex items-center gap-2 bg-brand-dark hover:bg-brand-green text-white font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-all duration-300 shadow-xl shadow-brand-dark/10 hover:shadow-brand-green/30 hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 bg-brand-dark hover:bg-brand-green text-white font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-all duration-300 hover:-translate-y-0.5"
           >
             <span>View All Work</span>
             <svg

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { brand, navLinks, contact } from "@/lib/content";
 
 /**
@@ -16,13 +17,8 @@ export default function Footer() {
           
           {/* Brand Info (4 cols) */}
           <div className="md:col-span-4 flex flex-col items-start">
-            <Link href="/" className="flex items-center gap-2 group mb-6">
-              <span className="font-black text-2xl tracking-widest text-white transition-colors duration-200 group-hover:text-brand-green">
-                TEGOER
-              </span>
-              <span className="font-black text-2xl tracking-widest text-brand-green">
-                SAPA
-              </span>
+            <Link href="/" className="block mb-6" aria-label={`${brand.name} — kembali ke beranda`}>
+              <Image src="/brand/logo-2-baris.svg" alt={brand.name} width={1258} height={1258} unoptimized className="w-32 h-32 object-contain" />
             </Link>
             <p className="text-white/60 text-sm leading-relaxed mb-6 font-medium">
               {brand.tagline}

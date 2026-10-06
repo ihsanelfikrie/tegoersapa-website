@@ -8,10 +8,12 @@
   /* ── Warna brand (sesuai Bagian 7 AGENT.md) ─────────────────────────── */
   --color-brand-green: #3aaa35;
   --color-brand-dark: #014126;
+  --color-brand-cream: #fffbe2;
+  --color-brand-sky: #c3f4f7;
 
   /* ── Tipografi ────────────────────────────────────────────────────────── */
   /* CSS variable ini di-inject oleh next/font di app/layout.tsx */
-  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-montserrat), "Hoss Round", ui-sans-serif, system-ui, sans-serif;
 }
 
 /* ── Base styles ──────────────────────────────────────────────────────────── */
@@ -42,6 +44,31 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ── Judul hero bergaya sticker/kartun: flat solid color, outline hitam tegas & 3D shadow ── */
+.hero-word {
+  display: inline-block;
+  font-weight: 900;
+  color: #fe6239; /* Coral orange khas maskot */
+  -webkit-text-stroke: 0.15em #000000;
+  paint-order: stroke fill;
+  filter: drop-shadow(0.04em 0.06em 0px #000000);
+  line-height: 1.05;
+  perspective: 800px;
+}
+
+.hero-word-green {
+  color: #1fae77; /* Hijau khas maskot & brand */
+  font-style: italic;
+  display: inline-block;
+}
+
+.hero-char {
+  display: inline-block;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transform-origin: center center;
 }
 
 

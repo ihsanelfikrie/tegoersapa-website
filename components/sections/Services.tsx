@@ -137,7 +137,7 @@ export default function Services() {
             <Link
               key={service.id}
               href={service.href}
-              className="group flex flex-col justify-between p-6 sm:p-7 rounded-2xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/20 transition-colors duration-300 hover:shadow-xl hover:shadow-brand-green/5"
+              className="group flex flex-col justify-between p-6 sm:p-7 rounded-2xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/20 transition-colors duration-300"
             >
               <div>
                 <span className="font-black text-3xl sm:text-4xl text-brand-green/20 group-hover:text-brand-green/40 transition-colors duration-300">

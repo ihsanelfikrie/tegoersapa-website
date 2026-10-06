@@ -33,7 +33,7 @@ function PhotoSlot({
     >
       {photo.placeholder ? (
         <div
-          className="absolute inset-0 bg-gradient-to-br from-brand-dark via-brand-dark/80 to-brand-green/20
+          className="absolute inset-0 bg-brand-dark
                       flex flex-col items-center justify-center gap-3 select-none"
           aria-hidden="true"
         >
@@ -69,12 +69,12 @@ function PhotoSlot({
       )}
 
       <div
-        className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"
+        className="absolute inset-0 bg-black/30 pointer-events-none"
         aria-hidden="true"
       />
       <span
         className="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg
-                   bg-brand-green/90 backdrop-blur-sm
+                   bg-brand-green/90
                    text-white text-[10px] font-bold tracking-[0.1em] uppercase"
       >
         {photo.category}
@@ -88,7 +88,6 @@ export default function Hero() {
   const containerRef = useRef<HTMLElement>(null);
 
   // Teks refs
-  const badgeRef    = useRef<HTMLDivElement>(null);
   const word1Ref    = useRef<HTMLSpanElement>(null);   // "TEGOER" inner span
   const word2Ref    = useRef<HTMLSpanElement>(null);   // "SAPA" inner span
   const dividerRef  = useRef<HTMLDivElement>(null);
@@ -107,7 +106,7 @@ export default function Hero() {
 
       if (prefersReduced) {
         // Langsung tampilkan semua tanpa animasi
-        gsap.set([badgeRef.current, dividerRef.current, taglineRef.current, decorRef.current], { opacity: 1, y: 0, scaleX: 1 });
+        gsap.set([dividerRef.current, taglineRef.current, decorRef.current], { opacity: 1, y: 0, scaleX: 1 });
         gsap.set([word1Ref.current, word2Ref.current], { y: 0 });
         gsap.set(statsRef.current?.children ?? [], { opacity: 1, y: 0 });
         gsap.set(ctaRef.current?.children ?? [], { opacity: 1, y: 0 });
@@ -126,7 +125,6 @@ export default function Hero() {
 
       // ── Initial states ──────────────────────────────────────────────────
       gsap.set(decorRef.current, { opacity: 0 });
-      gsap.set(badgeRef.current, { opacity: 0, y: -18 });
       // Line reveal: inner word dimulai di bawah wrapper overflow-hidden
       gsap.set([word1Ref.current, word2Ref.current], { y: "110%" });
       gsap.set(dividerRef.current, { scaleX: 0, opacity: 0, transformOrigin: "left" });
@@ -143,9 +141,6 @@ export default function Hero() {
       tl
         // Background gradient fade in
         .to(decorRef.current,  { opacity: 1, duration: 1.2, ease: "power1.out" }, 0)
-
-        // Badge turun dari atas
-        .to(badgeRef.current,  { opacity: 1, y: 0, duration: 0.55 }, 0.25)
 
         // "TEGOER" — line reveal slide up
         .to(word1Ref.current,  { y: 0, duration: 0.85, ease: "expo.out" }, 0.38)
@@ -195,7 +190,43 @@ export default function Hero() {
           yoyo: true,
           repeat: -1,
         });
+
+        // Buka overflow wrapper judul agar lompatan backflip tidak terpotong
+        gsap.set(".hero-line-wrap", { overflow: "visible" });
       });
+
+      // ── Animasi Backflip Teks Berulang Setiap 5 Detik ─────────────────
+      const chars = containerRef.current?.querySelectorAll(".hero-char");
+      if (chars && chars.length > 0) {
+        const backflipTl = gsap.timeline({
+          repeat: -1,
+          repeatDelay: 5,
+          delay: 2.2, // Mulai setelah animasi entrance selesai
+        });
+
+        // Efek backflip akrobatik berurutan satu per satu (wave)
+        backflipTl
+          .to(chars, {
+            y: -24,
+            rotateX: -360,
+            scale: 1.14,
+            stagger: 0.08,
+            duration: 0.65,
+            ease: "back.out(2)",
+          })
+          .to(
+            chars,
+            {
+              y: 0,
+              scale: 1,
+              stagger: 0.08,
+              duration: 0.35,
+              ease: "power2.out",
+            },
+            "<0.22",
+          )
+          .set(chars, { rotateX: 0 }); // Reset sudut 360° ke 0° untuk siklus berikutnya
+      }
     },
     { scope: containerRef },
   );
@@ -203,7 +234,7 @@ export default function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center overflow-hidden bg-brand-dark"
+      className="relative min-h-screen flex items-center overflow-hidden bg-brand-sky"
       aria-labelledby="hero-title"
     >
       {/* ═══════════════════════════════════════════════════════════════════
@@ -212,12 +243,25 @@ export default function Hero() {
       <div
         ref={decorRef}
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none select-none"
+        className="absolute inset-0 pointer-events-none select-none overflow-hidden"
       >
-        {/* Gradient fade kiri — supaya teks tidak bertabrakan dengan foto */}
-        <div
-          className="absolute inset-y-0 left-0 w-[55%]
-                      bg-gradient-to-r from-brand-dark via-brand-dark/80 to-transparent"
+        {/* Awan utama — berukuran besar di bagian atas */}
+        <Image
+          src="/brand/awan.svg"
+          alt=""
+          width={677}
+          height={408}
+          unoptimized
+          className="cloud-flow cloud-flow-a absolute top-10 lg:top-14 left-0 w-[32rem] sm:w-[42rem] lg:w-[54rem] max-w-none"
+        />
+        {/* Awan kedua — berukuran besar di bagian bawah dengan offset waktu */}
+        <Image
+          src="/brand/awan.svg"
+          alt=""
+          width={677}
+          height={408}
+          unoptimized
+          className="cloud-flow cloud-flow-b absolute bottom-6 lg:bottom-12 left-0 w-[26rem] sm:w-[34rem] lg:w-[44rem] max-w-none"
         />
       </div>
 
@@ -230,31 +274,30 @@ export default function Hero() {
           {/* ─── KOLOM KIRI: Teks ─────────────────────────────────────── */}
           <div className="flex flex-col items-start">
 
-            {/* Badge pre-title */}
-            <div
-              ref={badgeRef}
-              className="inline-flex items-center gap-2.5 mb-7
-                         px-4 py-1.5 rounded-full
-                         border border-brand-green/35 bg-brand-green/10 backdrop-blur-sm"
-            >
-              <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse flex-shrink-0" />
-              <span className="text-brand-green text-[11px] font-bold tracking-[0.2em] uppercase">
-                Studio Photography
-              </span>
-            </div>
-
             {/* Judul utama — line reveal (wrapper overflow-hidden + inner slide) */}
             <h1
               id="hero-title"
-              className="font-black leading-[0.9] tracking-[0.08em] text-[clamp(3.5rem,8vw,6rem)] mb-5"
+              className="font-black leading-[1.05] tracking-normal text-[clamp(3.5rem,9vw,7rem)] mb-5 select-none"
             >
-              {/* Baris 1: TEGOER */}
-              <span className="block text-white" style={{ overflow: "hidden", paddingBottom: "0.05em" }}>
-                <span ref={word1Ref} className="block">TEGOER</span>
+              {/* Baris 1: Tegoer */}
+              <span className="hero-line-wrap block" style={{ overflow: "hidden", padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
+                <span ref={word1Ref} className="hero-word">
+                  {"Tegoer".split("").map((c, i) => (
+                    <span key={i} className="hero-char">
+                      {c}
+                    </span>
+                  ))}
+                </span>
               </span>
-              {/* Baris 2: SAPA */}
-              <span className="block" style={{ overflow: "hidden", paddingBottom: "0.05em" }}>
-                <span ref={word2Ref} className="block text-brand-green">SAPA</span>
+              {/* Baris 2: Sapa */}
+              <span className="hero-line-wrap block" style={{ overflow: "hidden", padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
+                <span ref={word2Ref} className="hero-word hero-word-green">
+                  {"Sapa".split("").map((c, i) => (
+                    <span key={i} className="hero-char">
+                      {c}
+                    </span>
+                  ))}
+                </span>
               </span>
             </h1>
 
@@ -262,13 +305,13 @@ export default function Hero() {
             <div
               ref={dividerRef}
               aria-hidden="true"
-              className="w-16 h-1 rounded-full bg-brand-green mb-5"
+              className="w-16 h-1 rounded-full bg-brand-dark mb-5"
             />
 
             {/* Tagline */}
             <p
               ref={taglineRef}
-              className="text-white/60 font-medium tracking-[0.1em] uppercase
+              className="text-brand-dark/70 font-medium tracking-[0.1em] uppercase
                          text-[clamp(0.7rem,1.5vw,0.875rem)] leading-relaxed mb-8 max-w-sm"
             >
               {heroHome.tagline}
@@ -280,11 +323,11 @@ export default function Hero() {
                 <div key={stat.label} className="flex flex-col">
                   <span
                     ref={(el) => { statValRefs.current[index] = el; }}
-                    className="text-white font-black text-2xl leading-none tabular-nums"
+                    className="text-brand-dark font-black text-2xl leading-none tabular-nums"
                   >
                     {stat.num}{stat.suffix}
                   </span>
-                  <span className="text-white/40 text-[11px] font-medium tracking-wide mt-0.5">
+                  <span className="text-brand-dark/60 text-[11px] font-medium tracking-wide mt-0.5">
                     {stat.label}
                   </span>
                 </div>
@@ -323,11 +366,11 @@ export default function Hero() {
                 id="hero-cta-pricelist"
                 className={[
                   "inline-flex items-center gap-2",
-                  "border border-white/20 hover:border-brand-green/50",
-                  "text-white/75 hover:text-white",
+                  "border border-brand-dark/25 hover:border-brand-dark",
+                  "text-brand-dark",
                   "font-bold tracking-wide text-sm",
                   "px-7 py-3.5 rounded-full",
-                  "transition-all duration-200 hover:bg-white/5",
+                  "transition-all duration-200 hover:bg-brand-dark/5",
                   "hover:-translate-y-0.5 active:translate-y-0",
                 ].join(" ")}
               >
@@ -366,9 +409,9 @@ export default function Hero() {
             <div
               aria-hidden="true"
               className="absolute -bottom-5 left-4 z-20
-                         bg-brand-dark/90 backdrop-blur-md
+                         bg-brand-dark/90
                          border border-white/10 rounded-2xl px-4 py-3
-                         flex items-center gap-3 shadow-2xl"
+                         flex items-center gap-3"
             >
               <div className="w-9 h-9 rounded-xl bg-brand-green/20 border border-brand-green/30
                               flex items-center justify-center flex-shrink-0">
@@ -418,11 +461,11 @@ export default function Hero() {
         className="absolute bottom-6 left-1/2 -translate-x-1/2
                    flex flex-col items-center gap-1.5 animate-bounce"
       >
-        <span className="text-white/25 text-[10px] tracking-[0.25em] uppercase font-bold">
+        <span className="text-brand-dark/50 text-[10px] tracking-[0.25em] uppercase font-bold">
           Scroll
         </span>
-        <div className="w-5 h-8 rounded-full border border-white/15 flex items-start justify-center pt-1.5">
-          <div className="w-1 h-2 rounded-full bg-white/30 animate-[slideDown_1.5s_ease-in-out_infinite]" />
+        <div className="w-5 h-8 rounded-full border border-brand-dark/30 flex items-start justify-center pt-1.5">
+          <div className="w-1 h-2 rounded-full bg-brand-dark/50 animate-[slideDown_1.5s_ease-in-out_infinite]" />
         </div>
       </div>
 
@@ -431,6 +474,20 @@ export default function Hero() {
           0%  { transform: translateY(0);    opacity: 1; }
           80% { transform: translateY(10px); opacity: 0; }
           100%{ transform: translateY(0);    opacity: 0; }
+        }
+        @keyframes cloudFlow {
+          from { transform: translate3d(-100%, 0, 0); }
+          to   { transform: translate3d(100vw, 0, 0); }
+        }
+        .cloud-flow {
+          animation: cloudFlow 75s linear infinite;
+          will-change: transform;
+        }
+        .cloud-flow-a { animation-duration: 65s; animation-delay: -25s; }
+        .cloud-flow-b { animation-duration: 85s; animation-delay: -65s; }
+        @media (prefers-reduced-motion: reduce) {
+          .cloud-flow { animation: none; transform: translateX(25vw); }
+          .cloud-flow-b { transform: translateX(60vw); }
         }
       `}</style>
     </section>

@@ -176,12 +176,12 @@ export default function FeaturedStories() {
           
           {/* 1. FOTO UTAMA BESAR (7 Kolom di Desktop) */}
           <div ref={mainCardRef} className="lg:col-span-7 flex flex-col">
-            <div className="group h-full flex flex-col justify-between p-7 sm:p-9 rounded-3xl border border-gray-100 bg-gray-50/60 hover:bg-white hover:border-brand-green/30 transition-all duration-300 hover:shadow-2xl hover:shadow-brand-green/10">
+            <div className="group h-full flex flex-col justify-between p-7 sm:p-9 rounded-3xl border border-gray-100 bg-gray-50/60 hover:bg-white hover:border-brand-green/30 transition-all duration-300">
               
               <div>
                 {/* Visual Frame Slot Besar */}
                 <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-brand-dark ring-1 ring-black/5 mb-7">
-                  <div className="absolute inset-0 bg-gradient-to-br from-brand-dark via-brand-dark/95 to-brand-green/25 flex flex-col items-center justify-center p-8 text-center select-none">
+                  <div className="absolute inset-0 bg-brand-dark flex flex-col items-center justify-center p-8 text-center select-none">
                     <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-3">
                       <svg className="w-6 h-6 text-white/40 group-hover:text-brand-green transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
@@ -197,7 +197,7 @@ export default function FeaturedStories() {
                   </div>
 
                   {/* Badge Top Left */}
-                  <span className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-brand-green text-white text-[10px] font-bold tracking-wider uppercase shadow-md">
+                  <span className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-brand-green text-white text-[10px] font-bold tracking-wider uppercase">
                     Featured Story
                   </span>
                 </div>
@@ -224,7 +224,7 @@ export default function FeaturedStories() {
               <div className="mt-8 pt-6 border-t border-gray-200/80 flex items-center justify-between">
                 <Link
                   href={mainStory.href}
-                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-wide bg-brand-dark group-hover:bg-brand-green text-white px-6 py-3 rounded-full transition-all duration-300 shadow-md shadow-brand-dark/10 hover:shadow-brand-green/25 hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-wide bg-brand-dark group-hover:bg-brand-green text-white px-6 py-3 rounded-full transition-all duration-300 hover:-translate-y-0.5"
                 >
                   <span>View Story</span>
                   <span aria-hidden="true">→</span>
@@ -243,11 +243,11 @@ export default function FeaturedStories() {
             {supportingStories.map((story, index) => (
               <div
                 key={story.id}
-                className="group flex flex-col sm:flex-row lg:flex-row items-stretch sm:items-center lg:items-center gap-4 p-5 sm:p-5 rounded-2xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300 hover:shadow-lg hover:shadow-brand-green/5"
+                className="group flex flex-col sm:flex-row lg:flex-row items-stretch sm:items-center lg:items-center gap-4 p-5 sm:p-5 rounded-2xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300"
               >
                 {/* Visual Thumbnail Frame */}
                 <div className="relative w-full sm:w-36 lg:w-36 aspect-[16/10] sm:aspect-square lg:aspect-square flex-shrink-0 rounded-xl overflow-hidden bg-brand-dark ring-1 ring-black/5">
-                  <div className="absolute inset-0 bg-gradient-to-br from-brand-dark via-brand-dark/95 to-brand-green/25 flex flex-col items-center justify-center p-3 text-center select-none">
+                  <div className="absolute inset-0 bg-brand-dark flex flex-col items-center justify-center p-3 text-center select-none">
                     <span className="text-brand-green font-bold text-base leading-none">
                       0{index + 2}
                     </span>
