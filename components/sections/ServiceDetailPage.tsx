@@ -476,56 +476,88 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
                 <div
                   key={pkg.id}
                   className={[
-                    "package-card flex flex-col justify-between p-7 rounded-3xl transition-all duration-300",
+                    "package-card group flex flex-col justify-between rounded-3xl transition-all duration-300 overflow-hidden",
                     isSelected
                       ? "border-2 border-brand-green bg-white ring-4 ring-brand-green/10 shadow-lg"
-                      : "border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30",
+                      : "border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 hover:shadow-md",
                   ].join(" ")}
                 >
                   <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-brand-green/10 text-brand-dark border border-brand-green/20">
-                        {pkg.kategori || data.tag || data.title}
-                      </span>
-                      {isSelected ? (
-                        <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-brand-green text-white">
-                          ✓ Terpilih
-                        </span>
-                      ) : pkg.badge ? (
-                        <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-brand-dark text-white">
-                          {pkg.badge}
-                        </span>
-                      ) : null}
-                    </div>
-
-                    <h3 className="text-2xl font-black text-brand-dark tracking-wide">
-                      {pkg.nama}
-                    </h3>
-
-                    <div className="mt-2 text-2xl sm:text-3xl font-black text-brand-green">
-                      {pkg.harga}
-                    </div>
-
-                    {pkg.placeholderNote && (
-                      <p className="mt-1.5 text-[11px] text-gray-400 italic">
-                        *{pkg.placeholderNote}
-                      </p>
+                    {/* Cover Photo */}
+                    {pkg.image && (
+                      <div className="relative w-full h-48 sm:h-52 overflow-hidden bg-brand-dark">
+                        <Image
+                          src={pkg.image}
+                          alt={pkg.nama}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+                          <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20">
+                            {pkg.kategori || data.tag || data.title}
+                          </span>
+                          {isSelected ? (
+                            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-green text-white shadow-sm">
+                              ✓ Terpilih
+                            </span>
+                          ) : pkg.badge ? (
+                            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-dark text-white shadow-sm">
+                              {pkg.badge}
+                            </span>
+                          ) : null}
+                        </div>
+                      </div>
                     )}
 
-                    <div className="w-full h-px bg-gray-200 my-6" />
+                    <div className="p-7">
+                      {!pkg.image && (
+                        <div className="flex items-center justify-between mb-4">
+                          <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-brand-green/10 text-brand-dark border border-brand-green/20">
+                            {pkg.kategori || data.tag || data.title}
+                          </span>
+                          {isSelected ? (
+                            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-brand-green text-white">
+                              ✓ Terpilih
+                            </span>
+                          ) : pkg.badge ? (
+                            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-brand-dark text-white">
+                              {pkg.badge}
+                            </span>
+                          ) : null}
+                        </div>
+                      )}
 
-                    {/* Feature list */}
-                    <ul className="space-y-2.5">
-                      {pkg.fitur.map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-600 font-medium">
-                          <span className="text-brand-green font-bold flex-shrink-0 mt-0.5">✓</span>
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
+                      <h3 className="text-2xl font-black text-brand-dark tracking-wide">
+                        {pkg.nama}
+                      </h3>
+
+                      <div className="mt-2 text-2xl sm:text-3xl font-black text-brand-green">
+                        {pkg.harga}
+                      </div>
+
+                      {pkg.placeholderNote && (
+                        <p className="mt-1.5 text-[11px] text-gray-400 italic">
+                          *{pkg.placeholderNote}
+                        </p>
+                      )}
+
+                      <div className="w-full h-px bg-gray-200 my-6" />
+
+                      {/* Feature list */}
+                      <ul className="space-y-2.5">
+                        {pkg.fitur.map((feature, idx) => (
+                          <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-600 font-medium">
+                            <span className="text-brand-green font-bold flex-shrink-0 mt-0.5">✓</span>
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
 
-                  <div className="mt-8 pt-4 space-y-2">
+                  <div className="px-7 pb-7 pt-2 space-y-2">
                     <button
                       type="button"
                       onClick={() => {

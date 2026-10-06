@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { pricelistPackages, type PricePackage } from "@/lib/content";
 import { generateWhatsAppLink } from "@/lib/whatsapp";
@@ -63,30 +64,56 @@ export default function PricelistPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {filteredPackages.map((pkg: PricePackage) => {
             const waLink = generateWhatsAppLink(pkg.whatsappTemplate, pkg.nama);
+            const isSelected = selectedPackage?.id === pkg.id;
 
-              const isSelected = selectedPackage?.id === pkg.id;
-
-              return (
-                <div
-                  key={pkg.id}
-                  className={[
-                    "flex flex-col justify-between p-7 rounded-3xl transition-all duration-300",
-                    isSelected
-                      ? "border-2 border-brand-green bg-white ring-4 ring-brand-green/10 shadow-lg"
-                      : "border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30",
-                  ].join(" ")}
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-brand-green/10 text-brand-dark border border-brand-green/20">
-                        {pkg.kategori}
-                      </span>
-                      {isSelected && (
-                        <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-brand-green text-white">
-                          ✓ Terpilih
+            return (
+              <div
+                key={pkg.id}
+                className={[
+                  "group flex flex-col justify-between rounded-3xl transition-all duration-300 overflow-hidden",
+                  isSelected
+                    ? "border-2 border-brand-green bg-white ring-4 ring-brand-green/10 shadow-lg"
+                    : "border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 hover:shadow-md",
+                ].join(" ")}
+              >
+                <div>
+                  {/* Cover Photo */}
+                  {pkg.image && (
+                    <div className="relative w-full h-52 sm:h-56 overflow-hidden bg-brand-dark">
+                      <Image
+                        src={pkg.image}
+                        alt={pkg.nama}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20">
+                          {pkg.kategori}
                         </span>
-                      )}
+                        {isSelected && (
+                          <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-green text-white shadow-sm">
+                            ✓ Terpilih
+                          </span>
+                        )}
+                      </div>
                     </div>
+                  )}
+
+                  <div className="p-7">
+                    {!pkg.image && (
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-brand-green/10 text-brand-dark border border-brand-green/20">
+                          {pkg.kategori}
+                        </span>
+                        {isSelected && (
+                          <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-brand-green text-white">
+                            ✓ Terpilih
+                          </span>
+                        )}
+                      </div>
+                    )}
 
                     <h2 className="text-2xl font-black text-brand-dark tracking-wide">
                       {pkg.nama}
@@ -107,8 +134,9 @@ export default function PricelistPage() {
                       ))}
                     </ul>
                   </div>
+                </div>
 
-                  <div className="mt-8 pt-4 space-y-2">
+                <div className="px-7 pb-7 pt-2 space-y-2">
                     <button
                       type="button"
                       onClick={() => {

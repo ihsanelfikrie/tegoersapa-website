@@ -2,51 +2,58 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
-// ─── Data Portfolio Terpilih Mencakup Semua Kategori yang Diminta ───────────
+// ─── Data Portfolio Terpilih (Sesuai 100% dengan Visual Foto Asli) ─────────
 const ourWorkItems = [
   {
-    id: "work-wedding",
-    category: "Wedding",
-    subCategory: "Documentation",
-    title: "Wedding Celebration & Moments",
-    href: "/gallery?kategori=photobooth&sub=wedding",
+    id: "work-prewedding",
+    category: "Professional",
+    subCategory: "Pre-Wedding",
+    title: "Pre-Wedding & Couple Story",
+    image: "/images/pricelist/prewed-poswed.webp",
+    href: "/gallery?kategori=professional&sub=prewedding",
   },
   {
-    id: "work-graduation",
+    id: "work-outdoor-grad",
     category: "Graduation",
-    subCategory: "Outdoor & Studio",
-    title: "Graduation Milestone Session",
+    subCategory: "Outdoor Kampus",
+    title: "Framely Outdoor Graduation",
+    image: "/images/pricelist/outdoor-framely.webp",
     href: "/gallery?kategori=professional&sub=outdoor-graduation",
   },
   {
-    id: "work-traditional",
-    category: "Traditional Photography",
-    subCategory: "Adat & Budaya",
-    title: "Traditional Heritage Ceremony",
-    href: "/gallery?kategori=professional",
+    id: "work-indoor-grad",
+    category: "Graduation",
+    subCategory: "Studio Portrait",
+    title: "Indoor Graduation Studio",
+    image: "/images/pricelist/indoor-graduation.webp",
+    href: "/gallery?kategori=professional&sub=indoor-graduation",
   },
   {
-    id: "work-studio",
+    id: "work-family",
     category: "Studio",
-    subCategory: "Professional Portrait",
-    title: "Studio Portrait & Personal Branding",
-    href: "/gallery?kategori=professional&sub=indoor-graduation",
+    subCategory: "Family & Celebration",
+    title: "Family Studio & Birthday Moment",
+    image: "/images/pricelist/family.webp",
+    href: "/photography/studio",
   },
   {
     id: "work-photobooth",
     category: "Photobooth",
-    subCategory: "Event & Party",
-    title: "Interactive Photobooth Experience",
-    href: "/gallery?kategori=photobooth",
+    subCategory: "Open Space Lounge",
+    title: "Open Space Photobooth Experience",
+    image: "/images/pricelist/photobooth-open-space.webp",
+    href: "/photobooth",
   },
   {
     id: "work-photobox",
     category: "Photobox",
-    subCategory: "Self-Studio Box",
-    title: "Self-Studio Box & Frame Series",
+    subCategory: "3D Circle Series",
+    title: "Photobox 3D Circle & Props",
+    image: "/images/pricelist/photobox-3d-circle.webp",
     href: "/gallery?kategori=photobox",
   },
 ] as const;
@@ -152,7 +159,7 @@ export default function GalleryPreview() {
             </h2>
             <div aria-hidden="true" className="mt-4 w-12 h-1 rounded-full bg-brand-green" />
             <p className="mt-4 text-base text-gray-500 font-medium leading-relaxed">
-              Jelajahi ragam dokumentasi visual Tegoer Sapa — mulai dari momen sakral pernikahan, kebanggaan wisuda, prosesi adat, sesi studio eksklusif, hingga keceriaan photobooth interaktif.
+              Jelajahi ragam dokumentasi visual Tegoer Sapa — mulai dari sesi pre-wedding romantis, kebanggaan wisuda kampus & studio, momen hangat keluarga, hingga keceriaan photobooth dan photobox interaktif.
             </p>
           </div>
 
@@ -184,63 +191,51 @@ export default function GalleryPreview() {
             <Link
               key={item.id}
               href={item.href}
-              className="group relative block aspect-[4/3] overflow-hidden rounded-3xl bg-brand-dark ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1"
+              className="group relative block aspect-[4/3] overflow-hidden rounded-3xl bg-brand-dark ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-md"
             >
-              {/* Visual Frame Slot dengan Gradient Elegan */}
-              <div
-                className="absolute inset-0 bg-brand-dark
-                            flex flex-col items-center justify-center p-6 sm:p-7 text-center select-none"
-              >
-                <div className="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:border-brand-green/40 transition-all duration-300">
-                  <svg
-                    className="w-5 h-5 text-white/40 group-hover:text-brand-green transition-colors duration-300"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={1.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
-                    />
-                  </svg>
-                </div>
+              {/* Background Cover Photo */}
+              <div className="absolute inset-0">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10" />
+              </div>
 
+              {/* Text Info */}
+              <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-7 z-10 select-none">
                 <span className="text-[10px] text-brand-green font-bold uppercase tracking-[0.2em] mb-1.5">
                   {item.category}
                 </span>
 
-                <h3 className="text-white text-base sm:text-lg font-bold tracking-wide leading-snug max-w-[240px] group-hover:text-white transition-colors">
+                <h3 className="text-white text-base sm:text-lg font-bold tracking-wide leading-snug max-w-[260px] group-hover:text-brand-green transition-colors">
                   {item.title}
                 </h3>
 
-                <span className="text-white/40 text-xs font-medium mt-1">
+                <span className="text-white/60 text-xs font-medium mt-1">
                   {item.subCategory}
                 </span>
               </div>
 
               {/* Tag Badge Top Left */}
-              <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/10 border border-white/10 text-white/90 text-[10px] font-bold tracking-wider uppercase z-10">
+              <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold tracking-wider uppercase z-20">
                 {item.category}
               </span>
 
               {/* Hover / Active Overlay dengan Tombol "View Work →" */}
               <div
-                className="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex items-end justify-between p-6"
+                className="absolute inset-0 bg-brand-dark/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30 flex items-end justify-between p-6 pointer-events-none"
                 aria-hidden="true"
               >
-                <div className="flex items-center gap-2 text-white font-bold text-xs bg-brand-green px-4 py-2 rounded-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                <div className="flex items-center gap-2 text-white font-bold text-xs bg-brand-green px-4 py-2 rounded-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 shadow-md">
                   <span>View Work</span>
                   <span aria-hidden="true">→</span>
                 </div>
 
-                <span className="text-[11px] font-semibold text-white/70">
+                <span className="text-[11px] font-semibold text-white/90 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full">
                   Galeri Portfolio
                 </span>
               </div>

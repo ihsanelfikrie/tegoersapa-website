@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { portfolioPreview, galleryCategories } from "@/lib/content";
 
 function GalleryContent() {
@@ -139,28 +140,48 @@ function GalleryContent() {
             <div
               key={item.id}
               onClick={() => setActiveImage(item)}
-              className="group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-brand-dark cursor-pointer ring-1 ring-black/5"
+              className="group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-brand-dark cursor-pointer ring-1 ring-black/5 hover:ring-brand-green/50 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-md"
             >
-              <div
-                className="absolute inset-0 bg-brand-dark
-                            flex flex-col items-center justify-center p-6 text-center select-none"
-              >
-                <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-3">
-                  <svg className="w-5 h-5 text-white/40 group-hover:text-brand-green transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                  </svg>
+              {item.image ? (
+                <div className="relative w-full h-full">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent p-5 flex flex-col justify-end">
+                    <span className="text-[10px] text-brand-green font-bold uppercase tracking-wider mb-1">
+                      {item.category} • {item.subCategory}
+                    </span>
+                    <h4 className="text-white text-base font-bold tracking-wide">
+                      {item.title}
+                    </h4>
+                  </div>
                 </div>
-                <span className="text-[10px] text-white/40 font-bold uppercase tracking-[0.15em] mb-1">
-                  {item.category} • {item.subCategory}
-                </span>
-                <h4 className="text-white text-base font-black tracking-wide max-w-[220px]">
-                  {item.title}
-                </h4>
-              </div>
+              ) : (
+                <div
+                  className="absolute inset-0 bg-brand-dark
+                              flex flex-col items-center justify-center p-6 text-center select-none"
+                >
+                  <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-3">
+                    <svg className="w-5 h-5 text-white/40 group-hover:text-brand-green transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>
+                  </div>
+                  <span className="text-[10px] text-white/40 font-bold uppercase tracking-[0.15em] mb-1">
+                    {item.category} • {item.subCategory}
+                  </span>
+                  <h4 className="text-white text-base font-black tracking-wide max-w-[220px]">
+                    {item.title}
+                  </h4>
+                </div>
+              )}
 
               {/* Hover overlay */}
-              <div className="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                <div className="flex items-center gap-2 text-white font-bold text-xs bg-brand-green px-3.5 py-1.5 rounded-full">
+              <div className="absolute inset-0 bg-brand-dark/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+                <div className="flex items-center gap-2 text-white font-bold text-xs bg-brand-green px-3.5 py-1.5 rounded-full shadow-md">
                   <span>Lihat Preview</span>
                   <span>🔍</span>
                 </div>
@@ -195,7 +216,7 @@ function GalleryContent() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-brand-dark border border-white/10 rounded-3xl max-w-lg w-full p-6 sm:p-8 text-white relative"
+            className="bg-brand-dark border border-white/10 rounded-3xl max-w-lg w-full p-6 sm:p-8 text-white relative shadow-2xl"
           >
             <button
               onClick={() => setActiveImage(null)}
@@ -211,11 +232,22 @@ function GalleryContent() {
               {activeImage.title}
             </h3>
 
-            <div className="aspect-[4/3] rounded-2xl bg-black/40 border border-white/10 flex flex-col items-center justify-center p-6 text-center mb-6">
-              <span className="text-xs text-white/50 font-medium">
-                Preview Portfolio Tegoer Sapa
-              </span>
-            </div>
+            {activeImage.image ? (
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-6 ring-1 ring-white/15">
+                <Image
+                  src={activeImage.image}
+                  alt={activeImage.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <div className="aspect-[4/3] rounded-2xl bg-black/40 border border-white/10 flex flex-col items-center justify-center p-6 text-center mb-6">
+                <span className="text-xs text-white/50 font-medium">
+                  Preview Portfolio Tegoer Sapa
+                </span>
+              </div>
+            )}
 
             <div className="flex items-center justify-between gap-3">
               <Link

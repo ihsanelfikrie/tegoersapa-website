@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { portfolioPreview, brand } from "@/lib/content";
@@ -16,6 +17,7 @@ const photoboothServices = [
       "Layanan photo booth interaktif di lokasi acara dengan cetak instan berkecepatan tinggi, properti seru, dan desain template kustom.",
     exploreHref: "/gallery?kategori=photobooth",
     categoryLabel: "Photobooth",
+    image: "/images/pricelist/photobooth-open-space.webp",
   },
   {
     id: "photobox",
@@ -25,6 +27,7 @@ const photoboothServices = [
       "Mesin foto mandiri modern dengan monitor preview real-time, remote shutter nirkabel, dan ragam pilihan template strip frame kekinian.",
     exploreHref: "/gallery?kategori=photobox",
     categoryLabel: "Photobox",
+    image: "/images/pricelist/photobox-3d-circle.webp",
   },
   {
     id: "mingle-photobooth",
@@ -34,6 +37,7 @@ const photoboothServices = [
       "Fotografer keliling yang menyapa para tamu di seluruh area acara dengan cetak foto cepat atau live sharing langsung di tempat tanpa perlu mengantre.",
     exploreHref: "/gallery?kategori=photobooth&sub=event",
     categoryLabel: "Mingle",
+    image: "/images/pricelist/photobox-red-curtain.webp",
   },
   {
     id: "photo-barcode",
@@ -43,6 +47,7 @@ const photoboothServices = [
       "Solusi akses dan unduh soft file foto acara beresolusi tinggi secara instan, cepat, dan praktis via scan QR barcode personal dari smartphone.",
     exploreHref: "/gallery?kategori=photobooth",
     categoryLabel: "Barcode",
+    image: "/images/pricelist/photobox-reguler.webp",
   },
 ] as const;
 
@@ -247,20 +252,14 @@ export default function PhotoboothPage() {
                 <div>
                   {/* Photo Visual Slot (Konsisten dengan style existing) */}
                   <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-brand-dark ring-1 ring-black/5 mb-6">
-                    <div className="absolute inset-0 bg-brand-dark flex flex-col items-center justify-center p-6 text-center select-none">
-                      <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-2">
-                        <svg className="w-5 h-5 text-white/40 group-hover:text-brand-green transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
-                        </svg>
-                      </div>
-                      <span className="text-[10px] text-white/40 font-bold uppercase tracking-[0.15em]">
-                        {service.tag}
-                      </span>
-                      <h4 className="text-white text-sm sm:text-base font-bold tracking-wide mt-1">
-                        {service.title}
-                      </h4>
-                    </div>
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
 
                     <span className="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-brand-green/90 text-white text-[10px] font-bold tracking-wider uppercase z-10">
                       {service.categoryLabel}
@@ -363,29 +362,48 @@ export default function PhotoboothPage() {
               <Link
                 key={item.id}
                 href={item.href}
-                className="featured-item group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-brand-dark ring-1 ring-black/5"
+                className="featured-item group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-brand-dark ring-1 ring-black/5 hover:ring-brand-green/50 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-md"
               >
-                {/* Visual Placeholder Frame Bergaya Elegan */}
-                <div className="absolute inset-0 bg-brand-dark flex flex-col items-center justify-center p-6 text-center select-none">
-                  <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-3">
-                    <svg className="w-5 h-5 text-white/40 group-hover:text-brand-green/80 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                    </svg>
+                {item.image ? (
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent p-5 flex flex-col justify-end">
+                      <span className="text-[10px] text-brand-green font-bold uppercase tracking-wider mb-1">
+                        {item.category} • {item.subCategory}
+                      </span>
+                      <h4 className="text-white text-base font-bold tracking-wide">
+                        {item.title}
+                      </h4>
+                    </div>
                   </div>
-                  <span className="text-[10px] text-white/40 font-bold uppercase tracking-[0.15em] mb-1">
-                    {item.category} • {item.subCategory}
-                  </span>
-                  <h4 className="text-white text-base font-bold tracking-wide max-w-[220px]">
-                    {item.title}
-                  </h4>
-                </div>
+                ) : (
+                  <div className="absolute inset-0 bg-brand-dark flex flex-col items-center justify-center p-6 text-center select-none">
+                    <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-3">
+                      <svg className="w-5 h-5 text-white/40 group-hover:text-brand-green/80 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                      </svg>
+                    </div>
+                    <span className="text-[10px] text-white/40 font-bold uppercase tracking-[0.15em] mb-1">
+                      {item.category} • {item.subCategory}
+                    </span>
+                    <h4 className="text-white text-base font-bold tracking-wide max-w-[220px]">
+                      {item.title}
+                    </h4>
+                  </div>
+                )}
 
                 {/* Hover / Active overlay */}
                 <div
-                  className="absolute inset-0 bg-brand-dark/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6"
+                  className="absolute inset-0 bg-brand-dark/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5"
                   aria-hidden="true"
                 >
-                  <div className="flex items-center gap-2 text-white font-bold text-xs bg-brand-green px-3 py-1.5 rounded-full">
+                  <div className="flex items-center gap-2 text-white font-bold text-xs bg-brand-green px-3.5 py-1.5 rounded-full shadow-md">
                     <span>Explore Work</span>
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
