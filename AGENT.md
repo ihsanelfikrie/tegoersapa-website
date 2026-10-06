@@ -166,11 +166,7 @@ tegoersapa-redesign/
 - Registrasi plugin **hanya sekali** di `lib/gsap.ts`, lalu import dari situ — jangan register ulang di tiap komponen.
 - Gunakan hook `useGSAP()` dari `@gsap/react` di dalam komponen React (bukan `useEffect` manual), supaya animasi otomatis di-cleanup saat komponen unmount — mencegah memory leak & animasi "nyangkut" saat pindah halaman.
 - Pola animasi per section:
-  - **Hero Entrance:** `gsap.timeline()` — line reveal slide-up teks judul, fade in statistik counter, dan reveal mosaic foto.
-  - **Animasi Teks Berulang (Looping Backflip Hero):**
-    - Teks judul utama hero (`.hero-char`) menjalankan animasi akrobatik **3D backflip** berurutan (*staggered wave*) setiap **5 detik** (`repeat: -1, repeatDelay: 5`).
-    - Nilai transform: `rotateX: -360`, `y: -24`, `scale: 1.14` dengan easing pegas `ease: "back.out(2)"`.
-    - Setelah animasi entrance selesai, wrapper baris teks dibuka menjadi `overflow: visible` agar lompatan 3D huruf tidak terpotong.
+  - **Hero Entrance:** `gsap.timeline()` — Cascade Reveal text (SplitText) pada judul dan tag baris, fade in divider & tagline, serta reveal mosaic foto. Loop floating foto tetap berjalan halus (`yoyo: true`).
   - **Section list/grid (Layanan, Gallery preview, dll):** `ScrollTrigger` + `stagger` fade-up.
   - **Gallery filter (`/gallery`):** gunakan plugin `Flip` saat user ganti kategori filter, supaya transisi grid halus.
   - **Hover interaktif:** kartu/gambar di-scale sedikit saat hover (`gsap.to` simple, tanpa ScrollTrigger).

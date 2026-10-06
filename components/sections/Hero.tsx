@@ -175,43 +175,7 @@ export default function Hero() {
           yoyo: true,
           repeat: -1,
         });
-
-        // Buka overflow wrapper judul agar lompatan backflip tidak terpotong
-        gsap.set(".hero-line-wrap", { overflow: "visible" });
       });
-
-      // ── Animasi Backflip Teks Berulang Setiap 5 Detik ─────────────────
-      const chars = containerRef.current?.querySelectorAll(".hero-char");
-      if (chars && chars.length > 0) {
-        const backflipTl = gsap.timeline({
-          repeat: -1,
-          repeatDelay: 5,
-          delay: 2.2, // Mulai setelah animasi entrance selesai
-        });
-
-        // Efek backflip akrobatik berurutan satu per satu (wave)
-        backflipTl
-          .to(chars, {
-            y: -24,
-            rotateX: -360,
-            scale: 1.14,
-            stagger: 0.08,
-            duration: 0.65,
-            ease: "back.out(2)",
-          })
-          .to(
-            chars,
-            {
-              y: 0,
-              scale: 1,
-              stagger: 0.08,
-              duration: 0.35,
-              ease: "power2.out",
-            },
-            "<0.22",
-          )
-          .set(chars, { rotateX: 0 }); // Reset sudut 360° ke 0° untuk siklus berikutnya
-      }
     },
     { scope: containerRef },
   );
