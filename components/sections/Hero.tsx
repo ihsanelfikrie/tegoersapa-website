@@ -445,26 +445,6 @@ export default function Hero() {
               <PhotoSlot photo={heroPhotos[2]} className="h-full w-full" />
             </div>
 
-            {/* Floating badge — rating */}
-            <div
-              aria-hidden="true"
-              className="absolute -bottom-5 left-4 z-20
-                         bg-brand-dark/90
-                         border border-white/10 rounded-2xl px-4 py-3
-                         flex items-center gap-3"
-            >
-              <div className="w-9 h-9 rounded-xl bg-brand-green/20 border border-brand-green/30
-                              flex items-center justify-center flex-shrink-0">
-                <svg className="w-4 h-4 text-brand-green" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                </svg>
-              </div>
-              <div>
-                <div className="text-white font-black text-sm leading-none">4.9 / 5</div>
-                <div className="text-white/40 text-[10px] font-medium tracking-wide mt-0.5">Rating pelanggan</div>
-              </div>
-            </div>
-
             {/* Floating pill — open for booking */}
             <div
               aria-hidden="true"
