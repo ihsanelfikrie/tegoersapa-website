@@ -479,18 +479,6 @@ export default function Hero() {
               </span>
             </div>
           </div>
-
-          {/* ─── Mobile: 2 slot foto horizontal ──────────────────────── */}
-          <div
-            className="grid lg:hidden grid-cols-2 gap-3 mt-2"
-            aria-label="Preview hasil foto Tegoer Sapa"
-          >
-            {heroPhotos.slice(0, 2).map((photo) => (
-              <div key={photo.id} className="photo-slot h-44 rounded-2xl">
-                <PhotoSlot photo={photo} className="h-full w-full" />
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
