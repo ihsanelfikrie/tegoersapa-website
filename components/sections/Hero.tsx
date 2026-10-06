@@ -99,7 +99,6 @@ export default function Hero() {
       gsap.set(dividerRef.current, { scaleX: 0, opacity: 0, transformOrigin: "center" });
       gsap.set(taglineRef.current, { opacity: 0, y: 24 });
       gsap.set(ctaRef.current?.children ?? [], { opacity: 0, y: 20 });
-      gsap.set(".hero-shimmer-word", { opacity: 0 });
 
       const photoSlots = mosaicRef.current?.querySelectorAll(".photo-slot");
       if (photoSlots) gsap.set(photoSlots, { opacity: 0, x: 48, scale: 0.95 });
@@ -135,10 +134,7 @@ export default function Hero() {
         .to(ctaRef.current?.children ?? [], { opacity: 1, y: 0, stagger: 0.12, duration: 0.55 }, 0.95)
 
         // Foto mosaic — slide dari kanan dengan stagger
-        .to(photoSlots ?? [], { opacity: 1, x: 0, scale: 1, stagger: 0.13, duration: 0.8, ease: "expo.out" }, 0.35)
-
-        // Fade in efek cahaya / shimmer masked text setelah karakter masuk
-        .to(".hero-shimmer-word", { opacity: 1, duration: 0.7, ease: "power2.out" }, 0.9);
+        .to(photoSlots ?? [], { opacity: 1, x: 0, scale: 1, stagger: 0.13, duration: 0.8, ease: "expo.out" }, 0.35);
 
       // ── Floating loop foto setelah entrance selesai ─────────────────────
       tl.call(() => {
@@ -155,6 +151,7 @@ export default function Hero() {
       });
 
       // ── 2. Animasi Loop Lompat Per-Huruf Bergantian Setiap 5 Detik ────────
+      // Wave jump teratur yang PASTI mulai dari "T", "e", "g", "o", "e", "r", lalu "S", "a", "p", "a"
       const charKeys = [
         "t-0", "t-1", "t-2", "t-3", "t-4", "t-5",
         "s-0", "s-1", "s-2", "s-3"
@@ -163,7 +160,7 @@ export default function Hero() {
       const jumpTl = gsap.timeline({
         repeat: -1,
         repeatDelay: 5,
-        delay: 1.2, // Mulai segera setelah animasi awal selesai agar langsung terlihat
+        delay: 2.2, // Jeda nyaman setelah seluruh animasi masuk mendarat, agar lompatan "Te" terlihat jelas
       });
 
       charKeys.forEach((key, index) => {
@@ -171,50 +168,53 @@ export default function Hero() {
         const shim = containerRef.current?.querySelector<HTMLElement>(`[data-char-shim="${key}"]`);
         if (!base) return;
         const targets = shim ? [base, shim] : [base];
-        const tilt = (index % 2 === 0 ? 6 : -6);
+        const tilt = (index % 2 === 0 ? 7 : -7);
+        // Jeda ritme natural saat berpindah dari kata "Tegoer" (idx 0-5) ke "Sapa" (idx 6-9)
+        const wordOffset = index >= 6 ? 0.08 : 0;
+        const startTime = index * 0.11 + wordOffset;
 
-        // Gelombang lompatan ceria (wave jump) per huruf bergantian
+        // Gelombang lompatan ceria (wave jump) per huruf bergantian, dimulai dari T & e
         jumpTl
           .to(
             targets,
             {
-              y: -36,
-              scaleY: 1.22,
-              scaleX: 0.88,
+              y: -42,
+              scaleY: 1.25,
+              scaleX: 0.86,
               rotation: tilt,
-              duration: 0.22,
+              duration: 0.24,
               ease: "power2.out",
             },
-            index * 0.08
+            startTime
           )
           .to(
             targets,
             {
               y: 0,
-              scaleY: 0.88,
-              scaleX: 1.12,
+              scaleY: 0.86,
+              scaleX: 1.14,
               rotation: 0,
-              duration: 0.18,
+              duration: 0.20,
               ease: "power2.in",
             },
-            index * 0.08 + 0.22
+            startTime + 0.24
           )
           .to(
             targets,
             {
               scaleY: 1,
               scaleX: 1,
-              duration: 0.25,
+              duration: 0.28,
               ease: "elastic.out(1.5, 0.4)",
             },
-            index * 0.08 + 0.4
+            startTime + 0.44
           );
 
         // ── 3. Efek Interaktif Hover & Touch pada Setiap Huruf ─────────────
         const onEnter = () => {
           gsap.killTweensOf(targets);
           gsap.to(targets, {
-            y: -38,
+            y: -42,
             scale: 1.25,
             rotation: tilt * 1.5,
             duration: 0.2,

@@ -118,40 +118,41 @@ body {
   background-image: linear-gradient(
     115deg,
     transparent 0%,
-    transparent 38%,
-    rgba(255, 255, 255, 0.15) 43%,
-    rgba(255, 255, 255, 0.75) 47%,
+    transparent 35%,
+    rgba(255, 255, 255, 0.15) 42%,
+    rgba(255, 255, 255, 0.8) 47%,
     rgba(255, 255, 255, 1) 50%,
-    rgba(255, 255, 255, 0.75) 53%,
-    rgba(255, 255, 255, 0.15) 57%,
-    transparent 62%,
+    rgba(255, 255, 255, 0.8) 53%,
+    rgba(255, 255, 255, 0.15) 58%,
+    transparent 65%,
     transparent 100%
   );
   background-size: 320% 100%;
   background-repeat: no-repeat;
   -webkit-background-clip: text !important;
   background-clip: text !important;
-  opacity: 0;
+  opacity: 1;
 }
 
 .hero-shimmer-line1 {
-  animation: heroLightSweep 4.5s ease-in-out infinite;
+  animation: heroLightSweep 5s ease-in-out infinite;
+  animation-delay: 1.5s;
 }
 
 .hero-shimmer-line2 {
-  animation: heroLightSweep 4.5s ease-in-out infinite;
-  animation-delay: 0.25s;
+  animation: heroLightSweep 5s ease-in-out infinite;
+  animation-delay: 1.8s;
 }
 
 @keyframes heroLightSweep {
   0% {
-    background-position: 110% 0;
+    background-position: 140% 0;
   }
-  65% {
-    background-position: -10% 0;
+  60% {
+    background-position: -40% 0;
   }
   100% {
-    background-position: -10% 0;
+    background-position: -40% 0;
   }
 }
 
