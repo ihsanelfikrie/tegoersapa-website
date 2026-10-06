@@ -103,6 +103,7 @@ export default function Hero() {
         gsap.set(containerRef.current?.querySelectorAll(".hero-char") ?? [], { opacity: 1, y: 0, rotation: 0 });
         gsap.set(containerRef.current?.querySelectorAll(".text") ?? [], { opacity: 1, y: 0 });
         gsap.set(ctaRef.current?.children ?? [], { opacity: 1, y: 0 });
+        gsap.set(".hero-shimmer-word", { opacity: 0 });
         const slots = mosaicRef.current?.querySelectorAll(".photo-slot");
         if (slots) gsap.set(Array.from(slots), { opacity: 1, x: 0, scale: 1 });
         return;
@@ -113,6 +114,7 @@ export default function Hero() {
       gsap.set(dividerRef.current, { scaleX: 0, opacity: 0, transformOrigin: "left" });
       gsap.set(taglineRef.current, { opacity: 0, y: 24 });
       gsap.set(ctaRef.current?.children ?? [], { opacity: 0, y: 20 });
+      gsap.set(".hero-shimmer-word", { opacity: 0 });
 
       const photoSlots = mosaicRef.current?.querySelectorAll(".photo-slot");
       if (photoSlots) gsap.set(photoSlots, { opacity: 0, x: 48, scale: 0.95 });
@@ -161,7 +163,10 @@ export default function Hero() {
         .to(ctaRef.current?.children ?? [], { opacity: 1, y: 0, stagger: 0.12, duration: 0.55 }, 0.95)
 
         // Foto mosaic — slide dari kanan dengan stagger
-        .to(photoSlots ?? [], { opacity: 1, x: 0, scale: 1, stagger: 0.13, duration: 0.8, ease: "expo.out" }, 0.35);
+        .to(photoSlots ?? [], { opacity: 1, x: 0, scale: 1, stagger: 0.13, duration: 0.8, ease: "expo.out" }, 0.35)
+
+        // Fade in efek cahaya / shimmer masked text setelah karakter masuk
+        .to(".hero-shimmer-word", { opacity: 1, duration: 0.7, ease: "power2.out" }, 0.9);
 
       // ── Floating loop foto setelah entrance selesai ─────────────────────
       tl.call(() => {
@@ -235,22 +240,51 @@ export default function Hero() {
             >
               {/* Baris 1: Tegoer */}
               <span className="hero-line-wrap block" style={{ padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
-                <span ref={word1Ref} className="hero-word">
-                  {"Tegoer".split("").map((c, i) => (
-                    <span key={i} className="hero-char">
-                      {c}
-                    </span>
-                  ))}
+                <span className="relative inline-block">
+                  <span ref={word1Ref} className="hero-word">
+                    {"Tegoer".split("").map((c, i) => (
+                      <span key={i} className="hero-char">
+                        {c}
+                      </span>
+                    ))}
+                  </span>
+
+                  {/* Masked Light Sheen Overlay */}
+                  <span
+                    aria-hidden="true"
+                    className="hero-word hero-shimmer-word hero-shimmer-line1"
+                  >
+                    {"Tegoer".split("").map((c, i) => (
+                      <span key={i} className="hero-shimmer-char">
+                        {c}
+                      </span>
+                    ))}
+                  </span>
                 </span>
               </span>
+
               {/* Baris 2: Sapa */}
               <span className="hero-line-wrap block" style={{ padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
-                <span ref={word2Ref} className="hero-word hero-word-green">
-                  {"Sapa".split("").map((c, i) => (
-                    <span key={i} className="hero-char">
-                      {c}
-                    </span>
-                  ))}
+                <span className="relative inline-block">
+                  <span ref={word2Ref} className="hero-word hero-word-green">
+                    {"Sapa".split("").map((c, i) => (
+                      <span key={i} className="hero-char">
+                        {c}
+                      </span>
+                    ))}
+                  </span>
+
+                  {/* Masked Light Sheen Overlay */}
+                  <span
+                    aria-hidden="true"
+                    className="hero-word hero-word-green hero-shimmer-word hero-shimmer-line2"
+                  >
+                    {"Sapa".split("").map((c, i) => (
+                      <span key={i} className="hero-shimmer-char">
+                        {c}
+                      </span>
+                    ))}
+                  </span>
                 </span>
               </span>
             </h1>
