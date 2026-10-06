@@ -7,8 +7,11 @@ import { brand, contact } from "@/lib/content";
 
 /**
  * Footer global untuk website Tegoer Sapa.
- * Didesain mengikuti bentuk/arsitektur lengkung elegan (newsletter banner melengkung + 4 kolom hierarki + wave dunes di bawah)
- * dengan warna brand khas Tegoer Sapa (brand-dark & brand-green) dan konten asli Tegoer Sapa.
+ * Didesain mengikuti bentuk/arsitektur lengkung referensi:
+ * 1. Banner newsletter atas dengan grafis pita melingkar (3D tubular looping torus) yang jelas & terlihat.
+ * 2. Transisi kurva melandai (dipping arc) yang tegas & kontras tinggi memisahkan banner atas dan footer bawah.
+ * 3. Tata letak 4 kolom (Brand Info + Alamat & Kontak + Layanan + Tautan Cepat).
+ * 4. Siluet bukit gelombang (wave dunes) di bagian dasar dan teks hak cipta terpusat di tengah.
  */
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -21,48 +24,73 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative w-full overflow-hidden">
+    <footer className="relative w-full overflow-hidden bg-[#002716]">
       {/* ─── 1. TOP NEWSLETTER / CTA BANNER ────────────────────────────── */}
-      <section className="relative bg-gradient-to-b from-[#025a35] via-[#014d2d] to-[#013f24] text-white pt-20 pb-12 sm:pt-24 sm:pb-16 overflow-hidden">
-        {/* Ambient Decorative Organic Curves (matching reference ribbon swirls) */}
-        <div className="absolute inset-0 pointer-events-none opacity-15 overflow-hidden">
+      <section className="relative bg-gradient-to-b from-[#027845] via-[#02683c] to-[#015330] text-white pt-20 pb-16 sm:pt-24 sm:pb-20 overflow-hidden">
+        {/* Ambient Decorative Looping Ribbon / Torus Graphic ("Melingkar" sesuai referensi) */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
           <svg
-            className="w-full h-full"
-            viewBox="0 0 1440 400"
+            className="w-full h-full min-w-[900px] object-cover -translate-x-1/2 sm:translate-x-0 left-1/2 sm:left-0 absolute top-0"
+            viewBox="0 0 1440 380"
             fill="none"
             preserveAspectRatio="none"
             xmlns="http://www.w3.org/2000/svg"
           >
+            <defs>
+              <linearGradient id="melingkarGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.32" />
+                <stop offset="50%" stopColor="#c3f4f7" stopOpacity="0.22" />
+                <stop offset="100%" stopColor="#3aaa35" stopOpacity="0.12" />
+              </linearGradient>
+              <linearGradient id="melingkarGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.28" />
+                <stop offset="60%" stopColor="#ffffff" stopOpacity="0.18" />
+                <stop offset="100%" stopColor="#3aaa35" stopOpacity="0.08" />
+              </linearGradient>
+            </defs>
+
+            {/* Pita tabung melengkung dari kiri */}
             <path
-              d="M-100,100 C300,350 500,-50 900,280 C1200,480 1400,100 1600,200"
-              stroke="white"
-              strokeWidth="56"
+              d="M-80,-20 C180,120 340,240 680,280"
+              stroke="url(#melingkarGrad1)"
+              strokeWidth="110"
               strokeLinecap="round"
             />
+            {/* Busur penyambung di belakang form input */}
             <path
-              d="M100,320 C450,150 750,420 1150,120 C1350,0 1550,220 1650,150"
-              stroke="white"
-              strokeWidth="38"
+              d="M480,260 C700,330 900,280 1060,200"
+              stroke="url(#melingkarGrad1)"
+              strokeWidth="95"
               strokeLinecap="round"
+            />
+            {/* Lingkaran cincin melingkar besar (Giant Oval Torus Loop) di sisi kanan */}
+            <ellipse
+              cx="1080"
+              cy="130"
+              rx="220"
+              ry="165"
+              transform="rotate(-18 1080 130)"
+              stroke="url(#melingkarGrad2)"
+              strokeWidth="110"
             />
           </svg>
         </div>
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center z-10">
           {/* Badge / Category Header */}
-          <span className="inline-block text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em] text-brand-sky/80 mb-3 sm:mb-4">
+          <span className="inline-block text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em] text-brand-sky mb-3 sm:mb-4 drop-shadow-sm">
             Newsletter & Update
           </span>
 
           {/* Headline */}
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold text-white tracking-tight leading-tight sm:leading-snug max-w-2xl mx-auto mb-8 sm:mb-10">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold text-white tracking-tight leading-tight sm:leading-snug max-w-2xl mx-auto mb-8 sm:mb-10 drop-shadow">
             Dapatkan info promo & inspirasi momen spesial Anda
           </h2>
 
           {/* Newsletter Form: Pill Input & Pill Submit Button */}
           {isSubscribed ? (
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold animate-fade-in">
-              <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse" />
+            <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/30 text-white px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold shadow-lg">
+              <span className="w-2 h-2 rounded-full bg-brand-sky animate-pulse" />
               <span>Terima kasih! Kami akan mengirimkan update penawaran terbaru untuk Anda.</span>
             </div>
           ) : (
@@ -76,11 +104,11 @@ export default function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Alamat Email Anda"
-                className="w-full bg-white text-gray-900 placeholder-gray-400 text-sm font-medium px-6 py-3.5 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-green/60 transition-all"
+                className="w-full bg-white text-gray-900 placeholder-gray-400 text-sm font-medium px-6 py-3.5 rounded-full shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-green/60 transition-all"
               />
               <button
                 type="submit"
-                className="w-full sm:w-auto bg-[#002a18] hover:bg-brand-green text-white font-bold text-xs uppercase tracking-wider px-8 py-3.5 rounded-full transition-all duration-300 shadow-lg flex-shrink-0 cursor-pointer active:scale-95"
+                className="w-full sm:w-auto bg-[#002716] hover:bg-brand-green text-white font-bold text-xs uppercase tracking-wider px-8 py-3.5 rounded-full transition-all duration-300 shadow-xl flex-shrink-0 cursor-pointer active:scale-95"
               >
                 Kirim
               </button>
@@ -89,22 +117,22 @@ export default function Footer() {
         </div>
       </section>
 
-      {/* ─── 2. ORGANIC DIPPING CURVE TRANSITION ───────────────────────── */}
-      {/* Dipping smoothly downward in the center into the dark footer, exactly like the reference silhouette */}
-      <div className="relative w-full overflow-hidden leading-none -mt-px bg-[#013f24]">
+      {/* ─── 2. DRAMATIC DIPPING CURVE TRANSITION ───────────────────────── */}
+      {/* Kurva melandai melengkung ke bawah dengan kontras tegas antara hijau terang (#015330) dan hijau dasar gelap (#002716) */}
+      <div className="relative w-full overflow-hidden leading-none -mt-px bg-[#015330]">
         <svg
-          viewBox="0 0 1440 90"
+          viewBox="0 0 1440 140"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-12 sm:h-18 md:h-24 text-brand-dark fill-current block"
+          className="w-full h-16 sm:h-24 md:h-36 lg:h-44 text-[#002716] fill-current block"
           preserveAspectRatio="none"
         >
-          <path d="M0,0 C440,90 1000,90 1440,0 L1440,90 L0,90 Z" />
+          <path d="M0,0 C380,140 1060,140 1440,0 L1440,140 L0,140 Z" />
         </svg>
       </div>
 
       {/* ─── 3. MAIN DARK FOOTER BODY ──────────────────────────────────── */}
-      <div className="relative bg-brand-dark text-white pt-8 sm:pt-12 pb-16 sm:pb-20">
+      <div className="relative bg-[#002716] text-white pt-6 sm:pt-10 pb-16 sm:pb-20">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 pb-16">
             
@@ -316,12 +344,12 @@ export default function Footer() {
         </div>
 
         {/* Decorative Wave Dunes at bottom (matching reference bottom ambient hill layers) */}
-        <div className="absolute bottom-0 left-0 right-0 pointer-events-none overflow-hidden opacity-20">
+        <div className="absolute bottom-0 left-0 right-0 pointer-events-none overflow-hidden opacity-30">
           <svg
             viewBox="0 0 1440 120"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-16 sm:h-24 text-[#001c0f] fill-current"
+            className="w-full h-16 sm:h-24 text-[#00140a] fill-current"
             preserveAspectRatio="none"
           >
             <path d="M0,60 C320,15 500,100 820,50 C1140,5 1300,90 1440,50 L1440,120 L0,120 Z" />
