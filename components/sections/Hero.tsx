@@ -257,23 +257,23 @@ export default function Hero() {
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none select-none overflow-hidden"
       >
-        {/* Awan utama — berukuran besar di bagian atas */}
+        {/* Awan atas — proporsional & anggun, tidak menutupi area teks */}
         <Image
           src="/brand/awan.svg"
           alt=""
           width={677}
           height={408}
           unoptimized
-          className="cloud-flow cloud-flow-a absolute top-10 lg:top-14 left-0 w-[32rem] sm:w-[42rem] lg:w-[54rem] max-w-none"
+          className="cloud-flow cloud-flow-a absolute top-2 sm:top-4 lg:top-6 left-0 w-[22rem] sm:w-[30rem] lg:w-[40rem] max-w-none pointer-events-none opacity-95"
         />
-        {/* Awan kedua — berukuran besar di bagian bawah dengan offset waktu */}
+        {/* Awan bawah — berjarak di bagian dasar, tidak akan tumpang tindih */}
         <Image
           src="/brand/awan.svg"
           alt=""
           width={677}
           height={408}
           unoptimized
-          className="cloud-flow cloud-flow-b absolute bottom-6 lg:bottom-12 left-0 w-[26rem] sm:w-[34rem] lg:w-[44rem] max-w-none"
+          className="cloud-flow cloud-flow-b absolute bottom-0 sm:bottom-2 lg:bottom-4 left-0 w-[16rem] sm:w-[22rem] lg:w-[28rem] max-w-none pointer-events-none opacity-90"
         />
       </div>
 
@@ -508,14 +508,21 @@ export default function Hero() {
           to   { transform: translate3d(100vw, 0, 0); }
         }
         .cloud-flow {
-          animation: cloudFlow 75s linear infinite;
+          animation: cloudFlow 70s linear infinite;
           will-change: transform;
         }
-        .cloud-flow-a { animation-duration: 65s; animation-delay: -25s; }
-        .cloud-flow-b { animation-duration: 85s; animation-delay: -65s; }
+        .cloud-flow-a {
+          animation-duration: 70s;
+          animation-delay: -10s;
+        }
+        .cloud-flow-b {
+          animation-duration: 70s;
+          animation-delay: -45s; /* Beda fase 35s (tepat 50% siklus), awan selalu berjarak 180° sehingga tidak akan pernah tumpang tindih */
+        }
         @media (prefers-reduced-motion: reduce) {
-          .cloud-flow { animation: none; transform: translateX(25vw); }
-          .cloud-flow-b { transform: translateX(60vw); }
+          .cloud-flow { animation: none; }
+          .cloud-flow-a { transform: translateX(15vw); }
+          .cloud-flow-b { transform: translateX(65vw); }
         }
       `}</style>
     </section>
