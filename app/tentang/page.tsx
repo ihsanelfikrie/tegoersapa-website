@@ -52,7 +52,7 @@ export default function TentangPage() {
           </div>
 
           <div className="lg:col-span-5 flex flex-col gap-5">
-            <div className="p-8 rounded-3xl bg-brand-dark text-white">
+            <div className="p-6 sm:p-8 rounded-3xl bg-brand-dark text-white">
               <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green">
                 Nilai Utama Kami
               </span>
@@ -88,16 +88,16 @@ export default function TentangPage() {
           <p className="mt-3 text-sm text-gray-500 font-medium">
             Jadikan perayaan Anda berikutnya lebih berkesan bersama Tegoer Sapa.
           </p>
-          <div className="mt-6 flex justify-center gap-3">
+          <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
             <Link
               href="/kontak"
-              className="px-6 py-3 rounded-full bg-brand-dark hover:bg-brand-green text-white text-xs font-bold tracking-wide transition-colors duration-200"
+              className="px-6 py-3.5 rounded-full bg-brand-dark hover:bg-brand-green text-white text-xs font-bold tracking-wide transition-colors duration-200 text-center"
             >
               Hubungi Kami
             </Link>
             <Link
               href="/gallery"
-              className="px-6 py-3 rounded-full bg-white hover:bg-gray-100 text-brand-dark border border-gray-200 text-xs font-bold tracking-wide transition-colors duration-200"
+              className="px-6 py-3.5 rounded-full bg-white hover:bg-gray-100 text-brand-dark border border-gray-200 text-xs font-bold tracking-wide transition-colors duration-200 text-center"
             >
               Lihat Portofolio
             </Link>

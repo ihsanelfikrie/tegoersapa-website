@@ -138,7 +138,7 @@ export default function BehindTheLens() {
           
           {/* 1. VISUAL UTAMA BESAR (7 Kolom di Desktop) */}
           <div ref={mainVisualRef} className="lg:col-span-7 flex flex-col">
-            <div className="group relative h-full flex flex-col justify-between p-7 sm:p-9 rounded-3xl overflow-hidden bg-brand-dark text-white border border-white/10 transition-all duration-300 hover:border-brand-green/40">
+            <div className="group relative h-full flex flex-col justify-between p-5 sm:p-8 md:p-9 rounded-3xl overflow-hidden bg-brand-dark text-white border border-white/10 transition-all duration-300 hover:border-brand-green/40">
               
               {/* Background Glow & Subtle Texture */}
               <div
@@ -187,16 +187,16 @@ export default function BehindTheLens() {
               </div>
 
               {/* Bottom Action */}
-              <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+              <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <Link
                   href="/tentang"
-                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-wide bg-brand-green hover:bg-brand-green/90 text-white px-6 py-3 rounded-full transition-all duration-200 hover:-translate-y-0.5"
+                  className="inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-bold tracking-wide bg-brand-green hover:bg-brand-green/90 text-white px-6 py-3 rounded-full transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto"
                 >
                   <span>See More</span>
                   <span aria-hidden="true">→</span>
                 </Link>
 
-                <span className="text-xs font-medium text-white/40">
+                <span className="text-xs font-medium text-white/40 text-center sm:text-right">
                   {brand.name} Studio
                 </span>
               </div>
@@ -208,7 +208,7 @@ export default function BehindTheLens() {
           <div ref={subVisualsRef} className="lg:col-span-5 flex flex-col gap-6 justify-between">
             
             {/* Visual Pendukung 1: Lighting & Setup */}
-            <div className="group flex-1 p-6 sm:p-7 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300 flex flex-col justify-between">
+            <div className="group flex-1 p-5 sm:p-7 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300 flex flex-col justify-between">
               <div>
                 {/* Visual Thumbnail */}
                 <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-brand-dark ring-1 ring-black/5 mb-5">
@@ -240,7 +240,7 @@ export default function BehindTheLens() {
             </div>
 
             {/* Visual Pendukung 2: Post-Processing & Grading */}
-            <div className="group flex-1 p-6 sm:p-7 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300 flex flex-col justify-between">
+            <div className="group flex-1 p-5 sm:p-7 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300 flex flex-col justify-between">
               <div>
                 {/* Visual Thumbnail */}
                 <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-brand-dark ring-1 ring-black/5 mb-5">

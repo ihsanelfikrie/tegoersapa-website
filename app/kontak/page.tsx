@@ -33,7 +33,7 @@ export default function KontakPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           
           {/* WhatsApp Professional Photo */}
-          <div className="p-8 rounded-3xl border border-gray-100 bg-gray-50/50 flex flex-col justify-between hover:border-brand-green/30 transition-all duration-300">
+          <div className="p-5 sm:p-8 rounded-3xl border border-gray-100 bg-gray-50/50 flex flex-col justify-between hover:border-brand-green/30 transition-all duration-300">
             <div>
               <div className="w-12 h-12 rounded-2xl bg-brand-green/15 text-brand-green flex items-center justify-center text-xl font-bold mb-6">
                 💬
@@ -63,7 +63,7 @@ export default function KontakPage() {
           </div>
 
           {/* WhatsApp Photobooth */}
-          <div className="p-8 rounded-3xl border border-gray-100 bg-gray-50/50 flex flex-col justify-between hover:border-brand-green/30 transition-all duration-300">
+          <div className="p-5 sm:p-8 rounded-3xl border border-gray-100 bg-gray-50/50 flex flex-col justify-between hover:border-brand-green/30 transition-all duration-300">
             <div>
               <div className="w-12 h-12 rounded-2xl bg-brand-green/15 text-brand-green flex items-center justify-center text-xl font-bold mb-6">
                 📸
@@ -93,7 +93,7 @@ export default function KontakPage() {
           </div>
 
           {/* Email & Media Sosial */}
-          <div className="p-8 rounded-3xl border border-gray-100 bg-gray-50/50 flex flex-col justify-between hover:border-brand-green/30 transition-all duration-300">
+          <div className="p-5 sm:p-8 rounded-3xl border border-gray-100 bg-gray-50/50 flex flex-col justify-between hover:border-brand-green/30 transition-all duration-300">
             <div>
               <div className="w-12 h-12 rounded-2xl bg-brand-green/15 text-brand-green flex items-center justify-center text-xl font-bold mb-6">
                 ✉️

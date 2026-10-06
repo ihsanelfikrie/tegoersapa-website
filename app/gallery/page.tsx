@@ -68,16 +68,16 @@ function GalleryContent() {
       {/* ─── Filter Categories & Subcategories ──────────────────── */}
       <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Category Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-6">
+        <div className="flex items-center sm:justify-center gap-2 sm:gap-3 mb-6 overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 pb-1 flex-nowrap sm:flex-wrap">
           <button
             onClick={() => {
               setActiveCategory("all");
               setActiveSub("all");
             }}
             className={[
-              "px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 cursor-pointer",
+              "whitespace-nowrap flex-shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 cursor-pointer",
               activeCategory === "all"
-                ? "bg-brand-dark text-white"
+                ? "bg-brand-dark text-white shadow-sm"
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-brand-dark",
             ].join(" ")}
           >
@@ -92,9 +92,9 @@ function GalleryContent() {
                 setActiveSub("all");
               }}
               className={[
-                "px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 cursor-pointer",
+                "whitespace-nowrap flex-shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 cursor-pointer",
                 activeCategory === cat.id
-                  ? "bg-brand-dark text-white"
+                  ? "bg-brand-dark text-white shadow-sm"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-brand-dark",
               ].join(" ")}
             >
@@ -105,13 +105,13 @@ function GalleryContent() {
 
         {/* Sub-Category Pills (if active category has subcategories) */}
         {currentCategoryData && currentCategoryData.subs.length > 0 && (
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-10 pb-4 border-b border-gray-100">
+          <div className="flex items-center sm:justify-center gap-2 mb-10 pb-4 border-b border-gray-100 overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 flex-nowrap sm:flex-wrap">
             <button
               onClick={() => setActiveSub("all")}
               className={[
-                "px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors cursor-pointer",
+                "whitespace-nowrap flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors cursor-pointer",
                 activeSub === "all"
-                  ? "bg-brand-green text-white"
+                  ? "bg-brand-green text-white shadow-xs"
                   : "bg-gray-50 text-gray-500 hover:bg-gray-100",
               ].join(" ")}
             >
@@ -122,9 +122,9 @@ function GalleryContent() {
                 key={sub.id}
                 onClick={() => setActiveSub(sub.id)}
                 className={[
-                  "px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors cursor-pointer",
+                  "whitespace-nowrap flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors cursor-pointer",
                   activeSub === sub.id
-                    ? "bg-brand-green text-white"
+                    ? "bg-brand-green text-white shadow-xs"
                     : "bg-gray-50 text-gray-500 hover:bg-gray-100",
                 ].join(" ")}
               >
@@ -216,7 +216,7 @@ function GalleryContent() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-brand-dark border border-white/10 rounded-3xl max-w-lg w-full p-6 sm:p-8 text-white relative shadow-2xl"
+            className="bg-brand-dark border border-white/10 rounded-3xl max-w-lg w-full p-5 sm:p-8 text-white relative shadow-2xl max-h-[90vh] overflow-y-auto no-scrollbar"
           >
             <button
               onClick={() => setActiveImage(null)}

@@ -276,7 +276,12 @@ export default function Navbar() {
               aria-expanded={isOpen}
               aria-controls="mobile-menu"
               id="navbar-hamburger"
-              className="md:hidden flex flex-col justify-center items-center w-11 h-11 gap-0 p-2 rounded-full bg-white border border-gray-200 border-b-[3px] border-b-gray-300"
+              className={[
+                "md:hidden flex flex-col justify-center items-center w-11 h-11 gap-0 p-2 rounded-full border border-b-[3px] transition-colors duration-200",
+                isDarkNav
+                  ? "bg-white/10 border-white/20 border-b-white/30 text-white"
+                  : "bg-white border-gray-200 border-b-gray-300 text-brand-dark",
+              ].join(" ")}
             >
               <span
                 ref={hamburgerTopRef}
@@ -307,7 +312,12 @@ export default function Navbar() {
         <div
           ref={mobileMenuRef}
           id="mobile-menu"
-          className="pointer-events-auto md:hidden overflow-hidden mt-2 rounded-3xl bg-white border border-gray-200 max-h-[80vh] overflow-y-auto"
+          className={[
+            "pointer-events-auto md:hidden overflow-hidden mt-2 rounded-3xl max-h-[80vh] overflow-y-auto no-scrollbar shadow-2xl transition-colors duration-200",
+            isDarkNav
+              ? "bg-[#002716]/95 backdrop-blur-xl border border-white/15 text-white"
+              : "bg-white/95 backdrop-blur-xl border border-gray-200 text-gray-800",
+          ].join(" ")}
           aria-hidden={!isOpen}
         >
           <div className="px-4 pt-3 pb-5 flex flex-col gap-1">
@@ -320,13 +330,14 @@ export default function Navbar() {
                   <div className="flex items-center justify-between">
                     <Link
                       href={link.href}
+                      onClick={() => setIsOpen(false)}
                       className={[
-                        "flex-1 px-4 py-3 rounded-xl text-sm font-semibold tracking-wide transition-colors duration-150",
+                        "flex-1 px-4 py-3 rounded-xl text-sm font-semibold tracking-wide transition-colors duration-150 min-h-[44px] flex items-center",
                         active
-                          ? "bg-brand-green/15 text-brand-green"
+                          ? "bg-brand-green/20 text-brand-green font-bold"
                           : isDarkNav
-                          ? "text-white/80 hover:text-white hover:bg-white/5"
-                          : "text-gray-700 hover:text-brand-dark hover:bg-gray-50",
+                          ? "text-white/90 hover:text-white hover:bg-white/10"
+                          : "text-gray-700 hover:text-brand-dark hover:bg-gray-100/70",
                       ].join(" ")}
                       aria-current={active ? "page" : undefined}
                     >

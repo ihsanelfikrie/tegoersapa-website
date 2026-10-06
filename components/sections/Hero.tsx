@@ -267,7 +267,7 @@ export default function Hero() {
             {/* Judul utama */}
             <h1
               id="hero-title"
-              className="font-black leading-[1.05] tracking-normal text-[clamp(3.5rem,9vw,7rem)] mb-5 select-none"
+              className="font-black leading-[1.05] tracking-normal text-[clamp(2.75rem,8.5vw,7rem)] mb-5 select-none"
             >
               {/* Baris 1: Tegoer */}
               <span className="hero-line-wrap block" style={{ padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
@@ -308,17 +308,17 @@ export default function Hero() {
             </p>
 
             {/* CTA Buttons */}
-            <div ref={ctaRef} className="flex flex-col sm:flex-row items-start gap-3">
+            <div ref={ctaRef} className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 w-full sm:w-auto">
               <Link
                 href={heroHome.cta.primary.href}
                 id="hero-cta-gallery"
                 className={[
-                  "group inline-flex items-center gap-2.5",
+                  "group inline-flex items-center justify-center gap-2.5",
                   "bg-brand-green hover:bg-brand-green/90 text-white",
                   "font-bold tracking-wide text-sm",
                   "px-7 py-3.5 rounded-full",
                   "transition-all duration-200",
-                  "hover:-translate-y-0.5 active:translate-y-0",
+                  "hover:-translate-y-0.5 active:translate-y-0 text-center",
                 ].join(" ")}
               >
                 {heroHome.cta.primary.label}
@@ -338,11 +338,11 @@ export default function Hero() {
                 href={heroHome.cta.secondary.href}
                 id="hero-cta-pricelist"
                 className={[
-                  "inline-flex items-center gap-2",
+                  "inline-flex items-center justify-center gap-2",
                   "border border-brand-dark/25 hover:border-brand-dark",
                   "text-brand-dark",
                   "font-bold tracking-wide text-sm",
-                  "px-7 py-3.5 rounded-full",
+                  "px-7 py-3.5 rounded-full text-center",
                   "transition-all duration-200 hover:bg-brand-dark/5",
                   "hover:-translate-y-0.5 active:translate-y-0",
                 ].join(" ")}

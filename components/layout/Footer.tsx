@@ -104,11 +104,11 @@ export default function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Alamat Email Anda"
-                className="w-full bg-white text-gray-900 placeholder-gray-400 text-sm font-medium px-6 py-3.5 rounded-full shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-green/60 transition-all"
+                className="w-full bg-white text-gray-900 placeholder-gray-400 text-sm font-medium px-6 py-3.5 rounded-full shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-green/60 transition-all min-h-[48px]"
               />
               <button
                 type="submit"
-                className="w-full sm:w-auto bg-[#002716] hover:bg-brand-green text-white font-bold text-xs uppercase tracking-wider px-8 py-3.5 rounded-full transition-all duration-300 shadow-xl flex-shrink-0 cursor-pointer active:scale-95"
+                className="w-full sm:w-auto bg-[#002716] hover:bg-brand-green text-white font-bold text-xs uppercase tracking-wider px-8 py-3.5 rounded-full transition-all duration-300 shadow-xl flex-shrink-0 cursor-pointer active:scale-95 min-h-[48px] flex items-center justify-center"
               >
                 Kirim
               </button>
@@ -210,11 +210,11 @@ export default function Footer() {
                 <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-sky/80 mb-4">
                   Layanan
                 </h4>
-                <ul className="space-y-3">
+                <ul className="space-y-2">
                   <li>
                     <Link
                       href="/photobooth#photobooth"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block"
+                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
                     >
                       Photobooth Instant
                     </Link>
@@ -222,7 +222,7 @@ export default function Footer() {
                   <li>
                     <Link
                       href="/photobooth#photobox"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block"
+                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
                     >
                       Photobox Self Studio
                     </Link>
@@ -230,7 +230,7 @@ export default function Footer() {
                   <li>
                     <Link
                       href="/photography/traditional"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block"
+                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
                     >
                       Traditional Photography
                     </Link>
@@ -238,7 +238,7 @@ export default function Footer() {
                   <li>
                     <Link
                       href="/photography/wedding"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block"
+                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
                     >
                       Wedding Documentation
                     </Link>
@@ -246,7 +246,7 @@ export default function Footer() {
                   <li>
                     <Link
                       href="/photography/graduation"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block"
+                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
                     >
                       Graduation Photography
                     </Link>
@@ -254,7 +254,7 @@ export default function Footer() {
                   <li>
                     <Link
                       href="/photography/studio"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block"
+                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
                     >
                       Studio Professional
                     </Link>
@@ -267,11 +267,11 @@ export default function Footer() {
                 <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-sky/80 mb-4">
                   Tautan Cepat
                 </h4>
-                <ul className="space-y-3">
+                <ul className="space-y-2">
                   <li>
                     <Link
                       href="/"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block"
+                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
                     >
                       Beranda
                     </Link>
@@ -279,7 +279,7 @@ export default function Footer() {
                   <li>
                     <Link
                       href="/pricelist"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block"
+                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
                     >
                       Pricelist Paket
                     </Link>
@@ -287,7 +287,7 @@ export default function Footer() {
                   <li>
                     <Link
                       href="/gallery"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block"
+                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
                     >
                       Galeri Foto
                     </Link>
@@ -295,7 +295,7 @@ export default function Footer() {
                   <li>
                     <Link
                       href="/tentang"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block"
+                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
                     >
                       Tentang Kami
                     </Link>
@@ -303,7 +303,7 @@ export default function Footer() {
                   <li>
                     <Link
                       href="/kontak"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block"
+                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
                     >
                       Hubungi Kami
                     </Link>
@@ -313,7 +313,7 @@ export default function Footer() {
                       href="https://instagram.com/tegoersapa.photobooth"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block"
+                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
                     >
                       Instagram Photobooth ↗
                     </a>
@@ -323,7 +323,7 @@ export default function Footer() {
                       href="https://tiktok.com/@tegoersapaa"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block"
+                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
                     >
                       TikTok ↗
                     </a>

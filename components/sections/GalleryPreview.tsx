@@ -244,10 +244,10 @@ export default function GalleryPreview() {
         </div>
 
         {/* ─── Bottom Centered CTA: View All Work ───────────────────── */}
-        <div ref={footerCtaRef} className="mt-14 text-center">
+        <div ref={footerCtaRef} className="mt-14 text-center px-4 sm:px-0">
           <Link
             href="/gallery"
-            className="inline-flex items-center gap-2 bg-brand-dark hover:bg-brand-green text-white font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-all duration-300 hover:-translate-y-0.5"
+            className="inline-flex justify-center items-center gap-2 bg-brand-dark hover:bg-brand-green text-white font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-all duration-300 hover:-translate-y-0.5 w-full sm:w-auto"
           >
             <span>View All Work</span>
             <svg

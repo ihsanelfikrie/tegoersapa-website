@@ -51,15 +51,15 @@ export default function PricelistPage() {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12">
+        <div className="flex items-center sm:justify-center gap-2 sm:gap-3 mb-12 overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 pb-2 flex-nowrap sm:flex-wrap">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
               className={[
-                "px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 cursor-pointer",
+                "whitespace-nowrap flex-shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 cursor-pointer",
                 selectedCategory === cat
-                  ? "bg-brand-dark text-white"
+                  ? "bg-brand-dark text-white shadow-sm"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-brand-dark",
               ].join(" ")}
             >
@@ -109,7 +109,7 @@ export default function PricelistPage() {
                     </div>
                   )}
 
-                  <div className="p-7">
+                  <div className="p-6 sm:p-7">
                     {!pkg.image && (
                       <div className="flex items-center justify-between mb-4">
                         <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-brand-green/10 text-brand-dark border border-brand-green/20">
@@ -151,7 +151,7 @@ export default function PricelistPage() {
                   </div>
                 </div>
 
-                <div className="px-7 pb-7 pt-2 space-y-2">
+                <div className="px-6 pb-6 pt-2 sm:px-7 sm:pb-7 space-y-2">
                   <button
                     type="button"
                     onClick={() => {

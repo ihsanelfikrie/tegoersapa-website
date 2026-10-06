@@ -247,7 +247,7 @@ export default function PhotographyPage() {
             {photographyServices.map((service, index) => (
               <div
                 key={service.id}
-                className="service-card group flex flex-col justify-between p-7 sm:p-8 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300"
+                className="service-card group flex flex-col justify-between p-5 sm:p-8 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300"
               >
                 <div>
                   {/* Photo Visual Slot (Konsisten dengan style existing) */}

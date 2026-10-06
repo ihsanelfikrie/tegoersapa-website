@@ -511,7 +511,7 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
                       </div>
                     )}
 
-                    <div className="p-7">
+                    <div className="p-5 sm:p-7">
                       {!pkg.image && (
                         <div className="flex items-center justify-between mb-4">
                           <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-brand-green/10 text-brand-dark border border-brand-green/20">
@@ -557,7 +557,7 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
                     </div>
                   </div>
 
-                  <div className="px-7 pb-7 pt-2 space-y-2">
+                  <div className="px-5 pb-5 pt-2 sm:px-7 sm:pb-7 space-y-2">
                     <button
                       type="button"
                       onClick={() => {

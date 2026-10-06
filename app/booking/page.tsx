@@ -226,7 +226,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                 KOLOM KIRI: RINGKASAN PILIHAN USER
             ═══════════════════════════════════════════════════════ */}
             <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-6">
-              <div className="p-6 sm:p-8 rounded-3xl border border-gray-200 bg-gray-50/80 shadow-sm">
+              <div className="p-5 sm:p-8 rounded-3xl border border-gray-200 bg-gray-50/80 shadow-sm">
                 
                 <div className="flex items-center justify-between pb-4 border-b border-gray-200">
                   <div>
@@ -392,7 +392,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                 KOLOM KANAN: FORMULIR PEMESANAN
             ═══════════════════════════════════════════════════════ */}
             <div className="lg:col-span-7">
-              <div className="p-6 sm:p-10 rounded-3xl border border-gray-200 bg-white shadow-sm">
+              <div className="p-5 sm:p-8 md:p-10 rounded-3xl border border-gray-200 bg-white shadow-sm">
                 
                 <div className="mb-8">
                   <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green">

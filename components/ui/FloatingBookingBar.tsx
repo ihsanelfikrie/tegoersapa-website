@@ -20,7 +20,7 @@ export default function FloatingBookingBar() {
   return (
     <aside
       aria-label="Ringkasan Pilihan Booking Sementara"
-      className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[95%] max-w-2xl animate-in fade-in slide-in-from-bottom-5 duration-300 pointer-events-auto"
+      className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] sm:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[95%] max-w-2xl animate-in fade-in slide-in-from-bottom-5 duration-300 pointer-events-auto"
     >
       <div className="bg-brand-dark/95 backdrop-blur-md border border-brand-green/40 shadow-2xl shadow-black/40 rounded-2xl sm:rounded-full px-4 sm:px-6 py-3 text-white flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 ring-1 ring-white/10">
         
