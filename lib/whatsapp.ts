@@ -6,7 +6,14 @@ import type { PricePackage } from "./content";
 
 const WA_PROFESSIONAL = "6282254092927";
 
-type TemplateKey = PricePackage["whatsappTemplate"];
+type TemplateKey =
+  | PricePackage["whatsappTemplate"]
+  | "family"
+  | "group"
+  | "indoor-graduation"
+  | "personal"
+  | "prewed"
+  | string;
 
 function encodeWAText(text: string): string {
   return encodeURIComponent(text.trim());

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { heroHome, heroPhotos, type HeroPhoto } from "@/lib/content";
+import Button from "@/components/ui/Button";
 
 
 // ─── Sub-komponen: satu slot foto dalam mosaic ───────────────────────────────
@@ -142,8 +143,20 @@ export default function Hero() {
 
       // ── Cascade Reveal Karakter Judul Utama "Tegoer Sapa" ───────────────
       const heroChars = containerRef.current?.querySelectorAll(".hero-char");
+      const heroShims = containerRef.current?.querySelectorAll(".hero-shimmer-char");
       if (heroChars && heroChars.length > 0) {
         gsap.from(heroChars, {
+          y: -80,
+          rotation: -15,
+          opacity: 0,
+          stagger: { each: 0.04, from: "start" },
+          duration: 0.55,
+          ease: "back.out(1.4)",
+          delay: 0.1,
+        });
+      }
+      if (heroShims && heroShims.length > 0) {
+        gsap.from(heroShims, {
           y: -80,
           rotation: -15,
           opacity: 0,
@@ -283,7 +296,7 @@ export default function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center overflow-hidden bg-brand-sky"
+      className="relative min-h-[92vh] sm:min-h-screen flex items-center overflow-hidden bg-brand-sky"
       aria-labelledby="hero-title"
     >
       {/* ═══════════════════════════════════════════════════════════════════
@@ -317,20 +330,20 @@ export default function Hero() {
       {/* ═══════════════════════════════════════════════════════════════════
           LAYOUT UTAMA: TEKS KIRI + MOSAIC KANAN
       ═══════════════════════════════════════════════════════════════════ */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20 sm:pb-24 lg:pt-32 lg:pb-28">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12 sm:pt-24 sm:pb-20 lg:pt-28 lg:pb-28">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-8 items-center">
 
           {/* ─── KOLOM KIRI: Teks ─────────────────────────────────────── */}
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full">
 
-            {/* Judul utama */}
+            {/* Judul utama (Diberi ukuran lebih besar dan gagah di mobile) */}
             <h1
               id="hero-title"
-              className="font-black leading-[1.02] tracking-normal text-[clamp(3.75rem,14vw,7.5rem)] mb-5 select-none text-center lg:text-left w-full"
+              className="font-black leading-[0.98] sm:leading-[1.02] tracking-tight sm:tracking-normal text-[clamp(4.25rem,18.5vw,7.5rem)] sm:text-[clamp(5.25rem,15vw,7.5rem)] lg:text-[7.5rem] mb-3 sm:mb-5 select-none text-center lg:text-left w-full"
             >
               {/* Baris 1: Tegoer */}
-              <span className="hero-line-wrap block text-center lg:text-left mx-auto lg:mx-0" style={{ padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
-                <span className="relative inline-block">
+              <span className="hero-line-wrap block text-center lg:text-left mx-auto lg:mx-0" style={{ padding: "0.1em 0.12em 0.15em", margin: "-0.1em -0.12em 0" }}>
+                <span className="relative inline-flex">
                   <span ref={word1Ref} className="hero-word">
                     {"Tegoer".split("").map((c, i) => (
                       <span
@@ -343,16 +356,17 @@ export default function Hero() {
                     ))}
                   </span>
 
-                  {/* Masked Light Sheen Overlay */}
+                  {/* Masked Cel-Shaded Light Sheen Overlay */}
                   <span
                     aria-hidden="true"
-                    className="hero-word hero-shimmer-word hero-shimmer-line1"
+                    className="hero-shimmer-overlay hero-shimmer-overlay-t"
                   >
                     {"Tegoer".split("").map((c, i) => (
                       <span
                         key={i}
-                        className="hero-shimmer-char"
+                        className="hero-shimmer-char select-none"
                         data-char-shim={`t-${i}`}
+                        style={{ "--char-offset": `${i * 20}%` } as React.CSSProperties}
                       >
                         {c}
                       </span>
@@ -362,8 +376,8 @@ export default function Hero() {
               </span>
 
               {/* Baris 2: Sapa */}
-              <span className="hero-line-wrap block text-center lg:text-left mx-auto lg:mx-0" style={{ padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
-                <span className="relative inline-block">
+              <span className="hero-line-wrap block text-center lg:text-left mx-auto lg:mx-0" style={{ padding: "0.1em 0.12em 0.15em", margin: "-0.1em -0.12em 0" }}>
+                <span className="relative inline-flex">
                   <span ref={word2Ref} className="hero-word hero-word-green">
                     {"Sapa".split("").map((c, i) => (
                       <span
@@ -376,16 +390,17 @@ export default function Hero() {
                     ))}
                   </span>
 
-                  {/* Masked Light Sheen Overlay */}
+                  {/* Masked Cel-Shaded Light Sheen Overlay */}
                   <span
                     aria-hidden="true"
-                    className="hero-word hero-word-green hero-shimmer-word hero-shimmer-line2"
+                    className="hero-shimmer-overlay hero-shimmer-overlay-s"
                   >
                     {"Sapa".split("").map((c, i) => (
                       <span
                         key={i}
-                        className="hero-shimmer-char"
+                        className="hero-shimmer-char hero-shimmer-char-green select-none"
                         data-char-shim={`s-${i}`}
+                        style={{ "--char-offset": `${i * 33.33}%` } as React.CSSProperties}
                       >
                         {c}
                       </span>
@@ -399,33 +414,27 @@ export default function Hero() {
             <div
               ref={dividerRef}
               aria-hidden="true"
-              className="w-16 h-1 rounded-full bg-brand-dark mb-5 mx-auto lg:mx-0"
+              className="w-16 h-1 rounded-full bg-brand-dark mb-4 sm:mb-5 mx-auto lg:mx-0"
             />
 
             {/* Tagline */}
             <p
               ref={taglineRef}
               className="text-brand-dark/70 font-medium tracking-[0.1em] uppercase
-                         text-[clamp(0.75rem,2.2vw,0.875rem)] leading-relaxed mb-8 sm:mb-10 max-w-sm text-center lg:text-left mx-auto lg:mx-0"
+                         text-[clamp(0.75rem,2.2vw,0.875rem)] leading-relaxed mb-6 sm:mb-10 max-w-sm text-center lg:text-left mx-auto lg:mx-0"
             >
               {heroHome.tagline}
             </p>
 
             {/* CTA Buttons */}
-            <div ref={ctaRef} className="flex flex-col sm:flex-row items-stretch sm:items-center lg:items-start justify-center lg:justify-start gap-3 w-full sm:w-auto mx-auto lg:mx-0">
-              <Link
+            <div ref={ctaRef} className="flex flex-col sm:flex-row items-stretch sm:items-center lg:items-start justify-center lg:justify-start gap-2.5 sm:gap-3 w-full sm:w-auto mx-auto lg:mx-0">
+              <Button
                 href={heroHome.cta.primary.href}
                 id="hero-cta-gallery"
-                className={[
-                  "group inline-flex items-center justify-center gap-2.5",
-                  "bg-brand-green hover:bg-brand-green/90 text-white",
-                  "font-bold tracking-wide text-sm",
-                  "px-7 py-3.5 rounded-full",
-                  "transition-all duration-200",
-                  "hover:-translate-y-0.5 active:translate-y-0 text-center",
-                ].join(" ")}
+                variant="primary"
+                size="md"
               >
-                {heroHome.cta.primary.label}
+                <span>{heroHome.cta.primary.label}</span>
                 <svg
                   className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
                   fill="none"
@@ -436,23 +445,16 @@ export default function Hero() {
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </Link>
+              </Button>
 
-              <Link
+              <Button
                 href={heroHome.cta.secondary.href}
                 id="hero-cta-pricelist"
-                className={[
-                  "inline-flex items-center justify-center gap-2",
-                  "border border-brand-dark/25 hover:border-brand-dark",
-                  "text-brand-dark",
-                  "font-bold tracking-wide text-sm",
-                  "px-7 py-3.5 rounded-full text-center",
-                  "transition-all duration-200 hover:bg-brand-dark/5",
-                  "hover:-translate-y-0.5 active:translate-y-0",
-                ].join(" ")}
+                variant="stroke"
+                size="md"
               >
                 {heroHome.cta.secondary.label}
-              </Link>
+              </Button>
             </div>
           </div>
 
@@ -482,18 +484,7 @@ export default function Hero() {
               <PhotoSlot photo={heroPhotos[2]} className="h-full w-full" />
             </div>
 
-            {/* Floating pill — open for booking */}
-            <div
-              aria-hidden="true"
-              className="absolute -top-3 right-2 z-20
-                         bg-brand-green rounded-full px-3 py-1.5
-                         flex items-center gap-1.5"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-              <span className="text-white text-[10px] font-bold tracking-wide uppercase">
-                Open for Booking
-              </span>
-            </div>
+
           </div>
         </div>
       </div>
@@ -535,49 +526,49 @@ export default function Hero() {
           {/* Rumpun Rumput 1: Kiri bawah (4 bilah) */}
           <GrassTuft4
             className="grass-tuft grass-sway-a absolute w-9 sm:w-11 lg:w-14 h-auto"
-            style={{ left: "3.5%", bottom: "15%" }}
+            style={{ left: "3.5%", bottom: "15%", animationDelay: "0s" }}
           />
 
           {/* Rumpun Rumput Tambahan Kiri (Layar Menengah/Besar) */}
           <GrassTuft3
             className="grass-tuft grass-sway-b hidden md:block absolute w-6 sm:w-8 lg:w-10 h-auto"
-            style={{ left: "14%", bottom: "28%" }}
+            style={{ left: "14%", bottom: "28%", animationDelay: "-1.8s" }}
           />
 
           {/* Rumpun Rumput 2: Lereng Kiri atas (4 bilah) */}
           <GrassTuft4
-            className="grass-tuft grass-sway-b absolute w-9 sm:w-11 lg:w-14 h-auto"
-            style={{ left: "24%", bottom: "44%" }}
+            className="grass-tuft grass-sway-c absolute w-9 sm:w-11 lg:w-14 h-auto"
+            style={{ left: "24%", bottom: "44%", animationDelay: "-0.9s" }}
           />
 
           {/* Rumpun Rumput Tambahan Tengah-Kiri (Layar Besar) */}
           <GrassTuft3
             className="grass-tuft grass-sway-a hidden lg:block absolute w-6 sm:w-8 lg:w-10 h-auto"
-            style={{ left: "38%", bottom: "32%" }}
+            style={{ left: "38%", bottom: "32%", animationDelay: "-2.5s" }}
           />
 
           {/* Rumpun Rumput 3: Tengah-Kanan bawah (3 bilah, berdampingan rapi dengan scroll indicator) */}
           <GrassTuft3
-            className="grass-tuft grass-sway-a absolute w-6 sm:w-8 lg:w-10 h-auto"
-            style={{ left: "58%", bottom: "16%" }}
+            className="grass-tuft grass-sway-b absolute w-6 sm:w-8 lg:w-10 h-auto"
+            style={{ left: "58%", bottom: "16%", animationDelay: "-1.2s" }}
           />
 
           {/* Rumpun Rumput Tambahan Puncak Kanan (Layar Menengah/Besar) */}
           <GrassTuft3
-            className="grass-tuft grass-sway-b hidden md:block absolute w-6 sm:w-8 lg:w-10 h-auto"
-            style={{ left: "67%", bottom: "50%" }}
+            className="grass-tuft grass-sway-c hidden md:block absolute w-6 sm:w-8 lg:w-10 h-auto"
+            style={{ left: "67%", bottom: "50%", animationDelay: "-3.1s" }}
           />
 
           {/* Rumpun Rumput 4: Lereng Kanan atas (4 bilah) */}
           <GrassTuft4
-            className="grass-tuft grass-sway-b absolute w-9 sm:w-11 lg:w-14 h-auto"
-            style={{ left: "77%", bottom: "42%" }}
+            className="grass-tuft grass-sway-a absolute w-9 sm:w-11 lg:w-14 h-auto"
+            style={{ left: "77%", bottom: "42%", animationDelay: "-0.5s" }}
           />
 
           {/* Rumpun Rumput 5: Kanan bawah (3 bilah) */}
           <GrassTuft3
-            className="grass-tuft grass-sway-a absolute w-6 sm:w-8 lg:w-10 h-auto"
-            style={{ left: "93%", bottom: "14%" }}
+            className="grass-tuft grass-sway-b absolute w-6 sm:w-8 lg:w-10 h-auto"
+            style={{ left: "93%", bottom: "14%", animationDelay: "-2.1s" }}
           />
         </div>
       </div>
@@ -608,26 +599,6 @@ export default function Hero() {
           from { transform: translate3d(-100%, 0, 0); }
           to   { transform: translate3d(100vw, 0, 0); }
         }
-        @keyframes grassSwayA {
-          0%, 100% { transform: rotate(0deg); }
-          50%      { transform: rotate(-5deg); }
-        }
-        @keyframes grassSwayB {
-          0%, 100% { transform: rotate(0deg); }
-          50%      { transform: rotate(6deg); }
-        }
-        .grass-tuft {
-          transform-origin: bottom center;
-          pointer-events: none;
-        }
-        .grass-sway-a {
-          animation: grassSwayA 3.6s ease-in-out infinite;
-          will-change: transform;
-        }
-        .grass-sway-b {
-          animation: grassSwayB 4.2s ease-in-out infinite;
-          will-change: transform;
-        }
         .cloud-flow {
           animation: cloudFlow 70s linear infinite;
           will-change: transform;
@@ -641,9 +612,7 @@ export default function Hero() {
           animation-delay: -45s; /* Beda fase 35s (tepat 50% siklus), awan selalu berjarak 180° sehingga tidak akan pernah tumpang tindih */
         }
         @media (prefers-reduced-motion: reduce) {
-          .cloud-flow,
-          .grass-sway-a,
-          .grass-sway-b {
+          .cloud-flow {
             animation: none !important;
           }
           .cloud-flow-a { transform: translateX(15vw); }

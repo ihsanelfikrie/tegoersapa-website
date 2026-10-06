@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useBooking } from "@/lib/BookingContext";
 import { contact } from "@/lib/content";
+import HeroClouds from "@/components/ui/HeroClouds";
+import GrassyHill from "@/components/ui/GrassyHill";
+import Button from "@/components/ui/Button";
 
 export default function BookingPage() {
   const {
@@ -79,21 +82,36 @@ export default function BookingPage() {
 
     if (!selectedPackage) return;
 
+    if (isStudioPackage) {
+      alert(
+        "Mohon maaf, layanan Studio Professional saat ini sedang tidak tersedia untuk booking. Silakan pilih paket wisuda atau wedding yang tersedia."
+      );
+      return;
+    }
+
     // Build structured WhatsApp message
     const addOnLines =
       selectedAddOns.length > 0
         ? selectedAddOns.map((item) => `  • ${item.nama} (${item.harga})`).join("\n")
         : "  • Tidak ada add-on yang dipilih";
 
+    // Sanitize user inputs
+    const cleanNama = formData.nama.replace(/[<>]/g, "").trim();
+    const cleanWhatsapp = formData.whatsapp.replace(/[^\d+-\s]/g, "").trim();
+    const cleanWaktu = formData.waktu.replace(/[<>]/g, "").trim();
+    const cleanLokasi = formData.lokasi.replace(/[<>]/g, "").trim();
+    const cleanInstagram = formData.instagram.replace(/[^\w._]/g, "").trim();
+    const cleanCatatan = formData.catatan.replace(/[<>]/g, "").trim();
+
     const message = `Halo Tegoer Sapa, saya ingin melakukan reservasi / booking:
 
 📋 DETAIL PEMESAN
-• Nama: ${formData.nama.trim()}
-• No. WhatsApp: ${formData.whatsapp.trim()}
+• Nama: ${cleanNama}
+• No. WhatsApp: ${cleanWhatsapp}
 • Tanggal Acara: ${formData.tanggal}
-• Waktu: ${formData.waktu || "Fleksibel / Sesuai Jadwal"}
-• Lokasi / Venue: ${formData.lokasi || "Studio / Belum Ditentukan"}
-• Instagram: ${formData.instagram ? `@${formData.instagram.replace("@", "")}` : "-"}
+• Waktu: ${cleanWaktu || "Fleksibel / Sesuai Jadwal"}
+• Lokasi / Venue: ${cleanLokasi || "Studio / Belum Ditentukan"}
+• Instagram: ${cleanInstagram ? `@${cleanInstagram}` : "-"}
 
 📦 PAKET YANG DIPILIH
 • Paket: ${selectedPackage.nama} (${selectedPackage.kategori || "Dokumentasi"})
@@ -106,7 +124,7 @@ ${addOnLines}
 ${totalCalculation.totalText}
 
 📝 Catatan Tambahan:
-${formData.catatan.trim() || "-"}
+${cleanCatatan || "-"}
 
 Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kasih!`;
 
@@ -120,65 +138,80 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
     window.open(waUrl, "_blank", "noopener,noreferrer");
   };
 
-  // Determine back URL for "Ubah Pilihan"
-  const changeSelectionUrl =
-    selectedPackage?.sourceUrl || "/photography/wedding#packages";
+  // Determine if chosen package is Studio
+  const isStudioPackage = Boolean(
+    selectedPackage &&
+      (selectedPackage.kategori?.toLowerCase().includes("studio") ||
+        selectedPackage.id?.toLowerCase().includes("studio") ||
+        selectedPackage.id === "indoor-grad" ||
+        ["personal", "family", "group", "indoor-graduation", "prewed"].includes(
+          selectedPackage.id
+        ))
+  );
 
-  const addMoreAddOnsUrl = selectedPackage?.sourceUrl
-    ? selectedPackage.sourceUrl.includes("#")
-      ? selectedPackage.sourceUrl.split("#")[0] + "#addons"
-      : selectedPackage.sourceUrl + "#addons"
-    : "/photography/wedding#addons";
+  // Determine back URL for "Ubah Pilihan" (hardened against open-redirect)
+  const isSafeInternalUrl = (url?: string) =>
+    Boolean(url && url.startsWith("/") && !url.startsWith("//") && !url.includes("javascript:"));
 
-  // Prevent flicker before hydration
-  if (!isHydrated) {
-    return (
-      <div className="bg-white min-h-screen text-black flex items-center justify-center pt-24">
-        <div className="animate-pulse text-sm text-gray-500 font-medium">
-          Memuat formulir booking...
-        </div>
-      </div>
-    );
-  }
+  const safeSourceUrl = isSafeInternalUrl(selectedPackage?.sourceUrl)
+    ? selectedPackage!.sourceUrl
+    : "/photography/wedding#packages";
+
+  const changeSelectionUrl = safeSourceUrl;
+
+  const addMoreAddOnsUrl = safeSourceUrl.includes("#")
+    ? safeSourceUrl.split("#")[0] + "#addons"
+    : safeSourceUrl + "#addons";
 
   return (
     <div className="bg-white min-h-screen text-black">
       {/* ─── Hero Header ────────────────────────────────────────── */}
-      <section className="relative pt-32 pb-16 bg-brand-dark text-white overflow-hidden">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative pt-32 pb-24 sm:pb-28 lg:pb-36 bg-brand-sky text-brand-dark overflow-hidden">
+        {/* Floating Clouds Background */}
+        <HeroClouds />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-green/15 border border-brand-green/30 text-brand-green text-xs font-bold uppercase tracking-[0.2em] mb-4">
-              Booking Layanan
-            </span>
-            <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white leading-tight">
-              Formulir <span className="text-brand-green">Reservasi Jadwal</span>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+              <span className="hero-word">Formulir</span>{" "}
+              <span className="hero-word hero-word-green">Reservasi</span>
             </h1>
-            <div className="w-14 h-1 rounded-full bg-brand-green my-5" />
-            <p className="text-base sm:text-lg text-white/70 font-medium leading-relaxed">
+            <div className="w-16 h-1 rounded-full bg-brand-dark my-5" />
+            <p className="text-base sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-2xl">
               Konfirmasikan paket dan add-on pilihan Anda. Data pilihan langsung tersimpan dan diteruskan ke tim Tegoer Sapa untuk penjadwalan.
             </p>
 
             {/* Steps indicator */}
-            <div className="mt-8 flex flex-wrap items-center gap-3 text-xs font-bold text-white/80">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-brand-green border border-brand-green/30">
-                <span>✓</span> 1. Pilih Paket
+            <div className="mt-8 flex flex-wrap items-center gap-3 text-xs font-bold text-brand-dark">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 text-brand-dark border border-brand-dark/15 shadow-2xs">
+                <span className="text-brand-green font-black">✓</span> 1. Pilih Paket
               </span>
-              <span className="text-white/30">→</span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-brand-green border border-brand-green/30">
-                <span>✓</span> 2. Add-on (Opsional)
+              <span className="text-brand-dark/40">→</span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 text-brand-dark border border-brand-dark/15 shadow-2xs">
+                <span className="text-brand-green font-black">✓</span> 2. Add-on (Opsional)
               </span>
-              <span className="text-white/30">→</span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-green text-white">
+              <span className="text-brand-dark/40">→</span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-green text-white shadow-xs">
                 3. Formulir Booking
               </span>
             </div>
           </div>
         </div>
+
+        {/* Grassy Hill Bottom Decoration */}
+        <GrassyHill />
       </section>
 
       {/* ─── Main Content ───────────────────────────────────────── */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {!selectedPackage ? (
+        {!isHydrated ? (
+          <div className="py-20 flex items-center justify-center">
+            <div className="animate-pulse text-sm text-gray-500 font-medium">
+              Memuat formulir booking...
+            </div>
+          </div>
+        ) : !selectedPackage ? (
           /* Empty state: belum memilih paket */
           <div className="max-w-2xl mx-auto text-center p-8 sm:p-12 rounded-3xl border border-gray-200 bg-gray-50/50 shadow-sm">
             <div className="w-16 h-16 rounded-2xl bg-brand-green/10 text-brand-green flex items-center justify-center text-2xl mx-auto mb-4">
@@ -204,12 +237,18 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
               >
                 Pilih Paket Wisuda
               </Link>
-              <Link
-                href="/photography/studio#packages"
-                className="px-5 py-3 rounded-2xl bg-brand-dark hover:bg-brand-green text-white font-bold text-xs tracking-wide transition-all"
+              <button
+                type="button"
+                onClick={() => {
+                  alert(
+                    "Mohon maaf, layanan Studio Professional saat ini sedang tidak tersedia untuk booking."
+                  );
+                }}
+                className="px-5 py-3 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 font-bold text-xs tracking-wide transition-all hover:bg-amber-100 cursor-pointer inline-flex items-center gap-1.5"
               >
-                Pilih Paket Studio
-              </Link>
+                <span>Paket Studio (Tidak Tersedia)</span>
+                <span aria-hidden="true">⚠️</span>
+              </button>
               <Link
                 href="/pricelist"
                 className="px-5 py-3 rounded-2xl border border-gray-300 hover:border-brand-green text-gray-700 hover:text-brand-green font-bold text-xs tracking-wide transition-all"
@@ -246,6 +285,30 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                     <span>↺</span>
                   </Link>
                 </div>
+
+                {/* Studio Unavailable Warning Banner */}
+                {isStudioPackage && (
+                  <div className="mt-4 p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900">
+                    <div className="flex items-start gap-2.5">
+                      <span className="text-xl flex-shrink-0" aria-hidden="true">⚠️</span>
+                      <div>
+                        <h4 className="font-extrabold text-xs sm:text-sm text-amber-950">
+                          Studio Sedang Tidak Tersedia
+                        </h4>
+                        <p className="mt-0.5 text-xs text-amber-800 leading-relaxed font-medium">
+                          Paket Studio yang Anda pilih saat ini sedang tidak menerima pemesanan. Silakan pilih paket wisuda atau wedding yang tersedia.
+                        </p>
+                        <Link
+                          href="/pricelist"
+                          className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-bold text-amber-950 bg-amber-200/80 hover:bg-amber-300 px-3 py-1 rounded-full transition-colors"
+                        >
+                          <span>Pilih Paket Lain</span>
+                          <span>→</span>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Paket Terpilih */}
                 <div className="mt-5 p-4 rounded-2xl bg-white border border-gray-200">
@@ -431,6 +494,8 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       type="text"
                       id="nama"
                       name="nama"
+                      maxLength={80}
+                      autoComplete="name"
                       value={formData.nama}
                       onChange={handleChange}
                       placeholder="Contoh: Rian Pratama & Sarah"
@@ -458,6 +523,8 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       type="tel"
                       id="whatsapp"
                       name="whatsapp"
+                      maxLength={20}
+                      autoComplete="tel"
                       value={formData.whatsapp}
                       onChange={handleChange}
                       placeholder="Contoh: 081234567890"
@@ -511,6 +578,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                         type="text"
                         id="waktu"
                         name="waktu"
+                        maxLength={60}
                         value={formData.waktu}
                         onChange={handleChange}
                         placeholder="Contoh: 09.00 WIB / Siang"
@@ -531,9 +599,10 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       type="text"
                       id="lokasi"
                       name="lokasi"
+                      maxLength={150}
                       value={formData.lokasi}
                       onChange={handleChange}
-                      placeholder="Contoh: Tiara Convention Hall Medan / Studio Tegoer Sapa"
+                      placeholder="Contoh: Gedung Bina Satria Banjarbaru / Studio Tegoer Sapa"
                       className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-sm text-black placeholder:text-gray-400 font-medium bg-gray-50/50 focus:bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all"
                     />
                   </div>
@@ -554,6 +623,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                         type="text"
                         id="instagram"
                         name="instagram"
+                        maxLength={40}
                         value={formData.instagram}
                         onChange={handleChange}
                         placeholder="username_instagram"
@@ -574,6 +644,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       id="catatan"
                       name="catatan"
                       rows={3}
+                      maxLength={500}
                       value={formData.catatan}
                       onChange={handleChange}
                       placeholder="Ceritakan gambaran konsep acara, adat yang dipakai, atau request tambahan lainnya..."
@@ -583,15 +654,40 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
 
                   {/* Tombol Submit Booking */}
                   <div className="pt-4">
-                    <button
-                      type="submit"
-                      className="w-full py-4 px-6 rounded-2xl bg-brand-dark hover:bg-brand-green text-white font-black text-sm tracking-wide transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-3 cursor-pointer"
-                    >
-                      <span>Kirim Booking via WhatsApp</span>
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </button>
+                    {isStudioPackage ? (
+                      <div className="space-y-2.5">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            alert(
+                              "Mohon maaf, layanan Studio Professional saat ini sedang tidak tersedia untuk booking. Silakan pilih paket wisuda atau wedding."
+                            );
+                          }}
+                          className="w-full py-4 rounded-full bg-amber-100 text-amber-950 font-bold text-sm tracking-wide border border-amber-300 hover:bg-amber-200 transition-colors cursor-pointer flex items-center justify-center gap-2"
+                        >
+                          <span>Studio Sedang Tidak Tersedia</span>
+                          <span aria-hidden="true">⚠️</span>
+                        </button>
+                        <Link
+                          href="/pricelist"
+                          className="w-full inline-flex items-center justify-center gap-1.5 py-3 rounded-full bg-brand-green text-white font-bold text-xs tracking-wide hover:bg-brand-green/90 transition-colors shadow-sm"
+                        >
+                          <span>Pilih Paket Lain yang Tersedia →</span>
+                        </Link>
+                      </div>
+                    ) : (
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        size="lg"
+                        className="w-full"
+                      >
+                        <span>Kirim Booking via WhatsApp</span>
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </Button>
+                    )}
 
                     <p className="mt-3 text-center text-[11px] text-gray-400 font-medium">
                       🔒 Data Anda aman dan diteruskan secara privat ke Admin WhatsApp resmi Tegoer Sapa.

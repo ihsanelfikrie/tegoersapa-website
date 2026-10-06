@@ -5,6 +5,9 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { galleryPhotos, galleryCategories, type GalleryPhotoItem } from "@/lib/content";
+import HeroClouds from "@/components/ui/HeroClouds";
+import GrassyHill from "@/components/ui/GrassyHill";
+import Button from "@/components/ui/Button";
 
 function GalleryContent() {
   const searchParams = useSearchParams();
@@ -91,6 +94,16 @@ function GalleryContent() {
     return filteredItems.findIndex((it) => it.id === activeImage.id);
   }, [activeImage, filteredItems]);
 
+  // Check if current active photo is a studio shoot
+  const isStudioPhoto = Boolean(
+    activeImage &&
+      (activeImage.subCategorySlug === "indoor-graduation" ||
+        activeImage.subCategory.toLowerCase().includes("studio") ||
+        activeImage.subCategory.toLowerCase().includes("indoor") ||
+        activeImage.title.toLowerCase().includes("studio") ||
+        (activeImage.image && activeImage.image.toLowerCase().includes("ingraduation")))
+  );
+
   const handleNext = () => {
     if (filteredItems.length === 0) return;
     if (currentIndex >= 0 && currentIndex < filteredItems.length - 1) {
@@ -141,25 +154,26 @@ function GalleryContent() {
   return (
     <div className="bg-white min-h-screen text-black">
       {/* ─── Hero Header ────────────────────────────────────────── */}
-      <section className="relative pt-32 pb-16 bg-brand-dark text-white overflow-hidden">
-        {/* Subtle decorative circles */}
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-brand-green/10 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-brand-coral/10 blur-3xl pointer-events-none" />
+      <section className="relative pt-32 pb-24 sm:pb-28 lg:pb-36 bg-brand-sky text-brand-dark overflow-hidden">
+        {/* Floating Clouds Background */}
+        <HeroClouds />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-green/15 border border-brand-green/30 text-brand-green text-xs font-bold uppercase tracking-[0.2em] mb-4">
-              Koleksi Karya & Portofolio
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
-              Galeri <span className="text-brand-green">Portofolio</span>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+              <span className="hero-word">Galeri</span>{" "}
+              <span className="hero-word hero-word-green">Portofolio</span>
             </h1>
-            <div className="w-16 h-1 rounded-full bg-brand-green my-5" />
-            <p className="text-base sm:text-lg text-white/75 font-medium leading-relaxed max-w-2xl">
+            <div className="w-16 h-1 rounded-full bg-brand-dark my-5" />
+            <p className="text-base sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-2xl">
               Arsip visual lengkap {galleryPhotos.length} momen berkesan yang telah kami abadikan — mulai dari photobooth resepsi & event meriah, photobox ekspresif, hingga fotografi pre-wedding dan wisuda kampus.
             </p>
           </div>
         </div>
+
+        {/* Grassy Hill Bottom Decoration */}
+        <GrassyHill />
       </section>
 
       {/* ─── Filter & Search Control Bar ────────────────────────── */}
@@ -463,28 +477,67 @@ function GalleryContent() {
                 </span>
               </div>
 
-              <h3 className="text-base sm:text-lg font-black tracking-wide text-white mb-4 line-clamp-2">
+              <h3 className="text-base sm:text-lg font-black tracking-wide text-white mb-3 line-clamp-2">
                 {activeImage.title}
               </h3>
 
-              <div className="flex items-center gap-2.5 pt-2 border-t border-white/10">
-                <a
-                  href={`https://api.whatsapp.com/send?phone=6282254092927&text=${encodeURIComponent(
-                    `Halo kak! Saya ingin tanya paket atau booking untuk referensi foto portofolio: "${activeImage.title}" (${activeImage.subCategory})`
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 text-center py-2.5 px-4 rounded-full bg-brand-green hover:bg-brand-green/90 text-white font-bold text-xs transition-all flex items-center justify-center gap-2"
-                >
-                  <span>Tanya Booking via WA</span>
-                  <span>💬</span>
-                </a>
-                <Link
-                  href="/pricelist"
-                  className="py-2.5 px-4 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition-all text-center"
-                >
-                  Cek Pricelist
-                </Link>
+              {/* Studio Unavailable Notice */}
+              {isStudioPhoto && (
+                <div className="mb-3 px-3 py-2 rounded-xl bg-amber-500/15 border border-amber-400/30 flex items-center gap-2 text-xs text-amber-200">
+                  <span aria-hidden="true" className="text-sm">⚠️</span>
+                  <span className="font-medium">
+                    Layanan Studio Profesional saat ini sedang tidak tersedia untuk booking.
+                  </span>
+                </div>
+              )}
+
+              <div className="flex flex-col sm:flex-row items-center gap-2.5 pt-2 border-t border-white/10">
+                {isStudioPhoto ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        alert(
+                          "Mohon maaf, layanan Studio Professional saat ini sedang tidak tersedia untuk booking. Anda tetap dapat menikmati portofolio kami di galeri atau memilih paket foto outdoor wisuda & event yang tersedia."
+                        );
+                      }}
+                      className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/40 font-bold text-xs tracking-wide transition-all duration-200 cursor-pointer"
+                    >
+                      <span>Studio Sedang Tidak Tersedia</span>
+                      <span aria-hidden="true">⚠️</span>
+                    </button>
+                    <Button
+                      href="/pricelist"
+                      variant="white"
+                      size="sm"
+                      className="w-full sm:w-auto"
+                    >
+                      Lihat Paket Lain
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      href={`https://api.whatsapp.com/send?phone=6282254092927&text=${encodeURIComponent(
+                        `Halo kak! Saya ingin tanya paket atau booking untuk referensi foto portofolio: "${activeImage.title}" (${activeImage.subCategory})`
+                      )}`}
+                      variant="primary"
+                      size="sm"
+                      className="w-full sm:flex-1"
+                    >
+                      <span>Tanya Booking via WA</span>
+                      <span>💬</span>
+                    </Button>
+                    <Button
+                      href="/pricelist"
+                      variant="white"
+                      size="sm"
+                      className="w-full sm:w-auto"
+                    >
+                      Cek Pricelist
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>

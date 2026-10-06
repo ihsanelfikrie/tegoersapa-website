@@ -68,10 +68,10 @@ export default function OurStory() {
     <section
       ref={containerRef}
       id="our-story"
-      className="py-24 bg-gray-50 text-black scroll-mt-20 overflow-hidden border-b border-gray-100"
+      className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gray-50 text-black scroll-mt-20 overflow-hidden border-b border-gray-100"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center">
           
           {/* ─── KOLOM KIRI: Storytelling Narrative ─────────────────── */}
           <div ref={textRef} className="lg:col-span-7 flex flex-col items-start">
@@ -79,27 +79,27 @@ export default function OurStory() {
               Our Story
             </span>
 
-            <h2 className="mt-3 text-4xl sm:text-5xl font-black text-brand-dark tracking-tight leading-[1.08]">
+            <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-black text-brand-dark tracking-tight leading-[1.08]">
               Lebih Dekat Dengan Cerita Kami
             </h2>
 
-            <div aria-hidden="true" className="mt-4 w-12 h-1 rounded-full bg-brand-green mb-6" />
+            <div aria-hidden="true" className="mt-3.5 w-12 h-1 rounded-full bg-brand-green mb-4 sm:mb-6" />
 
-            <p className="text-gray-700 text-base sm:text-lg leading-relaxed font-semibold mb-4">
+            <p className="text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed font-semibold mb-3 sm:mb-4">
               Tegoer Sapa adalah studio fotografi dan penyedia pengalaman photobooth modern yang lahir dari rasa cinta terhadap momen-momen tulus dalam hidup.
             </p>
 
-            <p className="text-gray-500 text-sm sm:text-base leading-relaxed font-medium mb-4">
+            <p className="text-gray-500 text-xs sm:text-sm lg:text-base leading-relaxed font-medium mb-3 sm:mb-4">
               Dari sakralnya ikatan janji pernikahan, kebanggaan pencapaian wisuda, hingga kebersamaan hangat keluarga dan tawa spontan di booth acara — kami hadir bukan sekadar memotret, melainkan mendokumentasikan rasa dan emosi yang melatarbelakanginya.
             </p>
 
-            <p className="text-gray-500 text-sm sm:text-base leading-relaxed font-medium mb-8">
+            <p className="text-gray-500 text-xs sm:text-sm lg:text-base leading-relaxed font-medium mb-5 sm:mb-8">
               Bagi kami, <span className="text-brand-dark font-bold">&ldquo;{brand.tagline}&rdquo;</span> adalah komitmen mutlak. Kami berfokus pada kualitas visual berkelas, tata cahaya yang presisi, serta suasana sesi foto yang santai dan ramah bagi setiap klien.
             </p>
 
             <Link
               href="/tentang"
-              className="group inline-flex items-center gap-2.5 bg-brand-dark hover:bg-brand-green text-white font-bold tracking-wide text-xs sm:text-sm px-7 py-3.5 rounded-full transition-all duration-300 hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2 bg-brand-dark hover:bg-brand-green text-white font-bold tracking-wide text-xs sm:text-sm px-6 py-3 sm:px-7 sm:py-3.5 rounded-full transition-all duration-300 hover:-translate-y-0.5"
             >
               <span>Selengkapnya Tentang Kami</span>
               <svg
@@ -115,10 +115,10 @@ export default function OurStory() {
           </div>
 
           {/* ─── KOLOM KANAN: Visual & Brand Values ─────────────────── */}
-          <div ref={visualRef} className="lg:col-span-5 flex flex-col gap-5">
+          <div ref={visualRef} className="lg:col-span-5 flex flex-col gap-4 sm:gap-5">
             
             {/* Visi Card */}
-            <div className="p-8 sm:p-9 rounded-3xl bg-brand-dark text-white relative overflow-hidden border border-white/10">
+            <div className="p-5 sm:p-7 md:p-9 rounded-3xl bg-brand-dark text-white relative overflow-hidden border border-white/10">
               {/* Subtle ambient glow */}
               <div
                 aria-hidden="true"
@@ -129,45 +129,45 @@ export default function OurStory() {
                 Visi & Nilai Kami
               </span>
 
-              <h3 className="mt-3 text-2xl sm:text-3xl font-black tracking-tight leading-snug">
+              <h3 className="mt-2 text-xl sm:text-2xl lg:text-3xl font-black tracking-tight leading-snug">
                 Menghargai Setiap Detik Terbaik Anda
               </h3>
 
-              <p className="mt-4 text-white/70 text-xs sm:text-sm leading-relaxed font-medium">
+              <p className="mt-3 text-white/70 text-xs sm:text-sm leading-relaxed font-medium">
                 Setiap senyuman, tatapan haru, dan kehangatan kebersamaan pantas dikenang dengan visual yang abadi dan berkarakter.
               </p>
 
-              <div className="mt-6 pt-5 border-t border-white/10 flex items-center justify-between text-xs text-brand-green font-bold">
+              <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-brand-green font-bold">
                 <span>{brand.name}</span>
-                <span className="text-white/40 font-medium">Medan, Indonesia</span>
+                <span className="text-white/40 font-medium">Banjarbaru, Indonesia</span>
               </div>
             </div>
 
-            {/* 2 Core Highlights Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-5 sm:p-6 rounded-2xl bg-white border border-gray-100 flex flex-col justify-between">
+            {/* 2 Core Highlights Cards (2 Kolom di Mobile) */}
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              <div className="p-4 sm:p-6 rounded-2xl bg-white border border-gray-100 flex flex-col justify-between">
                 <div>
-                  <span className="w-8 h-8 rounded-xl bg-brand-green/10 text-brand-green flex items-center justify-center text-sm font-bold mb-3">
+                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-brand-green/10 text-brand-green flex items-center justify-center text-xs sm:text-sm font-bold mb-2.5 sm:mb-3">
                     ✦
                   </span>
-                  <h4 className="text-sm font-bold text-brand-dark tracking-wide">
+                  <h4 className="text-xs sm:text-sm font-bold text-brand-dark tracking-wide">
                     Pengalaman Bersahabat
                   </h4>
-                  <p className="mt-1.5 text-xs text-gray-500 font-medium leading-relaxed">
+                  <p className="mt-1 text-[11px] sm:text-xs text-gray-500 font-medium leading-relaxed">
                     Suasana pemotretan santai, menyenangkan, dan bebas canggung.
                   </p>
                 </div>
               </div>
 
-              <div className="p-5 sm:p-6 rounded-2xl bg-white border border-gray-100 flex flex-col justify-between">
+              <div className="p-4 sm:p-6 rounded-2xl bg-white border border-gray-100 flex flex-col justify-between">
                 <div>
-                  <span className="w-8 h-8 rounded-xl bg-brand-green/10 text-brand-green flex items-center justify-center text-sm font-bold mb-3">
+                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-brand-green/10 text-brand-green flex items-center justify-center text-xs sm:text-sm font-bold mb-2.5 sm:mb-3">
                     ★
                   </span>
-                  <h4 className="text-sm font-bold text-brand-dark tracking-wide">
+                  <h4 className="text-xs sm:text-sm font-bold text-brand-dark tracking-wide">
                     Kualitas Terpilih
                   </h4>
-                  <p className="mt-1.5 text-xs text-gray-500 font-medium leading-relaxed">
+                  <p className="mt-1 text-[11px] sm:text-xs text-gray-500 font-medium leading-relaxed">
                     Standar visual industri, tata cahaya presisi, dan grading sinematik.
                   </p>
                 </div>

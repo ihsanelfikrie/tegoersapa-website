@@ -76,9 +76,9 @@ body {
   display: inline-block;
   font-weight: 900;
   color: #fe6239; /* Coral orange khas maskot */
-  -webkit-text-stroke: 0.15em #000000;
+  -webkit-text-stroke: 0.08em #000000;
   paint-order: stroke fill;
-  filter: drop-shadow(0.04em 0.06em 0px #000000);
+  filter: drop-shadow(0.035em 0.045em 0px #000000);
   line-height: 1.05;
   perspective: 800px;
 }
@@ -96,64 +96,383 @@ body {
   cursor: pointer;
 }
 
-/* ── Efek Cahaya / Shimmer Masking Teks Hero ── */
-.hero-shimmer-char {
-  display: inline-block;
-  will-change: transform;
-  transform-origin: center bottom;
-  pointer-events: none;
-}
-
-.hero-shimmer-word {
+/* ── Efek Cahaya / Cel-Shaded Shimmer Masking Teks Hero (Bergerak dari Kiri ke Kanan) ── */
+.hero-shimmer-overlay {
   position: absolute;
   inset: 0;
+  display: inline-flex;
   pointer-events: none;
   user-select: none;
   z-index: 10;
+}
+
+.hero-shimmer-char {
+  display: inline-block;
+  will-change: transform, background-position;
+  transform-origin: center bottom;
+  pointer-events: none;
   color: transparent !important;
   -webkit-text-fill-color: transparent !important;
   -webkit-text-stroke: 0px transparent !important;
   paint-order: normal !important;
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.8)) !important;
   background-image: linear-gradient(
     115deg,
     transparent 0%,
-    transparent 35%,
-    rgba(255, 255, 255, 0.15) 42%,
-    rgba(255, 255, 255, 0.8) 47%,
-    rgba(255, 255, 255, 1) 50%,
-    rgba(255, 255, 255, 0.8) 53%,
-    rgba(255, 255, 255, 0.15) 58%,
-    transparent 65%,
+    transparent 41.5%,
+    rgba(255, 255, 255, 0.6) 42.2%,
+    rgba(255, 255, 255, 0.6) 48.2%,
+    transparent 48.9%,
     transparent 100%
   );
-  background-size: 320% 100%;
-  background-repeat: no-repeat;
+  background-size: 600% 100%;
+  background-repeat: no-repeat !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
-  opacity: 1;
+  animation: heroSweepTegoer 10s cubic-bezier(0.4, 0, 0.25, 1) infinite;
 }
 
-.hero-shimmer-line1 {
-  animation: heroLightSweep 5s ease-in-out infinite;
-  animation-delay: 1.5s;
+.hero-shimmer-char-green {
+  font-style: italic;
+  animation: heroSweepSapa 10s cubic-bezier(0.4, 0, 0.25, 1) infinite;
 }
 
-.hero-shimmer-line2 {
-  animation: heroLightSweep 5s ease-in-out infinite;
-  animation-delay: 1.8s;
-}
-
-@keyframes heroLightSweep {
+@keyframes heroSweepTegoer {
   0% {
-    background-position: 140% 0;
+    background-position: calc(260% - var(--char-offset, 0%)) 0;
   }
-  60% {
-    background-position: -40% 0;
+  42% {
+    background-position: calc(-140% - var(--char-offset, 0%)) 0;
   }
   100% {
-    background-position: -40% 0;
+    background-position: calc(-140% - var(--char-offset, 0%)) 0;
   }
 }
+
+@keyframes heroSweepSapa {
+  0% {
+    background-position: calc(260% - var(--char-offset, 0%)) 0;
+  }
+  38% {
+    background-position: calc(260% - var(--char-offset, 0%)) 0;
+  }
+  78% {
+    background-position: calc(-140% - var(--char-offset, 0%)) 0;
+  }
+  100% {
+    background-position: calc(-140% - var(--char-offset, 0%)) 0;
+  }
+}
+
+/* ── Animasi Awan & Rumput Hero ───────────────────────────────────────────── */
+@keyframes cloudFlow {
+  from { transform: translate3d(-100%, 0, 0); }
+  to   { transform: translate3d(100vw, 0, 0); }
+}
+
+.cloud-flow {
+  animation: cloudFlow 70s linear infinite;
+  will-change: transform;
+}
+
+.cloud-flow-a {
+  animation-duration: 70s;
+  animation-delay: -10s;
+}
+
+.cloud-flow-b {
+  animation-duration: 70s;
+  animation-delay: -45s;
+}
+
+/* ─── Animasi Rerumputan Alami (Organic Breeze / Wind Sway) ───────────── */
+@keyframes grassBreezeA {
+  0% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+  20% {
+    transform: rotate(6.5deg) skewX(4.5deg) scaleY(0.98);
+  }
+  35% {
+    transform: rotate(2deg) skewX(1deg);
+  }
+  50% {
+    transform: rotate(8deg) skewX(5.5deg) scaleY(0.97);
+  }
+  70% {
+    transform: rotate(-2.5deg) skewX(-1.8deg);
+  }
+  85% {
+    transform: rotate(3deg) skewX(2deg);
+  }
+  100% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+}
+
+@keyframes grassBreezeB {
+  0% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+  25% {
+    transform: rotate(-5.5deg) skewX(-3.5deg) scaleY(0.98);
+  }
+  45% {
+    transform: rotate(3deg) skewX(2deg);
+  }
+  65% {
+    transform: rotate(-7deg) skewX(-4.5deg) scaleY(0.97);
+  }
+  80% {
+    transform: rotate(1deg) skewX(0.5deg);
+  }
+  100% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+}
+
+@keyframes grassBreezeC {
+  0% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+  18% {
+    transform: rotate(7deg) skewX(5deg) scaleY(0.97);
+  }
+  38% {
+    transform: rotate(-1deg) skewX(-0.5deg);
+  }
+  58% {
+    transform: rotate(5.5deg) skewX(3.5deg) scaleY(0.98);
+  }
+  78% {
+    transform: rotate(-3deg) skewX(-2deg);
+  }
+  100% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+}
+
+.grass-tuft {
+  transform-origin: 50% 95%;
+  transform-box: fill-box;
+  display: inline-block;
+  pointer-events: auto;
+  cursor: pointer;
+  will-change: transform;
+  transition: transform 0.25s ease-out;
+}
+
+.grass-sway-a {
+  animation: grassBreezeA 4.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.grass-sway-b {
+  animation: grassBreezeB 3.7s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.grass-sway-c {
+  animation: grassBreezeC 4.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.grass-tuft:hover {
+  animation-play-state: paused;
+  transform: rotate(12deg) skewX(8deg) scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cloud-flow,
+  .grass-sway-a,
+  .grass-sway-b,
+  .grass-sway-c {
+    animation: none !important;
+  }
+  .cloud-flow-a { transform: translateX(15vw); }
+  .cloud-flow-b { transform: translateX(65vw); }
+  .button__flair { display: none !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SISTEM TOMBOL 3D TIMBUL + GSAP MAGNETIC FLAIR HOVER
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Base Button */
+.button,
+[data-block="button"] {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8125rem 1.625rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 3.5px solid rgba(0, 0, 0, 0.22);
+  transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              border-bottom-width 0.12s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.15s ease,
+              color 0.15s ease;
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Efek Timbul: Ketika tombol diklik / ditekan (active) */
+.button:active,
+[data-block="button"]:active {
+  transform: translateY(2px) !important;
+  border-bottom-width: 1.5px !important;
+}
+
+/* Label & Icons di dalam tombol */
+.button__label {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: inherit;
+  pointer-events: none;
+  transition: color 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Flair container: gelembung yang mengikuti kursor via GSAP */
+.button__flair {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform: scale(0);
+  transform-origin: 0 0;
+  will-change: transform;
+  z-index: 1;
+}
+
+.button__flair:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 190%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* ── VARIANT 1: Primary Green (Tombol Utama, seperti "Booking Sekarang") ── */
+.button--primary {
+  background-color: #1fae77;
+  color: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-bottom-color: #126b48;
+}
+
+.button--primary .button__flair:before {
+  background-color: #002716; /* Warna brand dark yang mekar dari posisi kursor */
+}
+
+.button--primary:hover {
+  color: #ffffff;
+}
+
+/* ── VARIANT 2: Dark Brand Button ── */
+.button--dark {
+  background-color: #002716;
+  color: #ffffff;
+  border-color: rgba(0, 0, 0, 0.25);
+  border-bottom-color: #000c07;
+}
+
+.button--dark .button__flair:before {
+  background-color: #1fae77; /* Brand green mekar saat hover */
+}
+
+.button--dark:hover {
+  color: #ffffff;
+}
+
+/* ── VARIANT 3: Stroke / Outline Button (Transparan / Putih Halus) ── */
+.button--stroke,
+.button--outline {
+  background-color: rgba(255, 255, 255, 0.75);
+  color: #002716;
+  border: 1.5px solid rgba(0, 39, 22, 0.2);
+  border-bottom: 3.5px solid #002716;
+  backdrop-filter: blur(8px);
+}
+
+.button--stroke .button__flair:before,
+.button--outline .button__flair:before {
+  background-color: #002716; /* Mengisi penuh tombol dengan warna gelap */
+}
+
+@media (hover: hover) {
+  .button--stroke:hover,
+  .button--outline:hover {
+    color: #ffffff;
+    border-color: #002716;
+    border-bottom-color: #000c07;
+  }
+  .button--stroke:hover .button__label,
+  .button--outline:hover .button__label {
+    color: #ffffff;
+  }
+}
+
+/* ── VARIANT 4: Coral Orange Button ── */
+.button--orange {
+  background-color: #fe6239;
+  color: #ffffff;
+  border-color: rgba(0, 0, 0, 0.12);
+  border-bottom-color: #b83c1c;
+}
+
+.button--orange .button__flair:before {
+  background-color: #002716;
+}
+
+.button--orange:hover {
+  color: #ffffff;
+}
+
+/* ── VARIANT 5: White Pill Button ── */
+.button--white {
+  background-color: #ffffff;
+  color: #002716;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 3.5px solid rgba(0, 0, 0, 0.18);
+}
+
+.button--white .button__flair:before {
+  background-color: #1fae77;
+}
+
+.button--white:hover {
+  color: #ffffff;
+}
+.button--white:hover .button__label {
+  color: #ffffff;
+}
+
+/* Ukuran Tombol */
+.button--sm {
+  padding: 0.45rem 1rem;
+  font-size: 0.75rem;
+  border-bottom-width: 2.5px;
+}
+
+.button--lg {
+  padding: 1rem 2.25rem;
+  font-size: 1rem;
+  border-bottom-width: 4px;
+}
+
 
 

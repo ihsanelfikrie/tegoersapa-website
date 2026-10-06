@@ -5,7 +5,7 @@ import { photographyDetailPages } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Traditional Photography — Tegoer Sapa",
   description:
-    "Dokumentasi prosesi adat nusantara yang autentik, khidmat, dan penuh makna di Medan dan sekitarnya oleh fotografer profesional Tegoer Sapa.",
+    "Dokumentasi prosesi adat nusantara yang autentik, khidmat, dan penuh makna di Banjarbaru dan sekitarnya oleh fotografer profesional Tegoer Sapa.",
 };
 
 export default function TraditionalPhotographyPage() {

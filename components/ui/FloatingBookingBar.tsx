@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useBooking } from "@/lib/BookingContext";
+import Button from "@/components/ui/Button";
 
 export default function FloatingBookingBar() {
   const pathname = usePathname();
@@ -62,15 +63,16 @@ export default function FloatingBookingBar() {
           </div>
 
           <div className="flex items-center gap-1.5">
-            <Link
+            <Button
               href="/booking"
-              className="inline-flex items-center gap-1.5 bg-brand-green hover:bg-brand-green/90 text-white font-bold text-xs sm:text-sm px-4 sm:px-5 py-2.5 rounded-full transition-all duration-200 hover:scale-[1.02] shadow-md border-b-2 border-black/20"
+              variant="primary"
+              size="sm"
             >
               <span>Booking</span>
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
-            </Link>
+            </Button>
 
             <button
               onClick={clearAll}

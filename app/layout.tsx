@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { BookingProvider } from "@/lib/BookingContext";
 import FloatingBookingBar from "@/components/ui/FloatingBookingBar";
+import GlobalButtonFlair from "@/components/ui/GlobalButtonFlair";
 
 /**
  * Font utama: Hoss Round (file lokal di public/fonts).
@@ -37,14 +38,16 @@ export const metadata: Metadata = {
     template: "%s | Tegoer Sapa",
   },
   description:
-    "Tegoer Sapa menyediakan layanan photobooth, photobox, dan professional photography untuk wedding, birthday, graduation, dan event corporate di Medan.",
+    "Tegoer Sapa menyediakan layanan photobooth, photobox, dan professional photography untuk wedding, birthday, graduation, dan event corporate di Banjarbaru, Kalimantan Selatan.",
   keywords: [
     "photobooth",
     "photobox",
     "professional photo",
     "wedding photobooth",
     "graduation photo",
-    "fotografer medan",
+    "fotografer banjarbaru",
+    "photobooth banjarbaru",
+    "fotografer kalimantan selatan",
     "Tegoer Sapa",
   ],
   authors: [{ name: "Tegoer Sapa" }],
@@ -64,7 +67,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Tegoer Sapa — Respect The Moment Every Second Matters",
     description:
-      "Layanan photobooth, photobox, dan dokumentasi foto profesional untuk berbagai momen berharga di Medan.",
+      "Layanan photobooth, photobox, dan dokumentasi foto profesional untuk berbagai momen berharga di Banjarbaru, Kalimantan Selatan.",
     url: "https://tegoersapa.com",
     siteName: "Tegoer Sapa",
     locale: "id_ID",
@@ -93,6 +96,52 @@ export const metadata: Metadata = {
       { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
+  alternates: {
+    canonical: "https://tegoersapa.com",
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "PhotographyBusiness",
+  name: "Tegoer Sapa",
+  image: "https://tegoersapa.com/icon.png",
+  description:
+    "Layanan photobooth, photobox, dan professional photography untuk wedding, graduation, birthday, dan corporate event di Banjarbaru, Kalimantan Selatan.",
+  url: "https://tegoersapa.com",
+  telephone: "+6282254092927",
+  priceRange: "$$",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Banjarbaru",
+    addressRegion: "Kalimantan Selatan",
+    addressCountry: "ID",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: -3.4402,
+    longitude: 114.8302,
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
+      opens: "09:00",
+      closes: "21:00",
+    },
+  ],
+  sameAs: [
+    "https://instagram.com/tegoersapa.photobooth",
+    "https://tiktok.com/@tegoersapaa",
+  ],
 };
 
 export default function RootLayout({
@@ -102,8 +151,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" className={hossRound.variable} suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="min-h-screen flex flex-col antialiased" suppressHydrationWarning>
         <BookingProvider>
+          <GlobalButtonFlair />
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />

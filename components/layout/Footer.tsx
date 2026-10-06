@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { brand, contact } from "@/lib/content";
@@ -8,25 +7,22 @@ import { brand, contact } from "@/lib/content";
 /**
  * Footer global untuk website Tegoer Sapa.
  * Didesain mengikuti bentuk/arsitektur lengkung referensi:
- * 1. Banner newsletter atas dengan grafis pita melingkar (3D tubular looping torus) yang jelas & terlihat.
- * 2. Transisi kurva melandai (dipping arc) yang tegas & kontras tinggi memisahkan banner atas dan footer bawah.
+ * 1. Banner tagline atas dengan transisi gradasi lembut dan grafis pita melingkar.
+ * 2. Transisi kurva melandai (dipping arc) yang tegas memisahkan banner atas dan footer bawah.
  * 3. Tata letak 4 kolom (Brand Info + Alamat & Kontak + Layanan + Tautan Cepat).
  * 4. Siluet bukit gelombang (wave dunes) di bagian dasar dan teks hak cipta terpusat di tengah.
  */
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [isSubscribed, setIsSubscribed] = useState(false);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email.trim()) return;
-    setIsSubscribed(true);
-  };
-
   return (
     <footer className="relative w-full overflow-hidden bg-[#002716]">
-      {/* ─── 1. TOP NEWSLETTER / CTA BANNER ────────────────────────────── */}
-      <section className="relative bg-gradient-to-b from-[#027845] via-[#02683c] to-[#015330] text-white pt-20 pb-16 sm:pt-24 sm:pb-20 overflow-hidden">
+      {/* ─── 1. TOP BRAND TAGLINE BANNER (Transisi Halus: Putih -> Hijau Muda -> Emerald Green) ─── */}
+      <section
+        className="relative text-white pt-10 sm:pt-16 lg:pt-24 pb-8 sm:pb-14 lg:pb-16 overflow-hidden text-center"
+        style={{
+          background:
+            "linear-gradient(to bottom, #ffffff 0%, #edf9f3 5%, #a8eed0 12%, #38ca86 20%, #039255 28%, #027443 38%, #015e36 52%, #015330 75%, #015330 100%)",
+        }}
+      >
         {/* Ambient Decorative Looping Ribbon / Torus Graphic ("Melingkar" sesuai referensi) */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
           <svg
@@ -38,14 +34,14 @@ export default function Footer() {
           >
             <defs>
               <linearGradient id="melingkarGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.32" />
-                <stop offset="50%" stopColor="#c3f4f7" stopOpacity="0.22" />
-                <stop offset="100%" stopColor="#3aaa35" stopOpacity="0.12" />
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.20" />
+                <stop offset="50%" stopColor="#c3f4f7" stopOpacity="0.14" />
+                <stop offset="100%" stopColor="#3aaa35" stopOpacity="0.08" />
               </linearGradient>
               <linearGradient id="melingkarGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.28" />
-                <stop offset="60%" stopColor="#ffffff" stopOpacity="0.18" />
-                <stop offset="100%" stopColor="#3aaa35" stopOpacity="0.08" />
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.18" />
+                <stop offset="60%" stopColor="#ffffff" stopOpacity="0.10" />
+                <stop offset="100%" stopColor="#3aaa35" stopOpacity="0.05" />
               </linearGradient>
             </defs>
 
@@ -56,14 +52,14 @@ export default function Footer() {
               strokeWidth="110"
               strokeLinecap="round"
             />
-            {/* Busur penyambung di belakang form input */}
+            {/* Busur penyambung di belakang */}
             <path
               d="M480,260 C700,330 900,280 1060,200"
               stroke="url(#melingkarGrad1)"
               strokeWidth="95"
               strokeLinecap="round"
             />
-            {/* Lingkaran cincin melingkar besar (Giant Oval Torus Loop) di sisi kanan */}
+            {/* Lingkaran cincin melingkar besar di sisi kanan */}
             <ellipse
               cx="1080"
               cy="130"
@@ -76,55 +72,20 @@ export default function Footer() {
           </svg>
         </div>
 
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center z-10">
-          {/* Badge / Category Header */}
-          <span className="inline-block text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em] text-brand-sky mb-3 sm:mb-4 drop-shadow-sm">
-            Newsletter & Update
-          </span>
-
-          {/* Headline */}
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold text-white tracking-tight leading-tight sm:leading-snug max-w-2xl mx-auto mb-8 sm:mb-10 drop-shadow">
-            Dapatkan info promo & inspirasi momen spesial Anda
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 z-10 py-2 sm:py-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] font-black text-white tracking-tight leading-tight sm:leading-snug max-w-2xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.18)]">
+            &ldquo;{brand.tagline}&rdquo;
           </h2>
-
-          {/* Newsletter Form: Pill Input & Pill Submit Button */}
-          {isSubscribed ? (
-            <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/30 text-white px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold shadow-lg">
-              <span className="w-2 h-2 rounded-full bg-brand-sky animate-pulse" />
-              <span>Terima kasih! Kami akan mengirimkan update penawaran terbaru untuk Anda.</span>
-            </div>
-          ) : (
-            <form
-              onSubmit={handleSubscribe}
-              className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto w-full px-2"
-            >
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Alamat Email Anda"
-                className="w-full bg-white text-gray-900 placeholder-gray-400 text-sm font-medium px-6 py-3.5 rounded-full shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-green/60 transition-all min-h-[48px]"
-              />
-              <button
-                type="submit"
-                className="w-full sm:w-auto bg-[#002716] hover:bg-brand-green text-white font-bold text-xs uppercase tracking-wider px-8 py-3.5 rounded-full transition-all duration-300 shadow-xl flex-shrink-0 cursor-pointer active:scale-95 min-h-[48px] flex items-center justify-center"
-              >
-                Kirim
-              </button>
-            </form>
-          )}
         </div>
       </section>
 
       {/* ─── 2. DRAMATIC DIPPING CURVE TRANSITION ───────────────────────── */}
-      {/* Kurva melandai melengkung ke bawah dengan kontras tegas antara hijau terang (#015330) dan hijau dasar gelap (#002716) */}
       <div className="relative w-full overflow-hidden leading-none -mt-px bg-[#015330]">
         <svg
           viewBox="0 0 1440 140"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-16 sm:h-24 md:h-36 lg:h-44 text-[#002716] fill-current block"
+          className="w-full h-7 sm:h-12 md:h-18 lg:h-28 text-[#002716] fill-current block"
           preserveAspectRatio="none"
         >
           <path d="M0,0 C380,140 1060,140 1440,0 L1440,140 L0,140 Z" />
@@ -132,15 +93,15 @@ export default function Footer() {
       </div>
 
       {/* ─── 3. MAIN DARK FOOTER BODY ──────────────────────────────────── */}
-      <div className="relative bg-[#002716] text-white pt-6 sm:pt-10 pb-16 sm:pb-20">
+      <div className="relative bg-[#002716] text-white pt-2 sm:pt-6 pb-6 sm:pb-12">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 pb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 lg:gap-8 pb-6 sm:pb-10">
             
             {/* Kolom 1: Brand Info (Left Side - 4 Cols) */}
             <div className="lg:col-span-4 flex flex-col items-start pr-0 lg:pr-6">
               <Link
                 href="/"
-                className="inline-block mb-6 group"
+                className="inline-block mb-3 sm:mb-5 group"
                 aria-label={`${brand.name} — Kembali ke beranda`}
               >
                 <Image
@@ -149,186 +110,193 @@ export default function Footer() {
                   width={1258}
                   height={1258}
                   unoptimized
-                  className="w-32 sm:w-36 h-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="w-28 sm:w-36 h-auto object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </Link>
-              <p className="text-white/80 text-sm leading-relaxed mb-4 font-semibold tracking-wide">
+              <p className="text-white text-xs sm:text-sm leading-snug mb-1.5 sm:mb-3 font-semibold tracking-wide">
                 {brand.tagline}
               </p>
-              <p className="text-white/50 text-xs leading-relaxed font-medium max-w-sm">
-                Penyedia layanan photobooth, photobox, dan professional photography berkualitas tinggi untuk setiap perayaan berharga Anda di Medan dan sekitarnya.
+              <p className="text-white/80 text-[11px] sm:text-xs leading-relaxed font-medium max-w-sm">
+                Penyedia layanan photobooth, photobox, dan professional photography berkualitas tinggi untuk setiap perayaan berharga Anda di Banjarbaru, Kalimantan Selatan dan sekitarnya.
               </p>
             </div>
 
             {/* 3 Kolom Kanan (Matching Address, Programs, Quick Links - 8 Cols) */}
-            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-8">
+            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-8">
               
-              {/* Kolom: ALAMAT & KONTAK */}
-              <div>
-                <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-sky/80 mb-3">
-                  Alamat
-                </h4>
-                <p className="text-sm text-white/80 font-medium leading-relaxed mb-6">
-                  Kota Medan, Sumatera Utara<br />
-                  Indonesia
-                </p>
+              {/* Kolom: ALAMAT & KONTAK (2 Kolom kompak di Mobile) */}
+              <div className="grid grid-cols-2 sm:grid-cols-1 gap-3.5 sm:gap-0">
+                <div>
+                  <h4 className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-brand-sky mb-1.5 sm:mb-2">
+                    Alamat
+                  </h4>
+                  <p className="text-xs sm:text-sm text-white/90 font-medium leading-relaxed mb-3 sm:mb-5">
+                    Kota Banjarbaru, Kalsel<br />
+                    Indonesia
+                  </p>
 
-                <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-sky/80 mb-3">
-                  Telepon / WA
-                </h4>
-                <div className="space-y-2 mb-6">
-                  {contact.whatsapp.map((wa) => (
-                    <div key={wa.raw}>
-                      <span className="block text-[10px] text-white/40 uppercase font-semibold tracking-wider">
-                        {wa.label}
-                      </span>
-                      <a
-                        href={`https://wa.me/${wa.raw}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-white/90 hover:text-brand-green font-bold transition-colors inline-block mt-0.5"
-                      >
-                        {wa.number}
-                      </a>
-                    </div>
-                  ))}
+                  <h4 className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-brand-sky mb-1">
+                    Email
+                  </h4>
+                  <a
+                    href={`mailto:${brand.email}`}
+                    className="text-xs sm:text-sm text-white hover:text-brand-green font-medium transition-colors inline-block break-all"
+                  >
+                    {brand.email}
+                  </a>
                 </div>
 
-                <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-sky/80 mb-2">
-                  Email
-                </h4>
-                <a
-                  href={`mailto:${brand.email}`}
-                  className="text-sm text-white/90 hover:text-brand-green font-medium transition-colors inline-block break-all"
-                >
-                  {brand.email}
-                </a>
+                <div>
+                  <h4 className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-brand-sky mb-1.5 sm:mb-2">
+                    Telepon / WA
+                  </h4>
+                  <div className="space-y-2 sm:space-y-2.5">
+                    {contact.whatsapp.map((wa) => (
+                      <div key={wa.raw}>
+                        <span className="block text-[9px] sm:text-[10px] text-brand-cream/90 uppercase font-bold tracking-wider">
+                          {wa.label}
+                        </span>
+                        <a
+                          href={`https://wa.me/${wa.raw}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs sm:text-sm text-white hover:text-brand-green font-bold transition-colors inline-block mt-0.5"
+                        >
+                          {wa.number}
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              {/* Kolom: LAYANAN (Programs) */}
-              <div>
-                <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-sky/80 mb-4">
-                  Layanan
-                </h4>
-                <ul className="space-y-2">
-                  <li>
-                    <Link
-                      href="/photobooth#photobooth"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
-                    >
-                      Photobooth Instant
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/photobooth#photobox"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
-                    >
-                      Photobox Self Studio
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/photography/traditional"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
-                    >
-                      Traditional Photography
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/photography/wedding"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
-                    >
-                      Wedding Documentation
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/photography/graduation"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
-                    >
-                      Graduation Photography
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/photography/studio"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
-                    >
-                      Studio Professional
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+              {/* Wrapper Kolom LAYANAN & TAUTAN CEPAT (2 Kolom Berdampingan di Mobile) */}
+              <div className="grid grid-cols-2 gap-3.5 sm:contents">
+                {/* Kolom: LAYANAN (Programs) */}
+                <div>
+                  <h4 className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-brand-sky mb-2 sm:mb-3">
+                    Layanan
+                  </h4>
+                  <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
+                    <li>
+                      <Link
+                        href="/photobooth#photobooth"
+                        className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
+                      >
+                        Photobooth Instant
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/photobooth#photobox"
+                        className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
+                      >
+                        Photobox Self Studio
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/photography/traditional"
+                        className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
+                      >
+                        Traditional Photography
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/photography/wedding"
+                        className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
+                      >
+                        Wedding Documentation
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/photography/graduation"
+                        className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
+                      >
+                        Graduation Photography
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/photography/studio"
+                        className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
+                      >
+                        Studio Professional
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
 
-              {/* Kolom: TAUTAN CEPAT (Quick Links) */}
-              <div>
-                <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-sky/80 mb-4">
-                  Tautan Cepat
-                </h4>
-                <ul className="space-y-2">
-                  <li>
-                    <Link
-                      href="/"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
-                    >
-                      Beranda
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/pricelist"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
-                    >
-                      Pricelist Paket
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/gallery"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
-                    >
-                      Galeri Foto
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/tentang"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
-                    >
-                      Tentang Kami
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/kontak"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
-                    >
-                      Hubungi Kami
-                    </Link>
-                  </li>
-                  <li>
-                    <a
-                      href="https://instagram.com/tegoersapa.photobooth"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
-                    >
-                      Instagram Photobooth ↗
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://tiktok.com/@tegoersapaa"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-white/70 hover:text-white transition-colors font-medium block py-1"
-                    >
-                      TikTok ↗
-                    </a>
-                  </li>
-                </ul>
+                {/* Kolom: TAUTAN CEPAT (Quick Links) */}
+                <div>
+                  <h4 className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-brand-sky mb-2 sm:mb-3">
+                    Tautan Cepat
+                  </h4>
+                  <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
+                    <li>
+                      <Link
+                        href="/"
+                        className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
+                      >
+                        Beranda
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/pricelist"
+                        className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
+                      >
+                        Pricelist Paket
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/gallery"
+                        className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
+                      >
+                        Galeri Foto
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/tentang"
+                        className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
+                      >
+                        Tentang Kami
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/kontak"
+                        className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
+                      >
+                        Hubungi Kami
+                      </Link>
+                    </li>
+                    <li>
+                      <a
+                        href="https://instagram.com/tegoersapa.photobooth"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
+                      >
+                        Instagram ↗
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://tiktok.com/@tegoersapaa"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
+                      >
+                        TikTok ↗
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
 
             </div>
@@ -336,20 +304,20 @@ export default function Footer() {
           </div>
 
           {/* ─── 4. BOTTOM CREDITS (Centered single line matching reference) ─── */}
-          <div className="pt-8 border-t border-white/10 text-center">
-            <p className="text-xs text-white/40 font-medium">
+          <div className="pt-4 sm:pt-6 border-t border-white/10 text-center">
+            <p className="text-[11px] sm:text-xs text-white/70 font-medium">
               © {new Date().getFullYear()} {brand.name}. Seluruh hak cipta dilindungi.
             </p>
           </div>
         </div>
 
-        {/* Decorative Wave Dunes at bottom (matching reference bottom ambient hill layers) */}
+        {/* Decorative Wave Dunes at bottom */}
         <div className="absolute bottom-0 left-0 right-0 pointer-events-none overflow-hidden opacity-30">
           <svg
             viewBox="0 0 1440 120"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-16 sm:h-24 text-[#00140a] fill-current"
+            className="w-full h-10 sm:h-20 text-[#00140a] fill-current"
             preserveAspectRatio="none"
           >
             <path d="M0,60 C320,15 500,100 820,50 C1140,5 1300,90 1440,50 L1440,120 L0,120 Z" />

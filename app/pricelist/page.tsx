@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -8,69 +7,67 @@ import { pricelistPackages, type PricePackage } from "@/lib/content";
 import { generateWhatsAppLink } from "@/lib/whatsapp";
 import { useBooking } from "@/lib/BookingContext";
 
-const CATEGORIES = ["Semua", "Profesional Studio", "Outdoor Graduation"] as const;
+import HeroClouds from "@/components/ui/HeroClouds";
+import GrassyHill from "@/components/ui/GrassyHill";
+import Button from "@/components/ui/Button";
 
 export default function PricelistPage() {
   const router = useRouter();
   const { selectedPackage, selectPackage } = useBooking();
-  const [selectedCategory, setSelectedCategory] = useState<typeof CATEGORIES[number]>("Semua");
-
-  const filteredPackages = pricelistPackages.filter((pkg) => {
-    if (selectedCategory === "Semua") return true;
-    return pkg.kategori === selectedCategory;
-  });
 
   return (
     <div className="bg-white min-h-screen text-black">
       {/* ─── Hero Header ────────────────────────────────────────── */}
-      <section className="relative pt-32 pb-16 bg-brand-dark text-white overflow-hidden">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative pt-32 pb-24 sm:pb-28 lg:pb-36 bg-brand-sky text-brand-dark overflow-hidden">
+        {/* Floating Clouds Background */}
+        <HeroClouds />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-green/15 border border-brand-green/30 text-brand-green text-xs font-bold uppercase tracking-[0.2em] mb-4">
-              Transparan & Terjangkau
-            </span>
-            <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white leading-tight">
-              Daftar Harga & <span className="text-brand-green">Paket Layanan</span>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+              <span className="hero-word">Daftar</span>{" "}
+              <span className="hero-word hero-word-green">Harga</span>
             </h1>
-            <div className="w-14 h-1 rounded-full bg-brand-green my-5" />
-            <p className="text-base sm:text-lg text-white/70 font-medium leading-relaxed">
-              Pilihan paket dokumentasi wisuda outdoor dengan format unlimited shoot, serta sesi foto studio profesional di Medan.
+            <div className="w-16 h-1 rounded-full bg-brand-dark my-5" />
+            <p className="text-base sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-2xl">
+              Pilihan paket dokumentasi wisuda outdoor dengan format unlimited shoot di Banjarbaru, Kalimantan Selatan.
             </p>
           </div>
         </div>
+
+        {/* Grassy Hill Bottom Decoration */}
+        <GrassyHill />
       </section>
 
       {/* ─── Filter & Packages Grid ─────────────────────────────── */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Info Note according to pricelist.md */}
         <div className="mb-10 p-4 sm:p-5 rounded-2xl bg-brand-cream/60 border border-brand-green/20 max-w-3xl mx-auto flex items-start gap-3.5 text-xs sm:text-sm text-brand-dark">
-          <span className="text-base flex-shrink-0">💡</span>
+          <span className="text-base flex-shrink-0">🎓</span>
           <p className="leading-relaxed font-medium">
-            <strong>Catatan:</strong> Paket <strong>Outdoor Graduation</strong> tercantum dengan harga lengkap dan fasilitas <em>unlimited shoot</em>. Untuk kategori <strong>Profesional Studio</strong>, berlaku sistem konfirmasi ketersediaan jadwal & rate langsung bersama admin (<em>By Request</em>).
+            <strong>Catatan:</strong> Seluruh paket <strong>Outdoor Graduation</strong> di bawah ini tercantum dengan harga transparan, fasilitas <em>unlimited shoot</em>, dan seluruh soft file lengkap.
           </p>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="flex items-center sm:justify-center gap-2 sm:gap-3 mb-12 overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 pb-2 flex-nowrap sm:flex-wrap">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={[
-                "whitespace-nowrap flex-shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 cursor-pointer",
-                selectedCategory === cat
-                  ? "bg-brand-dark text-white shadow-sm"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-brand-dark",
-              ].join(" ")}
-            >
-              {cat}
-            </button>
-          ))}
+        {/* Section Header */}
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-100 max-w-7xl mx-auto">
+          <div>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green block">
+              Kategori Layanan
+            </span>
+            <h2 className="text-xl sm:text-2xl font-black text-brand-dark">
+              Paket Outdoor Graduation
+            </h2>
+          </div>
+          <span className="text-xs font-bold text-gray-500 bg-gray-100 px-3.5 py-1.5 rounded-full">
+            {pricelistPackages.length} Pilihan Paket
+          </span>
         </div>
 
         {/* Packages Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {filteredPackages.map((pkg: PricePackage) => {
+          {pricelistPackages.map((pkg: PricePackage) => {
             const waLink = generateWhatsAppLink(pkg.whatsappTemplate, pkg.nama);
             const isSelected = selectedPackage?.id === pkg.id;
 
@@ -152,8 +149,11 @@ export default function PricelistPage() {
                 </div>
 
                 <div className="px-6 pb-6 pt-2 sm:px-7 sm:pb-7 space-y-2">
-                  <button
+                  <Button
                     type="button"
+                    variant={isSelected ? "primary" : "dark"}
+                    size="md"
+                    className="w-full"
                     onClick={() => {
                       selectPackage(
                         {
@@ -167,18 +167,12 @@ export default function PricelistPage() {
                       );
                       router.push("/booking");
                     }}
-                    className={[
-                      "w-full inline-flex items-center justify-center gap-2 text-xs font-bold tracking-wide px-5 py-3.5 rounded-2xl transition-all duration-200 hover:-translate-y-0.5 cursor-pointer shadow-sm",
-                      isSelected
-                        ? "bg-brand-green text-white hover:bg-brand-green/90"
-                        : "bg-brand-dark hover:bg-brand-green text-white",
-                    ].join(" ")}
                   >
                     <span>{isSelected ? "✓ Paket Terpilih • Lanjut Form Booking" : "Pilih Paket Ini"}</span>
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
-                  </button>
+                  </Button>
 
                   <a
                     href={waLink}

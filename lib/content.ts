@@ -239,11 +239,10 @@ export const photographyDetails: PhotographyCategoryDetail[] = [
     highlights: [
       "Dokumentasi urutan prosesi adat secara menyeluruh tanpa terlewat",
       "Penangkapan detail ornamen, motif busana adat, dan tata rias",
-      "Fotografer berpengalaman mendampingi prosesi budaya di Medan & sekitarnya",
+      "Fotografer berpengalaman mendampingi prosesi budaya di Banjarbaru & sekitarnya",
       "Color grading elegan yang mempertahankan keaslian warna busana tradisional",
     ],
     galleryFilter: { kategori: "professional" },
-    pricelistFilter: "Profesional Studio",
     whatsappMessage: "Halo kak, saya ingin konsultasi dokumentasi Traditional Photography",
   },
   {
@@ -260,7 +259,6 @@ export const photographyDetails: PhotographyCategoryDetail[] = [
       "Tersedia opsi cetak foto 5R, album kolase eksklusif, dan cetak kanvas",
     ],
     galleryFilter: { kategori: "photobooth", sub: "wedding" },
-    pricelistFilter: "Profesional Studio",
     whatsappMessage: "Halo kak, saya ingin tanya paket Wedding Documentation / Prewedding",
   },
   {
@@ -269,9 +267,9 @@ export const photographyDetails: PhotographyCategoryDetail[] = [
     title: "Graduation Photography",
     subtitle: "Abadikan Momen Kelulusan & Kebanggaan Bersama",
     description:
-      "Pencapaian wisuda adalah buah dari kerja keras dan kebanggaan keluarga. Kami menghadirkan sesi foto wisuda outdoor di lingkungan kampus maupun indoor studio ber-AC dengan berbagai pilihan paket personal, bestie, maupun keluarga besar.",
+      "Pencapaian wisuda adalah buah dari kerja keras dan kebanggaan keluarga. Kami menghadirkan sesi foto wisuda outdoor di lingkungan kampus dengan berbagai pilihan paket personal, bestie, maupun keluarga besar.",
     highlights: [
-      "Pilihan sesi Outdoor Kampus dan Indoor Studio",
+      "Pilihan sesi Outdoor Kampus",
       "Bisa foto individual, bersama bestie, sahabat satu kelompok, hingga keluarga",
       "Unlimited shoot selama durasi sesi dengan retouched photos berkualitas",
       "Paket harga terjangkau mulai dari Basic, Premium, Homie, Bestie, hingga Framely",
@@ -294,7 +292,6 @@ export const photographyDetails: PhotographyCategoryDetail[] = [
       "Cetak foto 5R berkualitas lab dan soft file lengkap",
     ],
     galleryFilter: { kategori: "professional", sub: "indoor-graduation" },
-    pricelistFilter: "Profesional Studio",
     whatsappMessage: "Halo kak, saya ingin booking sesi Studio Professional Photo",
   },
 ];
@@ -422,91 +419,15 @@ export const contact = {
 export type PricePackage = {
   id: string;
   nama: string;
-  kategori: "Profesional Studio" | "Outdoor Graduation";
+  kategori: "Outdoor Graduation";
   fitur: string[];
   harga: string;
   image?: string;
   /** key untuk generateWhatsAppLink() */
-  whatsappTemplate: "personal" | "family" | "group" | "indoor-graduation" | "prewed" | "outdoor-basic" | "outdoor-premium" | "outdoor-homie" | "outdoor-bestie" | "outdoor-unity" | "outdoor-framely";
+  whatsappTemplate: "outdoor-basic" | "outdoor-premium" | "outdoor-homie" | "outdoor-bestie" | "outdoor-unity" | "outdoor-framely";
 };
 
 export const pricelistPackages: PricePackage[] = [
-  // ── Profesional Studio (By Request / Hubungi Admin sesuai pricelist.md) ──
-  {
-    id: "personal",
-    nama: "Personal",
-    kategori: "Profesional Studio",
-    image: "/images/pricelist/personal.webp",
-    fitur: [
-      "1 Orang, 1 Kostum, 1 Background",
-      "20 Menit Sesi",
-      "15 Photo Edit",
-      "5 Lembar Cetak 5R",
-      "All Soft File",
-    ],
-    harga: "Hubungi Admin",
-    whatsappTemplate: "personal",
-  },
-  {
-    id: "family",
-    nama: "Family",
-    kategori: "Profesional Studio",
-    image: "/images/pricelist/family.webp",
-    fitur: [
-      "3–5 Orang (bisa tambah orang)",
-      "20 Menit Sesi",
-      "15 Photo Edit",
-      "5 Lembar Cetak 5R",
-      "All Soft File",
-    ],
-    harga: "Hubungi Admin",
-    whatsappTemplate: "family",
-  },
-  {
-    id: "group",
-    nama: "Group",
-    kategori: "Profesional Studio",
-    image: "/images/pricelist/group.webp",
-    fitur: [
-      "3 Orang, 1 Background (bisa tambah orang)",
-      "20 Menit Sesi",
-      "15 Photo Edit",
-      "Cetak 5R per Orang",
-      "All Soft File",
-    ],
-    harga: "Hubungi Admin",
-    whatsappTemplate: "group",
-  },
-  {
-    id: "indoor-graduation",
-    nama: "Indoor Graduation",
-    kategori: "Profesional Studio",
-    image: "/images/pricelist/indoor-graduation.webp",
-    fitur: [
-      "3 Orang, 1 Background (bisa tambah orang)",
-      "20 Menit Sesi",
-      "15 Photo Edit",
-      "Cetak 5R per Orang",
-      "All Soft File",
-    ],
-    harga: "Hubungi Admin",
-    whatsappTemplate: "indoor-graduation",
-  },
-  {
-    id: "prewed",
-    nama: "Prewed / Poswed",
-    kategori: "Profesional Studio",
-    image: "/images/pricelist/prewed-poswed.webp",
-    fitur: [
-      "Pasangan, 1 Kostum, 1 Background",
-      "30 Menit Sesi",
-      "15 Photo Edit",
-      "5 Lembar Cetak 5R",
-      "All Soft File",
-    ],
-    harga: "Hubungi Admin",
-    whatsappTemplate: "prewed",
-  },
   // ── Outdoor Graduation (Lengkap sesuai pricelist.md) ───────────────────
   {
     id: "outdoor-basic",
@@ -746,7 +667,7 @@ export const photographyDetailPages: Record<
     highlights: [
       "Dokumentasi urutan prosesi adat secara menyeluruh tanpa terlewat",
       "Penangkapan detail ornamen, motif busana adat, dan tata rias tradisional",
-      "Fotografer berpengalaman mendampingi prosesi budaya di Medan & sekitarnya",
+      "Fotografer berpengalaman mendampingi prosesi budaya di Banjarbaru & sekitarnya",
       "Color grading elegan yang mempertahankan keaslian warna busana tradisional",
     ],
     galleryItems: [
@@ -793,7 +714,7 @@ export const photographyDetailPages: Record<
           "Unlimited shoot momen prosesi sakral",
           "30 foto pilihan edit & color grade",
           "Seluruh soft file resolusi tinggi via Google Drive",
-          "+ Penyesuaian lokasi prosesi di Medan & sekitarnya",
+          "+ Penyesuaian lokasi prosesi di Banjarbaru & sekitarnya",
         ],
         whatsappUrl:
           "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Traditional%20Photography%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0ALokasi%20Acara%20%3A%0AJenis%20Adat%20%3A%0APaket%20%3A%20Half-Day%20Traditional",
@@ -1325,7 +1246,7 @@ export const photographyDetailPages: Record<
       badge: "Slot Terbatas",
       title: "Booking Jadwal Foto Wisuda Anda Sekarang",
       description:
-        "Slot sesi foto wisuda cepat penuh pada periode kelulusan kampus di Medan. Amankan tanggal dan waktu Anda sekarang!",
+        "Slot sesi foto wisuda cepat penuh pada periode kelulusan kampus di Banjarbaru & sekitarnya. Amankan tanggal dan waktu Anda sekarang!",
       buttonLabel: "Book Now via WhatsApp",
       bookingUrl:
         "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%2C%20saya%20mau%20booking%20sesi%20Foto%20Wisuda%20%2F%20Graduation",

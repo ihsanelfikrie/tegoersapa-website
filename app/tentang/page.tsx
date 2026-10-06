@@ -1,32 +1,40 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { brand } from "@/lib/content";
+import HeroClouds from "@/components/ui/HeroClouds";
+import GrassyHill from "@/components/ui/GrassyHill";
+import Button from "@/components/ui/Button";
 
 export const metadata: Metadata = {
   title: "Tentang Kami",
   description:
-    "Cerita, visi, dan dedikasi Tegoer Sapa dalam menghadirkan layanan photobooth dan fotografi modern di Medan.",
+    "Cerita, visi, dan dedikasi Tegoer Sapa dalam menghadirkan layanan photobooth dan fotografi modern di Banjarbaru, Kalimantan Selatan.",
 };
 
 export default function TentangPage() {
   return (
     <div className="bg-white min-h-screen text-black">
       {/* ─── Hero Header ────────────────────────────────────────── */}
-      <section className="relative pt-32 pb-20 bg-brand-dark text-white overflow-hidden">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative pt-32 pb-24 sm:pb-28 lg:pb-36 bg-brand-sky text-brand-dark overflow-hidden">
+        {/* Floating Clouds Background */}
+        <HeroClouds />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-green/15 border border-brand-green/30 text-brand-green text-xs font-bold uppercase tracking-[0.2em] mb-4">
-              Mengenal Tegoer Sapa
-            </span>
-            <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white leading-tight">
-              Menghargai Setiap Detik, <span className="text-brand-green">Mengabadikan Setiap Momen</span>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+              <span className="hero-word">Tentang</span>{" "}
+              <span className="hero-word hero-word-green">Kami</span>
             </h1>
-            <div className="w-14 h-1 rounded-full bg-brand-green my-5" />
-            <p className="text-base sm:text-lg text-white/70 font-medium leading-relaxed">
-              &ldquo;{brand.tagline}&rdquo; adalah komitmen utama kami sejak hari pertama melayani Anda.
+            <div className="w-16 h-1 rounded-full bg-brand-dark my-5" />
+            <p className="text-base sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-2xl">
+              &ldquo;{brand.tagline}&rdquo; — Menghargai setiap detik, mengabadikan setiap momen kebersamaan dengan hangat dan penuh cerita.
             </p>
           </div>
         </div>
+
+        {/* Grassy Hill Bottom Decoration */}
+        <GrassyHill />
       </section>
 
       {/* ─── Story & Vision ─────────────────────────────────────── */}
@@ -70,8 +78,8 @@ export default function TentangPage() {
                 <p className="text-xs text-gray-500 font-bold uppercase mt-1">Dedikasi Penuh</p>
               </div>
               <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100 text-center">
-                <span className="text-3xl font-black text-brand-dark">Medan</span>
-                <p className="text-xs text-gray-500 font-bold uppercase mt-1">Lokasi Studio</p>
+                <span className="text-xl sm:text-2xl font-black text-brand-dark">Banjarbaru</span>
+                <p className="text-xs text-gray-500 font-bold uppercase mt-1">Kalimantan Selatan</p>
               </div>
             </div>
           </div>
@@ -89,18 +97,20 @@ export default function TentangPage() {
             Jadikan perayaan Anda berikutnya lebih berkesan bersama Tegoer Sapa.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
-            <Link
+            <Button
               href="/kontak"
-              className="px-6 py-3.5 rounded-full bg-brand-dark hover:bg-brand-green text-white text-xs font-bold tracking-wide transition-colors duration-200 text-center"
+              variant="dark"
+              size="md"
             >
               Hubungi Kami
-            </Link>
-            <Link
+            </Button>
+            <Button
               href="/gallery"
-              className="px-6 py-3.5 rounded-full bg-white hover:bg-gray-100 text-brand-dark border border-gray-200 text-xs font-bold tracking-wide transition-colors duration-200 text-center"
+              variant="stroke"
+              size="md"
             >
               Lihat Portofolio
-            </Link>
+            </Button>
           </div>
         </div>
       </section>

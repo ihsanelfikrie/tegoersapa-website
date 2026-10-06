@@ -8,6 +8,9 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import type { ServiceDetailPageData, ServicePageGalleryItem } from "@/lib/content";
 import { useBooking } from "@/lib/BookingContext";
+import HeroClouds from "@/components/ui/HeroClouds";
+import GrassyHill from "@/components/ui/GrassyHill";
+import Button from "@/components/ui/Button";
 
 interface ServiceDetailPageProps {
   data: ServiceDetailPageData;
@@ -109,61 +112,48 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
       ═══════════════════════════════════════════════════════════════ */}
       <section
         ref={heroRef}
-        className="relative pt-32 pb-20 lg:pt-36 lg:pb-24 bg-brand-dark text-white overflow-hidden"
+        className="relative pt-32 pb-24 sm:pb-28 lg:pt-36 lg:pb-36 bg-brand-sky text-brand-dark overflow-hidden"
         aria-label={`Pembuka Layanan ${data.title}`}
       >
-        {/* Subtle Ambient Glow */}
-        <div
-          aria-hidden="true"
-          className="absolute top-1/4 right-0 w-96 h-96 bg-brand-green/10 rounded-full blur-3xl pointer-events-none"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute -bottom-10 left-10 w-72 h-72 bg-brand-green/5 rounded-full blur-2xl pointer-events-none"
-        />
+        {/* Floating Clouds Background */}
+        <HeroClouds />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb Nav */}
-          <nav aria-label="Breadcrumb" className="hero-fade mb-6 flex items-center gap-2 text-xs font-semibold text-white/50">
-            <Link href="/" className="hover:text-white transition-colors">
+          <nav aria-label="Breadcrumb" className="hero-fade mb-6 flex items-center gap-2 text-xs font-semibold text-brand-dark/60">
+            <Link href="/" className="hover:text-brand-dark transition-colors">
               Home
             </Link>
             <span aria-hidden="true">/</span>
-            <Link href="/photography" className="hover:text-white transition-colors">
+            <Link href="/photography" className="hover:text-brand-dark transition-colors">
               Photography
             </Link>
             <span aria-hidden="true">/</span>
-            <span className="text-brand-green font-bold">{data.title}</span>
+            <span className="text-brand-dark font-bold">{data.title}</span>
           </nav>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
             {/* Teks Pembuka (Kiri) */}
             <div className="lg:col-span-7 flex flex-col items-start">
-              {data.tag && (
-                <span className="hero-fade inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-green/15 border border-brand-green/30 text-brand-green text-xs font-bold uppercase tracking-[0.2em] mb-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse" />
-                  {data.tag}
-                </span>
-              )}
 
-              <h1 className="hero-fade text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-[1.1]">
-                {data.title}
+              <h1 className="hero-fade text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1]">
+                <span className="hero-word">{data.title}</span>
               </h1>
 
-              <p className="hero-fade text-base sm:text-lg font-bold text-white/90 mt-3 leading-snug whitespace-pre-line">
+              <p className="hero-fade text-base sm:text-lg font-bold text-brand-dark/90 mt-3 leading-snug whitespace-pre-line">
                 {data.subtitle}
               </p>
 
-              <div className="hero-fade w-16 h-1 rounded-full bg-brand-green my-4" />
+              <div className="hero-fade w-16 h-1 rounded-full bg-brand-dark my-4" />
 
-              <p className="hero-fade text-xs sm:text-sm text-brand-green font-bold uppercase tracking-wider max-w-xl">
+              <p className="hero-fade text-xs sm:text-sm text-brand-dark/80 font-bold uppercase tracking-wider max-w-xl">
                 {data.description}
               </p>
 
               {/* Highlight Bullets */}
               <div className="hero-fade mt-5 space-y-2.5 max-w-xl">
                 {data.highlights.map((highlight, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-white/90 font-medium">
+                  <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-brand-dark/90 font-medium">
                     <span className="text-brand-green font-bold flex-shrink-0 mt-0.5">✓</span>
                     <span>{highlight}</span>
                   </div>
@@ -172,88 +162,103 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
 
               {/* Tagline / Slogan */}
               {data.tagline && (
-                <p className="hero-fade mt-4 text-xs sm:text-sm font-semibold text-white/80 tracking-wide italic">
+                <p className="hero-fade mt-4 text-xs sm:text-sm font-semibold text-brand-dark/70 tracking-wide italic">
                   &ldquo;{data.tagline}&rdquo;
                 </p>
               )}
 
               {/* Lokasi studio jika ada */}
               {data.studioAddress && (
-                <div className="hero-fade mt-3 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-white/80 text-xs font-semibold border border-white/15">
-                  <span>📍</span>
+                <p className="hero-fade mt-3 text-xs sm:text-sm font-semibold text-brand-dark/80 flex items-center gap-1.5">
+                  <span aria-hidden="true">📍</span>
                   <span>{data.studioAddress}</span>
-                </div>
+                </p>
               )}
 
               {/* Action Buttons */}
               <div className="hero-fade mt-8 flex flex-wrap items-center gap-3">
-                <a
+                <Button
                   href="#packages"
-                  className="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-green/90 text-white font-bold text-xs tracking-wide px-6 py-3.5 rounded-full transition-all duration-200 hover:-translate-y-0.5 border-b-[3px] border-black/20"
+                  variant="primary"
+                  size="md"
                 >
                   <span>Lihat Pilihan Paket</span>
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                   </svg>
-                </a>
+                </Button>
 
-                <a
-                  href={data.cta.bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 border border-white/20 hover:border-brand-green text-white font-bold text-xs tracking-wide px-6 py-3.5 rounded-full transition-colors duration-200 hover:bg-white/5"
-                >
-                  <span>Book Now</span>
-                  <span aria-hidden="true">↗</span>
-                </a>
+                {data.id === "studio" ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const noticeEl = document.getElementById("studio-unavailable-notice");
+                      if (noticeEl) {
+                        noticeEl.scrollIntoView({ behavior: "smooth" });
+                      } else {
+                        alert("Mohon maaf, layanan Studio Professional saat ini sedang tidak tersedia untuk booking.");
+                      }
+                    }}
+                    className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-amber-50 border border-amber-300 text-amber-900 font-bold text-xs sm:text-sm hover:bg-amber-100 transition-colors cursor-pointer"
+                  >
+                    <span>Studio Sedang Tidak Tersedia</span>
+                    <span aria-hidden="true">⚠️</span>
+                  </button>
+                ) : (
+                  <Button
+                    href={data.cta.bookingUrl}
+                    variant="stroke"
+                    size="md"
+                  >
+                    <span>Book Now</span>
+                    <span aria-hidden="true">↗</span>
+                  </Button>
+                )}
               </div>
             </div>
 
             {/* Foto Utama Relevan (Kanan) */}
             <div className="lg:col-span-5">
-              <div className="hero-fade relative aspect-[4/3] rounded-3xl overflow-hidden bg-brand-dark ring-1 ring-white/15 p-6 flex flex-col justify-between group shadow-2xl">
-                {/* Background Pattern / Texture */}
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-tr from-brand-dark via-brand-dark/95 to-brand-green/10"
-                />
-
+              <div className="hero-fade relative aspect-[4/3] rounded-3xl overflow-hidden bg-white/90 backdrop-blur-xs ring-1 ring-brand-dark/10 p-6 flex flex-col justify-between group shadow-xl">
                 {/* Decorative Camera Frame */}
                 <div className="relative z-10 flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green bg-brand-green/15 px-3 py-1 rounded-full border border-brand-green/30">
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-brand-green">
                     {data.heroBadge}
                   </span>
-                  <span className="text-[11px] font-bold text-white/50 font-mono tracking-wider">
+                  <span className="text-[11px] font-bold text-brand-dark/50 font-mono tracking-wider">
                     TEGOER SAPA / 01
                   </span>
                 </div>
 
                 <div className="relative z-10 my-auto text-center py-6">
-                  <div className="mx-auto w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300">
+                  <div className="mx-auto w-16 h-16 rounded-full bg-brand-green/10 border border-brand-green/20 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300">
                     <svg className="w-8 h-8 text-brand-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
                     </svg>
                   </div>
-                  <h2 className="text-white text-xl sm:text-2xl font-black tracking-wide">
+                  <h2 className="text-brand-dark text-xl sm:text-2xl font-black tracking-wide">
                     {data.title}
                   </h2>
-                  <p className="text-white/60 text-xs font-medium mt-1">
+                  <p className="text-brand-dark/60 text-xs font-medium mt-1">
                     Dokumentasi Profesional & Berkarakter
                   </p>
                 </div>
 
-                <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-[11px] text-white/50">
+                <div className="relative z-10 pt-4 border-t border-brand-dark/10 flex items-center justify-between text-[11px] text-brand-dark/60">
                   <span className="flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-brand-green" />
                     High Resolution Result
                   </span>
-                  <span className="font-semibold text-white/70">Medan, ID</span>
+                  <span className="font-semibold text-brand-dark/80">Banjarbaru, ID</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Grassy Hill Bottom Decoration */}
+        <GrassyHill />
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
@@ -447,6 +452,39 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
             </p>
           </div>
 
+          {/* Studio Unavailable Alert Banner */}
+          {data.id === "studio" && (
+            <div
+              id="studio-unavailable-notice"
+              className="max-w-2xl mx-auto mb-10 p-5 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 shadow-sm flex items-start gap-4 scroll-mt-28"
+            >
+              <span className="text-2xl flex-shrink-0" aria-hidden="true">⚠️</span>
+              <div>
+                <h4 className="font-extrabold text-sm sm:text-base text-amber-950">
+                  Layanan Studio Sedang Tidak Tersedia
+                </h4>
+                <p className="mt-1 text-xs sm:text-sm text-amber-900/80 leading-relaxed font-medium">
+                  Mohon maaf, saat ini kami sedang tidak menerima pemesanan sesi Studio Profesional. Anda tetap dapat menikmati portofolio visual kami di galeri atau memilih paket foto outdoor wisuda & wedding yang tersedia.
+                </p>
+                <div className="mt-3 flex flex-wrap items-center gap-3">
+                  <Link
+                    href="/pricelist"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-950 bg-amber-200/80 hover:bg-amber-300 px-3.5 py-1.5 rounded-full transition-colors"
+                  >
+                    <span>Lihat Pricelist Outdoor Wisuda</span>
+                    <span>→</span>
+                  </Link>
+                  <Link
+                    href="/gallery"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-900 hover:text-amber-950 underline underline-offset-2"
+                  >
+                    <span>Jelajahi Galeri Foto</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Category Filter Tabs jika tersedia */}
           {data.packageCategories && data.packageCategories.length > 0 && (
             <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-10">
@@ -558,52 +596,62 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
                   </div>
 
                   <div className="px-5 pb-5 pt-2 sm:px-7 sm:pb-7 space-y-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        selectPackage(
-                          {
-                            id: pkg.id,
-                            nama: pkg.nama,
-                            harga: pkg.harga,
-                            kategori: pkg.kategori || data.tag || data.title,
-                            badge: pkg.badge,
-                            fitur: pkg.fitur,
-                            placeholderNote: pkg.placeholderNote,
-                          },
-                          typeof window !== "undefined"
-                            ? window.location.pathname + "#packages"
-                            : "/photography/wedding#packages"
-                        );
+                    {data.id === "studio" || pkg.kategori?.toLowerCase().includes("studio") || pkg.id === "indoor-grad" ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          alert("Mohon maaf, layanan Studio Professional saat ini sedang tidak tersedia untuk booking.");
+                        }}
+                        className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-amber-50 border border-amber-300 text-amber-900 font-bold text-xs sm:text-sm hover:bg-amber-100 transition-colors cursor-pointer"
+                      >
+                        <span>Studio Sedang Tidak Tersedia</span>
+                        <span aria-hidden="true">⚠️</span>
+                      </button>
+                    ) : (
+                      <Button
+                        type="button"
+                        variant={isSelected ? "primary" : "dark"}
+                        size="md"
+                        className="w-full"
+                        onClick={() => {
+                          selectPackage(
+                            {
+                              id: pkg.id,
+                              nama: pkg.nama,
+                              harga: pkg.harga,
+                              kategori: pkg.kategori || data.tag || data.title,
+                              badge: pkg.badge,
+                              fitur: pkg.fitur,
+                              placeholderNote: pkg.placeholderNote,
+                            },
+                            typeof window !== "undefined"
+                              ? window.location.pathname + "#packages"
+                              : "/photography/wedding#packages"
+                          );
 
-                        // Flow: Package -> Add-on (opsional) -> Booking
-                        if (data.addOns && data.addOns.length > 0) {
-                          const addonsEl = document.getElementById("addons");
-                          if (addonsEl) {
-                            addonsEl.scrollIntoView({ behavior: "smooth" });
+                          // Flow: Package -> Add-on (opsional) -> Booking
+                          if (data.addOns && data.addOns.length > 0) {
+                            const addonsEl = document.getElementById("addons");
+                            if (addonsEl) {
+                              addonsEl.scrollIntoView({ behavior: "smooth" });
+                            } else {
+                              router.push("/booking");
+                            }
                           } else {
                             router.push("/booking");
                           }
-                        } else {
-                          router.push("/booking");
-                        }
-                      }}
-                      className={[
-                        "w-full inline-flex items-center justify-center gap-2 text-xs font-bold tracking-wide px-5 py-3.5 rounded-2xl transition-all duration-200 hover:-translate-y-0.5 cursor-pointer shadow-sm",
-                        isSelected
-                          ? "bg-brand-green text-white hover:bg-brand-green/90"
-                          : "bg-brand-dark hover:bg-brand-green text-white",
-                      ].join(" ")}
-                    >
-                      <span>
-                        {isSelected
-                          ? "✓ Paket Terpilih • Lanjut Add-on / Booking"
-                          : "Pilih Paket Ini"}
-                      </span>
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </button>
+                        }}
+                      >
+                        <span>
+                          {isSelected
+                            ? "✓ Paket Terpilih • Lanjut Add-on / Booking"
+                            : "Pilih Paket Ini"}
+                        </span>
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </Button>
+                    )}
 
                     {isSelected && (
                       <Link
@@ -740,22 +788,26 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
 
                 <div className="flex items-center gap-3 w-full sm:w-auto">
                   {selectedPackage ? (
-                    <Link
+                    <Button
                       href="/booking"
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-green hover:bg-brand-green/90 text-white font-bold text-xs tracking-wide px-7 py-3.5 rounded-2xl transition-all shadow-md hover:-translate-y-0.5"
+                      variant="primary"
+                      size="md"
+                      className="w-full sm:w-auto"
                     >
                       <span>Lanjut ke Form Booking</span>
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
-                    </Link>
+                    </Button>
                   ) : (
-                    <a
+                    <Button
                       href="#packages"
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-dark hover:bg-brand-green text-white font-bold text-xs tracking-wide px-6 py-3.5 rounded-2xl transition-all"
+                      variant="dark"
+                      size="md"
+                      className="w-full sm:w-auto"
                     >
                       <span>↑ Pilih Paket di Atas</span>
-                    </a>
+                    </Button>
                   )}
                 </div>
               </div>
@@ -764,7 +816,7 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
 
           <div className="mt-14 text-center">
             <p className="text-xs sm:text-sm text-gray-500 font-medium">
-              Butuh penyesuaian khusus atau ingin melihat pricelist layanan studio & wisuda?{" "}
+              Butuh penyesuaian khusus atau ingin melihat pricelist paket wisuda?{" "}
               <Link href="/pricelist" className="text-brand-green font-bold hover:underline">
                 Buka Halaman Pricelist Lengkap →
               </Link>
@@ -782,34 +834,49 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
         aria-label="Call to Action Booking"
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-green/15 border border-brand-green/30 text-brand-green text-xs font-bold uppercase tracking-[0.2em] mb-4">
-            {data.cta.badge}
+          <span className="text-brand-green text-xs font-bold tracking-[0.2em] uppercase block mb-3">
+            {data.id === "studio" ? "Informasi Ketersediaan" : data.cta.badge}
           </span>
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            {data.cta.title}
+            {data.id === "studio" ? "Studio Sedang Tidak Tersedia" : data.cta.title}
           </h2>
           <p className="mt-4 text-base sm:text-lg text-white/70 max-w-xl mx-auto font-medium leading-relaxed">
-            {data.cta.description}
+            {data.id === "studio"
+              ? "Mohon maaf, saat ini kami sedang tidak menerima pemesanan sesi Studio Profesional. Anda tetap dapat menikmati portofolio visual kami di galeri atau memesan paket foto outdoor wisuda & event."
+              : data.cta.description}
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <a
-              href={data.cta.bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-green/90 text-white font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-all duration-200 hover:-translate-y-0.5 border-b-[3px] border-black/20"
-            >
-              <span>{data.cta.buttonLabel}</span>
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </a>
+            {data.id === "studio" ? (
+              <button
+                type="button"
+                onClick={() => {
+                  alert("Mohon maaf, layanan Studio Professional saat ini sedang tidak tersedia untuk booking.");
+                }}
+                className="inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-amber-950 font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-all duration-200 hover:-translate-y-0.5 border-b-[3px] border-black/20 cursor-pointer"
+              >
+                <span>Studio Sedang Tidak Tersedia</span>
+                <span aria-hidden="true">⚠️</span>
+              </button>
+            ) : (
+              <a
+                href={data.cta.bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-green/90 text-white font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-all duration-200 hover:-translate-y-0.5 border-b-[3px] border-black/20"
+              >
+                <span>{data.cta.buttonLabel}</span>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </a>
+            )}
 
             <Link
-              href="/kontak"
+              href="/pricelist"
               className="inline-flex items-center gap-2 border border-white/20 hover:border-brand-green text-white font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-colors duration-200 hover:bg-white/5"
             >
-              <span>Hubungi Kontak Kami</span>
+              <span>Lihat Paket Tersedia</span>
               <span aria-hidden="true">→</span>
             </Link>
           </div>

@@ -6,6 +6,9 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { portfolioPreview, brand } from "@/lib/content";
+import HeroClouds from "@/components/ui/HeroClouds";
+import GrassyHill from "@/components/ui/GrassyHill";
+import Button from "@/components/ui/Button";
 
 // ─── 4 Layanan Photography & Documentation ──────────────────────────────────
 const photographyServices = [
@@ -135,56 +138,49 @@ export default function PhotographyPage() {
       ═══════════════════════════════════════════════════════════════ */}
       <section
         ref={heroRef}
-        className="relative pt-32 pb-20 lg:pt-36 lg:pb-24 bg-brand-dark text-white overflow-hidden"
+        className="relative pt-32 pb-24 sm:pb-28 lg:pt-36 lg:pb-36 bg-brand-sky text-brand-dark overflow-hidden"
         aria-label="Hero Photography"
       >
-        {/* Subtle Ambient Glow */}
-        <div
-          aria-hidden="true"
-          className="absolute top-1/4 right-0 w-96 h-96 bg-brand-green/10 rounded-full pointer-events-none"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute -bottom-10 left-10 w-72 h-72 bg-brand-green/5 rounded-full pointer-events-none"
-        />
+        {/* Floating Clouds Background */}
+        <HeroClouds />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
             
             {/* Teks Hero (Kiri) */}
             <div className="lg:col-span-7 flex flex-col items-start">
-              <span className="hero-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-green/15 border border-brand-green/30 text-brand-green text-xs font-bold uppercase tracking-[0.2em] mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse" />
-                Layanan Fotografi
-              </span>
 
-              <h1 className="hero-anim text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.05]">
-                Photography / <span className="text-brand-green">Documentation</span>
+
+              <h1 className="hero-anim text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.05]">
+                <span className="hero-word">Photo</span>
+                <span className="hero-word hero-word-green ml-1.5 sm:ml-2">graphy</span>
               </h1>
 
-              <div className="hero-anim w-16 h-1 rounded-full bg-brand-green my-6" />
+              <div className="hero-anim w-16 h-1 rounded-full bg-brand-dark my-6" />
 
-              <p className="hero-anim text-base sm:text-lg text-white/70 font-medium leading-relaxed max-w-xl">
+              <p className="hero-anim text-base sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-xl">
                 Mengabadikan setiap cerita, emosi, dan tradisi berharga dengan keahlian fotografi profesional dan estetika visual sinematik khas {brand.name}.
               </p>
 
               <div className="hero-anim mt-8 flex flex-wrap items-center gap-3">
-                <Link
+                <Button
                   href="/pricelist"
-                  className="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-green/90 text-white font-bold text-xs tracking-wide px-6 py-3.5 rounded-full transition-all duration-200 hover:-translate-y-0.5"
+                  variant="primary"
+                  size="md"
                 >
                   <span>Lihat Pricelist</span>
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
-                </Link>
+                </Button>
 
-                <a
+                <Button
                   href="#services"
-                  className="inline-flex items-center gap-2 border border-white/20 hover:border-brand-green text-white/80 hover:text-white font-bold text-xs tracking-wide px-6 py-3.5 rounded-full transition-colors duration-200 hover:bg-white/5"
+                  variant="stroke"
+                  size="md"
                 >
                   <span>Explore Services ↓</span>
-                </a>
+                </Button>
               </div>
             </div>
 
@@ -193,7 +189,7 @@ export default function PhotographyPage() {
               {photographyServices.map((svc, idx) => (
                 <div
                   key={svc.id}
-                  className={`hero-anim relative aspect-[4/3] rounded-2xl overflow-hidden bg-brand-dark/80 ring-1 ring-white/10 p-4 flex flex-col justify-between group ${
+                  className={`hero-anim relative aspect-[4/3] rounded-2xl overflow-hidden bg-white/90 backdrop-blur-xs ring-1 ring-brand-dark/10 shadow-sm hover:shadow-md transition-shadow p-4 flex flex-col justify-between group ${
                     idx === 0 ? "sm:col-span-2 sm:aspect-[2.2/1]" : ""
                   }`}
                 >
@@ -201,13 +197,13 @@ export default function PhotographyPage() {
                     <span className="text-[9px] font-bold uppercase tracking-widest text-brand-green bg-brand-green/10 px-2 py-0.5 rounded-full border border-brand-green/20">
                       {svc.categoryLabel}
                     </span>
-                    <span className="text-[10px] font-bold text-white/40">
+                    <span className="text-[10px] font-bold text-brand-dark/40">
                       0{idx + 1}
                     </span>
                   </div>
 
                   <div>
-                    <h2 className="text-white text-sm font-bold tracking-wide leading-tight">
+                    <h2 className="text-brand-dark text-sm font-bold tracking-wide leading-tight">
                       {svc.title}
                     </h2>
                   </div>
@@ -217,6 +213,9 @@ export default function PhotographyPage() {
 
           </div>
         </div>
+
+        {/* Grassy Hill Bottom Decoration */}
+        <GrassyHill />
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
@@ -225,11 +224,11 @@ export default function PhotographyPage() {
       <section
         ref={servicesRef}
         id="services"
-        className="py-24 bg-white text-black scroll-mt-20"
+        className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white text-black scroll-mt-20"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 lg:mb-16">
             <span className="text-brand-green text-xs font-bold tracking-[0.2em] uppercase">
               Layanan Kami
             </span>
@@ -284,11 +283,12 @@ export default function PhotographyPage() {
                   </p>
                 </div>
 
-                {/* Tombol Explore Work */}
+                {/* Tombol Detail Layanan */}
                 <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
-                  <Link
+                  <Button
                     href={service.exploreHref}
-                    className="inline-flex items-center gap-2 text-xs font-bold tracking-wide bg-brand-dark group-hover:bg-brand-green text-white px-5 py-2.5 rounded-full transition-all duration-300"
+                    variant="dark"
+                    size="sm"
                   >
                     <span>Detail Layanan</span>
                     <svg
@@ -300,14 +300,20 @@ export default function PhotographyPage() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
-                  </Link>
+                  </Button>
 
-                  <Link
-                    href="/pricelist"
-                    className="text-xs font-semibold text-gray-400 hover:text-brand-dark transition-colors"
-                  >
-                    Lihat Paket →
-                  </Link>
+                  {service.id === "studio-professional" ? (
+                    <span className="text-[11px] font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+                      Studio Tidak Tersedia
+                    </span>
+                  ) : (
+                    <Link
+                      href="/pricelist"
+                      className="text-xs font-semibold text-gray-400 hover:text-brand-dark transition-colors"
+                    >
+                      Lihat Paket →
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}
@@ -320,11 +326,11 @@ export default function PhotographyPage() {
       ═══════════════════════════════════════════════════════════════ */}
       <section
         ref={featuredRef}
-        className="py-24 bg-gray-50 text-black border-t border-gray-100"
+        className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gray-50 text-black border-t border-gray-100"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 lg:mb-16">
             <div className="max-w-2xl">
               <span className="text-brand-green text-xs font-bold tracking-[0.2em] uppercase">
                 Portofolio Pilihan
@@ -421,7 +427,7 @@ export default function PhotographyPage() {
       ═══════════════════════════════════════════════════════════════ */}
       <section
         ref={ctaRef}
-        className="py-20 lg:py-24 bg-brand-dark text-white border-t border-white/10"
+        className="py-12 sm:py-16 md:py-20 lg:py-24 bg-brand-dark text-white border-t border-white/10"
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="text-brand-green text-xs font-bold tracking-[0.2em] uppercase">
@@ -435,25 +441,25 @@ export default function PhotographyPage() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Link
+            <Button
               href="/pricelist"
-              className="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-green/90 text-white font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-all duration-200 hover:-translate-y-0.5"
+              variant="primary"
+              size="lg"
             >
               <span>View Pricelist</span>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
-            </Link>
+            </Button>
 
-            <a
+            <Button
               href="https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20konsultasi%20layanan%20Photography%20Tegoer%20Sapa"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-white/20 hover:border-brand-green text-white font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-colors duration-200 hover:bg-white/5"
+              variant="stroke"
+              size="lg"
             >
               <span>Chat WhatsApp</span>
               <span aria-hidden="true">↗</span>
-            </a>
+            </Button>
           </div>
         </div>
       </section>

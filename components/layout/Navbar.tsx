@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { navLinks, navCta, brand } from "@/lib/content";
 import Image from "next/image";
+import Button from "@/components/ui/Button";
 
 /**
  * Navbar global — sesuai Bagian 5 AGENT.md.
@@ -255,19 +256,18 @@ export default function Navbar() {
 
           {/* Desktop CTA button + Mobile hamburger */}
           <div className="pointer-events-auto flex items-center gap-3">
-            {/* CTA — desktop */}
-            <Link
-              href="/booking"
-              id="navbar-cta-booking"
-              className={[
-                "hidden md:inline-flex items-center gap-2 h-11",
-                "bg-brand-green hover:bg-brand-dark text-white",
-                "text-sm font-bold tracking-wide px-5 rounded-full border-b-[3px] border-black/20",
-                "transition-colors duration-200",
-              ].join(" ")}
-            >
-              {navCta.label}
-            </Link>
+            {/* CTA — desktop only (disembunyikan di mobile agar navbar bersih) */}
+            <div className="hidden md:block">
+              <Link
+                href="/booking"
+                id="navbar-cta-booking"
+                data-block="button"
+                className="button button--primary text-sm font-bold tracking-wide px-5 h-11"
+              >
+                <span className="button__flair" aria-hidden="true" />
+                <span className="button__label">{navCta.label}</span>
+              </Link>
+            </div>
 
             {/* Hamburger — mobile */}
             <button
@@ -312,6 +312,7 @@ export default function Navbar() {
         <div
           ref={mobileMenuRef}
           id="mobile-menu"
+          style={{ display: isOpen ? "block" : "none" }}
           className={[
             "pointer-events-auto md:hidden overflow-hidden mt-2 rounded-3xl max-h-[80vh] overflow-y-auto no-scrollbar shadow-2xl transition-colors duration-200",
             isDarkNav
@@ -377,18 +378,18 @@ export default function Navbar() {
             })}
 
             {/* CTA — mobile */}
-            <Link
-              href="/booking"
-              onClick={() => setIsOpen(false)}
-              id="mobile-cta-booking"
-              className={[
-                "mt-2 flex items-center justify-center gap-2",
-                "bg-brand-green text-white text-sm font-bold tracking-wide",
-                "px-5 py-3 rounded-xl transition-colors duration-150 hover:bg-brand-green/90",
-              ].join(" ")}
-            >
-              {navCta.label}
-            </Link>
+            <div className="mt-3">
+              <Button
+                href="/booking"
+                variant="primary"
+                size="md"
+                className="w-full"
+                id="mobile-cta-booking"
+                onClick={() => setIsOpen(false)}
+              >
+                {navCta.label}
+              </Button>
+            </div>
           </div>
         </div>
       </nav>
