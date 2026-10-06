@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap";
+import { gsap, SplitText } from "@/lib/gsap";
 import { heroHome, heroPhotos, type HeroPhoto } from "@/lib/content";
 
 
@@ -99,7 +99,9 @@ export default function Hero() {
       if (prefersReduced) {
         // Langsung tampilkan semua tanpa animasi
         gsap.set([dividerRef.current, taglineRef.current, decorRef.current], { opacity: 1, y: 0, scaleX: 1 });
-        gsap.set([word1Ref.current, word2Ref.current], { y: 0 });
+        gsap.set([word1Ref.current, word2Ref.current], { y: 0, opacity: 1 });
+        gsap.set(containerRef.current?.querySelectorAll(".hero-char") ?? [], { opacity: 1, y: 0, rotation: 0 });
+        gsap.set(containerRef.current?.querySelectorAll(".text") ?? [], { opacity: 1, y: 0 });
         gsap.set(ctaRef.current?.children ?? [], { opacity: 1, y: 0 });
         const slots = mosaicRef.current?.querySelectorAll(".photo-slot");
         if (slots) gsap.set(Array.from(slots), { opacity: 1, x: 0, scale: 1 });
@@ -108,14 +110,39 @@ export default function Hero() {
 
       // ── Initial states ──────────────────────────────────────────────────
       gsap.set(decorRef.current, { opacity: 0 });
-      // Line reveal: inner word dimulai di bawah wrapper overflow-hidden
-      gsap.set([word1Ref.current, word2Ref.current], { y: "110%" });
       gsap.set(dividerRef.current, { scaleX: 0, opacity: 0, transformOrigin: "left" });
       gsap.set(taglineRef.current, { opacity: 0, y: 24 });
       gsap.set(ctaRef.current?.children ?? [], { opacity: 0, y: 20 });
 
       const photoSlots = mosaicRef.current?.querySelectorAll(".photo-slot");
       if (photoSlots) gsap.set(photoSlots, { opacity: 0, x: 48, scale: 0.95 });
+
+      // ── Cascade Reveal Text (SplitText) sesuai instruksi ────────────────
+      gsap.registerPlugin(SplitText);
+      const split = SplitText.create(".text", { type: "chars" });
+
+      gsap.from(split.chars, {
+        y: -80,
+        rotation: -15,
+        opacity: 0,
+        stagger: { each: 0.04, from: "start" },
+        duration: 0.5,
+        ease: "back.out(1.4)",
+      });
+
+      // Cascade reveal juga untuk karakter judul utama "Tegoer Sapa"
+      const heroChars = containerRef.current?.querySelectorAll(".hero-char");
+      if (heroChars && heroChars.length > 0) {
+        gsap.from(heroChars, {
+          y: -80,
+          rotation: -15,
+          opacity: 0,
+          stagger: { each: 0.04, from: "start" },
+          duration: 0.5,
+          ease: "back.out(1.4)",
+          delay: 0.15,
+        });
+      }
 
       // ── Main timeline ───────────────────────────────────────────────────
       const tl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.1 });
@@ -124,22 +151,17 @@ export default function Hero() {
         // Background gradient fade in
         .to(decorRef.current,  { opacity: 1, duration: 1.2, ease: "power1.out" }, 0)
 
-        // "TEGOER" — line reveal slide up
-        .to(word1Ref.current,  { y: 0, duration: 0.85, ease: "expo.out" }, 0.38)
-        // "SAPA" — staggered setelah TEGOER mulai muncul
-        .to(word2Ref.current,  { y: 0, duration: 0.85, ease: "expo.out" }, 0.55)
-
         // Garis divider scale dari kiri
-        .to(dividerRef.current, { scaleX: 1, opacity: 1, duration: 0.55 }, 0.88)
+        .to(dividerRef.current, { scaleX: 1, opacity: 1, duration: 0.55 }, 0.6)
 
         // Tagline fade up
-        .to(taglineRef.current, { opacity: 1, y: 0, duration: 0.6 }, 1.05)
+        .to(taglineRef.current, { opacity: 1, y: 0, duration: 0.6 }, 0.75)
 
         // CTA buttons stagger
-        .to(ctaRef.current?.children ?? [], { opacity: 1, y: 0, stagger: 0.12, duration: 0.55 }, 1.25)
+        .to(ctaRef.current?.children ?? [], { opacity: 1, y: 0, stagger: 0.12, duration: 0.55 }, 0.95)
 
         // Foto mosaic — slide dari kanan dengan stagger
-        .to(photoSlots ?? [], { opacity: 1, x: 0, scale: 1, stagger: 0.13, duration: 0.8, ease: "expo.out" }, 0.55);
+        .to(photoSlots ?? [], { opacity: 1, x: 0, scale: 1, stagger: 0.13, duration: 0.8, ease: "expo.out" }, 0.35);
 
       // ── Floating loop foto setelah entrance selesai ─────────────────────
       tl.call(() => {
@@ -237,13 +259,18 @@ export default function Hero() {
           {/* ─── KOLOM KIRI: Teks ─────────────────────────────────────── */}
           <div className="flex flex-col items-start">
 
-            {/* Judul utama — line reveal (wrapper overflow-hidden + inner slide) */}
+            {/* Cascade Reveal tag */}
+            <h3 className="text font-black uppercase tracking-[0.25em] text-xs sm:text-sm text-brand-dark/75 mb-3 select-none">
+              Cascade Reveal
+            </h3>
+
+            {/* Judul utama */}
             <h1
               id="hero-title"
               className="font-black leading-[1.05] tracking-normal text-[clamp(3.5rem,9vw,7rem)] mb-5 select-none"
             >
               {/* Baris 1: Tegoer */}
-              <span className="hero-line-wrap block" style={{ overflow: "hidden", padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
+              <span className="hero-line-wrap block" style={{ padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
                 <span ref={word1Ref} className="hero-word">
                   {"Tegoer".split("").map((c, i) => (
                     <span key={i} className="hero-char">
@@ -253,7 +280,7 @@ export default function Hero() {
                 </span>
               </span>
               {/* Baris 2: Sapa */}
-              <span className="hero-line-wrap block" style={{ overflow: "hidden", padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
+              <span className="hero-line-wrap block" style={{ padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
                 <span ref={word2Ref} className="hero-word hero-word-green">
                   {"Sapa".split("").map((c, i) => (
                     <span key={i} className="hero-char">
