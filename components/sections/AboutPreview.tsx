@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { brand } from "@/lib/content";
 
 /**
@@ -117,7 +117,7 @@ export default function AboutPreview() {
                 Menghargai Setiap Momen Terbaik
               </h3>
               <p className="mt-4 text-white/70 text-sm leading-relaxed font-medium">
-                "Respect The Moment Every Second Matters" bukan sekadar tagline. Ini adalah komitmen kami untuk memastikan tidak ada detik berharga yang terlewatkan tanpa diabadikan secara indah.
+                &ldquo;Respect The Moment Every Second Matters&rdquo; bukan sekadar tagline. Ini adalah komitmen kami untuk memastikan tidak ada detik berharga yang terlewatkan tanpa diabadikan secara indah.
               </p>
               
               {/* Subtle background decoration */}

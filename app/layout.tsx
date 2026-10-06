@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
@@ -24,7 +24,14 @@ const hossRound = localFont({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#8cd2f5",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://tegoersapa.com"),
   title: {
     default: "Tegoer Sapa — Photobooth, Photobox & Professional Photo",
     template: "%s | Tegoer Sapa",
@@ -37,12 +44,45 @@ export const metadata: Metadata = {
     "professional photo",
     "wedding photobooth",
     "graduation photo",
+    "fotografer medan",
     "Tegoer Sapa",
   ],
+  authors: [{ name: "Tegoer Sapa" }],
+  creator: "Tegoer Sapa",
+  publisher: "Tegoer Sapa",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
+    title: "Tegoer Sapa — Respect The Moment Every Second Matters",
+    description:
+      "Layanan photobooth, photobox, dan dokumentasi foto profesional untuk berbagai momen berharga di Medan.",
+    url: "https://tegoersapa.com",
     siteName: "Tegoer Sapa",
     locale: "id_ID",
     type: "website",
+    images: [
+      {
+        url: "/icon.png",
+        width: 512,
+        height: 512,
+        alt: "Tegoer Sapa Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tegoer Sapa — Photobooth & Professional Photo",
+    description: "Respect The Moment Every Second Matters.",
+    images: ["/icon.png"],
   },
   icons: {
     icon: [

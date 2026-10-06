@@ -62,23 +62,21 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
 
   // Load initial data on mount (client-side only)
   useEffect(() => {
-    const data = loadBookingFromStorage();
-    setSelectedPackage(data.selectedPackage);
-    setSelectedAddOns(data.selectedAddOns);
-    setCustomerInfo(data.customerInfo);
-    setIsHydrated(true);
-
-    // Listen for storage events (e.g. from other tabs or custom events)
     const handleSync = () => {
       const refreshed = loadBookingFromStorage();
       setSelectedPackage(refreshed.selectedPackage);
       setSelectedAddOns(refreshed.selectedAddOns);
       setCustomerInfo(refreshed.customerInfo);
+      setIsHydrated(true);
     };
+
+    // Hydrate state asynchronously from external localStorage store
+    const timer = setTimeout(handleSync, 0);
 
     window.addEventListener("tegoer_booking_updated", handleSync);
     window.addEventListener("storage", handleSync);
     return () => {
+      clearTimeout(timer);
       window.removeEventListener("tegoer_booking_updated", handleSync);
       window.removeEventListener("storage", handleSync);
     };

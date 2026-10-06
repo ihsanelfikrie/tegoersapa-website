@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { brand } from "@/lib/content";
 
 /**
@@ -94,7 +94,7 @@ export default function OurStory() {
             </p>
 
             <p className="text-gray-500 text-sm sm:text-base leading-relaxed font-medium mb-8">
-              Bagi kami, <span className="text-brand-dark font-bold">"{brand.tagline}"</span> adalah komitmen mutlak. Kami berfokus pada kualitas visual berkelas, tata cahaya yang presisi, serta suasana sesi foto yang santai dan ramah bagi setiap klien.
+              Bagi kami, <span className="text-brand-dark font-bold">&ldquo;{brand.tagline}&rdquo;</span> adalah komitmen mutlak. Kami berfokus pada kualitas visual berkelas, tata cahaya yang presisi, serta suasana sesi foto yang santai dan ramah bagi setiap klien.
             </p>
 
             <Link

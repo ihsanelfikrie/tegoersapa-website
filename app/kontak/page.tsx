@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { contact, brand } from "@/lib/content";
+import { contact } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Kontak Kami",

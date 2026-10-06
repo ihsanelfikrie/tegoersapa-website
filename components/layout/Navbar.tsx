@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useGSAP } from "@gsap/react";
@@ -29,9 +29,11 @@ export default function Navbar() {
   const menuTlRef = useRef<gsap.core.Timeline | null>(null);
 
   // Tutup mobile menu saat route berubah
-  useEffect(() => {
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setIsOpen(false);
-  }, [pathname]);
+  }
 
   // GSAP: hamburger ↔ X animation + slide-down menu
   useGSAP(

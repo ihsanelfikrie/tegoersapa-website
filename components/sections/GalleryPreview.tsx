@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 
 // ─── Data Portfolio Terpilih (Sesuai 100% dengan Visual Foto Asli) ─────────
 const ourWorkItems = [

@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { portfolioPreview, brand } from "@/lib/content";
 
 // ─── 4 Layanan Photobooth ───────────────────────────────────────────────────
@@ -425,7 +425,7 @@ export default function PhotoboothPage() {
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="text-brand-green text-xs font-bold tracking-[0.2em] uppercase">
-            Let's Celebrate
+            Let&apos;s Celebrate
           </span>
           <h2 className="mt-3 text-3xl sm:text-5xl font-black text-white tracking-tight">
             Interested in our service?

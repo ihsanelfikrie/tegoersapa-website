@@ -23,7 +23,7 @@ export default function TentangPage() {
             </h1>
             <div className="w-14 h-1 rounded-full bg-brand-green my-5" />
             <p className="text-base sm:text-lg text-white/70 font-medium leading-relaxed">
-              "{brand.tagline}" adalah komitmen utama kami sejak hari pertama melayani Anda.
+              &ldquo;{brand.tagline}&rdquo; adalah komitmen utama kami sejak hari pertama melayani Anda.
             </p>
           </div>
         </div>

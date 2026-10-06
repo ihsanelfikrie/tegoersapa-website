@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,19 +8,19 @@ import { portfolioPreview, galleryCategories } from "@/lib/content";
 
 function GalleryContent() {
   const searchParams = useSearchParams();
-  const initialCategory = searchParams.get("kategori") || "all";
-  const initialSub = searchParams.get("sub") || "all";
+  const paramKat = searchParams.get("kategori");
+  const paramSub = searchParams.get("sub");
 
-  const [activeCategory, setActiveCategory] = useState(initialCategory);
-  const [activeSub, setActiveSub] = useState(initialSub);
+  const [activeCategory, setActiveCategory] = useState(paramKat || "all");
+  const [activeSub, setActiveSub] = useState(paramSub || "all");
   const [activeImage, setActiveImage] = useState<typeof portfolioPreview[0] | null>(null);
 
-  useEffect(() => {
-    const kat = searchParams.get("kategori");
-    const sub = searchParams.get("sub");
-    if (kat) setActiveCategory(kat);
-    if (sub) setActiveSub(sub);
-  }, [searchParams]);
+  const [prevParams, setPrevParams] = useState({ kat: paramKat, sub: paramSub });
+  if (prevParams.kat !== paramKat || prevParams.sub !== paramSub) {
+    setPrevParams({ kat: paramKat, sub: paramSub });
+    if (paramKat) setActiveCategory(paramKat);
+    if (paramSub) setActiveSub(paramSub);
+  }
 
   const currentCategoryData = galleryCategories.find((c) => c.id === activeCategory);
 

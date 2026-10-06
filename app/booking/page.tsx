@@ -1,13 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useBooking } from "@/lib/BookingContext";
 import { contact } from "@/lib/content";
 
 export default function BookingPage() {
-  const router = useRouter();
   const {
     selectedPackage,
     selectedAddOns,
@@ -16,7 +14,6 @@ export default function BookingPage() {
     removeAddOn,
     saveCustomerInfo,
     totalCalculation,
-    clearAll,
   } = useBooking();
 
   // Form State initialized from customerInfo if available
@@ -34,14 +31,14 @@ export default function BookingPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Sync saved customerInfo to formData on hydration
-  useEffect(() => {
-    if (customerInfo) {
-      setFormData((prev) => ({
-        ...prev,
-        ...customerInfo,
-      }));
-    }
-  }, [customerInfo]);
+  const [prevCustomerInfo, setPrevCustomerInfo] = useState(customerInfo);
+  if (customerInfo && customerInfo !== prevCustomerInfo) {
+    setPrevCustomerInfo(customerInfo);
+    setFormData((prev) => ({
+      ...prev,
+      ...customerInfo,
+    }));
+  }
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
