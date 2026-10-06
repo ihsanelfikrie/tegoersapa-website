@@ -109,11 +109,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom Credits */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-white/40 font-medium">
+        <div className="pt-8 flex items-center justify-between text-xs text-white/40 font-medium">
           <p>© {new Date().getFullYear()} {brand.name}. Seluruh hak cipta dilindungi.</p>
-          <p className="mt-2 sm:mt-0">
-            Didesain & Dikembangkan dengan ❤️ di Medan
-          </p>
         </div>
       </div>
     </footer>
