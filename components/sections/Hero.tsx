@@ -94,20 +94,6 @@ export default function Hero() {
 
   useGSAP(
     () => {
-      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      if (prefersReduced) {
-        // Langsung tampilkan semua tanpa animasi
-        gsap.set([dividerRef.current, taglineRef.current, decorRef.current], { opacity: 1, y: 0, scaleX: 1 });
-        gsap.set([word1Ref.current, word2Ref.current], { y: 0, opacity: 1 });
-        gsap.set(containerRef.current?.querySelectorAll(".hero-char") ?? [], { opacity: 1, y: 0, rotation: 0 });
-        gsap.set(ctaRef.current?.children ?? [], { opacity: 1, y: 0 });
-        gsap.set(".hero-shimmer-word", { opacity: 0 });
-        const slots = mosaicRef.current?.querySelectorAll(".photo-slot");
-        if (slots) gsap.set(Array.from(slots), { opacity: 1, x: 0, scale: 1 });
-        return;
-      }
-
       // ── Initial states ──────────────────────────────────────────────────
       gsap.set(decorRef.current, { opacity: 0 });
       gsap.set(dividerRef.current, { scaleX: 0, opacity: 0, transformOrigin: "center" });
@@ -168,7 +154,7 @@ export default function Hero() {
         });
       });
 
-      // ── 2. Animasi Loop Lompat Per-Teks Setiap 5 Detik Sekali ────────────
+      // ── 2. Animasi Loop Lompat Per-Huruf Bergantian Setiap 5 Detik ────────
       const charKeys = [
         "t-0", "t-1", "t-2", "t-3", "t-4", "t-5",
         "s-0", "s-1", "s-2", "s-3"
@@ -177,7 +163,7 @@ export default function Hero() {
       const jumpTl = gsap.timeline({
         repeat: -1,
         repeatDelay: 5,
-        delay: 2.2, // Mulai setelah animasi entrance selesai
+        delay: 1.2, // Mulai segera setelah animasi awal selesai agar langsung terlihat
       });
 
       charKeys.forEach((key, index) => {
@@ -185,39 +171,52 @@ export default function Hero() {
         const shim = containerRef.current?.querySelector<HTMLElement>(`[data-char-shim="${key}"]`);
         if (!base) return;
         const targets = shim ? [base, shim] : [base];
+        const tilt = (index % 2 === 0 ? 6 : -6);
 
-        // Gelombang lompatan ceria (wave jump) berurutan
+        // Gelombang lompatan ceria (wave jump) per huruf bergantian
         jumpTl
           .to(
             targets,
             {
-              y: -24,
-              scaleY: 1.15,
-              scaleX: 0.92,
+              y: -36,
+              scaleY: 1.22,
+              scaleX: 0.88,
+              rotation: tilt,
               duration: 0.22,
               ease: "power2.out",
             },
-            index * 0.075
+            index * 0.08
           )
           .to(
             targets,
             {
               y: 0,
+              scaleY: 0.88,
+              scaleX: 1.12,
+              rotation: 0,
+              duration: 0.18,
+              ease: "power2.in",
+            },
+            index * 0.08 + 0.22
+          )
+          .to(
+            targets,
+            {
               scaleY: 1,
               scaleX: 1,
-              duration: 0.45,
-              ease: "bounce.out",
+              duration: 0.25,
+              ease: "elastic.out(1.5, 0.4)",
             },
-            index * 0.075 + 0.22
+            index * 0.08 + 0.4
           );
 
-        // ── 3. Efek Interaktif Hover & Touch pada Teks ────────────────────
+        // ── 3. Efek Interaktif Hover & Touch pada Setiap Huruf ─────────────
         const onEnter = () => {
           gsap.killTweensOf(targets);
           gsap.to(targets, {
-            y: -26,
-            scale: 1.2,
-            rotation: (index % 2 === 0 ? 1 : -1) * 7,
+            y: -38,
+            scale: 1.25,
+            rotation: tilt * 1.5,
             duration: 0.2,
             ease: "back.out(3)",
             overwrite: "auto",
@@ -229,8 +228,8 @@ export default function Hero() {
             y: 0,
             scale: 1,
             rotation: 0,
-            duration: 0.5,
-            ease: "elastic.out(1.2, 0.4)",
+            duration: 0.55,
+            ease: "elastic.out(1.2, 0.35)",
             overwrite: "auto",
           });
         };
