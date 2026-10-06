@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
-import { gsap, SplitText } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { heroHome, heroPhotos, type HeroPhoto } from "@/lib/content";
 
 
@@ -101,7 +101,6 @@ export default function Hero() {
         gsap.set([dividerRef.current, taglineRef.current, decorRef.current], { opacity: 1, y: 0, scaleX: 1 });
         gsap.set([word1Ref.current, word2Ref.current], { y: 0, opacity: 1 });
         gsap.set(containerRef.current?.querySelectorAll(".hero-char") ?? [], { opacity: 1, y: 0, rotation: 0 });
-        gsap.set(containerRef.current?.querySelectorAll(".text") ?? [], { opacity: 1, y: 0 });
         gsap.set(ctaRef.current?.children ?? [], { opacity: 1, y: 0 });
         gsap.set(".hero-shimmer-word", { opacity: 0 });
         const slots = mosaicRef.current?.querySelectorAll(".photo-slot");
@@ -111,7 +110,7 @@ export default function Hero() {
 
       // ── Initial states ──────────────────────────────────────────────────
       gsap.set(decorRef.current, { opacity: 0 });
-      gsap.set(dividerRef.current, { scaleX: 0, opacity: 0, transformOrigin: "left" });
+      gsap.set(dividerRef.current, { scaleX: 0, opacity: 0, transformOrigin: "center" });
       gsap.set(taglineRef.current, { opacity: 0, y: 24 });
       gsap.set(ctaRef.current?.children ?? [], { opacity: 0, y: 20 });
       gsap.set(".hero-shimmer-word", { opacity: 0 });
@@ -119,20 +118,7 @@ export default function Hero() {
       const photoSlots = mosaicRef.current?.querySelectorAll(".photo-slot");
       if (photoSlots) gsap.set(photoSlots, { opacity: 0, x: 48, scale: 0.95 });
 
-      // ── Cascade Reveal Text (SplitText) sesuai instruksi ────────────────
-      gsap.registerPlugin(SplitText);
-      const split = SplitText.create(".text", { type: "chars" });
-
-      gsap.from(split.chars, {
-        y: -80,
-        rotation: -15,
-        opacity: 0,
-        stagger: { each: 0.04, from: "start" },
-        duration: 0.5,
-        ease: "back.out(1.4)",
-      });
-
-      // Cascade reveal juga untuk karakter judul utama "Tegoer Sapa"
+      // ── Cascade Reveal Karakter Judul Utama "Tegoer Sapa" ───────────────
       const heroChars = containerRef.current?.querySelectorAll(".hero-char");
       if (heroChars && heroChars.length > 0) {
         gsap.from(heroChars, {
@@ -140,9 +126,9 @@ export default function Hero() {
           rotation: -15,
           opacity: 0,
           stagger: { each: 0.04, from: "start" },
-          duration: 0.5,
+          duration: 0.55,
           ease: "back.out(1.4)",
-          delay: 0.15,
+          delay: 0.1,
         });
       }
 
@@ -226,20 +212,15 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
 
           {/* ─── KOLOM KIRI: Teks ─────────────────────────────────────── */}
-          <div className="flex flex-col items-start">
-
-            {/* Cascade Reveal tag */}
-            <h3 className="text font-black uppercase tracking-[0.25em] text-xs sm:text-sm text-brand-dark/75 mb-3 select-none">
-              Cascade Reveal
-            </h3>
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full">
 
             {/* Judul utama */}
             <h1
               id="hero-title"
-              className="font-black leading-[1.05] tracking-normal text-[clamp(2.75rem,8.5vw,7rem)] mb-5 select-none"
+              className="font-black leading-[1.02] tracking-normal text-[clamp(3.75rem,14vw,7.5rem)] mb-5 select-none text-center lg:text-left w-full"
             >
               {/* Baris 1: Tegoer */}
-              <span className="hero-line-wrap block" style={{ padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
+              <span className="hero-line-wrap block text-center lg:text-left mx-auto lg:mx-0" style={{ padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
                 <span className="relative inline-block">
                   <span ref={word1Ref} className="hero-word">
                     {"Tegoer".split("").map((c, i) => (
@@ -264,7 +245,7 @@ export default function Hero() {
               </span>
 
               {/* Baris 2: Sapa */}
-              <span className="hero-line-wrap block" style={{ padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
+              <span className="hero-line-wrap block text-center lg:text-left mx-auto lg:mx-0" style={{ padding: "0.15em 0.25em 0.2em", margin: "-0.15em -0.25em 0" }}>
                 <span className="relative inline-block">
                   <span ref={word2Ref} className="hero-word hero-word-green">
                     {"Sapa".split("").map((c, i) => (
@@ -293,20 +274,20 @@ export default function Hero() {
             <div
               ref={dividerRef}
               aria-hidden="true"
-              className="w-16 h-1 rounded-full bg-brand-dark mb-5"
+              className="w-16 h-1 rounded-full bg-brand-dark mb-5 mx-auto lg:mx-0"
             />
 
             {/* Tagline */}
             <p
               ref={taglineRef}
               className="text-brand-dark/70 font-medium tracking-[0.1em] uppercase
-                         text-[clamp(0.7rem,1.5vw,0.875rem)] leading-relaxed mb-10 max-w-sm"
+                         text-[clamp(0.75rem,2.2vw,0.875rem)] leading-relaxed mb-8 sm:mb-10 max-w-sm text-center lg:text-left mx-auto lg:mx-0"
             >
               {heroHome.tagline}
             </p>
 
             {/* CTA Buttons */}
-            <div ref={ctaRef} className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 w-full sm:w-auto">
+            <div ref={ctaRef} className="flex flex-col sm:flex-row items-stretch sm:items-center lg:items-start justify-center lg:justify-start gap-3 w-full sm:w-auto mx-auto lg:mx-0">
               <Link
                 href={heroHome.cta.primary.href}
                 id="hero-cta-gallery"
