@@ -7,12 +7,6 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { heroHome, heroPhotos, type HeroPhoto } from "@/lib/content";
 
-// Stats dengan config counter animasi
-const STATS = [
-  { num: 75, suffix: "+", label: "Foto Tersedia" },
-  { num: 3,  suffix: "",  label: "Layanan Utama" },
-  { num: 11, suffix: "",  label: "Paket Pilihan" },
-] as const;
 
 // ─── Sub-komponen: satu slot foto dalam mosaic ───────────────────────────────
 function PhotoSlot({
@@ -92,8 +86,6 @@ export default function Hero() {
   const word2Ref    = useRef<HTMLSpanElement>(null);   // "SAPA" inner span
   const dividerRef  = useRef<HTMLDivElement>(null);
   const taglineRef  = useRef<HTMLParagraphElement>(null);
-  const statsRef    = useRef<HTMLDivElement>(null);
-  const statValRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const ctaRef      = useRef<HTMLDivElement>(null);
 
   // Mosaic & decor refs
@@ -108,20 +100,11 @@ export default function Hero() {
         // Langsung tampilkan semua tanpa animasi
         gsap.set([dividerRef.current, taglineRef.current, decorRef.current], { opacity: 1, y: 0, scaleX: 1 });
         gsap.set([word1Ref.current, word2Ref.current], { y: 0 });
-        gsap.set(statsRef.current?.children ?? [], { opacity: 1, y: 0 });
         gsap.set(ctaRef.current?.children ?? [], { opacity: 1, y: 0 });
         const slots = mosaicRef.current?.querySelectorAll(".photo-slot");
         if (slots) gsap.set(Array.from(slots), { opacity: 1, x: 0, scale: 1 });
-        STATS.forEach((s, i) => {
-          if (statValRefs.current[i]) statValRefs.current[i]!.textContent = s.num + s.suffix;
-        });
         return;
       }
-
-      // ── Reset counter ke 0 sebelum animasi ─────────────────────────────
-      STATS.forEach((s, i) => {
-        if (statValRefs.current[i]) statValRefs.current[i]!.textContent = "0" + s.suffix;
-      });
 
       // ── Initial states ──────────────────────────────────────────────────
       gsap.set(decorRef.current, { opacity: 0 });
@@ -129,7 +112,6 @@ export default function Hero() {
       gsap.set([word1Ref.current, word2Ref.current], { y: "110%" });
       gsap.set(dividerRef.current, { scaleX: 0, opacity: 0, transformOrigin: "left" });
       gsap.set(taglineRef.current, { opacity: 0, y: 24 });
-      gsap.set(statsRef.current?.children ?? [], { opacity: 0, y: 16 });
       gsap.set(ctaRef.current?.children ?? [], { opacity: 0, y: 20 });
 
       const photoSlots = mosaicRef.current?.querySelectorAll(".photo-slot");
@@ -153,30 +135,11 @@ export default function Hero() {
         // Tagline fade up
         .to(taglineRef.current, { opacity: 1, y: 0, duration: 0.6 }, 1.05)
 
-        // Stats reveal (opacity + y stagger)
-        .to(statsRef.current?.children ?? [], { opacity: 1, y: 0, stagger: 0.1, duration: 0.5 }, 1.2)
-
         // CTA buttons stagger
-        .to(ctaRef.current?.children ?? [], { opacity: 1, y: 0, stagger: 0.12, duration: 0.55 }, 1.38)
+        .to(ctaRef.current?.children ?? [], { opacity: 1, y: 0, stagger: 0.12, duration: 0.55 }, 1.25)
 
         // Foto mosaic — slide dari kanan dengan stagger
         .to(photoSlots ?? [], { opacity: 1, x: 0, scale: 1, stagger: 0.13, duration: 0.8, ease: "expo.out" }, 0.55);
-
-      // ── Counter stats — berjalan secara mandiri setelah delay ──────────
-      STATS.forEach((s, i) => {
-        const el = statValRefs.current[i];
-        if (!el) return;
-        const obj = { val: 0 };
-        gsap.to(obj, {
-          val: s.num,
-          duration: 2.2,
-          ease: "power2.out",
-          delay: 1.25 + i * 0.15,
-          onUpdate() {
-            el.textContent = Math.round(obj.val) + s.suffix;
-          },
-        });
-      });
 
       // ── Floating loop foto setelah entrance selesai ─────────────────────
       tl.call(() => {
@@ -312,27 +275,10 @@ export default function Hero() {
             <p
               ref={taglineRef}
               className="text-brand-dark/70 font-medium tracking-[0.1em] uppercase
-                         text-[clamp(0.7rem,1.5vw,0.875rem)] leading-relaxed mb-8 max-w-sm"
+                         text-[clamp(0.7rem,1.5vw,0.875rem)] leading-relaxed mb-10 max-w-sm"
             >
               {heroHome.tagline}
             </p>
-
-            {/* Stats mini — dengan counter animasi */}
-            <div ref={statsRef} className="flex items-center gap-8 mb-10">
-              {STATS.map((stat, index) => (
-                <div key={stat.label} className="flex flex-col">
-                  <span
-                    ref={(el) => { statValRefs.current[index] = el; }}
-                    className="text-brand-dark font-black text-2xl leading-none tabular-nums"
-                  >
-                    {stat.num}{stat.suffix}
-                  </span>
-                  <span className="text-brand-dark/60 text-[11px] font-medium tracking-wide mt-0.5">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div>
 
             {/* CTA Buttons */}
             <div ref={ctaRef} className="flex flex-col sm:flex-row items-start gap-3">
