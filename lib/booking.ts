@@ -47,8 +47,14 @@ export const BOOKING_STORAGE_KEY = "tegoer_booking_draft";
  */
 export function parseNumericPrice(priceStr: string | undefined | null): number {
   if (!priceStr) return 0;
-  // If price is consultation/custom, numeric price is 0
-  if (priceStr.toLowerCase().includes("konsultasi") || priceStr.toLowerCase().includes("custom")) {
+  const lower = priceStr.toLowerCase();
+  // If price is consultation/custom/hubungi admin, numeric price is 0
+  if (
+    lower.includes("konsultasi") ||
+    lower.includes("custom") ||
+    lower.includes("admin") ||
+    lower.includes("hubungi")
+  ) {
     return 0;
   }
   const digits = priceStr.replace(/[^0-9]/g, "");
@@ -78,7 +84,12 @@ export function calculateBookingTotal(
 } {
   const packagePrice = pkg?.numericPrice ?? (pkg ? parseNumericPrice(pkg.harga) : 0);
   const isCustomPrice = Boolean(
-    pkg && (pkg.harga.toLowerCase().includes("konsultasi") || pkg.harga.toLowerCase().includes("custom"))
+    pkg && (
+      pkg.harga.toLowerCase().includes("konsultasi") ||
+      pkg.harga.toLowerCase().includes("custom") ||
+      pkg.harga.toLowerCase().includes("admin") ||
+      pkg.harga.toLowerCase().includes("hubungi")
+    )
   );
 
   const addOnsTotal = addOns.reduce((acc, curr) => {
@@ -91,8 +102,8 @@ export function calculateBookingTotal(
   let totalText = formatRupiah(grandTotal);
   if (isCustomPrice) {
     totalText = addOnsTotal > 0
-      ? `Konsultasi / Custom (+ Add-on: ${formatRupiah(addOnsTotal)})`
-      : "Konsultasi / Custom";
+      ? `Hubungi Admin (+ Add-on: ${formatRupiah(addOnsTotal)})`
+      : "Hubungi Admin";
   }
 
   return {

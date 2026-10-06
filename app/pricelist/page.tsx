@@ -34,7 +34,7 @@ export default function PricelistPage() {
             </h1>
             <div className="w-14 h-1 rounded-full bg-brand-green my-5" />
             <p className="text-base sm:text-lg text-white/70 font-medium leading-relaxed">
-              Pilihan paket dokumentasi foto profesional studio dan foto wisuda outdoor dengan kualitas visual terbaik dan harga transparan.
+              Pilihan paket dokumentasi wisuda outdoor dengan format unlimited shoot, serta sesi foto studio profesional di Medan.
             </p>
           </div>
         </div>
@@ -42,6 +42,14 @@ export default function PricelistPage() {
 
       {/* ─── Filter & Packages Grid ─────────────────────────────── */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Info Note according to pricelist.md */}
+        <div className="mb-10 p-4 sm:p-5 rounded-2xl bg-brand-cream/60 border border-brand-green/20 max-w-3xl mx-auto flex items-start gap-3.5 text-xs sm:text-sm text-brand-dark">
+          <span className="text-base flex-shrink-0">💡</span>
+          <p className="leading-relaxed font-medium">
+            <strong>Catatan:</strong> Paket <strong>Outdoor Graduation</strong> tercantum dengan harga lengkap dan fasilitas <em>unlimited shoot</em>. Untuk kategori <strong>Profesional Studio</strong>, berlaku sistem konfirmasi ketersediaan jadwal & rate langsung bersama admin (<em>By Request</em>).
+          </p>
+        </div>
+
         {/* Filter Tabs */}
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12">
           {CATEGORIES.map((cat) => (
@@ -118,8 +126,15 @@ export default function PricelistPage() {
                     <h2 className="text-2xl font-black text-brand-dark tracking-wide">
                       {pkg.nama}
                     </h2>
-                    <div className="mt-2 text-2xl sm:text-3xl font-black text-brand-green">
-                      {pkg.harga}
+                    <div className="mt-2 flex items-center gap-2">
+                      <span className={pkg.harga === "Hubungi Admin" ? "text-xl sm:text-2xl font-black text-brand-dark" : "text-2xl sm:text-3xl font-black text-brand-green"}>
+                        {pkg.harga}
+                      </span>
+                      {pkg.harga === "Hubungi Admin" && (
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-brand-green/10 text-brand-green border border-brand-green/20">
+                          Rate by Request
+                        </span>
+                      )}
                     </div>
 
                     <div className="w-full h-px bg-gray-200 my-6" />
@@ -137,46 +152,46 @@ export default function PricelistPage() {
                 </div>
 
                 <div className="px-7 pb-7 pt-2 space-y-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        selectPackage(
-                          {
-                            id: pkg.id,
-                            nama: pkg.nama,
-                            harga: pkg.harga,
-                            kategori: pkg.kategori,
-                            fitur: pkg.fitur,
-                          },
-                          "/pricelist"
-                        );
-                        router.push("/booking");
-                      }}
-                      className={[
-                        "w-full inline-flex items-center justify-center gap-2 text-xs font-bold tracking-wide px-5 py-3.5 rounded-2xl transition-all duration-200 hover:-translate-y-0.5 cursor-pointer shadow-sm",
-                        isSelected
-                          ? "bg-brand-green text-white hover:bg-brand-green/90"
-                          : "bg-brand-dark hover:bg-brand-green text-white",
-                      ].join(" ")}
-                    >
-                      <span>{isSelected ? "✓ Paket Terpilih • Lanjut Form Booking" : "Pilih Paket Ini"}</span>
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      selectPackage(
+                        {
+                          id: pkg.id,
+                          nama: pkg.nama,
+                          harga: pkg.harga,
+                          kategori: pkg.kategori,
+                          fitur: pkg.fitur,
+                        },
+                        "/pricelist"
+                      );
+                      router.push("/booking");
+                    }}
+                    className={[
+                      "w-full inline-flex items-center justify-center gap-2 text-xs font-bold tracking-wide px-5 py-3.5 rounded-2xl transition-all duration-200 hover:-translate-y-0.5 cursor-pointer shadow-sm",
+                      isSelected
+                        ? "bg-brand-green text-white hover:bg-brand-green/90"
+                        : "bg-brand-dark hover:bg-brand-green text-white",
+                    ].join(" ")}
+                  >
+                    <span>{isSelected ? "✓ Paket Terpilih • Lanjut Form Booking" : "Pilih Paket Ini"}</span>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </button>
 
-                    <a
-                      href={waLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-center gap-1.5 text-[11px] font-semibold text-gray-400 hover:text-brand-green transition-colors py-1"
-                    >
-                      <span>Tanya via WhatsApp Langsung</span>
-                      <span aria-hidden="true">↗</span>
-                    </a>
-                  </div>
+                  <a
+                    href={waLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full inline-flex items-center justify-center gap-1.5 text-[11px] font-semibold text-gray-500 hover:text-brand-green transition-colors py-1"
+                  >
+                    <span>{pkg.harga === "Hubungi Admin" ? "Tanya Rate & Jadwal via WhatsApp" : "Tanya via WhatsApp Langsung"}</span>
+                    <span aria-hidden="true">↗</span>
+                  </a>
                 </div>
-              );
+              </div>
+            );
           })}
         </div>
       </section>
