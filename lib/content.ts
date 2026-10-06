@@ -60,24 +60,24 @@ export const navLinks: readonly NavItem[] = [
     href: "/photobooth",
     subItems: [
       {
-        label: "Photobooth",
-        href: "/photobooth#photobooth",
+        label: "Photobooth Reguler",
+        href: "/photobooth#pricing",
         description: "Cetak instan & properti seru di lokasi acara",
       },
       {
-        label: "Photobox",
-        href: "/photobooth#photobox",
-        description: "Mesin foto mandiri modern dengan frame kekinian",
+        label: "Bajaj Photobooth",
+        href: "/photobooth#pricing",
+        description: "Armada ikonik Tegoer Keliling unik & viral",
       },
       {
-        label: "Mingle Photobooth",
-        href: "/photobooth#mingle",
-        description: "Fotografer keliling dengan cetak & sharing langsung",
+        label: "Daftar Harga Photobooth",
+        href: "/pricelist?tab=photobooth",
+        description: "Pricelist resmi No Print & Unlimited Print (2–6 Jam)",
       },
       {
-        label: "Photo Barcode",
-        href: "/photobooth#barcode",
-        description: "Scan barcode instan untuk unduh foto acara",
+        label: "Photobox & Mingle",
+        href: "/photobooth#services",
+        description: "Self-photo box & fotografer keliling",
       },
     ],
   },
@@ -325,7 +325,7 @@ export const photoboothDetails: PhotoboothCategoryDetail[] = [
     ],
     galleryFilter: { kategori: "photobooth" },
     whatsappMessage: "Halo kak, mau tanya informasi paket Photobooth untuk acara",
-    waNumber: "628810805188087",
+    waNumber: "6281350655747",
   },
   {
     id: "photobox",
@@ -342,7 +342,24 @@ export const photoboothDetails: PhotoboothCategoryDetail[] = [
     ],
     galleryFilter: { kategori: "photobox" },
     whatsappMessage: "Halo kak, mau tanya informasi Photobox Tegoer Sapa",
-    waNumber: "628810805188087",
+    waNumber: "6281350655747",
+  },
+  {
+    id: "bajaj-photobooth",
+    tag: "Mobile Iconic Booth",
+    title: "Bajaj Photobooth",
+    subtitle: "Tegoer Keliling — Photobooth Unik di Dalam Armada Bajaj",
+    description:
+      "Sensasi berfoto seru dan instagramable langsung di dalam kabin armada Bajaj ikonik Tegoer Sapa. Menghadirkan daya tarik visual yang sangat viral dan memorable untuk tamu pesta Anda.",
+    highlights: [
+      "Armada Bajaj hijau khas Tegoer Keliling yang disulap menjadi photo booth",
+      "Setup kamera profesional, monitor live preview, dan lighting studio terstandar",
+      "Opsi cetak instan unlimited dan soft file via scan QR code cepat",
+      "Sangat cocok untuk outdoor wedding, festival musik, bazaar, dan pesta ulang tahun",
+    ],
+    galleryFilter: { kategori: "photobooth", sub: "event" },
+    whatsappMessage: "Halo kak, mau konsultasi Bajaj Photobooth (Tegoer Keliling) untuk event",
+    waNumber: "6281350655747",
   },
   {
     id: "mingle",
@@ -359,7 +376,7 @@ export const photoboothDetails: PhotoboothCategoryDetail[] = [
     ],
     galleryFilter: { kategori: "photobooth", sub: "event" },
     whatsappMessage: "Halo kak, mau konsultasi Mingle Photobooth untuk event",
-    waNumber: "628810805188087",
+    waNumber: "6281350655747",
   },
   {
     id: "barcode",
@@ -376,7 +393,7 @@ export const photoboothDetails: PhotoboothCategoryDetail[] = [
     ],
     galleryFilter: { kategori: "photobooth" },
     whatsappMessage: "Halo kak, mau tanya layanan Photo Barcode untuk acara kami",
-    waNumber: "628810805188087",
+    waNumber: "6281350655747",
   },
 ];
 
@@ -391,8 +408,8 @@ export const contact = {
     },
     {
       label: "Photobooth",
-      number: "+62 881-0805-18887",
-      raw: "628810805188087",
+      number: "+62 813-5065-5747",
+      raw: "6281350655747",
     },
   ],
   social: [
@@ -413,6 +430,263 @@ export const contact = {
     },
   ],
 } as const;
+
+// ─── Photobooth Catalog & Price List (Sesuai Katalog Resmi No Brand) ─────────
+export type PhotoboothDurationTier = {
+  duration: string; // "2 Jam", "3 Jam", dst
+  hours: number;
+  harga: string;
+  numericPrice: number;
+};
+
+export type PhotoboothPackage = {
+  id: string;
+  nama: string;
+  category: "Photobooth Reguler" | "Bajaj Photobooth";
+  type: "print" | "no-print";
+  badge?: string;
+  isBestDeal?: boolean;
+  description: string;
+  fitur: string[];
+  durations: PhotoboothDurationTier[];
+  additionalHourRate: string;
+  additionalHourNumeric: number;
+  image?: string;
+};
+
+export const photoboothPackages: PhotoboothPackage[] = [
+  // ── 1. Photobooth Reguler - No Print ──
+  {
+    id: "pb-reg-noprint",
+    nama: "Photobooth Reguler (No Print)",
+    category: "Photobooth Reguler",
+    type: "no-print",
+    description:
+      "Layanan photobooth digital interaktif dengan kamera & lightning profesional, soft file langsung unduh tanpa cetak fisik.",
+    image: "/images/pricelist/photobooth-open-space.webp",
+    fitur: [
+      "Profesional Camera & Lightning",
+      "Unlimited Photo",
+      "Free Photo Frame Digital",
+      "Free GIF Animation",
+      "Backdrop Selection (5 Pilihan Warna)",
+      "Free to Use Property / Aksesoris Lucu",
+      "QR Code Share File (Scan & Unduh Langsung)",
+      "Special Custom Design Layout Overlay",
+    ],
+    durations: [
+      { duration: "2 Jam", hours: 2, harga: "Rp 1.500.000", numericPrice: 1500000 },
+      { duration: "3 Jam", hours: 3, harga: "Rp 1.700.000", numericPrice: 1700000 },
+      { duration: "4 Jam", hours: 4, harga: "Rp 1.900.000", numericPrice: 1900000 },
+      { duration: "5 Jam", hours: 5, harga: "Rp 2.200.000", numericPrice: 2200000 },
+      { duration: "6 Jam", hours: 6, harga: "Rp 2.500.000", numericPrice: 2500000 },
+    ],
+    additionalHourRate: "Rp 600.000 / jam",
+    additionalHourNumeric: 600000,
+  },
+  // ── 2. Photobooth Reguler - Print (Best Deal) ──
+  {
+    id: "pb-reg-print",
+    nama: "Photobooth Reguler (Print)",
+    category: "Photobooth Reguler",
+    type: "print",
+    badge: "Best Deal",
+    isBestDeal: true,
+    description:
+      "Paket terfavorit! Cetak foto instan tanpa batas (Unlimited Print) kualitas prima yang bisa langsung dibawa pulang tamu.",
+    image: "/images/pricelist/photobooth-packages-preview.webp",
+    fitur: [
+      "Profesional Camera & Lightning",
+      "Unlimited Photo",
+      "Unlimited Print (Cetak Instan Tanpa Batas)",
+      "Free Photo Frame Fisik & Digital",
+      "Free GIF Animation",
+      "Backdrop Selection (5 Pilihan Warna)",
+      "Free to Use Property / Aksesoris Lengkap",
+      "QR Code Share File (Scan & Unduh Langsung)",
+      "Pilihan Cetak STRIP (2 pcs) atau 4R (1 pcs)",
+      "Special Custom Design Layout Overlay",
+    ],
+    durations: [
+      { duration: "2 Jam", hours: 2, harga: "Rp 2.300.000", numericPrice: 2300000 },
+      { duration: "3 Jam", hours: 3, harga: "Rp 2.800.000", numericPrice: 2800000 },
+      { duration: "4 Jam", hours: 4, harga: "Rp 3.500.000", numericPrice: 3500000 },
+      { duration: "5 Jam", hours: 5, harga: "Rp 4.200.000", numericPrice: 4200000 },
+      { duration: "6 Jam", hours: 6, harga: "Rp 4.900.000", numericPrice: 4900000 },
+    ],
+    additionalHourRate: "Rp 600.000 / jam",
+    additionalHourNumeric: 600000,
+  },
+  // ── 3. Bajaj Photobooth - No Print ──
+  {
+    id: "pb-bajaj-noprint",
+    nama: "Bajaj Photobooth (No Print)",
+    category: "Bajaj Photobooth",
+    type: "no-print",
+    description:
+      "Photobooth unik di dalam armada Bajaj hijau 'Tegoer Keliling' dengan pengalaman foto digital yang sangat viral & seru.",
+    image: "/images/photobooth/bajaj-photobooth.webp",
+    fitur: [
+      "Armada Ikonik Bajaj 'Tegoer Keliling'",
+      "Profesional Camera & Lightning",
+      "Unlimited Photo",
+      "Free Photo Frame Digital",
+      "Free GIF Animation",
+      "Backdrop Selection",
+      "Free to Use Property",
+      "QR Code Share File (Scan & Unduh Langsung)",
+      "Special Custom Design Layout Overlay",
+    ],
+    durations: [
+      { duration: "2 Jam", hours: 2, harga: "Rp 1.800.000", numericPrice: 1800000 },
+      { duration: "3 Jam", hours: 3, harga: "Rp 2.000.000", numericPrice: 2000000 },
+      { duration: "4 Jam", hours: 4, harga: "Rp 2.200.000", numericPrice: 2200000 },
+      { duration: "5 Jam", hours: 5, harga: "Rp 2.500.000", numericPrice: 2500000 },
+      { duration: "6 Jam", hours: 6, harga: "Rp 2.800.000", numericPrice: 2800000 },
+    ],
+    additionalHourRate: "Rp 600.000 / jam",
+    additionalHourNumeric: 600000,
+  },
+  // ── 4. Bajaj Photobooth - Print (Best Deal) ──
+  {
+    id: "pb-bajaj-print",
+    nama: "Bajaj Photobooth (Print)",
+    category: "Bajaj Photobooth",
+    type: "print",
+    badge: "Best Deal",
+    isBestDeal: true,
+    description:
+      "Pengalaman lengkap photobooth keliling di dalam Bajaj dengan hasil cetak instan unlimited untuk kenangan terbaik tamu.",
+    image: "/images/photobooth/bajaj-photobooth.webp",
+    fitur: [
+      "Armada Ikonik Bajaj 'Tegoer Keliling'",
+      "Profesional Camera & Lightning",
+      "Unlimited Photo",
+      "Unlimited Print (Cetak Instan Tanpa Batas)",
+      "Free Photo Frame Fisik & Digital",
+      "Free GIF Animation",
+      "Backdrop Selection",
+      "Free to Use Property Lengkap",
+      "QR Code Share File (Scan & Unduh Langsung)",
+      "Pilihan Cetak STRIP (2 pcs) atau 4R (1 pcs)",
+      "Special Custom Design Layout Overlay",
+    ],
+    durations: [
+      { duration: "2 Jam", hours: 2, harga: "Rp 2.600.000", numericPrice: 2600000 },
+      { duration: "3 Jam", hours: 3, harga: "Rp 3.100.000", numericPrice: 3100000 },
+      { duration: "4 Jam", hours: 4, harga: "Rp 3.800.000", numericPrice: 3800000 },
+      { duration: "5 Jam", hours: 5, harga: "Rp 4.500.000", numericPrice: 4500000 },
+      { duration: "6 Jam", hours: 6, harga: "Rp 5.200.000", numericPrice: 5200000 },
+    ],
+    additionalHourRate: "Rp 600.000 / jam",
+    additionalHourNumeric: 600000,
+  },
+];
+
+// Pilihan Warna Backdrop
+export type PhotoboothBackdrop = {
+  id: string;
+  name: string;
+  colorHex: string;
+  previewBg: string;
+};
+
+export const photoboothBackdrops: PhotoboothBackdrop[] = [
+  { id: "merah", name: "Merah", colorHex: "#991B1B", previewBg: "from-red-800 to-red-950" },
+  { id: "hijau", name: "Hijau", colorHex: "#064E3B", previewBg: "from-emerald-800 to-emerald-950" },
+  { id: "biru-highschool", name: "Biru High School", colorHex: "#1D4ED8", previewBg: "from-blue-600 to-sky-900" },
+  { id: "biru-navy", name: "Biru Navy", colorHex: "#0F172A", previewBg: "from-slate-900 to-indigo-950" },
+  { id: "cream", name: "Cream", colorHex: "#E2D9C8", previewBg: "from-amber-100 to-stone-300" },
+];
+
+// Pilihan Layout Overlay
+export type PhotoboothLayout = {
+  id: string;
+  name: string;
+  size: string;
+  pieces: string;
+  description: string;
+  templates: string[];
+};
+
+export const photoboothLayouts: PhotoboothLayout[] = [
+  {
+    id: "strip",
+    name: "STRIP Photo Print",
+    size: "2R Strip",
+    pieces: "2 pcs per cetak",
+    description:
+      "Kami menyediakan berbagai pilihan template overlay yang dapat disesuaikan dengan tema acara atau preferensi pribadi Anda. Banyak variasi layout vertikal & horizontal.",
+    templates: ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10"],
+  },
+  {
+    id: "4r",
+    name: "4R Photo Print",
+    size: "4R Postcard",
+    pieces: "1 pcs per cetak",
+    description:
+      "Template overlay ukuran 4R yang dapat disesuaikan dengan kebutuhan Anda, menampilkan detail foto lebih lapang dengan variasi layout kotak dan collage.",
+    templates: ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"],
+  },
+];
+
+// Ketentuan Order & Payment Photobooth
+export const photoboothOrderTerms = [
+  {
+    no: "01",
+    title: "Form Order",
+    desc: "Klien mengisi form reservasi yang dikirimkan oleh admin untuk pendataan jadwal, lokasi, dan detail kebutuhan acara.",
+  },
+  {
+    no: "02",
+    title: "Down Payment (DP 30%)",
+    desc: "Admin akan mengirimkan invoice resmi, kemudian klien melakukan pembayaran DP minimal 30% dari total harga yang tertera pada invoice untuk mengunci jadwal.",
+  },
+  {
+    no: "03",
+    title: "Material Collection",
+    desc: "Admin mengumpulkan informasi kebutuhan materi overlay design (nama acara, tanggal, logo, tema warna, dan hal-hal yang diperlukan).",
+  },
+  {
+    no: "04",
+    title: "Repayment & Canceling",
+    desc: "Pelunasan dilakukan H-1 Event. Apabila klien membatalkan order secara sepihak sebelum H-10 maka DP 30% tidak dapat dikembalikan. Perubahan tanggal event dapat berakibat pembatalan order apabila jadwal Tegoer Sapa Photobooth sudah terisi pada tanggal tersebut.",
+  },
+];
+
+// 6 Keunggulan Photobooth Tegoer Sapa (Sesuai Katalog Halaman 7)
+export const photoboothAdvantages = [
+  {
+    title: "Print Instan dan Berkualitas",
+    desc: "Setiap foto yang diambil langsung bisa dicetak dengan kualitas terbaik dalam hitungan detik. Momen indah bisa langsung dibawa pulang oleh tamu Anda.",
+    icon: "⚡",
+  },
+  {
+    title: "Portabel dan Fleksibel",
+    desc: "Photobooth Tegoer Sapa dapat dipindahkan dengan mudah ke berbagai lokasi, baik di dalam maupun di luar ruangan — dari pesta pernikahan hingga acara kantor.",
+    icon: "🔄",
+  },
+  {
+    title: "Pengalaman Seru dan Interaktif",
+    desc: "Bukan sekadar tempat berfoto, tetapi menghadirkan pengalaman menyenangkan bagi tamu. Mereka bisa berkreasi dengan beragam pose dan properti menarik.",
+    icon: "🎉",
+  },
+  {
+    title: "Kualitas Layanan Profesional",
+    desc: "Tim operator ramah dan profesional siap membantu dari awal hingga akhir acara, memastikan setiap detik berharga terabadikan dengan sempurna.",
+    icon: "🤝",
+  },
+  {
+    title: "Personalisasi Sesuai Tema Acara",
+    desc: "Desain frame foto bisa disesuaikan dengan tema acara, membuat setiap gambar lebih spesial dan berkesan sesuai suasana hati dan cerita di balik acara.",
+    icon: "🎨",
+  },
+  {
+    title: "Kenangan Abadi dalam Genggaman",
+    desc: "Setiap foto yang dihasilkan adalah kenangan abadi yang bisa diingat sepanjang waktu. Tersedia dalam cetak fisik dan soft file digital instan via QR code.",
+    icon: "✨",
+  },
+];
 
 // ─── Pricelist ───────────────────────────────────────────────────────────────
 // Tipe data paket
@@ -706,8 +980,8 @@ export const photographyDetailPages: Record<
         nama: "Half-Day Traditional",
         harga: "Konsultasi / Custom",
         badge: "Favorit Adat",
-        isPlaceholder: true,
-        placeholderNote: "Struktur placeholder — hubungi kami untuk kustomisasi rincian paket",
+        isPlaceholder: false,
+        placeholderNote: "Paket kustom tersedia — konsultasikan detail rundown acara adat Anda",
         fitur: [
           "Liputan prosesi adat hingga 4 jam",
           "1 Fotografer profesional + 1 Asisten",
@@ -724,8 +998,8 @@ export const photographyDetailPages: Record<
         nama: "Full-Day Traditional",
         harga: "Konsultasi / Custom",
         badge: "Liputan Lengkap",
-        isPlaceholder: true,
-        placeholderNote: "Struktur placeholder — hubungi kami untuk kustomisasi rincian paket",
+        isPlaceholder: false,
+        placeholderNote: "Paket kustom tersedia — konsultasikan detail rundown acara adat Anda",
         fitur: [
           "Liputan prosesi adat penuh (hingga 8 jam)",
           "2 Fotografer profesional berpengalaman",
@@ -741,8 +1015,8 @@ export const photographyDetailPages: Record<
         id: "trad-custom",
         nama: "Custom Cultural Event",
         harga: "Konsultasi Khusus",
-        isPlaceholder: true,
-        placeholderNote: "Struktur placeholder — hubungi kami untuk kustomisasi rincian paket",
+        isPlaceholder: false,
+        placeholderNote: "Paket kustom tersedia — konsultasikan detail rundown acara adat Anda",
         fitur: [
           "Konsultasi pra-acara & penyusunan rundown dokumentasi adat",
           "Penyesuaian jumlah tim foto & video sesuai skala acara",

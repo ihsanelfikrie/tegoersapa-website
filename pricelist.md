@@ -61,22 +61,65 @@ Layanan sesi foto studio profesional di studio Tegoer Sapa untuk perorangan, kel
 
 ---
 
-## 3. Cover Layanan Lainnya (Photobooth & Photobox)
+## 3. Photobooth (Katalog Resmi Tegoer Sapa)
 
-| Layanan / Paket | Kategori | File Cover Foto |
-|---|---|---|
-| **Open Space** | Photobooth | `/images/pricelist/photobooth-open-space.webp` |
-| **FLAT BOX** | Photobox | `/images/pricelist/photobox-flat-box.webp` |
-| **Reguler** | Photobox | `/images/pricelist/photobox-reguler.webp` |
-| **Red Curtain** | Photobox | `/images/pricelist/photobox-red-curtain.webp` |
-| **3D Circle** | Photobox | `/images/pricelist/photobox-3d-circle.webp` |
+Layanan photo booth instan modern untuk pernikahan, ulang tahun, gathering perusahaan, dan acara lainnya.
+
+### A. Opsi Paket Photobooth Reguler
+*Fasilitas umum:* Professional Camera & Lightning, Unlimited Photo, Free Photo Frame, Free GIF Animation, Backdrop Selection, Free to Use Property, QR Code Share File, Special Custom Design Layout Overlay.
+
+| Tipe Paket | 2 Jam | 3 Jam | 4 Jam | 5 Jam | 6 Jam | Additional Hour | Keterangan Cetak |
+|---|---|---|---|---|---|---|---|
+| **No Print** | Rp 1.500.000 | Rp 1.700.000 | Rp 1.900.000 | Rp 2.200.000 | Rp 2.500.000 | Rp 600.000 / jam | Soft file digital via QR Code |
+| **Print (Best Deal)** | Rp 2.300.000 | Rp 2.800.000 | Rp 3.500.000 | Rp 4.200.000 | Rp 4.900.000 | Rp 600.000 / jam | **Unlimited Print** (STRIP 2 pcs / 4R 1 pcs) |
+
+---
+
+### B. Opsi Paket Bajaj Photobooth ("Tegoer Keliling")
+Sensasi berfoto unik langsung di dalam armada Bajaj hijau ikonik Tegoer Sapa!  
+*Fasilitas umum:* Armada Bajaj 'Tegoer Keliling', Professional Camera & Lightning, Unlimited Photo, Free Photo Frame, Free GIF Animation, Backdrop Selection, Free to Use Property, QR Code Share File, Special Custom Design Layout Overlay.
+
+| Tipe Paket | 2 Jam | 3 Jam | 4 Jam | 5 Jam | 6 Jam | Additional Hour | Keterangan Cetak |
+|---|---|---|---|---|---|---|---|
+| **No Print** | Rp 1.800.000 | Rp 2.000.000 | Rp 2.200.000 | Rp 2.500.000 | Rp 2.800.000 | Rp 600.000 / jam | Soft file digital via QR Code |
+| **Print (Best Deal)** | Rp 2.600.000 | Rp 3.100.000 | Rp 3.800.000 | Rp 4.500.000 | Rp 5.200.000 | Rp 600.000 / jam | **Unlimited Print** (STRIP 2 pcs / 4R 1 pcs) |
+
+---
+
+### C. Pilihan Backdrop & Layout Overlay
+- **Pilihan Backdrop:** Merah, Hijau, Biru High School, Biru Navy, Cream
+- **Layout Overlay STRIP Photo Print (2R):** 2 pcs per cetak, Special Custom Design (Template A1 – A10)
+- **Layout Overlay 4R Photo Print:** 1 pcs per cetak, Special Custom Design (Template B1 – B9)
+
+---
+
+### D. Catatan Form Order & Ketentuan Payment
+1. **Form Order:** Client mengisi form yang dikirimkan oleh admin
+2. **Down Payment (DP):** Admin akan mengirimkan invoice resmi, Klien membayar DP minimal 30% dari total harga invoice
+3. **Material Collection:** Admin mengumpulkan kebutuhan materi overlay design (nama acara, tanggal, tema, logo)
+4. **Repayment & Canceling:** Pelunasan dilakukan H-1 Event. Pembatalan sepihak sebelum H-10 berakibat DP 30% hangus. Perubahan tanggal bergantung pada ketersediaan jadwal Tegoer Sapa.
+
+---
+
+### Format Pemesanan WhatsApp (Photobooth)
+- **Tujuan WhatsApp Photobooth:** `+62 813-5065-5747`
+- **Template Pesan:**
+  ```text
+  Halo kak Mau booking Photobooth Tegoer Sapa
+
+  Nama           : [Nama Lengkap]
+  Tanggal & Waktu: [Hari, DD-MM-YYYY / Jam]
+  Lokasi Acara   : [Venue / Alamat Acara]
+  Instagram      : [Username IG]
+  Paket          : [Photobooth Reguler / Bajaj Photobooth] - [Print / No Print] - [Durasi Jam]
+  ```
 
 ---
 
 ## 4. Informasi Kontak & Operasional
 
+- **WhatsApp Photobooth & Event:** `+62 813-5065-5747`
 - **WhatsApp Professional Photo & Graduation:** `+62 822-5409-2927`
-- **WhatsApp Photobooth & Event:** `+62 881-0805-18887`
 - **Email:** `tegoersapaa@gmail.com`
 - **Instagram:** [@tegoersapa.photobooth](https://instagram.com/tegoersapa.photobooth) | [@bertegoersapa_](https://instagram.com/bertegoersapa_)
 - **TikTok:** [@tegoersapaa](https://tiktok.com/@tegoersapaa)

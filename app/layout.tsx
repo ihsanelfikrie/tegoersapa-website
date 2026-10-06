@@ -40,15 +40,19 @@ export const metadata: Metadata = {
   description:
     "Tegoer Sapa menyediakan layanan photobooth, photobox, dan professional photography untuk wedding, birthday, graduation, dan event corporate di Banjarbaru, Kalimantan Selatan.",
   keywords: [
-    "photobooth",
-    "photobox",
-    "professional photo",
-    "wedding photobooth",
-    "graduation photo",
-    "fotografer banjarbaru",
     "photobooth banjarbaru",
+    "photobox banjarbaru",
+    "sewa photobooth banjarbaru",
+    "photobooth banjarmasin",
+    "fotografer banjarbaru",
+    "fotografer wisuda banjarbaru",
+    "foto wisuda banjarbaru",
+    "wedding photography banjarbaru",
     "fotografer kalimantan selatan",
+    "studio foto banjarbaru",
     "Tegoer Sapa",
+    "tegoersapa",
+    "photobooth event banjarbaru",
   ],
   authors: [{ name: "Tegoer Sapa" }],
   creator: "Tegoer Sapa",
@@ -110,7 +114,9 @@ const jsonLd = {
     "Layanan photobooth, photobox, dan professional photography untuk wedding, graduation, birthday, dan corporate event di Banjarbaru, Kalimantan Selatan.",
   url: "https://tegoersapa.com",
   telephone: "+6282254092927",
-  priceRange: "$$",
+  priceRange: "Rp300.000 - Rp2.500.000",
+  currenciesAccepted: "IDR",
+  paymentAccepted: "Cash, QRIS, Bank Transfer",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Banjarbaru",
@@ -122,6 +128,28 @@ const jsonLd = {
     latitude: -3.4402,
     longitude: 114.8302,
   },
+  areaServed: [
+    { "@type": "City", name: "Banjarbaru" },
+    { "@type": "City", name: "Banjarmasin" },
+    { "@type": "City", name: "Martapura" },
+    { "@type": "AdministrativeArea", name: "Kalimantan Selatan" },
+  ],
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: "+6282254092927",
+      contactType: "customer service",
+      contactOption: "WhatsApp",
+      availableLanguage: ["id", "en"],
+    },
+    {
+      "@type": "ContactPoint",
+      telephone: "+628810805188087",
+      contactType: "sales",
+      contactOption: "WhatsApp",
+      availableLanguage: ["id", "en"],
+    },
+  ],
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
@@ -140,6 +168,7 @@ const jsonLd = {
   ],
   sameAs: [
     "https://instagram.com/tegoersapa.photobooth",
+    "https://instagram.com/bertegoersapa_",
     "https://tiktok.com/@tegoersapaa",
   ],
 };

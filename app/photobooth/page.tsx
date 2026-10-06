@@ -9,18 +9,29 @@ import { portfolioPreview, brand } from "@/lib/content";
 import HeroClouds from "@/components/ui/HeroClouds";
 import GrassyHill from "@/components/ui/GrassyHill";
 import Button from "@/components/ui/Button";
+import PhotoboothPricing from "@/components/sections/PhotoboothPricing";
 
-// ─── 4 Layanan Photobooth ───────────────────────────────────────────────────
+// ─── Layanan Photobooth & Interactive Experience ───────────────────────────
 const photoboothServices = [
   {
     id: "photobooth",
     tag: "Event & Party",
-    title: "Photobooth",
+    title: "Photobooth Reguler",
     description:
       "Layanan photo booth interaktif di lokasi acara dengan cetak instan berkecepatan tinggi, properti seru, dan desain template kustom.",
     exploreHref: "/gallery?kategori=photobooth",
     categoryLabel: "Photobooth",
     image: "/images/pricelist/photobooth-open-space.webp",
+  },
+  {
+    id: "bajaj-photobooth",
+    tag: "Mobile Iconic",
+    title: "Bajaj Photobooth",
+    description:
+      "Sensasi berfoto di dalam kabin armada Bajaj ikonik 'Tegoer Keliling'. Menghadirkan daya tarik visual yang sangat viral dan memorable.",
+    exploreHref: "/gallery?kategori=photobooth",
+    categoryLabel: "Bajaj",
+    image: "/images/photobooth/bajaj-photobooth.webp",
   },
   {
     id: "photobox",
@@ -164,11 +175,11 @@ export default function PhotoboothPage() {
 
               <div className="hero-anim mt-8 flex flex-wrap items-center gap-3">
                 <Button
-                  href="/pricelist"
+                  href="#pricing"
                   variant="primary"
                   size="md"
                 >
-                  <span>Lihat Pricelist</span>
+                  <span>Lihat Paket & Harga</span>
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
@@ -241,13 +252,17 @@ export default function PhotoboothPage() {
             </p>
           </div>
 
-          {/* 4 Cards Grid */}
+          {/* 5 Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {photoboothServices.map((service, index) => (
-              <div
-                key={service.id}
-                className="service-card group flex flex-col justify-between p-5 sm:p-8 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300"
-              >
+            {photoboothServices.map((service, index) => {
+              const isFeaturedWide = index === 4;
+              return (
+                <div
+                  key={service.id}
+                  className={`service-card group flex flex-col justify-between p-5 sm:p-8 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300 ${
+                    isFeaturedWide ? "md:col-span-2" : ""
+                  }`}
+                >
                 <div>
                   {/* Photo Visual Slot (Konsisten dengan style existing) */}
                   <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-brand-dark ring-1 ring-black/5 mb-6">
@@ -303,15 +318,28 @@ export default function PhotoboothPage() {
                   </Button>
 
                   <Link
-                    href="/pricelist"
+                    href="#pricing"
                     className="text-xs font-semibold text-gray-400 hover:text-brand-dark transition-colors"
                   >
-                    Lihat Paket →
+                    Lihat Paket & Harga →
                   </Link>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          2.5. DAFTAR HARGA & OPSI PAKET PHOTOBOOTH (Katalog Resmi)
+      ═══════════════════════════════════════════════════════════════ */}
+      <section
+        id="pricing"
+        className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white border-t border-gray-100 scroll-mt-20"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <PhotoboothPricing sourceUrl="/photobooth#pricing" />
         </div>
       </section>
 
@@ -436,7 +464,7 @@ export default function PhotoboothPage() {
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Button
-              href="/pricelist"
+              href="#pricing"
               variant="primary"
               size="lg"
             >
@@ -447,11 +475,11 @@ export default function PhotoboothPage() {
             </Button>
 
             <Button
-              href="https://api.whatsapp.com/send?phone=628810805188087&text=Halo%20kak%20Mau%20konsultasi%20layanan%20Photobooth%20Tegoer%20Sapa"
+              href="https://api.whatsapp.com/send?phone=6281350655747&text=Halo%20kak%20Mau%20konsultasi%20layanan%20Photobooth%20Tegoer%20Sapa"
               variant="stroke"
               size="lg"
             >
-              <span>Chat WhatsApp</span>
+              <span>Chat WhatsApp Photobooth</span>
               <span aria-hidden="true">↗</span>
             </Button>
           </div>

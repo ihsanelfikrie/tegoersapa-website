@@ -30,6 +30,11 @@ export default function BookingPage() {
     catatan: "",
   });
 
+  const [photoboothPrefs, setPhotoboothPrefs] = useState({
+    backdrop: "Hijau",
+    layout: "STRIP Photo Print (2R • 2 pcs)",
+  });
+
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -103,6 +108,24 @@ export default function BookingPage() {
     const cleanInstagram = formData.instagram.replace(/[^\w._]/g, "").trim();
     const cleanCatatan = formData.catatan.replace(/[<>]/g, "").trim();
 
+    const isPhotobooth = Boolean(
+      selectedPackage.kategori?.toLowerCase().includes("photobooth") ||
+      selectedPackage.kategori?.toLowerCase().includes("photobox") ||
+      selectedPackage.kategori?.toLowerCase().includes("bajaj") ||
+      selectedPackage.id?.toLowerCase().includes("photobooth") ||
+      selectedPackage.id?.toLowerCase().includes("photobox") ||
+      selectedPackage.id?.toLowerCase().includes("bajaj") ||
+      selectedPackage.id?.toLowerCase().startsWith("pb-") ||
+      selectedPackage.id?.toLowerCase().includes("mingle") ||
+      selectedPackage.sourceUrl?.includes("photobooth")
+    );
+
+    const photoboothDetailsText = isPhotobooth
+      ? `\n🎨 PREFERENSI PHOTOBOOTH:
+• Pilihan Backdrop: ${photoboothPrefs.backdrop}
+• Format Layout / Cetak: ${photoboothPrefs.layout}`
+      : "";
+
     const message = `Halo Tegoer Sapa, saya ingin melakukan reservasi / booking:
 
 📋 DETAIL PEMESAN
@@ -115,7 +138,7 @@ export default function BookingPage() {
 
 📦 PAKET YANG DIPILIH
 • Paket: ${selectedPackage.nama} (${selectedPackage.kategori || "Dokumentasi"})
-• Harga Paket: ${selectedPackage.harga}
+• Harga Paket: ${selectedPackage.harga}${photoboothDetailsText}
 
 ➕ ADD-ON OPSIONAL
 ${addOnLines}
@@ -128,7 +151,10 @@ ${cleanCatatan || "-"}
 
 Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kasih!`;
 
-    const adminPhone = contact.whatsapp[0].raw || "6282254092927";
+    const adminPhone = isPhotobooth
+      ? contact.whatsapp[1]?.raw || "6281350655747"
+      : contact.whatsapp[0]?.raw || "6282254092927";
+
     const waUrl = `https://api.whatsapp.com/send?phone=${adminPhone}&text=${encodeURIComponent(
       message
     )}`;
@@ -137,6 +163,20 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
     // Open WhatsApp in new tab
     window.open(waUrl, "_blank", "noopener,noreferrer");
   };
+
+  // Determine if chosen package is Photobooth / Bajaj
+  const isPhotobooth = Boolean(
+    selectedPackage &&
+      (selectedPackage.kategori?.toLowerCase().includes("photobooth") ||
+        selectedPackage.kategori?.toLowerCase().includes("photobox") ||
+        selectedPackage.kategori?.toLowerCase().includes("bajaj") ||
+        selectedPackage.id?.toLowerCase().includes("photobooth") ||
+        selectedPackage.id?.toLowerCase().includes("photobox") ||
+        selectedPackage.id?.toLowerCase().includes("bajaj") ||
+        selectedPackage.id?.toLowerCase().startsWith("pb-") ||
+        selectedPackage.id?.toLowerCase().includes("mingle") ||
+        selectedPackage.sourceUrl?.includes("photobooth"))
+  );
 
   // Determine if chosen package is Studio
   const isStudioPackage = Boolean(
@@ -631,6 +671,72 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       />
                     </div>
                   </div>
+
+                  {/* Preferensi Khusus Photobooth (Tampil jika memilih Photobooth) */}
+                  {isPhotobooth && (
+                    <div className="p-4 sm:p-5 rounded-2xl bg-brand-green/5 border border-brand-green/20 space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-brand-green block">
+                            Preferensi Khusus Photobooth
+                          </span>
+                          <h4 className="text-sm font-black text-brand-dark">
+                            Pilihan Backdrop & Format Cetak (Opsional)
+                          </h4>
+                        </div>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-green/10 text-brand-green border border-brand-green/20">
+                          Katalog Resmi
+                        </span>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-brand-dark mb-1.5">
+                          Pilihan Warna Backdrop:
+                        </label>
+                        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                          {["Merah", "Hijau", "Biru High School", "Biru Navy", "Cream"].map((color) => (
+                            <button
+                              key={color}
+                              type="button"
+                              onClick={() => setPhotoboothPrefs((prev) => ({ ...prev, backdrop: color }))}
+                              className={`py-2 px-1 text-center rounded-xl text-xs font-bold transition-all ${
+                                photoboothPrefs.backdrop === color
+                                  ? "bg-brand-dark text-white ring-2 ring-brand-green shadow-xs"
+                                  : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-100"
+                              }`}
+                            >
+                              {color}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-brand-dark mb-1.5">
+                          Format Layout / Ukuran Cetak:
+                        </label>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          {[
+                            { label: "STRIP Photo Print (2R • 2 pcs)", val: "STRIP (2 pcs)" },
+                            { label: "4R Photo Print Postcard (1 pcs)", val: "4R Postcard (1 pcs)" },
+                          ].map((item) => (
+                            <button
+                              key={item.val}
+                              type="button"
+                              onClick={() => setPhotoboothPrefs((prev) => ({ ...prev, layout: item.val }))}
+                              className={`py-2.5 px-3 text-center rounded-xl text-xs font-bold transition-all ${
+                                photoboothPrefs.layout === item.val
+                                  ? "bg-brand-dark text-white ring-2 ring-brand-green shadow-xs"
+                                  : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-100"
+                              }`}
+                            >
+                              {item.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Catatan Tambahan */}
                   <div>

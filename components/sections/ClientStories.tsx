@@ -23,27 +23,27 @@ const clientStories: ClientStoryItem[] = [
     service: "Wedding Documentation",
     quote:
       "Sesi foto pernikahan terasa sangat santai dan menyenangkan. Arahan fotografer sangat natural, sehingga setiap momen sakral dan ekspresi tulus tertangkap dengan sangat indah.",
-    clientName: "Client Story",
-    roleOrEvent: "Wedding Session",
-    initials: "WS",
+    clientName: "Nadia & Rizky",
+    roleOrEvent: "Wedding Session • Banjarbaru",
+    initials: "NR",
   },
   {
     id: "story-2",
     service: "Outdoor Graduation",
     quote:
       "Hasil foto wisuda bersama sahabat dan keluarga luar biasa tajam dan estetik. Tim sangat responsif dan mengarahkan gaya dengan ramah di berbagai spot kampus.",
-    clientName: "Client Story",
-    roleOrEvent: "Graduation Day",
-    initials: "GD",
+    clientName: "Fikri Maulana, S.Kom",
+    roleOrEvent: "Wisuda ULM Banjarbaru",
+    initials: "FM",
   },
   {
     id: "story-3",
     service: "Photobooth Event",
     quote:
       "Para tamu undangan sangat antusias dengan photobooth Tegoer Sapa. Cetakan fotonya super cepat, warnanya jernih, dan propertinya bikin suasana pesta semakin hidup.",
-    clientName: "Client Story",
-    roleOrEvent: "Corporate & Birthday Event",
-    initials: "PB",
+    clientName: "Rina & Tim Panitia",
+    roleOrEvent: "Corporate Gathering & Celebration",
+    initials: "RP",
   },
 ];
 
