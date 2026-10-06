@@ -77,6 +77,43 @@ function PhotoSlot({
   );
 }
 
+// ─── Sub-komponen: Rumpun rumput kartun 4 bilah (lebar) ──────────────────────
+function GrassTuft4({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg
+      viewBox="0 0 60 30"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      style={style}
+      aria-hidden="true"
+    >
+      <path d="M 12 25 L 2 11" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
+      <path d="M 18 21 L 24 3" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
+      <path d="M 40 20 L 39 1" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
+      <path d="M 46 25 L 56 12" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+// ─── Sub-komponen: Rumpun rumput kartun 3 bilah (kompak) ────────────────────
+function GrassTuft3({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg
+      viewBox="0 0 36 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      style={style}
+      aria-hidden="true"
+    >
+      <path d="M 8 23 L 1 13" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
+      <path d="M 14 24 L 12 1" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
+      <path d="M 20 25 L 30 14" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 // ─── Komponen utama: Hero ────────────────────────────────────────────────────
 export default function Hero() {
   const containerRef = useRef<HTMLElement>(null);
@@ -266,21 +303,21 @@ export default function Hero() {
           unoptimized
           className="cloud-flow cloud-flow-a absolute top-2 sm:top-4 lg:top-6 left-0 w-[22rem] sm:w-[30rem] lg:w-[40rem] max-w-none pointer-events-none opacity-95"
         />
-        {/* Awan bawah — berjarak di bagian dasar, tidak akan tumpang tindih */}
+        {/* Awan bawah — melayang anggun di atas lengkungan bukit rumput */}
         <Image
           src="/brand/awan.svg"
           alt=""
           width={677}
           height={408}
           unoptimized
-          className="cloud-flow cloud-flow-b absolute bottom-0 sm:bottom-2 lg:bottom-4 left-0 w-[16rem] sm:w-[22rem] lg:w-[28rem] max-w-none pointer-events-none opacity-90"
+          className="cloud-flow cloud-flow-b absolute bottom-14 sm:bottom-20 lg:bottom-24 left-0 w-[16rem] sm:w-[22rem] lg:w-[28rem] max-w-none pointer-events-none opacity-90"
         />
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════
           LAYOUT UTAMA: TEKS KIRI + MOSAIC KANAN
       ═══════════════════════════════════════════════════════════════════ */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 lg:pt-32 lg:pb-20">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20 sm:pb-24 lg:pt-32 lg:pb-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
 
           {/* ─── KOLOM KIRI: Teks ─────────────────────────────────────── */}
@@ -462,18 +499,102 @@ export default function Hero() {
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════
-          SCROLL INDICATOR
+          BUKIT RERUMPUTAN KARTUN (RESPONSIF DENGAN CSS / SVG VECTOR)
+          Didesain presisi persis seperti referensi: lengkung bukit hijau,
+          outline hitam kartun tebal, dan rumpun rumput tersebar alami.
       ═══════════════════════════════════════════════════════════════════ */}
       <div
         aria-hidden="true"
-        className="absolute bottom-6 left-1/2 -translate-x-1/2
-                   flex flex-col items-center gap-1.5 animate-bounce"
+        className="absolute bottom-0 left-0 right-0 w-full pointer-events-none select-none z-10 overflow-hidden leading-none translate-y-[1px]"
       >
-        <span className="text-brand-dark/50 text-[10px] tracking-[0.25em] uppercase font-bold">
+        <div className="relative w-full h-28 sm:h-36 md:h-44 lg:h-48 xl:h-52">
+          {/* Lengkungan Bukit Hijau dengan Garis Hitam Kartun */}
+          <svg
+            viewBox="0 0 1440 220"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="none"
+            className="absolute inset-0 w-full h-full block"
+          >
+            {/* Bidang Rumput Hijau Segar */}
+            <path
+              d="M -10,128 Q 720,-16 1450,96 L 1450,225 L -10,225 Z"
+              fill="#1eab73"
+            />
+            {/* Outline Hitam Tegas Khas Kartun & Sticker */}
+            <path
+              d="M -10,128 Q 720,-16 1450,96"
+              fill="none"
+              stroke="#000000"
+              strokeWidth="4.5"
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
+
+          {/* Rumpun Rumput 1: Kiri bawah (4 bilah) */}
+          <GrassTuft4
+            className="grass-tuft grass-sway-a absolute w-9 sm:w-11 lg:w-14 h-auto"
+            style={{ left: "3.5%", bottom: "15%" }}
+          />
+
+          {/* Rumpun Rumput Tambahan Kiri (Layar Menengah/Besar) */}
+          <GrassTuft3
+            className="grass-tuft grass-sway-b hidden md:block absolute w-6 sm:w-8 lg:w-10 h-auto"
+            style={{ left: "14%", bottom: "28%" }}
+          />
+
+          {/* Rumpun Rumput 2: Lereng Kiri atas (4 bilah) */}
+          <GrassTuft4
+            className="grass-tuft grass-sway-b absolute w-9 sm:w-11 lg:w-14 h-auto"
+            style={{ left: "24%", bottom: "44%" }}
+          />
+
+          {/* Rumpun Rumput Tambahan Tengah-Kiri (Layar Besar) */}
+          <GrassTuft3
+            className="grass-tuft grass-sway-a hidden lg:block absolute w-6 sm:w-8 lg:w-10 h-auto"
+            style={{ left: "38%", bottom: "32%" }}
+          />
+
+          {/* Rumpun Rumput 3: Tengah-Kanan bawah (3 bilah, berdampingan rapi dengan scroll indicator) */}
+          <GrassTuft3
+            className="grass-tuft grass-sway-a absolute w-6 sm:w-8 lg:w-10 h-auto"
+            style={{ left: "58%", bottom: "16%" }}
+          />
+
+          {/* Rumpun Rumput Tambahan Puncak Kanan (Layar Menengah/Besar) */}
+          <GrassTuft3
+            className="grass-tuft grass-sway-b hidden md:block absolute w-6 sm:w-8 lg:w-10 h-auto"
+            style={{ left: "67%", bottom: "50%" }}
+          />
+
+          {/* Rumpun Rumput 4: Lereng Kanan atas (4 bilah) */}
+          <GrassTuft4
+            className="grass-tuft grass-sway-b absolute w-9 sm:w-11 lg:w-14 h-auto"
+            style={{ left: "77%", bottom: "42%" }}
+          />
+
+          {/* Rumpun Rumput 5: Kanan bawah (3 bilah) */}
+          <GrassTuft3
+            className="grass-tuft grass-sway-a absolute w-6 sm:w-8 lg:w-10 h-auto"
+            style={{ left: "93%", bottom: "14%" }}
+          />
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          SCROLL INDICATOR (DIPOSISIKAN ELEGAN DI ATAS RERUMPUTAN)
+      ═══════════════════════════════════════════════════════════════════ */}
+      <div
+        aria-hidden="true"
+        className="absolute bottom-2.5 sm:bottom-4 lg:bottom-6 left-1/2 -translate-x-1/2 z-20
+                   flex flex-col items-center gap-0.5 sm:gap-1 animate-bounce"
+      >
+        <span className="text-white text-[9px] sm:text-[10px] tracking-[0.25em] uppercase font-extrabold drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
           Scroll
         </span>
-        <div className="w-5 h-8 rounded-full border border-brand-dark/30 flex items-start justify-center pt-1.5">
-          <div className="w-1 h-2 rounded-full bg-brand-dark/50 animate-[slideDown_1.5s_ease-in-out_infinite]" />
+        <div className="w-4 h-7 sm:w-5 sm:h-8 rounded-full border border-white/80 bg-black/25 backdrop-blur-xs flex items-start justify-center pt-1 shadow-sm">
+          <div className="w-1 h-2 rounded-full bg-white animate-[slideDown_1.5s_ease-in-out_infinite]" />
         </div>
       </div>
 
@@ -486,6 +607,26 @@ export default function Hero() {
         @keyframes cloudFlow {
           from { transform: translate3d(-100%, 0, 0); }
           to   { transform: translate3d(100vw, 0, 0); }
+        }
+        @keyframes grassSwayA {
+          0%, 100% { transform: rotate(0deg); }
+          50%      { transform: rotate(-5deg); }
+        }
+        @keyframes grassSwayB {
+          0%, 100% { transform: rotate(0deg); }
+          50%      { transform: rotate(6deg); }
+        }
+        .grass-tuft {
+          transform-origin: bottom center;
+          pointer-events: none;
+        }
+        .grass-sway-a {
+          animation: grassSwayA 3.6s ease-in-out infinite;
+          will-change: transform;
+        }
+        .grass-sway-b {
+          animation: grassSwayB 4.2s ease-in-out infinite;
+          will-change: transform;
         }
         .cloud-flow {
           animation: cloudFlow 70s linear infinite;
@@ -500,7 +641,11 @@ export default function Hero() {
           animation-delay: -45s; /* Beda fase 35s (tepat 50% siklus), awan selalu berjarak 180° sehingga tidak akan pernah tumpang tindih */
         }
         @media (prefers-reduced-motion: reduce) {
-          .cloud-flow { animation: none; }
+          .cloud-flow,
+          .grass-sway-a,
+          .grass-sway-b {
+            animation: none !important;
+          }
           .cloud-flow-a { transform: translateX(15vw); }
           .cloud-flow-b { transform: translateX(65vw); }
         }
