@@ -192,35 +192,56 @@ export default function Navbar() {
                         </div>
 
                         <div className="space-y-0.5">
-                          {link.subItems?.map((sub) => (
-                            <Link
-                              key={sub.href}
-                              href={sub.href}
-                              className={[
-                                "block px-3 py-2.5 rounded-xl transition-all duration-150 group/item",
-                                isDarkNav
-                                  ? "hover:bg-white/10 text-white/90 hover:text-white"
-                                  : "hover:bg-brand-green/10 text-gray-800 hover:text-brand-dark",
-                              ].join(" ")}
-                            >
-                              <div className="text-xs font-bold tracking-wide flex items-center justify-between">
-                                <span className="group-hover/item:text-brand-green transition-colors duration-150">
-                                  {sub.label}
-                                </span>
-                                <span className="text-[10px] opacity-0 group-hover/item:opacity-100 -translate-x-1 group-hover/item:translate-x-0 transition-all duration-150 text-brand-green">
-                                  ↗
-                                </span>
-                              </div>
-                              <p
+                          {link.subItems?.map((sub) => {
+                            const isSubActive = pathname === sub.href;
+
+                            return (
+                              <Link
+                                key={sub.href}
+                                href={sub.href}
                                 className={[
-                                  "text-[11px] font-medium leading-snug mt-0.5",
-                                  isDarkNav ? "text-white/50" : "text-gray-500",
+                                  "block px-3 py-2.5 rounded-xl transition-all duration-150 group/item",
+                                  isSubActive
+                                    ? isDarkNav
+                                      ? "bg-white/15 text-white"
+                                      : "bg-brand-green/15 text-brand-dark"
+                                    : isDarkNav
+                                    ? "hover:bg-white/10 text-white/90 hover:text-white"
+                                    : "hover:bg-brand-green/10 text-gray-800 hover:text-brand-dark",
                                 ].join(" ")}
                               >
-                                {sub.description}
-                              </p>
-                            </Link>
-                          ))}
+                                <div className="text-xs font-bold tracking-wide flex items-center justify-between">
+                                  <span
+                                    className={
+                                      isSubActive
+                                        ? "text-brand-green"
+                                        : "group-hover/item:text-brand-green transition-colors duration-150"
+                                    }
+                                  >
+                                    {sub.label}
+                                  </span>
+                                  <span
+                                    className={[
+                                      "text-[10px] transition-all duration-150 text-brand-green",
+                                      isSubActive
+                                        ? "opacity-100 translate-x-0"
+                                        : "opacity-0 group-hover/item:opacity-100 -translate-x-1 group-hover/item:translate-x-0",
+                                    ].join(" ")}
+                                  >
+                                    ↗
+                                  </span>
+                                </div>
+                                <p
+                                  className={[
+                                    "text-[11px] font-medium leading-snug mt-0.5",
+                                    isDarkNav ? "text-white/50" : "text-gray-500",
+                                  ].join(" ")}
+                                >
+                                  {sub.description}
+                                </p>
+                              </Link>
+                            );
+                          })}
                         </div>
                       </div>
                     </div>
@@ -233,10 +254,8 @@ export default function Navbar() {
           {/* Desktop CTA button + Mobile hamburger */}
           <div className="pointer-events-auto flex items-center gap-3">
             {/* CTA — desktop */}
-            <a
-              href={navCta.href}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/booking"
               id="navbar-cta-booking"
               className={[
                 "hidden md:inline-flex items-center gap-2 h-11",
@@ -246,7 +265,7 @@ export default function Navbar() {
               ].join(" ")}
             >
               {navCta.label}
-            </a>
+            </Link>
 
             {/* Hamburger — mobile */}
             <button
@@ -316,21 +335,28 @@ export default function Navbar() {
                   {/* Sub-items in mobile menu */}
                   {hasSub && (
                     <div className="pl-4 pr-1 py-1 space-y-1 mb-1 border-l-2 border-brand-green/30 ml-4 my-1">
-                      {link.subItems?.map((sub) => (
-                        <Link
-                          key={sub.href}
-                          href={sub.href}
-                          className={[
-                            "block px-3 py-2 rounded-lg text-xs font-medium transition-colors duration-150",
-                            isDarkNav
-                              ? "text-white/70 hover:text-brand-green hover:bg-white/5"
-                              : "text-gray-600 hover:text-brand-green hover:bg-gray-50",
-                          ].join(" ")}
-                        >
-                          <span className="font-semibold block">{sub.label}</span>
-                          <span className="text-[10px] opacity-70 block">{sub.description}</span>
-                        </Link>
-                      ))}
+                      {link.subItems?.map((sub) => {
+                        const isSubActive = pathname === sub.href;
+
+                        return (
+                          <Link
+                            key={sub.href}
+                            href={sub.href}
+                            onClick={() => setIsOpen(false)}
+                            className={[
+                              "block px-3 py-2 rounded-lg text-xs font-medium transition-colors duration-150",
+                              isSubActive
+                                ? "bg-brand-green/15 text-brand-green font-bold"
+                                : isDarkNav
+                                ? "text-white/70 hover:text-brand-green hover:bg-white/5"
+                                : "text-gray-600 hover:text-brand-green hover:bg-gray-50",
+                            ].join(" ")}
+                          >
+                            <span className="font-semibold block">{sub.label}</span>
+                            <span className="text-[10px] opacity-70 block">{sub.description}</span>
+                          </Link>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -338,10 +364,9 @@ export default function Navbar() {
             })}
 
             {/* CTA — mobile */}
-            <a
-              href={navCta.href}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/booking"
+              onClick={() => setIsOpen(false)}
               id="mobile-cta-booking"
               className={[
                 "mt-2 flex items-center justify-center gap-2",
@@ -350,7 +375,7 @@ export default function Navbar() {
               ].join(" ")}
             >
               {navCta.label}
-            </a>
+            </Link>
           </div>
         </div>
       </nav>

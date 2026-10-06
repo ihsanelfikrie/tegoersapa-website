@@ -14,7 +14,7 @@ const photographyServices = [
     title: "Traditional Photography",
     description:
       "Dokumentasi prosesi adat dan tradisi budaya nusantara dengan pendekatan visual yang autentik, khidmat, dan penuh makna.",
-    exploreHref: "/gallery?kategori=professional",
+    exploreHref: "/photography/traditional",
     categoryLabel: "Traditional",
   },
   {
@@ -23,7 +23,7 @@ const photographyServices = [
     title: "Wedding Documentation",
     description:
       "Abadikan setiap detik sakral, haru, dan romantis hari bahagia Anda dengan visual sinematik dan tata warna berkelas.",
-    exploreHref: "/gallery?kategori=photobooth&sub=wedding",
+    exploreHref: "/photography/wedding",
     categoryLabel: "Wedding",
   },
   {
@@ -32,7 +32,7 @@ const photographyServices = [
     title: "Graduation",
     description:
       "Rayakan kelulusan dan kebanggaan bersama keluarga serta sahabat melalui sesi foto wisuda outdoor kampus maupun indoor studio.",
-    exploreHref: "/gallery?kategori=professional&sub=outdoor-graduation",
+    exploreHref: "/photography/graduation",
     categoryLabel: "Graduation",
   },
   {
@@ -41,7 +41,7 @@ const photographyServices = [
     title: "Studio Professional",
     description:
       "Sesi foto studio eksklusif dengan tata pencahayaan presisi, pilihan backdrop elegan, dan pengarahan gaya profesional.",
-    exploreHref: "/gallery?kategori=professional&sub=indoor-graduation",
+    exploreHref: "/photography/studio",
     categoryLabel: "Studio",
   },
 ] as const;
@@ -291,7 +291,7 @@ export default function PhotographyPage() {
                     href={service.exploreHref}
                     className="inline-flex items-center gap-2 text-xs font-bold tracking-wide bg-brand-dark group-hover:bg-brand-green text-white px-5 py-2.5 rounded-full transition-all duration-300"
                   >
-                    <span>Explore Work</span>
+                    <span>Detail Layanan</span>
                     <svg
                       className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
                       fill="none"

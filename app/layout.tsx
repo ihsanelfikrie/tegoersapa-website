@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { BookingProvider } from "@/lib/BookingContext";
+import FloatingBookingBar from "@/components/ui/FloatingBookingBar";
 
 /**
  * Font utama: Hoss Round (file lokal di public/fonts).
@@ -52,9 +54,12 @@ export default function RootLayout({
   return (
     <html lang="id" className={hossRound.variable} suppressHydrationWarning>
       <body className="min-h-screen flex flex-col antialiased" suppressHydrationWarning>
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <BookingProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <FloatingBookingBar />
+        </BookingProvider>
       </body>
     </html>
   );

@@ -2,12 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { pricelistPackages, type PricePackage } from "@/lib/content";
 import { generateWhatsAppLink } from "@/lib/whatsapp";
+import { useBooking } from "@/lib/BookingContext";
 
 const CATEGORIES = ["Semua", "Profesional Studio", "Outdoor Graduation"] as const;
 
 export default function PricelistPage() {
+  const router = useRouter();
+  const { selectedPackage, selectPackage } = useBooking();
   const [selectedCategory, setSelectedCategory] = useState<typeof CATEGORIES[number]>("Semua");
 
   const filteredPackages = pricelistPackages.filter((pkg) => {
@@ -60,53 +64,91 @@ export default function PricelistPage() {
           {filteredPackages.map((pkg: PricePackage) => {
             const waLink = generateWhatsAppLink(pkg.whatsappTemplate, pkg.nama);
 
-            return (
-              <div
-                key={pkg.id}
-                className="flex flex-col justify-between p-7 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-brand-green/10 text-brand-dark border border-brand-green/20">
-                      {pkg.kategori}
-                    </span>
+              const isSelected = selectedPackage?.id === pkg.id;
+
+              return (
+                <div
+                  key={pkg.id}
+                  className={[
+                    "flex flex-col justify-between p-7 rounded-3xl transition-all duration-300",
+                    isSelected
+                      ? "border-2 border-brand-green bg-white ring-4 ring-brand-green/10 shadow-lg"
+                      : "border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30",
+                  ].join(" ")}
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-brand-green/10 text-brand-dark border border-brand-green/20">
+                        {pkg.kategori}
+                      </span>
+                      {isSelected && (
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-brand-green text-white">
+                          ✓ Terpilih
+                        </span>
+                      )}
+                    </div>
+
+                    <h2 className="text-2xl font-black text-brand-dark tracking-wide">
+                      {pkg.nama}
+                    </h2>
+                    <div className="mt-2 text-2xl sm:text-3xl font-black text-brand-green">
+                      {pkg.harga}
+                    </div>
+
+                    <div className="w-full h-px bg-gray-200 my-6" />
+
+                    {/* Feature list */}
+                    <ul className="space-y-2.5">
+                      {pkg.fitur.map((feature, idx) => (
+                        <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-600 font-medium">
+                          <span className="text-brand-green font-bold flex-shrink-0 mt-0.5">✓</span>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
-                  <h2 className="text-2xl font-black text-brand-dark tracking-wide">
-                    {pkg.nama}
-                  </h2>
-                  <div className="mt-2 text-2xl sm:text-3xl font-black text-brand-green">
-                    {pkg.harga}
+                  <div className="mt-8 pt-4 space-y-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        selectPackage(
+                          {
+                            id: pkg.id,
+                            nama: pkg.nama,
+                            harga: pkg.harga,
+                            kategori: pkg.kategori,
+                            fitur: pkg.fitur,
+                          },
+                          "/pricelist"
+                        );
+                        router.push("/booking");
+                      }}
+                      className={[
+                        "w-full inline-flex items-center justify-center gap-2 text-xs font-bold tracking-wide px-5 py-3.5 rounded-2xl transition-all duration-200 hover:-translate-y-0.5 cursor-pointer shadow-sm",
+                        isSelected
+                          ? "bg-brand-green text-white hover:bg-brand-green/90"
+                          : "bg-brand-dark hover:bg-brand-green text-white",
+                      ].join(" ")}
+                    >
+                      <span>{isSelected ? "✓ Paket Terpilih • Lanjut Form Booking" : "Pilih Paket Ini"}</span>
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </button>
+
+                    <a
+                      href={waLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full inline-flex items-center justify-center gap-1.5 text-[11px] font-semibold text-gray-400 hover:text-brand-green transition-colors py-1"
+                    >
+                      <span>Tanya via WhatsApp Langsung</span>
+                      <span aria-hidden="true">↗</span>
+                    </a>
                   </div>
-
-                  <div className="w-full h-px bg-gray-200 my-6" />
-
-                  {/* Feature list */}
-                  <ul className="space-y-2.5">
-                    {pkg.fitur.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-600 font-medium">
-                        <span className="text-brand-green font-bold flex-shrink-0 mt-0.5">✓</span>
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-
-                <div className="mt-8 pt-4">
-                  <a
-                    href={waLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2 bg-brand-dark hover:bg-brand-green text-white font-bold text-xs tracking-wide px-5 py-3.5 rounded-2xl transition-all duration-200 hover:-translate-y-0.5"
-                  >
-                    <span>Book Now via WhatsApp</span>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            );
+              );
           })}
         </div>
       </section>

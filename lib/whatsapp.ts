@@ -57,3 +57,16 @@ Paket : ${paketNama}`;
 
   return `https://api.whatsapp.com/send?phone=${WA_PROFESSIONAL}&text=${encodeWAText(message)}`;
 }
+
+export function generateServiceBookingLink(serviceName: string, customText?: string): string {
+  const defaultText = `Halo kak Mau booking layanan ${serviceName} di Tegoer Sapa
+
+Nama :
+Tanggal & Waktu :
+Lokasi / Acara :
+Instagram :
+Paket : ${serviceName}`;
+
+  const message = customText || defaultText;
+  return `https://api.whatsapp.com/send?phone=${WA_PROFESSIONAL}&text=${encodeWAText(message)}`;
+}
