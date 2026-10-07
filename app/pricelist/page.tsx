@@ -44,11 +44,6 @@ export default function PricelistPage() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl flex flex-col items-center lg:items-start text-center lg:text-left mx-auto lg:mx-0">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 backdrop-blur-xs border border-brand-green/20 text-xs font-bold text-brand-green mb-4 mx-auto lg:mx-0">
-              <span>★</span>
-              <span>Daftar Harga Resmi Tegoer Sapa</span>
-            </div>
-
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-center lg:text-left">
               <span className="hero-word">Daftar</span>{" "}
               <span className="hero-word hero-word-green">Harga</span>
