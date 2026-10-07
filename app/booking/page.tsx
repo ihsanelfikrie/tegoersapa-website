@@ -37,6 +37,9 @@ export default function BookingPage() {
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showDraftPreview, setShowDraftPreview] = useState(false);
+  const [copiedDraftToast, setCopiedDraftToast] = useState(false);
+  const todayDate = new Date().toISOString().split("T")[0];
 
   // Sync saved customerInfo to formData on hydration
   const [prevCustomerInfo, setPrevCustomerInfo] = useState(customerInfo);
@@ -81,89 +84,6 @@ export default function BookingPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validate()) return;
-
-    if (!selectedPackage) return;
-
-    if (isStudioPackage) {
-      alert(
-        "Mohon maaf, layanan Studio Professional saat ini sedang tidak tersedia untuk booking. Silakan pilih paket wisuda atau wedding yang tersedia."
-      );
-      return;
-    }
-
-    // Build structured WhatsApp message
-    const addOnLines =
-      selectedAddOns.length > 0
-        ? selectedAddOns.map((item) => `  • ${item.nama} (${item.harga})`).join("\n")
-        : "  • Tidak ada add-on yang dipilih";
-
-    // Sanitize user inputs
-    const cleanNama = formData.nama.replace(/[<>]/g, "").trim();
-    const cleanWhatsapp = formData.whatsapp.replace(/[^\d+-\s]/g, "").trim();
-    const cleanWaktu = formData.waktu.replace(/[<>]/g, "").trim();
-    const cleanLokasi = formData.lokasi.replace(/[<>]/g, "").trim();
-    const cleanInstagram = formData.instagram.replace(/[^\w._]/g, "").trim();
-    const cleanCatatan = formData.catatan.replace(/[<>]/g, "").trim();
-
-    const isPhotobooth = Boolean(
-      selectedPackage.kategori?.toLowerCase().includes("photobooth") ||
-      selectedPackage.kategori?.toLowerCase().includes("photobox") ||
-      selectedPackage.kategori?.toLowerCase().includes("bajaj") ||
-      selectedPackage.id?.toLowerCase().includes("photobooth") ||
-      selectedPackage.id?.toLowerCase().includes("photobox") ||
-      selectedPackage.id?.toLowerCase().includes("bajaj") ||
-      selectedPackage.id?.toLowerCase().startsWith("pb-") ||
-      selectedPackage.id?.toLowerCase().includes("mingle") ||
-      selectedPackage.sourceUrl?.includes("photobooth")
-    );
-
-    const photoboothDetailsText = isPhotobooth
-      ? `\n🎨 PREFERENSI PHOTOBOOTH:
-• Pilihan Backdrop: ${photoboothPrefs.backdrop}
-• Format Layout / Cetak: ${photoboothPrefs.layout}`
-      : "";
-
-    const message = `Halo Tegoer Sapa, saya ingin melakukan reservasi / booking:
-
-📋 DETAIL PEMESAN
-• Nama: ${cleanNama}
-• No. WhatsApp: ${cleanWhatsapp}
-• Tanggal Acara: ${formData.tanggal}
-• Waktu: ${cleanWaktu || "Fleksibel / Sesuai Jadwal"}
-• Lokasi / Venue: ${cleanLokasi || "Studio / Belum Ditentukan"}
-• Instagram: ${cleanInstagram ? `@${cleanInstagram}` : "-"}
-
-📦 PAKET YANG DIPILIH
-• Paket: ${selectedPackage.nama} (${selectedPackage.kategori || "Dokumentasi"})
-• Harga Paket: ${selectedPackage.harga}${photoboothDetailsText}
-
-➕ ADD-ON OPSIONAL
-${addOnLines}
-
-💰 ESTIMASI TOTAL BIAYA:
-${totalCalculation.totalText}
-
-📝 Catatan Tambahan:
-${cleanCatatan || "-"}
-
-Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kasih!`;
-
-    const adminPhone = isPhotobooth
-      ? contact.whatsapp[1]?.raw || "6281350655747"
-      : contact.whatsapp[0]?.raw || "6282254092927";
-
-    const waUrl = `https://api.whatsapp.com/send?phone=${adminPhone}&text=${encodeURIComponent(
-      message
-    )}`;
-
-    setIsSubmitted(true);
-    // Open WhatsApp in new tab
-    window.open(waUrl, "_blank", "noopener,noreferrer");
-  };
-
   // Determine if chosen package is Photobooth / Bajaj
   const isPhotobooth = Boolean(
     selectedPackage &&
@@ -188,6 +108,82 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
           selectedPackage.id
         ))
   );
+
+  // Live builder for formatted WhatsApp message
+  const buildWhatsAppMessage = () => {
+    if (!selectedPackage) return "";
+
+    const addOnLines =
+      selectedAddOns.length > 0
+        ? selectedAddOns.map((item) => `  • ${item.nama} (${item.harga})`).join("\n")
+        : "  • Tidak ada add-on yang dipilih";
+
+    const cleanNama = formData.nama.replace(/[<>]/g, "").trim() || "[Nama Belum Diisi]";
+    const cleanWhatsapp = formData.whatsapp.replace(/[^\d+-\s]/g, "").trim() || "[No. WA Belum Diisi]";
+    const cleanWaktu = formData.waktu.replace(/[<>]/g, "").trim();
+    const cleanLokasi = formData.lokasi.replace(/[<>]/g, "").trim();
+    const cleanInstagram = formData.instagram.replace(/[^\w._]/g, "").trim();
+    const cleanCatatan = formData.catatan.replace(/[<>]/g, "").trim();
+
+    const photoboothDetailsText = isPhotobooth
+      ? `\n🎨 PREFERENSI PHOTOBOOTH:
+• Pilihan Backdrop: ${photoboothPrefs.backdrop}
+• Format Layout / Cetak: ${photoboothPrefs.layout}`
+      : "";
+
+    return `Halo Tegoer Sapa, saya ingin melakukan reservasi / booking:
+
+📋 DETAIL PEMESAN
+• Nama: ${cleanNama}
+• No. WhatsApp: ${cleanWhatsapp}
+• Tanggal Acara: ${formData.tanggal || "[Tanggal Belum Dipilih]"}
+• Waktu: ${cleanWaktu || "Fleksibel / Sesuai Jadwal"}
+• Lokasi / Venue: ${cleanLokasi || "Studio / Belum Ditentukan"}
+• Instagram: ${cleanInstagram ? `@${cleanInstagram}` : "-"}
+
+📦 PAKET YANG DIPILIH
+• Paket: ${selectedPackage.nama} (${selectedPackage.kategori || "Dokumentasi"})
+• Harga Paket: ${selectedPackage.harga}${photoboothDetailsText}
+
+➕ ADD-ON OPSIONAL
+${addOnLines}
+
+💰 ESTIMASI TOTAL BIAYA:
+${totalCalculation.totalText}
+
+📝 Catatan Tambahan:
+${cleanCatatan || "-"}
+
+Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kasih!`;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    if (!selectedPackage) return;
+
+    if (isStudioPackage) {
+      alert(
+        "Mohon maaf, layanan Studio Professional saat ini sedang tidak tersedia untuk booking. Silakan pilih paket wisuda atau wedding yang tersedia."
+      );
+      return;
+    }
+
+    const message = buildWhatsAppMessage();
+
+    const adminPhone = isPhotobooth
+      ? contact.whatsapp[1]?.raw || "6281350655747"
+      : contact.whatsapp[0]?.raw || "6282254092927";
+
+    const waUrl = `https://api.whatsapp.com/send?phone=${adminPhone}&text=${encodeURIComponent(
+      message
+    )}`;
+
+    setIsSubmitted(true);
+    // Open WhatsApp in new tab
+    window.open(waUrl, "_blank", "noopener,noreferrer");
+  };
 
   // Determine back URL for "Ubah Pilihan" (hardened against open-redirect)
   const isSafeInternalUrl = (url?: string) =>
@@ -593,6 +589,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                         type="date"
                         id="tanggal"
                         name="tanggal"
+                        min={todayDate}
                         value={formData.tanggal}
                         onChange={handleChange}
                         className={[
@@ -756,6 +753,52 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       placeholder="Ceritakan gambaran konsep acara, adat yang dipakai, atau request tambahan lainnya..."
                       className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-sm text-black placeholder:text-gray-400 font-medium bg-gray-50/50 focus:bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all resize-none"
                     />
+                  </div>
+
+                  {/* Pratinjau Draf Pesan WhatsApp Accordion */}
+                  <div className="rounded-2xl border border-brand-green/20 bg-brand-green/5 overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={() => setShowDraftPreview((prev) => !prev)}
+                      className="w-full p-4 flex items-center justify-between text-left text-xs font-bold text-brand-dark hover:bg-brand-green/10 transition-colors cursor-pointer"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-base">👁️</span>
+                        <span>Pratinjau Draf Pesan WhatsApp</span>
+                        <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-brand-green/15 text-brand-green">
+                          Live Preview
+                        </span>
+                      </div>
+                      <span className="text-brand-green font-bold">
+                        {showDraftPreview ? "Sembunyikan ▲" : "Lihat Format ▼"}
+                      </span>
+                    </button>
+
+                    {showDraftPreview && (
+                      <div className="p-4 pt-0 space-y-3">
+                        <div className="p-3.5 rounded-xl bg-white border border-gray-200 text-xs font-mono text-gray-700 whitespace-pre-wrap leading-relaxed shadow-2xs max-h-60 overflow-y-auto">
+                          {buildWhatsAppMessage()}
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-[11px] text-gray-500 font-medium">
+                            Pesan ini otomatis terisi dan siap dikirim saat WhatsApp terbuka.
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (typeof navigator !== "undefined" && navigator.clipboard) {
+                                navigator.clipboard.writeText(buildWhatsAppMessage());
+                                setCopiedDraftToast(true);
+                                setTimeout(() => setCopiedDraftToast(false), 2500);
+                              }
+                            }}
+                            className="px-3 py-1.5 rounded-xl bg-white border border-gray-200 hover:border-brand-green text-[11px] font-bold text-gray-700 hover:text-brand-green transition-all shadow-2xs cursor-pointer flex items-center gap-1.5"
+                          >
+                            <span>{copiedDraftToast ? "✓ Tersalin!" : "📋 Salin Teks"}</span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Tombol Submit Booking */}

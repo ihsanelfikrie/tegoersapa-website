@@ -50,7 +50,21 @@ export default function PhotoboothPricing({
   const [previewTemplateModal, setPreviewTemplateModal] = useState<"strip" | "4r" | null>(null);
 
   // Additional hour interactive calculator
+  const [calcPackageId, setCalcPackageId] = useState<string>("pb-reg-print");
+  const [calcBaseDurationIdx, setCalcBaseDurationIdx] = useState<number>(1); // index 1: 3 Jam
   const [extraHoursCount, setExtraHoursCount] = useState<number>(1);
+
+  // Toast feedback state for copied text
+  const [copiedToast, setCopiedToast] = useState<string | null>(null);
+
+  const handleCopyPackage = (pkg: PhotoboothPackage, tier: { duration: string; harga: string }) => {
+    const text = `📸 Paket Tegoer Sapa: ${pkg.nama}\n⏱️ Durasi: ${tier.duration} (${tier.harga})\n🎨 Kategori: ${pkg.category} (${pkg.type === "print" ? "Unlimited Print" : "Digital No Print"})\n✨ Fitur Utama:\n${pkg.fitur.slice(0, 5).map((f) => ` • ${f}`).join("\n")}\n\nInfo selengkapnya: https://tegoersapa.com/pricelist?tab=photobooth`;
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+      setCopiedToast(`Rincian ${pkg.nama} berhasil disalin!`);
+      setTimeout(() => setCopiedToast(null), 3000);
+    }
+  };
 
   const handleGlobalDurationChange = (idx: number) => {
     setGlobalDuration(idx);
@@ -77,6 +91,22 @@ export default function PhotoboothPricing({
 
   const photoboothWaNumber = "6281350655747";
   const selectedBackdrop = photoboothBackdrops.find((b) => b.id === selectedBackdropId) || photoboothBackdrops[1];
+
+  // Calculator derived values
+  const calcPkg =
+    photoboothPackages.find((p) => p.id === calcPackageId) || photoboothPackages[1];
+  const calcBaseTier =
+    calcPkg.durations[calcBaseDurationIdx] || calcPkg.durations[1];
+  const calcBaseNumeric = calcBaseTier.numericPrice;
+  const calcExtraRate = calcPkg.additionalHourNumeric || 600000;
+  const calcExtraCost = extraHoursCount * calcExtraRate;
+  const calcTotalHours = calcBaseTier.hours + extraHoursCount;
+  const calcTotalPrice = calcBaseNumeric + calcExtraCost;
+
+  const customWaMessage = encodeURIComponent(
+    `Halo kak Mau booking Custom Durasi Photobooth Tegoer Sapa\n\nPaket Dasar : ${calcPkg.nama} (${calcBaseTier.duration} - ${calcBaseTier.harga})\nTambahan Waktu : +${extraHoursCount} Jam (Rp ${calcExtraCost.toLocaleString("id-ID")})\nTotal Durasi : ${calcTotalHours} Jam Operasional\nEstimasi Biaya : Rp ${calcTotalPrice.toLocaleString("id-ID")}\nBackdrop Pilihan : ${selectedBackdrop.name}\n\nMohon info ketersediaan slot tanggal & jam acara kami. Terima kasih!`
+  );
+  const customWaLink = `https://api.whatsapp.com/send?phone=${photoboothWaNumber}&text=${customWaMessage}`;
 
   // Backdrop detailed recommendations
   const backdropNotes: { [id: string]: string } = {
@@ -110,36 +140,63 @@ export default function PhotoboothPricing({
           </div>
 
           {/* Sub Filter Buttons */}
-          <div className="flex items-center gap-2 p-1.5 bg-gray-100 rounded-2xl self-start md:self-auto">
+          <div className="flex items-center gap-1.5 p-1.5 bg-gray-100 rounded-2xl self-start md:self-auto">
             <button
               onClick={() => setActiveCategory("all")}
-              className={`px-4 py-2 text-xs font-bold rounded-xl transition-all ${
+              className={`px-3.5 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 ${
                 activeCategory === "all"
                   ? "bg-white text-brand-dark shadow-xs"
                   : "text-gray-500 hover:text-brand-dark"
               }`}
             >
-              Semua Paket
+              <span>Semua Paket</span>
+              <span
+                className={`text-[10px] px-1.5 py-0.5 rounded-full font-black ${
+                  activeCategory === "all"
+                    ? "bg-brand-green/15 text-brand-green"
+                    : "bg-gray-200 text-gray-600"
+                }`}
+              >
+                4
+              </span>
             </button>
             <button
               onClick={() => setActiveCategory("regular")}
-              className={`px-4 py-2 text-xs font-bold rounded-xl transition-all ${
+              className={`px-3.5 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 ${
                 activeCategory === "regular"
                   ? "bg-white text-brand-dark shadow-xs"
                   : "text-gray-500 hover:text-brand-dark"
               }`}
             >
-              Reguler
+              <span>Reguler</span>
+              <span
+                className={`text-[10px] px-1.5 py-0.5 rounded-full font-black ${
+                  activeCategory === "regular"
+                    ? "bg-brand-green/15 text-brand-green"
+                    : "bg-gray-200 text-gray-600"
+                }`}
+              >
+                2
+              </span>
             </button>
             <button
               onClick={() => setActiveCategory("bajaj")}
-              className={`px-4 py-2 text-xs font-bold rounded-xl transition-all ${
+              className={`px-3.5 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 ${
                 activeCategory === "bajaj"
                   ? "bg-white text-brand-dark shadow-xs"
                   : "text-gray-500 hover:text-brand-dark"
               }`}
             >
-              Bajaj Photobooth
+              <span>Bajaj Photobooth</span>
+              <span
+                className={`text-[10px] px-1.5 py-0.5 rounded-full font-black ${
+                  activeCategory === "bajaj"
+                    ? "bg-brand-green/15 text-brand-green"
+                    : "bg-gray-200 text-gray-600"
+                }`}
+              >
+                2
+              </span>
             </button>
           </div>
         </div>
@@ -394,15 +451,27 @@ export default function PhotoboothPricing({
                   </svg>
                 </Button>
 
-                <a
-                  href={waLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-brand-green transition-colors py-1"
-                >
-                  <span>Tanya Jadwal / Booking via WhatsApp</span>
-                  <span aria-hidden="true">↗</span>
-                </a>
+                <div className="flex items-center justify-between pt-1">
+                  <a
+                    href={waLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-brand-green transition-colors py-1"
+                  >
+                    <span>Booking via WA</span>
+                    <span aria-hidden="true">↗</span>
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={() => handleCopyPackage(pkg, currentTier)}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-brand-dark py-1 px-2.5 rounded-xl hover:bg-white border border-transparent hover:border-gray-200 transition-all cursor-pointer"
+                    title="Salin ringkasan paket ini ke clipboard"
+                  >
+                    <span>📋</span>
+                    <span>Salin Rincian</span>
+                  </button>
+                </div>
               </div>
             </div>
           );
@@ -491,6 +560,243 @@ export default function PhotoboothPricing({
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+
+      {/* ─── Interactive Extra Hours & Custom Duration Calculator ── */}
+      <div className="rounded-3xl border border-brand-green/30 bg-gradient-to-br from-brand-sky/20 via-white to-brand-green/10 p-6 sm:p-10 shadow-xs">
+        <div className="max-w-2xl mb-8">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green bg-brand-green/10 px-2.5 py-0.5 rounded-full border border-brand-green/20">
+              Interactive Estimator
+            </span>
+            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+              Rp 600.000 / Jam Tambahan
+            </span>
+          </div>
+          <h3 className="text-2xl sm:text-3xl font-black text-brand-dark tracking-tight">
+            Kalkulator Tambahan Jam & Durasi Kustom
+          </h3>
+          <p className="mt-2 text-xs sm:text-sm text-gray-600 font-medium leading-relaxed">
+            Punya jadwal acara panjang lebih dari 6 jam atau ingin menambah durasi operasional photobooth?
+            Hitung perkiraan biaya secara akurat dan transparan di bawah ini.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Kolom Kiri: Input Pilihan (7 cols) */}
+          <div className="lg:col-span-7 bg-white rounded-2xl p-5 sm:p-7 border border-gray-200/80 shadow-xs space-y-6">
+            {/* 1. Pilih Paket Dasar */}
+            <div>
+              <label className="block text-xs font-black uppercase tracking-wider text-brand-dark mb-2.5">
+                1. Pilih Paket Dasar:
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {photoboothPackages.map((p) => {
+                  const isCurPkg = calcPackageId === p.id;
+                  return (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => setCalcPackageId(p.id)}
+                      className={`text-left p-3 rounded-xl border text-xs font-bold transition-all flex flex-col justify-between cursor-pointer ${
+                        isCurPkg
+                          ? "border-brand-green bg-brand-green/10 text-brand-dark ring-2 ring-brand-green/30"
+                          : "border-gray-200 bg-gray-50/70 text-gray-700 hover:bg-gray-100"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-extrabold">{p.nama}</span>
+                        {p.isBestDeal && (
+                          <span className="text-[9px] font-black uppercase px-1.5 py-0.5 rounded bg-brand-green text-white">
+                            Best
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-[10px] text-gray-500 font-medium">
+                        {p.type === "print" ? "Unlimited Print" : "Digital QR File"}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* 2. Pilih Durasi Dasar */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-xs font-black uppercase tracking-wider text-brand-dark">
+                  2. Durasi Awal Sesi:
+                </label>
+                <span className="text-xs font-bold text-brand-green">
+                  {calcBaseTier.duration} terpilih ({calcBaseTier.harga})
+                </span>
+              </div>
+              <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
+                {calcPkg.durations.map((d, idx) => (
+                  <button
+                    key={d.duration}
+                    type="button"
+                    onClick={() => setCalcBaseDurationIdx(idx)}
+                    className={`py-2 px-1 text-center rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      calcBaseDurationIdx === idx
+                        ? "bg-brand-dark text-white ring-2 ring-brand-green shadow-xs"
+                        : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+                    }`}
+                  >
+                    <span className="block">{d.duration}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 3. Tambahan Jam (Extra Hours) */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-xs font-black uppercase tracking-wider text-brand-dark">
+                  3. Tambahan Jam (Extra Hours):
+                </label>
+                <span className="text-xs font-bold text-brand-green">
+                  +{extraHoursCount} Jam (Rp {(extraHoursCount * 600000).toLocaleString("id-ID")})
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3 flex-wrap sm:flex-nowrap">
+                <div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 p-1">
+                  <button
+                    type="button"
+                    onClick={() => setExtraHoursCount((prev) => Math.max(1, prev - 1))}
+                    disabled={extraHoursCount <= 1}
+                    className="w-9 h-9 rounded-lg bg-white border border-gray-200 flex items-center justify-center font-black text-brand-dark disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors cursor-pointer"
+                  >
+                    −
+                  </button>
+                  <span className="w-16 text-center font-black text-brand-dark text-xs sm:text-sm">
+                    +{extraHoursCount} Jam
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setExtraHoursCount((prev) => Math.min(8, prev + 1))}
+                    disabled={extraHoursCount >= 8}
+                    className="w-9 h-9 rounded-lg bg-white border border-gray-200 flex items-center justify-center font-black text-brand-dark disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors cursor-pointer"
+                  >
+                    +
+                  </button>
+                </div>
+
+                {/* Quick Chips */}
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {[1, 2, 3, 4].map((hrs) => (
+                    <button
+                      key={hrs}
+                      type="button"
+                      onClick={() => setExtraHoursCount(hrs)}
+                      className={`px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        extraHoursCount === hrs
+                          ? "bg-brand-green text-white shadow-xs"
+                          : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+                      }`}
+                    >
+                      +{hrs} Jam
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Kolom Kanan: Rincian & Total Biaya (5 cols) */}
+          <div className="lg:col-span-5 bg-brand-dark text-white rounded-2xl p-6 sm:p-7 shadow-lg flex flex-col justify-between space-y-6">
+            <div>
+              <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green">
+                  Estimasi Biaya Transparan
+                </span>
+                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-white/10 text-white/90">
+                  Resmi
+                </span>
+              </div>
+
+              <div className="mt-5 space-y-3.5 text-xs">
+                <div className="flex items-center justify-between text-white/70">
+                  <span>Paket Dasar:</span>
+                  <span className="font-bold text-white text-right">{calcPkg.nama}</span>
+                </div>
+                <div className="flex items-center justify-between text-white/70">
+                  <span>Durasi Sesi Awal:</span>
+                  <span className="font-bold text-white">{calcBaseTier.duration} ({calcBaseTier.harga})</span>
+                </div>
+                <div className="flex items-center justify-between text-white/70">
+                  <span>Tambahan Jam (+{extraHoursCount} Jam):</span>
+                  <span className="font-bold text-brand-green">
+                    +Rp {(extraHoursCount * 600000).toLocaleString("id-ID")}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-white/70">
+                  <span>Total Durasi Operasional:</span>
+                  <span className="font-black text-brand-sky text-sm">
+                    {calcBaseTier.hours + extraHoursCount} Jam Sesi
+                  </span>
+                </div>
+              </div>
+
+              <div className="my-5 h-px bg-white/15" />
+
+              <div className="flex items-end justify-between">
+                <div>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-white/60 block">
+                    Total Estimasi Biaya
+                  </span>
+                  <span className="text-2xl sm:text-3xl font-black text-brand-green">
+                    Rp {(calcBaseTier.numericPrice + extraHoursCount * 600000).toLocaleString("id-ID")}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-2.5 pt-2">
+              <Button
+                type="button"
+                variant="primary"
+                size="md"
+                className="w-full"
+                onClick={() => {
+                  const totalHrs = calcBaseTier.hours + extraHoursCount;
+                  const totalNum = calcBaseTier.numericPrice + extraHoursCount * 600000;
+                  selectPackage(
+                    {
+                      id: `${calcPkg.id}-${totalHrs}h-custom`,
+                      nama: `${calcPkg.nama} (Custom ${totalHrs} Jam)`,
+                      harga: `Rp ${totalNum.toLocaleString("id-ID")}`,
+                      kategori: calcPkg.category,
+                      fitur: [
+                        `Durasi Awal: ${calcBaseTier.duration} (${calcBaseTier.harga})`,
+                        `Tambahan Waktu: +${extraHoursCount} Jam (Rp ${(extraHoursCount * 600000).toLocaleString("id-ID")})`,
+                        `Total Durasi Operasional: ${totalHrs} Jam`,
+                        `Backdrop Terpilih: ${selectedBackdrop.name}`,
+                        ...calcPkg.fitur,
+                      ],
+                    },
+                    sourceUrl
+                  );
+                  router.push("/booking");
+                }}
+              >
+                <span>Pilih & Lanjut Form Booking</span>
+                <span>→</span>
+              </Button>
+
+              <a
+                href={customWaLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs tracking-wide transition-colors"
+              >
+                <span>Chat Admin Durasi Custom via WA</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -709,8 +1015,8 @@ export default function PhotoboothPricing({
       {/* ─── Template Preview Modal ─────────────────────────────── */}
       {previewTemplateModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-4 shadow-2xl overflow-hidden relative">
-            <div className="flex items-center justify-between">
+          <div className="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-4 shadow-2xl overflow-hidden relative max-h-[92vh] flex flex-col">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-3">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-brand-green">
                   Katalog Template Overlay
@@ -721,16 +1027,43 @@ export default function PhotoboothPricing({
                     : "Template 4R Photo Print (B1 – B9)"}
                 </h4>
               </div>
-              <button
-                type="button"
-                onClick={() => setPreviewTemplateModal(null)}
-                className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-black flex items-center justify-center font-bold text-sm"
-              >
-                ✕
-              </button>
+
+              {/* In-Modal Template Switcher Tabs */}
+              <div className="flex items-center gap-1.5 p-1 bg-gray-100 rounded-2xl self-start sm:self-auto">
+                <button
+                  type="button"
+                  onClick={() => setPreviewTemplateModal("strip")}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    previewTemplateModal === "strip"
+                      ? "bg-white text-brand-dark shadow-xs"
+                      : "text-gray-500 hover:text-brand-dark"
+                  }`}
+                >
+                  🎞️ STRIP (A1–A10)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPreviewTemplateModal("4r")}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    previewTemplateModal === "4r"
+                      ? "bg-white text-brand-dark shadow-xs"
+                      : "text-gray-500 hover:text-brand-dark"
+                  }`}
+                >
+                  🖼️ 4R (B1–B9)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPreviewTemplateModal(null)}
+                  className="w-8 h-8 rounded-full bg-white hover:bg-gray-200 text-gray-500 hover:text-black flex items-center justify-center font-bold text-sm ml-1 cursor-pointer"
+                  aria-label="Tutup preview modal"
+                >
+                  ✕
+                </button>
+              </div>
             </div>
 
-            <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-brand-dark border border-gray-200">
+            <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-brand-dark border border-gray-200 my-auto">
               <Image
                 src={
                   previewTemplateModal === "strip"
@@ -743,7 +1076,7 @@ export default function PhotoboothPricing({
               />
             </div>
 
-            <div className="flex items-center justify-between pt-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-gray-100">
               <p className="text-xs text-gray-500 font-medium">
                 Semua template dapat dipersonalisasi dengan nama acara, logo, warna, dan tanggal.
               </p>
@@ -856,6 +1189,16 @@ export default function PhotoboothPricing({
           </Button>
         </div>
       </div>
+
+      {/* Floating Toast Feedback */}
+      {copiedToast && (
+        <div className="fixed bottom-6 right-6 z-50 bg-brand-dark text-white text-xs font-bold px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2.5 border border-brand-green/40 ring-4 ring-black/10 animate-in slide-in-from-bottom-3 duration-200">
+          <span className="w-5 h-5 rounded-full bg-brand-green text-white flex items-center justify-center text-[11px] font-black">
+            ✓
+          </span>
+          <span>{copiedToast}</span>
+        </div>
+      )}
     </div>
   );
 }
