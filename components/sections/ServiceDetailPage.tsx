@@ -170,7 +170,10 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
               {/* Lokasi studio jika ada */}
               {data.studioAddress && (
                 <p className="hero-fade mt-3 text-xs sm:text-sm font-semibold text-brand-dark/80 flex items-center justify-center lg:justify-start gap-1.5 mx-auto lg:mx-0">
-                  <span aria-hidden="true">📍</span>
+                  <svg className="w-4 h-4 text-brand-green flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
                   <span>{data.studioAddress}</span>
                 </p>
               )}
@@ -202,7 +205,6 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
                     className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-amber-50 border border-amber-300 text-amber-900 font-bold text-xs sm:text-sm hover:bg-amber-100 transition-colors cursor-pointer"
                   >
                     <span>Studio Sedang Tidak Tersedia</span>
-                    <span aria-hidden="true">⚠️</span>
                   </button>
                 ) : (
                   <Button
@@ -347,7 +349,7 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
                   <div className="absolute inset-0 bg-brand-dark/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                     <div className="flex items-center gap-1.5 text-white font-bold text-[11px] bg-brand-green px-3 py-1 rounded-full">
                       <span>Preview</span>
-                      <span aria-hidden="true">🔍</span>
+                      <span aria-hidden="true">↗</span>
                     </div>
                   </div>
                 </div>
@@ -449,9 +451,11 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
           {data.id === "studio" && (
             <div
               id="studio-unavailable-notice"
-              className="max-w-2xl mx-auto mb-10 p-5 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 shadow-sm flex items-start gap-4 scroll-mt-28"
+              className="max-w-2xl mx-auto mb-10 p-5 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 shadow-sm flex items-start gap-3.5 scroll-mt-28"
             >
-              <span className="text-2xl flex-shrink-0" aria-hidden="true">⚠️</span>
+              <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-800 flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5">
+                !
+              </span>
               <div>
                 <h4 className="font-extrabold text-sm sm:text-base text-amber-950">
                   Layanan Studio Sedang Tidak Tersedia
@@ -598,7 +602,6 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
                         className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-amber-50 border border-amber-300 text-amber-900 font-bold text-xs sm:text-sm hover:bg-amber-100 transition-colors cursor-pointer"
                       >
                         <span>Studio Sedang Tidak Tersedia</span>
-                        <span aria-hidden="true">⚠️</span>
                       </button>
                     ) : (
                       <Button
@@ -850,7 +853,6 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
                 }}
               >
                 <span>Studio Sedang Tidak Tersedia</span>
-                <span aria-hidden="true">⚠️</span>
               </Button>
             ) : (
               <Button

@@ -383,8 +383,11 @@ function GalleryContent() {
         {/* Empty State */}
         {filteredItems.length === 0 && (
           <div className="text-center py-24 bg-gray-50 rounded-3xl border border-dashed border-gray-200">
-            <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4 text-2xl">
-              📷
+            <div className="w-14 h-14 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center mx-auto mb-4">
+              <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
             </div>
             <h3 className="text-lg font-bold text-brand-dark mb-1">
               Tidak ada foto yang cocok
@@ -485,7 +488,6 @@ function GalleryContent() {
               {/* Studio Unavailable Notice */}
               {isStudioPhoto && (
                 <div className="mb-3 px-3 py-2 rounded-xl bg-amber-500/15 border border-amber-400/30 flex items-center gap-2 text-xs text-amber-200">
-                  <span aria-hidden="true" className="text-sm">⚠️</span>
                   <span className="font-medium">
                     Layanan Studio Profesional saat ini sedang tidak tersedia untuk booking.
                   </span>
@@ -505,7 +507,6 @@ function GalleryContent() {
                       className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/40 font-bold text-xs tracking-wide transition-all duration-200 cursor-pointer"
                     >
                       <span>Studio Sedang Tidak Tersedia</span>
-                      <span aria-hidden="true">⚠️</span>
                     </button>
                     <Button
                       href="/pricelist"
@@ -527,7 +528,7 @@ function GalleryContent() {
                       className="w-full sm:flex-1"
                     >
                       <span>Tanya Booking via WA</span>
-                      <span>💬</span>
+                      <span aria-hidden="true">↗</span>
                     </Button>
                     <Button
                       href="/pricelist"

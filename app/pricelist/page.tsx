@@ -73,7 +73,6 @@ export default function PricelistPage() {
                   : "bg-white text-gray-600 hover:text-brand-dark hover:bg-gray-100"
               }`}
             >
-              <span>📸</span>
               <span>Photobooth & Bajaj</span>
               <span className="hidden sm:inline-block px-1.5 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider bg-brand-green text-white">
                 Katalog Baru
@@ -88,7 +87,6 @@ export default function PricelistPage() {
                   : "bg-white text-gray-600 hover:text-brand-dark hover:bg-gray-100"
               }`}
             >
-              <span>🎓</span>
               <span>Outdoor Graduation</span>
               <span className="text-[10px] text-gray-400 font-bold hidden sm:inline-block">
                 ({pricelistPackages.length} Paket)
@@ -98,9 +96,9 @@ export default function PricelistPage() {
 
           <div className="text-xs text-gray-500 font-medium self-center sm:self-auto text-center sm:text-right px-3">
             {activeTab === "photobooth" ? (
-              <span>✨ Termasuk Opsi Print & No Print (2–6 Jam)</span>
+              <span>Termasuk Opsi Print & No Print (2–6 Jam)</span>
             ) : (
-              <span>✨ Format Unlimited Shoot & All Soft File</span>
+              <span>Format Unlimited Shoot & All Soft File</span>
             )}
           </div>
         </div>
@@ -117,7 +115,9 @@ export default function PricelistPage() {
           <div className="animate-in fade-in duration-300 space-y-12">
             {/* Info Note according to pricelist.md */}
             <div className="p-4 sm:p-5 rounded-2xl bg-brand-cream/60 border border-brand-green/20 max-w-3xl mx-auto flex items-start gap-3.5 text-xs sm:text-sm text-brand-dark">
-              <span className="text-base flex-shrink-0">🎓</span>
+              <span className="w-5 h-5 rounded-full bg-brand-green/15 text-brand-green flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5">
+                i
+              </span>
               <p className="leading-relaxed font-medium">
                 <strong>Catatan:</strong> Seluruh paket <strong>Outdoor Graduation</strong> di bawah ini tercantum dengan harga transparan, fasilitas <em>unlimited shoot</em>, dan seluruh soft file lengkap.
               </p>
@@ -296,7 +296,7 @@ export default function PricelistPage() {
       <section className="py-14 bg-gray-50 border-t border-gray-100">
         <div className="max-w-4xl mx-auto px-4 text-center space-y-4">
           <p className="text-sm text-gray-600 font-medium">
-            💡 Butuh dokumentasi <strong>Wedding</strong> atau <strong>Traditional Photography</strong>?{" "}
+            Butuh dokumentasi <strong>Wedding</strong> atau <strong>Traditional Photography</strong>?{" "}
             <Link
               href="/photography/wedding"
               className="text-brand-green font-bold hover:underline"

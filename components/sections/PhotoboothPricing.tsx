@@ -468,7 +468,9 @@ export default function PhotoboothPricing({
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-brand-dark py-1 px-2.5 rounded-xl hover:bg-white border border-transparent hover:border-gray-200 transition-all cursor-pointer"
                     title="Salin ringkasan paket ini ke clipboard"
                   >
-                    <span>📋</span>
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
                     <span>Salin Rincian</span>
                   </button>
                 </div>
@@ -496,7 +498,7 @@ export default function PhotoboothPricing({
 
         {/* Mobile Swipe Hint */}
         <div className="sm:hidden flex items-center gap-1.5 text-[11px] font-semibold text-brand-green bg-brand-green/10 px-3 py-1.5 rounded-xl mb-3 w-fit">
-          <span>👆 Geser tabel ke samping untuk melihat semua durasi →</span>
+          <span>Geser tabel ke samping untuk melihat semua durasi →</span>
         </div>
 
         <div className="overflow-x-auto -mx-6 sm:mx-0">
@@ -863,7 +865,9 @@ export default function PhotoboothPricing({
 
           {/* Dynamic Backdrop Recommendation Card */}
           <div className="p-4 rounded-2xl bg-gray-50 border border-gray-100 flex items-start gap-3">
-            <span className="text-xl flex-shrink-0">💡</span>
+            <span className="w-5 h-5 rounded-full bg-brand-green/15 text-brand-green flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5">
+              i
+            </span>
             <div>
               <span className="text-xs font-black text-brand-dark block">
                 {selectedBackdrop.name}
@@ -1012,7 +1016,7 @@ export default function PhotoboothPricing({
             onClick={() => setPreviewTemplateModal(activeLayoutTab)}
             className="w-full py-2.5 px-4 rounded-xl border border-gray-200 bg-gray-50 hover:bg-gray-100 text-xs font-bold text-brand-dark flex items-center justify-center gap-2 transition-colors"
           >
-            <span>🔍 Lihat Seluruh Template ({activeLayoutTab === "strip" ? "A1–A10" : "B1–B9"})</span>
+            <span>Lihat Seluruh Template ({activeLayoutTab === "strip" ? "A1–A10" : "B1–B9"})</span>
           </button>
         </div>
       </div>
@@ -1044,7 +1048,7 @@ export default function PhotoboothPricing({
                       : "text-gray-500 hover:text-brand-dark"
                   }`}
                 >
-                  🎞️ STRIP (A1–A10)
+                  Strip (A1–A10)
                 </button>
                 <button
                   type="button"
@@ -1055,7 +1059,7 @@ export default function PhotoboothPricing({
                       : "text-gray-500 hover:text-brand-dark"
                   }`}
                 >
-                  🖼️ 4R (B1–B9)
+                  4R (B1–B9)
                 </button>
                 <button
                   type="button"
@@ -1118,8 +1122,10 @@ export default function PhotoboothPricing({
               key={idx}
               className="p-6 rounded-2xl bg-white border border-gray-100 shadow-xs hover:border-brand-green/30 transition-all"
             >
-              <div className="w-10 h-10 rounded-xl bg-brand-green/10 flex items-center justify-center text-xl mb-4">
-                {adv.icon}
+              <div className="w-10 h-10 rounded-xl bg-brand-green/10 flex items-center justify-center mb-4">
+                <span className="text-sm font-black text-brand-green tracking-wider">
+                  0{idx + 1}
+                </span>
               </div>
               <h4 className="text-base font-bold text-brand-dark mb-2">
                 {adv.title}
@@ -1170,8 +1176,10 @@ export default function PhotoboothPricing({
         {/* WhatsApp Consultation Footer */}
         <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-brand-green/10 flex items-center justify-center text-brand-green font-bold flex-shrink-0">
-              💬
+            <div className="w-10 h-10 rounded-full bg-brand-green/10 text-brand-green flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
             </div>
             <div>
               <p className="text-xs sm:text-sm font-bold text-brand-dark">

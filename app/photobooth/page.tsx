@@ -335,7 +335,9 @@ export default function PhotoboothPage() {
 
                   {isUpcoming && (
                     <div className="mt-4 p-3 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 font-medium flex items-center gap-2">
-                      <span className="text-base flex-shrink-0">🚀</span>
+                      <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-800 flex items-center justify-center text-[10px] font-black flex-shrink-0">
+                        ✦
+                      </span>
                       <span>
                         Layanan ini sedang dipersiapkan dan akan segera diluncurkan sebagai inovasi baru Tegoer Sapa!
                       </span>

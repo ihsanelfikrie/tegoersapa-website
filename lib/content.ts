@@ -665,32 +665,32 @@ export const photoboothAdvantages = [
   {
     title: "Print Instan dan Berkualitas",
     desc: "Setiap foto yang diambil langsung bisa dicetak dengan kualitas terbaik dalam hitungan detik. Momen indah bisa langsung dibawa pulang oleh tamu Anda.",
-    icon: "⚡",
+    icon: "01",
   },
   {
     title: "Portabel dan Fleksibel",
     desc: "Photobooth Tegoer Sapa dapat dipindahkan dengan mudah ke berbagai lokasi, baik di dalam maupun di luar ruangan — dari pesta pernikahan hingga acara kantor.",
-    icon: "🔄",
+    icon: "02",
   },
   {
     title: "Pengalaman Seru dan Interaktif",
     desc: "Bukan sekadar tempat berfoto, tetapi menghadirkan pengalaman menyenangkan bagi tamu. Mereka bisa berkreasi dengan beragam pose dan properti menarik.",
-    icon: "🎉",
+    icon: "03",
   },
   {
     title: "Kualitas Layanan Profesional",
     desc: "Tim operator ramah dan profesional siap membantu dari awal hingga akhir acara, memastikan setiap detik berharga terabadikan dengan sempurna.",
-    icon: "🤝",
+    icon: "04",
   },
   {
     title: "Personalisasi Sesuai Tema Acara",
     desc: "Desain frame foto bisa disesuaikan dengan tema acara, membuat setiap gambar lebih spesial dan berkesan sesuai suasana hati dan cerita di balik acara.",
-    icon: "🎨",
+    icon: "05",
   },
   {
     title: "Kenangan Abadi dalam Genggaman",
     desc: "Setiap foto yang dihasilkan adalah kenangan abadi yang bisa diingat sepanjang waktu. Tersedia dalam cetak fisik dan soft file digital instan via QR code.",
-    icon: "✨",
+    icon: "06",
   },
 ];
 

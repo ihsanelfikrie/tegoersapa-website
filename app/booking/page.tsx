@@ -250,8 +250,10 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
         ) : !selectedPackage ? (
           /* Empty state: belum memilih paket */
           <div className="max-w-2xl mx-auto text-center p-8 sm:p-12 rounded-3xl border border-gray-200 bg-gray-50/50 shadow-sm">
-            <div className="w-16 h-16 rounded-2xl bg-brand-green/10 text-brand-green flex items-center justify-center text-2xl mx-auto mb-4">
-              📦
+            <div className="w-16 h-16 rounded-2xl bg-brand-green/10 text-brand-green flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+              </svg>
             </div>
             <h2 className="text-2xl font-black text-brand-dark">
               Anda Belum Memilih Paket Layanan
@@ -285,7 +287,6 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                 className="px-5 py-2.5 rounded-full bg-amber-50 border border-amber-300 text-amber-900 font-bold text-xs tracking-wide transition-all hover:bg-amber-100 cursor-pointer inline-flex items-center gap-1.5"
               >
                 <span>Paket Studio (Tidak Tersedia)</span>
-                <span aria-hidden="true">⚠️</span>
               </button>
               <Button
                 href="/pricelist"
@@ -329,7 +330,9 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                 {isStudioPackage && (
                   <div className="mt-4 p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900">
                     <div className="flex items-start gap-2.5">
-                      <span className="text-xl flex-shrink-0" aria-hidden="true">⚠️</span>
+                      <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-800 flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5">
+                        !
+                      </span>
                       <div>
                         <h4 className="font-extrabold text-xs sm:text-sm text-amber-950">
                           Studio Sedang Tidak Tersedia
@@ -766,7 +769,10 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       className="w-full p-4 flex items-center justify-between text-left text-xs font-bold text-brand-dark hover:bg-brand-green/10 transition-colors cursor-pointer"
                     >
                       <div className="flex items-center gap-2">
-                        <span className="text-base">👁️</span>
+                        <svg className="w-4 h-4 text-brand-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
                         <span>Pratinjau Draf Pesan WhatsApp</span>
                         <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-brand-green/15 text-brand-green">
                           Live Preview
@@ -797,7 +803,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                             }}
                             className="px-3 py-1.5 rounded-xl bg-white border border-gray-200 hover:border-brand-green text-[11px] font-bold text-gray-700 hover:text-brand-green transition-all shadow-2xs cursor-pointer flex items-center gap-1.5"
                           >
-                            <span>{copiedDraftToast ? "✓ Tersalin!" : "📋 Salin Teks"}</span>
+                            <span>{copiedDraftToast ? "Tersalin!" : "Salin Teks"}</span>
                           </button>
                         </div>
                       </div>
@@ -836,7 +842,6 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                           className="w-full py-4 rounded-full bg-amber-100 text-amber-950 font-bold text-sm tracking-wide border border-amber-300 hover:bg-amber-200 transition-colors cursor-pointer flex items-center justify-center gap-2"
                         >
                           <span>Studio Sedang Tidak Tersedia</span>
-                          <span aria-hidden="true">⚠️</span>
                         </button>
                         <Button
                           href="/pricelist"
@@ -861,8 +866,11 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       </Button>
                     )}
 
-                    <p className="mt-3 text-center text-[11px] text-gray-400 font-medium">
-                      🔒 Data Anda aman dan diteruskan secara privat ke Admin WhatsApp resmi Tegoer Sapa.
+                    <p className="mt-3 text-center text-[11px] text-gray-400 font-medium flex items-center justify-center gap-1.5">
+                      <svg className="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                      <span>Data Anda aman dan diteruskan secara privat ke Admin WhatsApp resmi Tegoer Sapa.</span>
                     </p>
                   </div>
 

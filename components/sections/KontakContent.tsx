@@ -17,32 +17,32 @@ export default function KontakContent() {
 
   const quickInquiries = [
     {
-      label: "💍 Tanya Jadwal Wedding",
+      label: "Tanya Jadwal Wedding",
       wa: contact.whatsapp[0].raw,
       msg: "Halo kak Mau tanya ketersediaan jadwal foto wedding dokumentasi Tegoer Sapa",
     },
     {
-      label: "🎓 Tanya Jadwal Wisuda",
+      label: "Tanya Jadwal Wisuda",
       wa: contact.whatsapp[0].raw,
       msg: "Halo kak Mau tanya slot jadwal foto wisuda outdoor di Banjarbaru",
     },
     {
-      label: "📸 Sewa Photobooth Event",
+      label: "Sewa Photobooth Event",
       wa: contact.whatsapp[1].raw,
       msg: "Halo kak Mau konsultasi sewa photobooth instan untuk acara kami",
     },
     {
-      label: "🛺 Booking Bajaj Keliling",
+      label: "Booking Bajaj Keliling",
       wa: contact.whatsapp[1].raw,
       msg: "Halo kak Mau booking Bajaj Photobooth Tegoer Keliling untuk event",
     },
     {
-      label: "🎨 Custom Frame Overlay",
+      label: "Custom Frame Overlay",
       wa: contact.whatsapp[1].raw,
       msg: "Halo kak Mau tanya kustomisasi layout dan frame overlay photobooth",
     },
     {
-      label: "🚀 Info Mingle & Barcode (Upcoming)",
+      label: "Info Mingle & Barcode",
       wa: contact.whatsapp[1].raw,
       msg: "Halo kak Mau tanya info rilis & pre-order layanan Mingle Photobooth & Photo Barcode Tegoer Sapa",
     },
@@ -56,8 +56,10 @@ export default function KontakContent() {
         <div className="p-6 sm:p-8 rounded-3xl border border-gray-200/80 bg-white shadow-xs flex flex-col justify-between hover:border-brand-green/40 hover:shadow-md transition-all duration-300">
           <div>
             <div className="flex items-center justify-between mb-6">
-              <div className="w-12 h-12 rounded-2xl bg-brand-green/15 text-brand-green flex items-center justify-center text-xl font-bold">
-                💬
+              <div className="w-12 h-12 rounded-2xl bg-brand-green/15 text-brand-green flex items-center justify-center">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
               </div>
               <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-green/10 text-brand-green border border-brand-green/20">
                 Layanan Foto
@@ -86,10 +88,12 @@ export default function KontakContent() {
               <button
                 type="button"
                 onClick={() => copyToClipboard(contact.whatsapp[0].number, "Nomor Admin 1")}
-                className="px-2.5 py-1 rounded-lg bg-white border border-gray-200 hover:border-brand-green text-[11px] font-bold text-gray-600 hover:text-brand-green transition-all shadow-2xs cursor-pointer flex items-center gap-1"
+                className="px-2.5 py-1 rounded-lg bg-white border border-gray-200 hover:border-brand-green text-[11px] font-bold text-gray-600 hover:text-brand-green transition-all shadow-2xs cursor-pointer flex items-center gap-1.5"
                 title="Salin nomor WhatsApp"
               >
-                <span>📋</span>
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
                 <span>Salin</span>
               </button>
             </div>
@@ -114,8 +118,11 @@ export default function KontakContent() {
         <div className="p-6 sm:p-8 rounded-3xl border border-gray-200/80 bg-white shadow-xs flex flex-col justify-between hover:border-brand-green/40 hover:shadow-md transition-all duration-300">
           <div>
             <div className="flex items-center justify-between mb-6">
-              <div className="w-12 h-12 rounded-2xl bg-brand-green/15 text-brand-green flex items-center justify-center text-xl font-bold">
-                📸
+              <div className="w-12 h-12 rounded-2xl bg-brand-green/15 text-brand-green flex items-center justify-center">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
               </div>
               <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-green/10 text-brand-green border border-brand-green/20">
                 Photobooth
@@ -144,10 +151,12 @@ export default function KontakContent() {
               <button
                 type="button"
                 onClick={() => copyToClipboard(contact.whatsapp[1].number, "Nomor Admin 2")}
-                className="px-2.5 py-1 rounded-lg bg-white border border-gray-200 hover:border-brand-green text-[11px] font-bold text-gray-600 hover:text-brand-green transition-all shadow-2xs cursor-pointer flex items-center gap-1"
+                className="px-2.5 py-1 rounded-lg bg-white border border-gray-200 hover:border-brand-green text-[11px] font-bold text-gray-600 hover:text-brand-green transition-all shadow-2xs cursor-pointer flex items-center gap-1.5"
                 title="Salin nomor WhatsApp"
               >
-                <span>📋</span>
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
                 <span>Salin</span>
               </button>
             </div>
@@ -172,8 +181,10 @@ export default function KontakContent() {
         <div className="p-6 sm:p-8 rounded-3xl border border-gray-200/80 bg-white shadow-xs flex flex-col justify-between hover:border-brand-green/40 hover:shadow-md transition-all duration-300">
           <div>
             <div className="flex items-center justify-between mb-6">
-              <div className="w-12 h-12 rounded-2xl bg-brand-green/15 text-brand-green flex items-center justify-center text-xl font-bold">
-                ✉️
+              <div className="w-12 h-12 rounded-2xl bg-brand-green/15 text-brand-green flex items-center justify-center">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
               </div>
               <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-green/10 text-brand-green border border-brand-green/20">
                 Official Channels
@@ -202,10 +213,12 @@ export default function KontakContent() {
               <button
                 type="button"
                 onClick={() => copyToClipboard(contact.email, "Alamat Email")}
-                className="px-2.5 py-1 rounded-lg bg-white border border-gray-200 hover:border-brand-green text-[11px] font-bold text-gray-600 hover:text-brand-green transition-all shadow-2xs cursor-pointer flex items-center gap-1"
+                className="px-2.5 py-1 rounded-lg bg-white border border-gray-200 hover:border-brand-green text-[11px] font-bold text-gray-600 hover:text-brand-green transition-all shadow-2xs cursor-pointer flex items-center gap-1.5"
                 title="Salin email resmi"
               >
-                <span>📋</span>
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
                 <span>Salin</span>
               </button>
             </div>
