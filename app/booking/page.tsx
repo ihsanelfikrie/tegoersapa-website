@@ -536,7 +536,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       onChange={handleChange}
                       placeholder="Contoh: Rian Pratama & Sarah"
                       className={[
-                        "w-full px-4 py-3 rounded-2xl border text-sm text-black placeholder:text-gray-400 font-medium transition-all focus:outline-none focus:ring-2",
+                        "w-full px-4 py-3 rounded-2xl border text-base sm:text-sm text-black placeholder:text-gray-400 font-medium transition-all focus:outline-none focus:ring-2",
                         errors.nama
                           ? "border-red-400 focus:ring-red-300 bg-red-50/30"
                           : "border-gray-200 focus:border-brand-green focus:ring-brand-green/20 bg-gray-50/50 focus:bg-white",
@@ -565,7 +565,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       onChange={handleChange}
                       placeholder="Contoh: 081234567890"
                       className={[
-                        "w-full px-4 py-3 rounded-2xl border text-sm text-black placeholder:text-gray-400 font-medium transition-all focus:outline-none focus:ring-2",
+                        "w-full px-4 py-3 rounded-2xl border text-base sm:text-sm text-black placeholder:text-gray-400 font-medium transition-all focus:outline-none focus:ring-2",
                         errors.whatsapp
                           ? "border-red-400 focus:ring-red-300 bg-red-50/30"
                           : "border-gray-200 focus:border-brand-green focus:ring-brand-green/20 bg-gray-50/50 focus:bg-white",
@@ -593,7 +593,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                         value={formData.tanggal}
                         onChange={handleChange}
                         className={[
-                          "w-full px-4 py-3 rounded-2xl border text-sm text-black font-medium transition-all focus:outline-none focus:ring-2",
+                          "w-full px-4 py-3 rounded-2xl border text-base sm:text-sm text-black font-medium transition-all focus:outline-none focus:ring-2",
                           errors.tanggal
                             ? "border-red-400 focus:ring-red-300 bg-red-50/30"
                             : "border-gray-200 focus:border-brand-green focus:ring-brand-green/20 bg-gray-50/50 focus:bg-white",
@@ -619,7 +619,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                         value={formData.waktu}
                         onChange={handleChange}
                         placeholder="Contoh: 09.00 WIB / Siang"
-                        className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-sm text-black placeholder:text-gray-400 font-medium bg-gray-50/50 focus:bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all"
+                        className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-base sm:text-sm text-black placeholder:text-gray-400 font-medium bg-gray-50/50 focus:bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all"
                       />
                     </div>
                   </div>
@@ -640,7 +640,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       value={formData.lokasi}
                       onChange={handleChange}
                       placeholder="Contoh: Gedung Bina Satria Banjarbaru / Studio Tegoer Sapa"
-                      className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-sm text-black placeholder:text-gray-400 font-medium bg-gray-50/50 focus:bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all"
+                      className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-base sm:text-sm text-black placeholder:text-gray-400 font-medium bg-gray-50/50 focus:bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all"
                     />
                   </div>
 
@@ -664,7 +664,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                         value={formData.instagram}
                         onChange={handleChange}
                         placeholder="username_instagram"
-                        className="w-full pl-9 pr-4 py-3 rounded-2xl border border-gray-200 text-sm text-black placeholder:text-gray-400 font-medium bg-gray-50/50 focus:bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all"
+                        className="w-full pl-9 pr-4 py-3 rounded-2xl border border-gray-200 text-base sm:text-sm text-black placeholder:text-gray-400 font-medium bg-gray-50/50 focus:bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all"
                       />
                     </div>
                   </div>
@@ -751,7 +751,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       value={formData.catatan}
                       onChange={handleChange}
                       placeholder="Ceritakan gambaran konsep acara, adat yang dipakai, atau request tambahan lainnya..."
-                      className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-sm text-black placeholder:text-gray-400 font-medium bg-gray-50/50 focus:bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all resize-none"
+                      className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-base sm:text-sm text-black placeholder:text-gray-400 font-medium bg-gray-50/50 focus:bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all resize-none"
                     />
                   </div>
 
@@ -802,7 +802,25 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                   </div>
 
                   {/* Tombol Submit Booking */}
-                  <div className="pt-4">
+                  <div className="pt-4 space-y-3">
+                    {/* Ringkasan Cepat di Mobile (sebelum tombol kirim) */}
+                    {selectedPackage && (
+                      <div className="lg:hidden p-3.5 rounded-2xl bg-gray-50 border border-gray-200 flex items-center justify-between text-xs">
+                        <div>
+                          <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider block">
+                            Paket: {selectedPackage.nama}
+                          </span>
+                          <span className="font-extrabold text-brand-dark">
+                            Total: <strong className="text-brand-green font-black">{totalCalculation.totalText}</strong>
+                          </span>
+                        </div>
+                        {selectedAddOns.length > 0 && (
+                          <span className="text-[10px] font-bold text-gray-500 bg-white px-2 py-1 rounded-lg border border-gray-200">
+                            +{selectedAddOns.length} Add-on
+                          </span>
+                        )}
+                      </div>
+                    )}
                     {isStudioPackage ? (
                       <div className="space-y-2.5">
                         <button

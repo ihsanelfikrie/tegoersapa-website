@@ -331,19 +331,19 @@ export default function PhotographyPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 lg:mb-16">
-            <div className="max-w-2xl">
+            <div className="max-w-2xl text-center md:text-left">
               <span className="text-brand-green text-xs font-bold tracking-[0.2em] uppercase">
                 Portofolio Pilihan
               </span>
               <h2 className="mt-3 text-3xl sm:text-5xl font-black text-brand-dark tracking-tight">
                 Featured Work
               </h2>
-              <div aria-hidden="true" className="mt-4 w-12 h-1 rounded-full bg-brand-green" />
+              <div aria-hidden="true" className="mt-4 w-12 h-1 rounded-full bg-brand-green mx-auto md:mx-0" />
               <p className="mt-4 text-base text-gray-500 font-medium">
                 Cuplikan hasil karya dokumentasi dan sesi fotografi terbaik yang telah kami kerjakan.
               </p>
             </div>
-            <div className="mt-6 md:mt-0">
+            <div className="mt-6 md:mt-0 text-center md:text-left">
               <Link
                 href="/gallery?kategori=professional"
                 className="group inline-flex items-center gap-2 text-sm font-bold text-brand-green hover:text-brand-dark transition-colors duration-300"

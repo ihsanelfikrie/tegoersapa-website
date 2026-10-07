@@ -189,20 +189,20 @@ export default function GalleryPreview() {
           ref={headerRef}
           className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 lg:mb-16 gap-4 sm:gap-6"
         >
-          <div className="max-w-2xl">
+          <div className="max-w-2xl text-center md:text-left">
             <span className="text-brand-green text-xs font-bold tracking-[0.2em] uppercase">
               Our Work
             </span>
             <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-black text-brand-dark tracking-tight leading-none">
               Portofolio & Karya Pilihan
             </h2>
-            <div aria-hidden="true" className="mt-3.5 w-12 h-1 rounded-full bg-brand-green" />
+            <div aria-hidden="true" className="mt-3.5 w-12 h-1 rounded-full bg-brand-green mx-auto md:mx-0" />
             <p className="mt-3 text-sm sm:text-base text-gray-500 font-medium leading-relaxed">
               Jelajahi ragam dokumentasi visual Tegoer Sapa — mulai dari sesi pre-wedding romantis, kebanggaan wisuda kampus & studio, momen hangat keluarga, hingga keceriaan photobooth dan photobox interaktif.
             </p>
           </div>
 
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 self-center md:self-auto">
             <Link
               href="/gallery"
               className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-brand-green hover:text-brand-dark transition-colors duration-300"

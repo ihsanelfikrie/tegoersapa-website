@@ -74,7 +74,7 @@ export default function OurStory() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center">
           
           {/* ─── KOLOM KIRI: Storytelling Narrative ─────────────────── */}
-          <div ref={textRef} className="lg:col-span-7 flex flex-col items-start">
+          <div ref={textRef} className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
             <span className="text-brand-green text-xs font-bold tracking-[0.2em] uppercase">
               Our Story
             </span>
@@ -83,7 +83,7 @@ export default function OurStory() {
               Lebih Dekat Dengan Cerita Kami
             </h2>
 
-            <div aria-hidden="true" className="mt-3.5 w-12 h-1 rounded-full bg-brand-green mb-4 sm:mb-6" />
+            <div aria-hidden="true" className="mt-3.5 w-12 h-1 rounded-full bg-brand-green mb-4 sm:mb-6 mx-auto lg:mx-0" />
 
             <p className="text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed font-semibold mb-3 sm:mb-4">
               Tegoer Sapa adalah studio fotografi dan penyedia pengalaman photobooth modern yang lahir dari rasa cinta terhadap momen-momen tulus dalam hidup.
@@ -99,7 +99,7 @@ export default function OurStory() {
 
             <Link
               href="/tentang"
-              className="group inline-flex items-center gap-2 bg-brand-dark hover:bg-brand-green text-white font-bold tracking-wide text-xs sm:text-sm px-6 py-3 sm:px-7 sm:py-3.5 rounded-full transition-all duration-300 hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2 bg-brand-dark hover:bg-brand-green text-white font-bold tracking-wide text-xs sm:text-sm px-6 py-3 sm:px-7 sm:py-3.5 rounded-full transition-all duration-300 hover:-translate-y-0.5 mx-auto lg:mx-0"
             >
               <span>Selengkapnya Tentang Kami</span>
               <svg

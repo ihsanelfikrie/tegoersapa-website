@@ -96,7 +96,7 @@ export default function PricelistPage() {
             </button>
           </div>
 
-          <div className="text-xs text-gray-500 font-medium self-end sm:self-auto px-3">
+          <div className="text-xs text-gray-500 font-medium self-center sm:self-auto text-center sm:text-right px-3">
             {activeTab === "photobooth" ? (
               <span>✨ Termasuk Opsi Print & No Print (2–6 Jam)</span>
             ) : (

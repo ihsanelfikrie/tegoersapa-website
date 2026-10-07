@@ -41,8 +41,8 @@ export default function TentangPage() {
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          <div className="lg:col-span-7 space-y-6 text-gray-600 font-medium leading-relaxed text-base">
-            <span className="text-brand-green text-xs font-bold tracking-[0.2em] uppercase">
+          <div className="lg:col-span-7 space-y-6 text-gray-600 font-medium leading-relaxed text-base text-center lg:text-left">
+            <span className="text-brand-green text-xs font-bold tracking-[0.2em] uppercase block">
               Cerita Kami
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-brand-dark tracking-tight">
@@ -60,8 +60,8 @@ export default function TentangPage() {
           </div>
 
           <div className="lg:col-span-5 flex flex-col gap-5">
-            <div className="p-6 sm:p-8 rounded-3xl bg-brand-dark text-white">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green">
+            <div className="p-6 sm:p-8 rounded-3xl bg-brand-dark text-white text-center sm:text-left">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green block">
                 Nilai Utama Kami
               </span>
               <h3 className="text-2xl font-black tracking-wide mt-2 mb-4">
@@ -101,6 +101,7 @@ export default function TentangPage() {
               href="/kontak"
               variant="dark"
               size="md"
+              className="w-full sm:w-auto"
             >
               Hubungi Kami
             </Button>
@@ -108,6 +109,7 @@ export default function TentangPage() {
               href="/gallery"
               variant="stroke"
               size="md"
+              className="w-full sm:w-auto"
             >
               Lihat Portofolio
             </Button>

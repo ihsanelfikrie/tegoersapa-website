@@ -140,10 +140,10 @@ export default function PhotoboothPricing({
           </div>
 
           {/* Sub Filter Buttons */}
-          <div className="flex items-center gap-1.5 p-1.5 bg-gray-100 rounded-2xl self-start md:self-auto">
+          <div className="w-full sm:w-auto overflow-x-auto no-scrollbar flex items-center gap-1.5 p-1.5 bg-gray-100 rounded-2xl self-start md:self-auto -mx-1 px-1 sm:mx-0 sm:px-1.5">
             <button
               onClick={() => setActiveCategory("all")}
-              className={`px-3.5 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 ${
+              className={`whitespace-nowrap flex-shrink-0 px-3.5 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 min-h-[38px] ${
                 activeCategory === "all"
                   ? "bg-white text-brand-dark shadow-xs"
                   : "text-gray-500 hover:text-brand-dark"
@@ -162,7 +162,7 @@ export default function PhotoboothPricing({
             </button>
             <button
               onClick={() => setActiveCategory("regular")}
-              className={`px-3.5 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 ${
+              className={`whitespace-nowrap flex-shrink-0 px-3.5 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 min-h-[38px] ${
                 activeCategory === "regular"
                   ? "bg-white text-brand-dark shadow-xs"
                   : "text-gray-500 hover:text-brand-dark"
@@ -181,7 +181,7 @@ export default function PhotoboothPricing({
             </button>
             <button
               onClick={() => setActiveCategory("bajaj")}
-              className={`px-3.5 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 ${
+              className={`whitespace-nowrap flex-shrink-0 px-3.5 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 min-h-[38px] ${
                 activeCategory === "bajaj"
                   ? "bg-white text-brand-dark shadow-xs"
                   : "text-gray-500 hover:text-brand-dark"
@@ -218,7 +218,7 @@ export default function PhotoboothPricing({
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 md:pb-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pb-1 md:pb-0 -mx-2 px-2 sm:mx-0 sm:px-0">
           {[
             { label: "2 Jam", idx: 0 },
             { label: "3 Jam ★", idx: 1, note: "Paling Populer" },
@@ -230,7 +230,7 @@ export default function PhotoboothPricing({
               key={item.label}
               type="button"
               onClick={() => handleGlobalDurationChange(item.idx)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex-shrink-0 min-h-[38px] transition-all ${
                 globalDuration === item.idx
                   ? "bg-brand-dark text-white shadow-sm scale-102 ring-2 ring-brand-green/30"
                   : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-100"
@@ -494,6 +494,11 @@ export default function PhotoboothPricing({
           </span>
         </div>
 
+        {/* Mobile Swipe Hint */}
+        <div className="sm:hidden flex items-center gap-1.5 text-[11px] font-semibold text-brand-green bg-brand-green/10 px-3 py-1.5 rounded-xl mb-3 w-fit">
+          <span>👆 Geser tabel ke samping untuk melihat semua durasi →</span>
+        </div>
+
         <div className="overflow-x-auto -mx-6 sm:mx-0">
           <table className="w-full text-left text-xs sm:text-sm border-collapse min-w-[640px]">
             <thead>
@@ -638,7 +643,7 @@ export default function PhotoboothPricing({
                     key={d.duration}
                     type="button"
                     onClick={() => setCalcBaseDurationIdx(idx)}
-                    className={`py-2 px-1 text-center rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    className={`py-2 px-0.5 sm:px-1 text-center rounded-xl text-[11px] sm:text-xs font-bold transition-all cursor-pointer min-h-[38px] ${
                       calcBaseDurationIdx === idx
                         ? "bg-brand-dark text-white ring-2 ring-brand-green shadow-xs"
                         : "bg-gray-100 hover:bg-gray-200 text-gray-700"

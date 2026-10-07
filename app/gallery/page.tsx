@@ -240,7 +240,7 @@ function GalleryContent() {
                 placeholder="Cari foto atau momen..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-white border border-gray-200 rounded-full pl-10 pr-4 py-2 text-xs sm:text-sm font-medium placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-all"
+                className="w-full bg-white border border-gray-200 rounded-full pl-10 pr-4 py-2 text-base sm:text-sm font-medium placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green transition-all"
               />
               <svg
                 className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
@@ -415,7 +415,7 @@ function GalleryContent() {
           {/* Modal Close Button (Top-Right) */}
           <button
             onClick={() => setActiveImage(null)}
-            className="fixed top-5 right-5 z-50 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-lg font-bold transition-all hover:scale-105"
+            className="fixed top-3 right-3 sm:top-5 sm:right-5 z-50 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-base sm:text-lg font-bold transition-all hover:scale-105 cursor-pointer"
             aria-label="Tutup preview"
           >
             ✕
@@ -427,7 +427,7 @@ function GalleryContent() {
               e.stopPropagation();
               handlePrev();
             }}
-            className="fixed left-3 sm:left-6 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-black/60 hover:bg-brand-green border border-white/20 text-white flex items-center justify-center text-xl font-bold transition-all hover:scale-110 shadow-xl"
+            className="fixed left-2 sm:left-6 top-1/2 -translate-y-1/2 z-50 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/60 hover:bg-brand-green border border-white/20 text-white flex items-center justify-center text-lg sm:text-xl font-bold transition-all hover:scale-110 shadow-xl cursor-pointer"
             aria-label="Foto sebelumnya"
           >
             ‹
@@ -439,7 +439,7 @@ function GalleryContent() {
               e.stopPropagation();
               handleNext();
             }}
-            className="fixed right-3 sm:right-6 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-black/60 hover:bg-brand-green border border-white/20 text-white flex items-center justify-center text-xl font-bold transition-all hover:scale-110 shadow-xl"
+            className="fixed right-2 sm:right-6 top-1/2 -translate-y-1/2 z-50 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-black/60 hover:bg-brand-green border border-white/20 text-white flex items-center justify-center text-lg sm:text-xl font-bold transition-all hover:scale-110 shadow-xl cursor-pointer"
             aria-label="Foto selanjutnya"
           >
             ›
@@ -451,9 +451,9 @@ function GalleryContent() {
             className="relative max-w-4xl w-full max-h-[92vh] flex flex-col items-center justify-center"
           >
             {/* Image Container */}
-            <div className="relative w-full max-h-[72vh] flex items-center justify-center overflow-hidden rounded-2xl bg-black/40">
+            <div className="relative w-full max-h-[48vh] sm:max-h-[72vh] flex items-center justify-center overflow-hidden rounded-2xl bg-black/40">
               <div className={[
-                "relative max-w-full max-h-[72vh] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10",
+                "relative max-w-full max-h-[48vh] sm:max-h-[72vh] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10",
                 activeImage.aspectRatio === "landscape" ? "w-[850px] aspect-[3/2]" : "w-[520px] aspect-[2/3]"
               ].join(" ")}>
                 <Image

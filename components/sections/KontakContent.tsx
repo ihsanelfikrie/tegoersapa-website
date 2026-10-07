@@ -270,7 +270,7 @@ export default function KontakContent() {
 
       {/* ─── Floating Toast Notification ─────────────────────────── */}
       {copiedToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-brand-dark text-white text-xs font-bold px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2.5 border border-brand-green/40 ring-4 ring-black/10 animate-in slide-in-from-bottom-3 duration-200">
+        <div className="fixed bottom-6 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50 bg-brand-dark text-white text-xs font-bold px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2.5 border border-brand-green/40 ring-4 ring-black/10 animate-in slide-in-from-bottom-3 duration-200">
           <span className="w-5 h-5 rounded-full bg-brand-green text-white flex items-center justify-center text-[11px] font-black">
             ✓
           </span>

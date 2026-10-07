@@ -272,20 +272,20 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
-            <div>
+            <div className="text-center md:text-left">
               <span className="text-brand-green text-xs font-bold tracking-[0.2em] uppercase">
                 Portofolio Khusus
               </span>
               <h2 className="mt-2 text-3xl sm:text-4xl font-black text-brand-dark tracking-tight">
                 Galeri {data.title}
               </h2>
-              <div aria-hidden="true" className="mt-3 w-12 h-1 rounded-full bg-brand-green" />
+              <div aria-hidden="true" className="mt-3 w-12 h-1 rounded-full bg-brand-green mx-auto md:mx-0" />
               <p className="mt-3 text-sm sm:text-base text-gray-500 font-medium max-w-xl">
                 Koleksi cuplikan visual terbaik dari sesi fotografi dan dokumentasi yang telah kami abadikan.
               </p>
             </div>
 
-            <div className="mt-6 md:mt-0">
+            <div className="mt-6 md:mt-0 text-center md:text-left">
               <Link
                 href="/gallery"
                 className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-brand-green hover:text-brand-dark transition-colors duration-300"
@@ -487,13 +487,13 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
 
           {/* Category Filter Tabs jika tersedia */}
           {data.packageCategories && data.packageCategories.length > 0 && (
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-10">
+            <div className="flex items-center gap-2 sm:gap-2.5 mb-10 overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:justify-center">
               {data.packageCategories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
                   className={[
-                    "px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 cursor-pointer",
+                    "whitespace-nowrap flex-shrink-0 min-h-[38px] px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 cursor-pointer",
                     selectedCategory === cat
                       ? "bg-brand-dark text-white shadow-sm"
                       : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-brand-dark",
