@@ -103,26 +103,17 @@ export default function Navbar() {
         aria-label="Navigasi utama"
       >
         <div className="relative flex items-center justify-between">
-          {/* Logo — pill gelap interaktif (All-in-One: Shimmer kilau berkala, glow mewah hover, micro-tilt spring) */}
+          {/* Logo — pill gelap dengan efek cel-shaded shimmer tajam (tanpa blur, konsisten dengan hero section) */}
           <Link
             href="/"
-            className="pointer-events-auto group relative flex items-center h-11 px-5 rounded-full bg-brand-dark border border-white/10 border-b-[3px] border-b-black/40 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-[1.04] active:translate-y-0.5 active:scale-[0.97] hover:shadow-[0_10px_25px_-4px_rgba(58,170,53,0.45)] hover:border-brand-green/60 overflow-hidden select-none"
+            className="pointer-events-auto group relative flex items-center h-11 px-5 rounded-full bg-brand-dark border-b-[3px] border-black/40 hover:border-b-brand-green/80 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.03] active:translate-y-0.5 active:scale-[0.97] overflow-hidden select-none"
             aria-label={`${brand.name} — kembali ke beranda`}
           >
-            {/* Ambient Aura Glow saat Hover */}
-            <span
-              className="absolute -inset-1 rounded-full bg-gradient-to-r from-brand-green/0 via-brand-green/30 to-brand-green/0 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500 pointer-events-none"
-              aria-hidden="true"
-            />
+            {/* Cel-Shaded Crisp Light Sheen (Kasar & Tajam ala Hero Section Tanpa Blur) */}
+            <span className="logo-sheen-cel" aria-hidden="true" />
 
-            {/* Shimmer Sheen Beam — Kilau diagonal berkala & sweep saat hover */}
-            <span
-              className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none logo-sheen-sweep"
-              aria-hidden="true"
-            />
-
-            {/* Logo Image dengan micro-tilt & zoom saat hover */}
-            <div className="relative z-10 flex items-center transition-transform duration-300 ease-out group-hover:scale-105 group-hover:-rotate-1 group-active:scale-95">
+            {/* Logo Image */}
+            <div className="relative z-10 flex items-center transition-transform duration-200 ease-out group-hover:scale-105 group-active:scale-95">
               <Image
                 src="/brand/logo-1-baris.svg"
                 alt={brand.name}
@@ -130,15 +121,9 @@ export default function Navbar() {
                 height={116}
                 unoptimized
                 priority
-                className="h-5 w-auto filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] transition-all duration-300"
+                className="h-5 w-auto"
               />
             </div>
-
-            {/* Micro Sparkle Accent on Hover */}
-            <span
-              className="absolute right-2.5 top-1.5 w-1.5 h-1.5 rounded-full bg-brand-cream/80 opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-out animate-ping pointer-events-none"
-              aria-hidden="true"
-            />
           </Link>
 
           {/* Desktop navigation links */}

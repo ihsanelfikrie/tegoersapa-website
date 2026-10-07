@@ -474,44 +474,41 @@ body {
   border-bottom-width: 4px;
 }
 
-/* ── Navbar Logo Animated Enhancements ───────────────────────────────────── */
-@keyframes logoSheenSweep {
+/* ── Navbar Logo Cel-Shaded Crisp Sheen (Sama seperti Teks Hero — Tanpa Blur) ── */
+.logo-sheen-cel {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  background-image: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.5) 40.8%,
+    rgba(255, 255, 255, 0.5) 47.5%,
+    transparent 48.3%,
+    transparent 51.5%,
+    rgba(255, 255, 255, 0.35) 52.2%,
+    rgba(255, 255, 255, 0.35) 54.8%,
+    transparent 55.5%,
+    transparent 100%
+  );
+  background-size: 380% 100%;
+  background-repeat: no-repeat;
+  animation: logoCelSweep 5.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: background-position;
+}
+
+@keyframes logoCelSweep {
   0% {
-    transform: translateX(-160%) skewX(-25deg);
-    opacity: 0;
+    background-position: 260% 0;
   }
-  15% {
-    opacity: 1;
+  38% {
+    background-position: -140% 0;
   }
-  35% {
-    transform: translateX(260%) skewX(-25deg);
-    opacity: 1;
+  100% {
+    background-position: -140% 0;
   }
-  36%, 100% {
-    transform: translateX(260%) skewX(-25deg);
-    opacity: 0;
-  }
-}
-
-.logo-sheen-sweep {
-  animation: logoSheenSweep 5.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  will-change: transform, opacity;
-}
-
-@keyframes logoAuraPulse {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(0.98);
-  }
-  50% {
-    opacity: 0.75;
-    transform: scale(1.02);
-  }
-}
-
-.logo-aura-pulse {
-  animation: logoAuraPulse 3.5s ease-in-out infinite;
-  will-change: transform, opacity;
 }
 
 
