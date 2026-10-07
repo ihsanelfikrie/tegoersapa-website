@@ -181,6 +181,9 @@ export default function RootLayout({
   return (
     <html lang="id" className={hossRound.variable} suppressHydrationWarning>
       <head>
+        <link rel="dns-prefetch" href="https://api.whatsapp.com" />
+        <link rel="dns-prefetch" href="https://wa.me" />
+        <link rel="preconnect" href="https://api.whatsapp.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

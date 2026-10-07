@@ -351,8 +351,8 @@ function GalleryContent() {
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  loading={index < 8 ? "eager" : "lazy"}
-                  priority={index < 4}
+                  priority={index < 2}
+                  loading={index < 2 ? undefined : "lazy"}
                 />
 
                 {/* Always visible subtle vignette & category badge */}

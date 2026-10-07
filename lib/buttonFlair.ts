@@ -114,9 +114,9 @@ export class ButtonFlair {
       });
     };
 
-    this.block.addEventListener("mouseenter", this.onMouseEnterHandler);
-    this.block.addEventListener("mouseleave", this.onMouseLeaveHandler);
-    this.block.addEventListener("mousemove", this.onMouseMoveHandler);
+    this.block.addEventListener("mouseenter", this.onMouseEnterHandler, { passive: true });
+    this.block.addEventListener("mouseleave", this.onMouseLeaveHandler, { passive: true });
+    this.block.addEventListener("mousemove", this.onMouseMoveHandler, { passive: true });
   }
 
   destroy() {
@@ -141,6 +141,9 @@ const initializedButtons = new WeakMap<HTMLElement, ButtonFlair>();
  * Inisialisasi satu tombol dengan efek flair
  */
 export function initSingleButtonFlair(buttonEl: HTMLElement): ButtonFlair | undefined {
+  if (typeof window !== "undefined" && window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
+    return undefined;
+  }
   if (initializedButtons.has(buttonEl)) {
     return initializedButtons.get(buttonEl);
   }
@@ -155,6 +158,11 @@ export function initSingleButtonFlair(buttonEl: HTMLElement): ButtonFlair | unde
  */
 export function initAllButtonFlairs(): () => void {
   if (typeof window === "undefined") return () => {};
+
+  // Jangan pasang mouse tracker berlebih di perangkat sentuh murni (hemat RAM, CPU & baterai)
+  if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
+    return () => {};
+  }
 
   const scanAndInit = () => {
     const targets = document.querySelectorAll<HTMLElement>(

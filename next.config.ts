@@ -7,10 +7,14 @@ const cspHeader = `
   img-src 'self' blob: data: https:;
   font-src 'self' data:;
   connect-src 'self' https://api.whatsapp.com https://wa.me;
+  media-src 'self' blob: data:;
   object-src 'none';
   base-uri 'self';
   form-action 'self' https://api.whatsapp.com https://wa.me;
+  frame-src 'none';
   frame-ancestors 'none';
+  manifest-src 'self';
+  worker-src 'self' blob:;
   block-all-mixed-content;
   upgrade-insecure-requests;
 `
@@ -45,7 +49,7 @@ const securityHeaders = [
   {
     key: "Permissions-Policy",
     value:
-      "camera=(), microphone=(), geolocation=(), payment=(), usb=(), vr=(), accelerometer=(), gyroscope=(), magnetometer=(), display-capture=(), browsing-topics=()",
+      "camera=(), microphone=(), geolocation=(), payment=(), usb=(), vr=(), accelerometer=(), gyroscope=(), magnetometer=(), display-capture=(), browsing-topics=(), clipboard-write=(self), interest-cohort=(), screen-wake-lock=(), serial=(), autoplay=(), sync-xhr=()",
   },
   {
     key: "Cross-Origin-Opener-Policy",
@@ -54,6 +58,10 @@ const securityHeaders = [
   {
     key: "Cross-Origin-Resource-Policy",
     value: "same-origin",
+  },
+  {
+    key: "Origin-Agent-Cluster",
+    value: "?1",
   },
   {
     key: "X-Permitted-Cross-Domain-Policies",
@@ -69,8 +77,14 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
+  compiler: {
+    removeConsole:
+      process.env.NODE_ENV === "production"
+        ? { exclude: ["error", "warn"] }
+        : false,
+  },
   experimental: {
-    optimizePackageImports: ["@gsap/react"],
+    optimizePackageImports: ["@gsap/react", "gsap"],
   },
   images: {
     formats: ["image/avif", "image/webp"],
@@ -105,6 +119,15 @@ const nextConfig: NextConfig = {
           {
             key: "Cache-Control",
             value: "public, max-age=2592000, stale-while-revalidate=86400",
+          },
+        ],
+      },
+      {
+        source: "/(favicon\\.ico|icon\\.png|apple-icon\\.png)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
           },
         ],
       },

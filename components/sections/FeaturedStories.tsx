@@ -186,7 +186,6 @@ export default function FeaturedStories() {
                     fill
                     sizes="(max-width: 1024px) 100vw, 60vw"
                     className="object-cover object-center transition-transform duration-700 ease-out group-hover/img:scale-105 group-hover:scale-105"
-                    priority
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
 
