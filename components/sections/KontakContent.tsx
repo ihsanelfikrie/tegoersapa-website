@@ -268,52 +268,6 @@ export default function KontakContent() {
         </div>
       </div>
 
-      {/* ─── Location & Studio Banjarbaru Card ─────────────────────── */}
-      <div className="rounded-3xl border border-brand-green/30 bg-gradient-to-br from-brand-sky/20 via-white to-brand-green/10 p-6 sm:p-10 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div className="space-y-3 max-w-2xl">
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-brand-green"></span>
-            </span>
-            <span className="text-xs font-black uppercase tracking-wider text-brand-green">
-              Buka Setiap Hari • 09.00 – 21.00 WITA
-            </span>
-          </div>
-
-          <h3 className="text-2xl sm:text-3xl font-black text-brand-dark tracking-tight">
-            Studio & Basecamp Tegoer Sapa
-          </h3>
-          <p className="text-xs sm:text-sm text-gray-600 font-medium leading-relaxed">
-            Berlokasi di <strong>Banjarbaru, Kalimantan Selatan</strong>. Kami melayani sesi foto dan instalasi photobooth untuk area Banjarbaru, Banjarmasin, Martapura, dan seluruh wilayah Kalimantan Selatan.
-          </p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-shrink-0">
-          <Button
-            href="https://maps.google.com/?q=Banjarbaru,+Kalimantan+Selatan"
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="stroke"
-            size="md"
-          >
-            <span>Buka di Google Maps 📍</span>
-            <span>↗</span>
-          </Button>
-
-          <Button
-            href={`https://wa.me/${contact.whatsapp[1].raw}?text=${encodeURIComponent(
-              "Halo kak Mau tanya ketersediaan dan booking Tegoer Sapa untuk area Banjarbaru"
-            )}`}
-            variant="primary"
-            size="md"
-          >
-            <span>Chat via WhatsApp</span>
-            <span>↗</span>
-          </Button>
-        </div>
-      </div>
-
       {/* ─── Floating Toast Notification ─────────────────────────── */}
       {copiedToast && (
         <div className="fixed bottom-6 right-6 z-50 bg-brand-dark text-white text-xs font-bold px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2.5 border border-brand-green/40 ring-4 ring-black/10 animate-in slide-in-from-bottom-3 duration-200">
