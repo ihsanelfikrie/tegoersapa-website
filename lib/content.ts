@@ -1674,3 +1674,70 @@ export const photographyDetailPages: Record<
   },
 };
 
+// ─── Photobooth Linktree (Link-in-Bio) ───────────────────────────────────────
+export type LinktreeItem = {
+  id: string;
+  title: string;
+  subtitle?: string;
+  url: string;
+  iconType: "external-link" | "website" | "whatsapp" | "instagram" | "tiktok";
+  isExternal: boolean;
+};
+
+export const photoboothLinktree = {
+  title: "Photobooth",
+  tagline: "Respect the moment, every second matter.",
+  avatar: "/brand/photobooth-avatar.png",
+  shareUrl: "https://link.tegoersapa.com/@photobooth",
+  links: [
+    {
+      id: "request-frame",
+      title: "Request Frame",
+      subtitle: "Custom desain frame photobooth",
+      url: "https://tegoersapa.com/requestframe",
+      iconType: "external-link",
+      isExternal: true,
+    },
+    {
+      id: "website",
+      title: "Website",
+      subtitle: "tegoersapa.com",
+      url: "https://tegoersapa.com",
+      iconType: "website",
+      isExternal: false,
+    },
+    {
+      id: "booking-photobooth",
+      title: "Photobooth",
+      subtitle: "Chat WhatsApp booking acara",
+      url: "https://api.whatsapp.com/send?phone=62881080518887&text=Halo%20kak%20mau%20booking%20photobooth%20untuk%20acara...%20%20pada%C2%A0tanggal%C2%A0...",
+      iconType: "whatsapp",
+      isExternal: true,
+    },
+    {
+      id: "kendala-photobox",
+      title: "Kendala Photobox",
+      subtitle: "Permintaan soft file & kendala",
+      url: "https://api.whatsapp.com/send?phone=62881080518887&text=Halo%20kak%20boleh%20minta%20soft%20file%20photobox%0ATanggal%20%3A%0AJam%20%3A%0AContoh%C2%A0Photonya%C2%A0%3A",
+      iconType: "whatsapp",
+      isExternal: true,
+    },
+    {
+      id: "instagram",
+      title: "Instagram",
+      subtitle: "@tegoersapa.photobooth",
+      url: "https://www.instagram.com/tegoersapa.photobooth",
+      iconType: "instagram",
+      isExternal: true,
+    },
+    {
+      id: "tiktok",
+      title: "Tik Tok",
+      subtitle: "@tegoersapaa",
+      url: "https://tiktok.com/@tegoersapaa",
+      iconType: "tiktok",
+      isExternal: true,
+    },
+  ] as readonly LinktreeItem[],
+} as const;
+

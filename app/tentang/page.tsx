@@ -5,10 +5,12 @@ import HeroClouds from "@/components/ui/HeroClouds";
 import GrassyHill from "@/components/ui/GrassyHill";
 import Button from "@/components/ui/Button";
 
+import PhotoboothLinktreeSection from "@/components/sections/PhotoboothLinkTree";
+
 export const metadata: Metadata = {
-  title: "Tentang Kami",
+  title: "Tentang Kami & Hub Tautan Resmi",
   description:
-    "Cerita, visi, dan dedikasi Tegoer Sapa dalam menghadirkan layanan photobooth dan fotografi modern di Banjarbaru, Kalimantan Selatan.",
+    "Cerita, visi, dedikasi, serta hub tautan resmi (Link in Bio) Tegoer Sapa Photobooth di Banjarbaru, Kalimantan Selatan.",
 };
 
 export default function TentangPage() {
@@ -87,6 +89,9 @@ export default function TentangPage() {
         </div>
       </section>
 
+      {/* ─── Hub Tautan Resmi Photobooth (Linktree) ─────────────── */}
+      <PhotoboothLinktreeSection />
+
       {/* ─── Bottom CTA ─────────────────────────────────────────── */}
       <section className="py-16 bg-gray-50 border-t border-gray-100 text-center">
         <div className="max-w-4xl mx-auto px-4">
@@ -119,3 +124,4 @@ export default function TentangPage() {
     </div>
   );
 }
+

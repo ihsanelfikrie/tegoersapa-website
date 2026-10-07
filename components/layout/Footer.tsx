@@ -269,6 +269,14 @@ export default function Footer() {
                     </li>
                     <li>
                       <Link
+                        href="/links"
+                        className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
+                      >
+                        Link in Bio (Photobooth)
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
                         href="/kontak"
                         className="text-white/85 hover:text-brand-green transition-colors font-medium block py-0.5"
                       >

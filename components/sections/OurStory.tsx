@@ -146,15 +146,25 @@ export default function OurStory() {
               Bagi kami, <span className="text-brand-dark font-extrabold">&ldquo;{brand.tagline}&rdquo;</span> adalah komitmen mutlak. Kami berfokus pada kualitas visual berkelas, tata cahaya yang presisi, serta suasana sesi foto yang santai dan ramah bagi setiap klien.
             </p>
 
-            <Button
-              href="/tentang"
-              variant="primary"
-              size="md"
-              className="mx-auto lg:mx-0"
-            >
-              <span>Selengkapnya Tentang Kami</span>
-              <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-            </Button>
+            <div className="flex flex-col sm:flex-row items-center gap-3 mx-auto lg:mx-0 w-full sm:w-auto">
+              <Button
+                href="/tentang"
+                variant="primary"
+                size="md"
+                className="w-full sm:w-auto"
+              >
+                <span>Selengkapnya Tentang Kami</span>
+                <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+              </Button>
+              <Button
+                href="/tentang#linktree"
+                variant="stroke"
+                size="md"
+                className="w-full sm:w-auto text-xs"
+              >
+                <span>🔗 Hub Tautan Photobooth</span>
+              </Button>
+            </div>
           </div>
 
           {/* ─── KOLOM KANAN: Visual & Brand Values ─────────────────── */}
