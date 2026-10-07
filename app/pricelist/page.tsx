@@ -20,6 +20,16 @@ export default function PricelistPage() {
   // Tab state: "photobooth" or "graduation"
   const [activeTab, setActiveTab] = useState<"photobooth" | "graduation">("photobooth");
 
+  // Sub-filter for outdoor graduation on mobile
+  const [gradFilter, setGradFilter] = useState<"all" | "solo" | "duo" | "group">("all");
+
+  const filteredGradPackages = pricelistPackages.filter((pkg) => {
+    if (gradFilter === "solo") return pkg.id === "outdoor-basic" || pkg.id === "outdoor-premium";
+    if (gradFilter === "duo") return pkg.id === "outdoor-homie" || pkg.id === "outdoor-bestie";
+    if (gradFilter === "group") return pkg.id === "outdoor-unity" || pkg.id === "outdoor-framely";
+    return true;
+  });
+
   // Read URL query / hash on client mount
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -38,7 +48,7 @@ export default function PricelistPage() {
   return (
     <div className="bg-white min-h-screen text-black">
       {/* ─── Hero Header ────────────────────────────────────────── */}
-      <section className="relative pt-24 pb-12 sm:pt-32 sm:pb-24 lg:pt-36 lg:pb-36 bg-brand-sky text-brand-dark overflow-hidden">
+      <section className="relative pt-20 pb-8 sm:pt-32 sm:pb-24 lg:pt-36 lg:pb-36 bg-brand-sky text-brand-dark overflow-hidden">
         {/* Floating Clouds Background */}
         <HeroClouds />
 
@@ -124,7 +134,7 @@ export default function PricelistPage() {
             </div>
 
             {/* Section Header */}
-            <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-gray-100">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green block">
                   Kategori Layanan
@@ -133,14 +143,34 @@ export default function PricelistPage() {
                   Paket Outdoor Graduation
                 </h2>
               </div>
-              <span className="text-xs font-bold text-gray-500 bg-gray-100 px-3.5 py-1.5 rounded-full">
-                {pricelistPackages.length} Pilihan Paket
-              </span>
+
+              {/* Graduation Sub-Filter Chips */}
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar p-1 bg-gray-100 rounded-2xl w-full sm:w-auto">
+                {[
+                  { id: "all", label: `Semua (${pricelistPackages.length})` },
+                  { id: "solo", label: "1 Orang (Solo)" },
+                  { id: "duo", label: "2 Orang (Duo)" },
+                  { id: "group", label: "3–5 Orang (Group)" },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setGradFilter(tab.id as typeof gradFilter)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                      gradFilter === tab.id
+                        ? "bg-white text-brand-dark shadow-xs"
+                        : "text-gray-500 hover:text-brand-dark"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Packages Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-              {pricelistPackages.map((pkg: PricePackage) => {
+              {filteredGradPackages.map((pkg: PricePackage) => {
                 const waLink = generateWhatsAppLink(pkg.whatsappTemplate, pkg.nama);
                 const isSelected = selectedPackage?.id === pkg.id;
 

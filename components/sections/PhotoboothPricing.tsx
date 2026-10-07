@@ -63,11 +63,42 @@ export default function PhotoboothPricing({
   const [calcBaseDurationIdx, setCalcBaseDurationIdx] = useState<number>(1); // index 1: 3 Jam
   const [extraHoursCount, setExtraHoursCount] = useState<number>(1);
 
-  // Mobile optimization states: collapsible sections to reduce vertical scroll length on mobile
+  // Mobile optimization states: collapsible sections and swipe carousel
   const [expandedFeatures, setExpandedFeatures] = useState<Record<string, boolean>>({});
   const [showTableMobile, setShowTableMobile] = useState(false);
   const [showCalcMobile, setShowCalcMobile] = useState(false);
   const [showcaseTabMobile, setShowcaseTabMobile] = useState<"backdrop" | "layout">("backdrop");
+
+  // Mobile swipe carousel & view mode states
+  const [mobileViewMode, setMobileViewMode] = useState<"swipe" | "vertical">("swipe");
+  const [activeSwipeIndex, setActiveSwipeIndex] = useState<number>(0);
+  const [showMobileStickyBar, setShowMobileStickyBar] = useState<boolean>(true);
+  const cardsScrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollToCard = useCallback((index: number) => {
+    setActiveSwipeIndex(index);
+    if (cardsScrollRef.current) {
+      const children = cardsScrollRef.current.children;
+      if (children[index]) {
+        (children[index] as HTMLElement).scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
+      }
+    }
+  }, []);
+
+  const handleCardsScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    const cardWidth = el.offsetWidth * 0.85;
+    if (cardWidth > 0) {
+      const idx = Math.round(el.scrollLeft / cardWidth);
+      if (idx !== activeSwipeIndex && idx >= 0) {
+        setActiveSwipeIndex(idx);
+      }
+    }
+  }, [activeSwipeIndex]);
 
   const toggleFeatures = useCallback((pkgId: string) => {
     setExpandedFeatures((prev) => ({
@@ -170,6 +201,16 @@ export default function PhotoboothPricing({
 
   const backdropNotes = BACKDROP_NOTES;
 
+  // Active package & tier for mobile quick preview & sticky bottom bar
+  const activeMobilePkg = useMemo(() => {
+    return filteredPackages[activeSwipeIndex] || filteredPackages[0] || photoboothPackages[1];
+  }, [filteredPackages, activeSwipeIndex]);
+
+  const activeMobileTier = useMemo(() => {
+    const dIdx = selectedDurations[activeMobilePkg?.id] ?? 1;
+    return activeMobilePkg?.durations[dIdx] || activeMobilePkg?.durations[0];
+  }, [activeMobilePkg, selectedDurations]);
+
   return (
     <div id="pricing-photobooth" className="space-y-8 sm:space-y-12 lg:space-y-16">
       {/* ─── Header & Sub-Category Filter ───────────────────────── */}
@@ -256,16 +297,21 @@ export default function PhotoboothPricing({
       )}
 
       {/* ─── Global Duration Quick Sync Bar ─────────────────────── */}
-      <div className="bg-gradient-to-r from-brand-sky/30 via-white to-brand-green/5 border border-brand-green/20 p-3 sm:p-5 rounded-2xl sm:rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
-        <div className="flex items-center gap-2.5 sm:gap-3">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-brand-green/10 flex items-center justify-center text-base sm:text-lg text-brand-green flex-shrink-0">
+      <div className="bg-gradient-to-r from-brand-sky/20 via-white to-brand-green/5 border border-brand-green/20 p-2.5 sm:p-5 rounded-2xl sm:rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-2xl bg-brand-green/10 flex items-center justify-center text-sm sm:text-lg text-brand-green flex-shrink-0">
             ⏱️
           </div>
           <div>
-            <span className="text-xs sm:text-sm font-black text-brand-dark block">
-              Sinkronkan Durasi Sesi Acara:
-            </span>
-            <span className="text-[11px] sm:text-xs text-gray-500 font-medium">
+            <div className="flex items-center gap-2">
+              <span className="text-xs sm:text-sm font-black text-brand-dark block">
+                Pilih Durasi Acara:
+              </span>
+              <span className="md:hidden text-[10px] font-bold text-brand-green bg-brand-green/10 px-2 py-0.5 rounded-full">
+                Sinkron Semua Paket
+              </span>
+            </div>
+            <span className="hidden md:block text-[11px] sm:text-xs text-gray-500 font-medium">
               Pilih estimasi durasi acara Anda untuk membandingkan harga semua paket secara serentak.
             </span>
           </div>
@@ -283,7 +329,7 @@ export default function PhotoboothPricing({
               key={item.label}
               type="button"
               onClick={() => handleGlobalDurationChange(item.idx)}
-              className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold whitespace-nowrap flex-shrink-0 min-h-[34px] sm:min-h-[38px] transition-all cursor-pointer ${
+              className={`px-2.5 py-1 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold whitespace-nowrap flex-shrink-0 min-h-[32px] sm:min-h-[38px] transition-all cursor-pointer ${
                 globalDuration === item.idx
                   ? "bg-brand-dark text-white shadow-xs scale-102 ring-2 ring-brand-green/30"
                   : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-100"
@@ -295,8 +341,50 @@ export default function PhotoboothPricing({
         </div>
       </div>
 
-      {/* ─── Package Cards Grid ─────────────────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
+      {/* ─── Mobile View Mode Switcher (Swipe vs List) ───────────── */}
+      <div className="md:hidden flex items-center justify-between gap-2 px-1">
+        <div className="flex items-center gap-1.5 text-[11px] font-bold text-gray-600">
+          <span>Tampilan:</span>
+          <span className="text-brand-dark font-black">
+            {mobileViewMode === "swipe" ? "↔ Geser Kartu" : "↕ Daftar Vertikal"}
+          </span>
+        </div>
+        <div className="flex items-center gap-1 bg-gray-100 p-0.5 rounded-xl text-[11px] font-bold">
+          <button
+            type="button"
+            onClick={() => setMobileViewMode("swipe")}
+            className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+              mobileViewMode === "swipe"
+                ? "bg-white text-brand-dark shadow-xs"
+                : "text-gray-500 hover:text-brand-dark"
+            }`}
+          >
+            ↔ Geser
+          </button>
+          <button
+            type="button"
+            onClick={() => setMobileViewMode("vertical")}
+            className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+              mobileViewMode === "vertical"
+                ? "bg-white text-brand-dark shadow-xs"
+                : "text-gray-500 hover:text-brand-dark"
+            }`}
+          >
+            ↕ List
+          </button>
+        </div>
+      </div>
+
+      {/* ─── Package Cards Grid / Mobile Swipe Carousel ─────────── */}
+      <div
+        ref={cardsScrollRef}
+        onScroll={mobileViewMode === "swipe" ? handleCardsScroll : undefined}
+        className={
+          mobileViewMode === "swipe"
+            ? "flex md:grid md:grid-cols-2 overflow-x-auto snap-x snap-mandatory gap-4 sm:gap-8 pb-3 pt-1 no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0"
+            : "grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8"
+        }
+      >
         {filteredPackages.map((pkg: PhotoboothPackage) => {
           const durationIdx = selectedDurations[pkg.id] ?? 1;
           const currentTier = pkg.durations[durationIdx] || pkg.durations[0];
@@ -315,6 +403,9 @@ export default function PhotoboothPricing({
               key={pkg.id}
               className={[
                 "group relative flex flex-col justify-between rounded-3xl transition-all duration-300 overflow-hidden",
+                mobileViewMode === "swipe"
+                  ? "w-[85vw] max-w-[340px] flex-shrink-0 snap-center md:w-auto md:max-w-none"
+                  : "w-full",
                 isSelected
                   ? "border-2 border-brand-green bg-white ring-4 ring-brand-green/10 shadow-xl"
                   : pkg.isBestDeal
@@ -557,6 +648,46 @@ export default function PhotoboothPricing({
           );
         })}
       </div>
+
+      {/* ─── Mobile Swipe Pagination Dots & Direct Pill Selector ─── */}
+      {mobileViewMode === "swipe" && (
+        <div className="md:hidden flex flex-col items-center gap-2 -mt-1 mb-2">
+          {/* Dot Indicators */}
+          <div className="flex items-center gap-1.5">
+            {filteredPackages.map((p, idx) => (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => scrollToCard(idx)}
+                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                  activeSwipeIndex === idx ? "w-6 bg-brand-green" : "w-2 bg-gray-300"
+                }`}
+                aria-label={`Buka kartu paket ${p.nama}`}
+              />
+            ))}
+          </div>
+
+          {/* Quick Pill Selector */}
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar max-w-full px-1 py-0.5">
+            {filteredPackages.map((p, idx) => (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => scrollToCard(idx)}
+                className={`px-2.5 py-1 rounded-full text-[10px] font-bold whitespace-nowrap transition-all cursor-pointer ${
+                  activeSwipeIndex === idx
+                    ? "bg-brand-dark text-white shadow-xs scale-102"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                }`}
+              >
+                {p.isBestDeal ? "★ " : ""}
+                {p.category === "Bajaj Photobooth" ? "Bajaj " : "Reguler "}
+                {p.type === "print" ? "Print" : "No Print"}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* ─── Complete Price Matrix Table ────────────────────────── */}
       <div className="rounded-2xl sm:rounded-3xl border border-gray-200 bg-white p-4 sm:p-8 shadow-xs overflow-hidden">
@@ -1355,11 +1486,68 @@ export default function PhotoboothPricing({
 
       {/* Floating Toast Feedback */}
       {copiedToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-brand-dark text-white text-xs font-bold px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2.5 border border-brand-green/40 ring-4 ring-black/10 animate-in slide-in-from-bottom-3 duration-200">
+        <div className="fixed bottom-20 md:bottom-6 right-6 z-50 bg-brand-dark text-white text-xs font-bold px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2.5 border border-brand-green/40 ring-4 ring-black/10 animate-in slide-in-from-bottom-3 duration-200">
           <span className="w-5 h-5 rounded-full bg-brand-green text-white flex items-center justify-center text-[11px] font-black">
             ✓
           </span>
           <span>{copiedToast}</span>
+        </div>
+      )}
+
+      {/* ─── Sticky Mobile Floating Booking Bar ──────────────────── */}
+      {showMobileStickyBar && (
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-brand-dark/95 backdrop-blur-md text-white border-t border-emerald-800/40 px-3.5 py-2.5 shadow-[0_-8px_20px_rgba(0,0,0,0.3)] flex items-center justify-between gap-3 animate-in slide-in-from-bottom-2 duration-200">
+          <div className="min-w-0 flex-1">
+            <span className="block text-[10px] font-bold text-brand-green uppercase tracking-wider truncate">
+              {activeMobilePkg.nama}
+            </span>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-sm font-black text-white">
+                {activeMobileTier.harga}
+              </span>
+              <span className="text-[10px] text-white/60">
+                / {activeMobileTier.duration}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <Button
+              type="button"
+              variant="primary"
+              size="sm"
+              className="py-2 px-3 text-xs font-bold"
+              onClick={() => {
+                selectPackage(
+                  {
+                    id: `${activeMobilePkg.id}-${activeMobileTier.hours}h`,
+                    nama: `${activeMobilePkg.nama} (${activeMobileTier.duration})`,
+                    harga: activeMobileTier.harga,
+                    kategori: activeMobilePkg.category,
+                    fitur: [
+                      `Durasi Sesi: ${activeMobileTier.duration}`,
+                      `Backdrop: ${selectedBackdrop.name}`,
+                      ...activeMobilePkg.fitur,
+                      `Tambahan Jam: ${activeMobilePkg.additionalHourRate}`,
+                    ],
+                  },
+                  sourceUrl
+                );
+                router.push("/booking");
+              }}
+            >
+              <span>Booking</span>
+              <span>→</span>
+            </Button>
+            <button
+              type="button"
+              onClick={() => setShowMobileStickyBar(false)}
+              className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-white/70 flex items-center justify-center text-xs cursor-pointer"
+              aria-label="Tutup bar booking melayang"
+            >
+              ✕
+            </button>
+          </div>
         </div>
       )}
     </div>
