@@ -34,7 +34,10 @@ export default function Button({
 
   useEffect(() => {
     if (btnRef.current) {
-      initSingleButtonFlair(btnRef.current);
+      const flair = initSingleButtonFlair(btnRef.current);
+      return () => {
+        flair?.destroy();
+      };
     }
   }, []);
 

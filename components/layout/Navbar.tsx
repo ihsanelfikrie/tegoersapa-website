@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useGSAP } from "@gsap/react";
@@ -83,6 +83,34 @@ export default function Navbar() {
     }
     setIsOpen((prev) => !prev);
   }
+
+  // Keyboard accessibility (Escape) dan Outside Click untuk menutup mobile menu
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        const tl = menuTlRef.current;
+        if (tl) tl.reverse();
+        setIsOpen(false);
+      }
+    };
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (navbarRef.current && !navbarRef.current.contains(e.target as Node)) {
+        const tl = menuTlRef.current;
+        if (tl) tl.reverse();
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   // Cek apakah link aktif (exact untuk Home, prefix untuk yang lain)
   function isActive(href: string): boolean {

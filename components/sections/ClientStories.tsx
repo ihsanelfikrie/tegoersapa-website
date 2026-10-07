@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 
@@ -53,18 +53,19 @@ export default function ClientStories() {
   const cardsRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
     const el = e.currentTarget;
     const scrollLeft = el.scrollLeft;
     const cardWidth = el.firstElementChild ? (el.firstElementChild as HTMLElement).offsetWidth : 300;
     const gap = 16;
     const newIndex = Math.round(scrollLeft / (cardWidth + gap));
-    if (newIndex !== activeIndex) {
-      setActiveIndex(Math.min(Math.max(newIndex, 0), clientStories.length - 1));
-    }
-  };
+    setActiveIndex((prev) => {
+      const clamped = Math.min(Math.max(newIndex, 0), clientStories.length - 1);
+      return prev !== clamped ? clamped : prev;
+    });
+  }, []);
 
-  const scrollToIndex = (index: number) => {
+  const scrollToIndex = useCallback((index: number) => {
     if (!cardsRef.current) return;
     const cards = cardsRef.current.children;
     if (cards[index]) {
@@ -75,7 +76,7 @@ export default function ClientStories() {
       });
       setActiveIndex(index);
     }
-  };
+  }, []);
 
   useGSAP(
     () => {

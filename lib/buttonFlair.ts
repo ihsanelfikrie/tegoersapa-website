@@ -1,5 +1,7 @@
 import { gsap } from "@/lib/gsap";
 
+const initializedButtons = new WeakMap<HTMLElement, ButtonFlair>();
+
 /**
  * ButtonFlair — GSAP Cursor-following Magnetic Ripple/Flair Animation
  * Sesuai spesifikasi dan script yang diberikan oleh user.
@@ -132,10 +134,9 @@ export class ButtonFlair {
     if (this.flair) {
       gsap.killTweensOf(this.flair);
     }
+    initializedButtons.delete(this.block);
   }
 }
-
-const initializedButtons = new WeakMap<HTMLElement, ButtonFlair>();
 
 /**
  * Inisialisasi satu tombol dengan efek flair

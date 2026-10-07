@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense, useMemo } from "react";
+import { useState, useEffect, Suspense, useMemo, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -104,26 +104,27 @@ function GalleryContent() {
         (activeImage.image && activeImage.image.toLowerCase().includes("ingraduation")))
   );
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (filteredItems.length === 0) return;
     if (currentIndex >= 0 && currentIndex < filteredItems.length - 1) {
       setActiveImage(filteredItems[currentIndex + 1]);
     } else {
       setActiveImage(filteredItems[0]); // Loop back to start
     }
-  };
+  }, [currentIndex, filteredItems]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     if (filteredItems.length === 0) return;
     if (currentIndex > 0) {
       setActiveImage(filteredItems[currentIndex - 1]);
     } else {
       setActiveImage(filteredItems[filteredItems.length - 1]); // Loop to end
     }
-  };
+  }, [currentIndex, filteredItems]);
 
   useEffect(() => {
     if (!activeImage) return;
+    document.body.style.overflow = "hidden";
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setActiveImage(null);
@@ -148,7 +149,10 @@ function GalleryContent() {
       }
     };
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [activeImage, filteredItems]);
 
   return (

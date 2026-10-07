@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -100,10 +100,27 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
     { scope: containerRef }
   );
 
-  const filteredPackages = data.packages.filter((pkg) => {
-    if (selectedCategory === "Semua") return true;
-    return pkg.kategori === selectedCategory;
-  });
+  // Modal accessibility & background scroll lock
+  useEffect(() => {
+    if (activeImage) {
+      document.body.style.overflow = "hidden";
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") setActiveImage(null);
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.body.style.overflow = "";
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [activeImage]);
+
+  const filteredPackages = useMemo(() => {
+    return data.packages.filter((pkg) => {
+      if (selectedCategory === "Semua") return true;
+      return pkg.kategori === selectedCategory;
+    });
+  }, [data.packages, selectedCategory]);
 
   return (
     <div ref={containerRef} className="bg-white min-h-screen text-black">

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
@@ -13,6 +13,15 @@ import {
 } from "@/lib/content";
 import { useBooking } from "@/lib/BookingContext";
 import Button from "@/components/ui/Button";
+
+// Backdrop detailed recommendations (statis di luar render loop agar zero memory allocation)
+const BACKDROP_NOTES: Record<string, string> = {
+  merah: "Velvet Red — Mewah, berani & glamor. Sangat pas untuk tema pernikahan elegan, pesta malam, dan perayaan imlek.",
+  hijau: "Forest Green — Signature Tegoer Sapa. Bernuansa segar, estetik, dan selaras sempurna dengan tema dekorasi botanical & garden.",
+  "biru-highschool": "High School Blue — Ceria, cerah & energik. Pilihan favorit untuk birthday party, sweet 17, prom night, dan festival.",
+  "biru-navy": "Classic Navy — Formal, profesional & timeless. Sangat cocok untuk corporate gathering, konferensi, dan perayaan formal.",
+  cream: "Warm Cream — Hangat, minimalis & netral. Menghasilkan kontras foto yang lembut dan cocok dengan semua warna busana tamu.",
+};
 
 interface PhotoboothPricingProps {
   sourceUrl?: string;
@@ -56,17 +65,41 @@ export default function PhotoboothPricing({
 
   // Toast feedback state for copied text
   const [copiedToast, setCopiedToast] = useState<string | null>(null);
+  const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const handleCopyPackage = (pkg: PhotoboothPackage, tier: { duration: string; harga: string }) => {
+  // Bersihkan timeout toast saat unmount untuk mencegah memory leak
+  useEffect(() => {
+    return () => {
+      if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+    };
+  }, []);
+
+  // Modal accessibility & background scroll lock
+  useEffect(() => {
+    if (previewTemplateModal) {
+      document.body.style.overflow = "hidden";
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") setPreviewTemplateModal(null);
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.body.style.overflow = "";
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [previewTemplateModal]);
+
+  const handleCopyPackage = useCallback((pkg: PhotoboothPackage, tier: { duration: string; harga: string }) => {
     const text = `*Paket Tegoer Sapa*: ${pkg.nama}\n• Durasi: ${tier.duration} (${tier.harga})\n• Kategori: ${pkg.category} (${pkg.type === "print" ? "Unlimited Print" : "Digital No Print"})\n• Fitur Utama:\n${pkg.fitur.slice(0, 5).map((f) => `  - ${f}`).join("\n")}\n\nInfo selengkapnya: https://tegoersapa.com/pricelist?tab=photobooth`;
     if (typeof navigator !== "undefined" && navigator.clipboard) {
       navigator.clipboard.writeText(text);
       setCopiedToast(`Rincian ${pkg.nama} berhasil disalin!`);
-      setTimeout(() => setCopiedToast(null), 3000);
+      if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+      toastTimeoutRef.current = setTimeout(() => setCopiedToast(null), 3000);
     }
-  };
+  }, []);
 
-  const handleGlobalDurationChange = (idx: number) => {
+  const handleGlobalDurationChange = useCallback((idx: number) => {
     setGlobalDuration(idx);
     setSelectedDurations({
       "pb-reg-noprint": idx,
@@ -74,48 +107,55 @@ export default function PhotoboothPricing({
       "pb-bajaj-noprint": idx,
       "pb-bajaj-print": idx,
     });
-  };
+  }, []);
 
-  const handleDurationChange = (pkgId: string, index: number) => {
+  const handleDurationChange = useCallback((pkgId: string, index: number) => {
     setSelectedDurations((prev) => ({
       ...prev,
       [pkgId]: index,
     }));
-  };
+  }, []);
 
-  const filteredPackages = photoboothPackages.filter((pkg) => {
-    if (activeCategory === "regular") return pkg.category === "Photobooth Reguler";
-    if (activeCategory === "bajaj") return pkg.category === "Bajaj Photobooth";
-    return true;
-  });
+  const filteredPackages = useMemo(() => {
+    return photoboothPackages.filter((pkg) => {
+      if (activeCategory === "regular") return pkg.category === "Photobooth Reguler";
+      if (activeCategory === "bajaj") return pkg.category === "Bajaj Photobooth";
+      return true;
+    });
+  }, [activeCategory]);
 
   const photoboothWaNumber = "6281350655747";
-  const selectedBackdrop = photoboothBackdrops.find((b) => b.id === selectedBackdropId) || photoboothBackdrops[1];
-
-  // Calculator derived values
-  const calcPkg =
-    photoboothPackages.find((p) => p.id === calcPackageId) || photoboothPackages[1];
-  const calcBaseTier =
-    calcPkg.durations[calcBaseDurationIdx] || calcPkg.durations[1];
-  const calcBaseNumeric = calcBaseTier.numericPrice;
-  const calcExtraRate = calcPkg.additionalHourNumeric || 600000;
-  const calcExtraCost = extraHoursCount * calcExtraRate;
-  const calcTotalHours = calcBaseTier.hours + extraHoursCount;
-  const calcTotalPrice = calcBaseNumeric + calcExtraCost;
-
-  const customWaMessage = encodeURIComponent(
-    `Halo kak Mau booking Custom Durasi Photobooth Tegoer Sapa\n\nPaket Dasar : ${calcPkg.nama} (${calcBaseTier.duration} - ${calcBaseTier.harga})\nTambahan Waktu : +${extraHoursCount} Jam (Rp ${calcExtraCost.toLocaleString("id-ID")})\nTotal Durasi : ${calcTotalHours} Jam Operasional\nEstimasi Biaya : Rp ${calcTotalPrice.toLocaleString("id-ID")}\nBackdrop Pilihan : ${selectedBackdrop.name}\n\nMohon info ketersediaan slot tanggal & jam acara kami. Terima kasih!`
+  const selectedBackdrop = useMemo(
+    () => photoboothBackdrops.find((b) => b.id === selectedBackdropId) || photoboothBackdrops[1],
+    [selectedBackdropId]
   );
-  const customWaLink = `https://api.whatsapp.com/send?phone=${photoboothWaNumber}&text=${customWaMessage}`;
 
-  // Backdrop detailed recommendations
-  const backdropNotes: { [id: string]: string } = {
-    merah: "Velvet Red — Mewah, berani & glamor. Sangat pas untuk tema pernikahan elegan, pesta malam, dan perayaan imlek.",
-    hijau: "Forest Green — Signature Tegoer Sapa. Bernuansa segar, estetik, dan selaras sempurna dengan tema dekorasi botanical & garden.",
-    "biru-highschool": "High School Blue — Ceria, cerah & energik. Pilihan favorit untuk birthday party, sweet 17, prom night, dan festival.",
-    "biru-navy": "Classic Navy — Formal, profesional & timeless. Sangat cocok untuk corporate gathering, konferensi, dan perayaan formal.",
-    cream: "Warm Cream — Hangat, minimalis & netral. Menghasilkan kontras foto yang lembut dan cocok dengan semua warna busana tamu.",
-  };
+  // Calculator derived values (dimemoize agar tidak re-compute pada setiap scroll/render)
+  const { calcPkg, calcBaseTier, calcExtraCost, calcTotalHours, calcTotalPrice, customWaLink } = useMemo(() => {
+    const pkg = photoboothPackages.find((p) => p.id === calcPackageId) || photoboothPackages[1];
+    const baseTier = pkg.durations[calcBaseDurationIdx] || pkg.durations[1];
+    const baseNumeric = baseTier.numericPrice;
+    const extraRate = pkg.additionalHourNumeric || 600000;
+    const extraCost = extraHoursCount * extraRate;
+    const totalHours = baseTier.hours + extraHoursCount;
+    const totalPrice = baseNumeric + extraCost;
+
+    const customWaMessage = encodeURIComponent(
+      `Halo kak Mau booking Custom Durasi Photobooth Tegoer Sapa\n\nPaket Dasar : ${pkg.nama} (${baseTier.duration} - ${baseTier.harga})\nTambahan Waktu : +${extraHoursCount} Jam (Rp ${extraCost.toLocaleString("id-ID")})\nTotal Durasi : ${totalHours} Jam Operasional\nEstimasi Biaya : Rp ${totalPrice.toLocaleString("id-ID")}\nBackdrop Pilihan : ${selectedBackdrop.name}\n\nMohon info ketersediaan slot tanggal & jam acara kami. Terima kasih!`
+    );
+    const waLink = `https://api.whatsapp.com/send?phone=${photoboothWaNumber}&text=${customWaMessage}`;
+
+    return {
+      calcPkg: pkg,
+      calcBaseTier: baseTier,
+      calcExtraCost: extraCost,
+      calcTotalHours: totalHours,
+      calcTotalPrice: totalPrice,
+      customWaLink: waLink,
+    };
+  }, [calcPackageId, calcBaseDurationIdx, extraHoursCount, selectedBackdrop]);
+
+  const backdropNotes = BACKDROP_NOTES;
 
   return (
     <div id="pricing-photobooth" className="space-y-16">
