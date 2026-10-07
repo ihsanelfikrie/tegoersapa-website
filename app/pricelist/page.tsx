@@ -38,18 +38,18 @@ export default function PricelistPage() {
   return (
     <div className="bg-white min-h-screen text-black">
       {/* ─── Hero Header ────────────────────────────────────────── */}
-      <section className="relative pt-32 pb-24 sm:pb-28 lg:pb-36 bg-brand-sky text-brand-dark overflow-hidden">
+      <section className="relative pt-24 pb-12 sm:pt-32 sm:pb-24 lg:pt-36 lg:pb-36 bg-brand-sky text-brand-dark overflow-hidden">
         {/* Floating Clouds Background */}
         <HeroClouds />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl flex flex-col items-center lg:items-start text-center lg:text-left mx-auto lg:mx-0">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-center lg:text-left">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-center lg:text-left">
               <span className="hero-word">Daftar</span>{" "}
               <span className="hero-word hero-word-green">Harga</span>
             </h1>
-            <div className="w-16 h-1 rounded-full bg-brand-dark my-5 mx-auto lg:mx-0" />
-            <p className="text-base sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            <div className="w-12 sm:w-16 h-1 rounded-full bg-brand-dark my-3 sm:my-5 mx-auto lg:mx-0" />
+            <p className="text-sm sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0">
               Transparansi harga untuk layanan <strong>Photobooth Instan</strong>, armada unik <strong>Bajaj Photobooth</strong>, dan dokumentasi <strong>Outdoor Graduation</strong> di Banjarbaru, Kalimantan Selatan.
             </p>
           </div>
@@ -60,14 +60,14 @@ export default function PricelistPage() {
       </section>
 
       {/* ─── Main Content Section ───────────────────────────────── */}
-      <section className="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-6 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Category Navigation Pills */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-12 bg-gray-50/80 border border-gray-200/80 p-2 sm:p-2.5 rounded-3xl">
-          <div className="flex items-center gap-2 w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mb-6 sm:mb-12 bg-gray-50/80 border border-gray-200/80 p-1.5 sm:p-2.5 rounded-2xl sm:rounded-3xl">
+          <div className="flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto">
             <button
               onClick={() => setActiveTab("photobooth")}
-              className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-200 ${
+              className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-200 cursor-pointer ${
                 activeTab === "photobooth"
                   ? "bg-brand-dark text-white shadow-md scale-101"
                   : "bg-white text-gray-600 hover:text-brand-dark hover:bg-gray-100"
@@ -81,7 +81,7 @@ export default function PricelistPage() {
 
             <button
               onClick={() => setActiveTab("graduation")}
-              className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-200 ${
+              className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-200 cursor-pointer ${
                 activeTab === "graduation"
                   ? "bg-brand-dark text-white shadow-md scale-101"
                   : "bg-white text-gray-600 hover:text-brand-dark hover:bg-gray-100"
@@ -94,7 +94,7 @@ export default function PricelistPage() {
             </button>
           </div>
 
-          <div className="text-xs text-gray-500 font-medium self-center sm:self-auto text-center sm:text-right px-3">
+          <div className="text-[11px] sm:text-xs text-gray-500 font-medium self-center sm:self-auto text-center sm:text-right px-2 sm:px-3">
             {activeTab === "photobooth" ? (
               <span>Termasuk Opsi Print & No Print (2–6 Jam)</span>
             ) : (
@@ -139,7 +139,7 @@ export default function PricelistPage() {
             </div>
 
             {/* Packages Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {pricelistPackages.map((pkg: PricePackage) => {
                 const waLink = generateWhatsAppLink(pkg.whatsappTemplate, pkg.nama);
                 const isSelected = selectedPackage?.id === pkg.id;
@@ -148,7 +148,7 @@ export default function PricelistPage() {
                   <div
                     key={pkg.id}
                     className={[
-                      "group flex flex-col justify-between rounded-3xl transition-all duration-300 overflow-hidden",
+                      "group flex flex-col justify-between rounded-2xl sm:rounded-3xl transition-all duration-300 overflow-hidden",
                       isSelected
                         ? "border-2 border-brand-green bg-white ring-4 ring-brand-green/10 shadow-lg"
                         : "border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 hover:shadow-md",
@@ -157,7 +157,7 @@ export default function PricelistPage() {
                     <div>
                       {/* Cover Photo */}
                       {pkg.image && (
-                        <div className="relative w-full h-52 sm:h-56 overflow-hidden bg-brand-dark">
+                        <div className="relative w-full h-40 sm:h-56 overflow-hidden bg-brand-dark">
                           <Image
                             src={pkg.image}
                             alt={pkg.nama}
@@ -166,8 +166,8 @@ export default function PricelistPage() {
                             className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                          <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-                            <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20">
+                          <div className="absolute top-3.5 left-3.5 right-3.5 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between">
+                            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20">
                               {pkg.kategori}
                             </span>
                             {isSelected && (
@@ -179,10 +179,10 @@ export default function PricelistPage() {
                         </div>
                       )}
 
-                      <div className="p-6 sm:p-7">
+                      <div className="p-4 sm:p-7">
                         {!pkg.image && (
-                          <div className="flex items-center justify-between mb-4">
-                            <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-brand-green/10 text-brand-dark border border-brand-green/20">
+                          <div className="flex items-center justify-between mb-3 sm:mb-4">
+                            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-brand-green/10 text-brand-dark border border-brand-green/20">
                               {pkg.kategori}
                             </span>
                             {isSelected && (
@@ -193,14 +193,14 @@ export default function PricelistPage() {
                           </div>
                         )}
 
-                        <h3 className="text-2xl font-black text-brand-dark tracking-wide">
+                        <h3 className="text-xl sm:text-2xl font-black text-brand-dark tracking-wide">
                           {pkg.nama}
                         </h3>
-                        <div className="mt-2 flex items-center gap-2">
+                        <div className="mt-1 sm:mt-2 flex items-center gap-2">
                           <span
                             className={
                               pkg.harga === "Hubungi Admin"
-                                ? "text-xl sm:text-2xl font-black text-brand-dark"
+                                ? "text-lg sm:text-2xl font-black text-brand-dark"
                                 : "text-2xl sm:text-3xl font-black text-brand-green"
                             }
                           >
@@ -213,14 +213,14 @@ export default function PricelistPage() {
                           )}
                         </div>
 
-                        <div className="w-full h-px bg-gray-200 my-6" />
+                        <div className="w-full h-px bg-gray-200 my-3.5 sm:my-6" />
 
                         {/* Feature list */}
-                        <ul className="space-y-2.5">
+                        <ul className="space-y-1.5 sm:space-y-2.5">
                           {pkg.fitur.map((feature, idx) => (
                             <li
                               key={idx}
-                              className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-600 font-medium"
+                              className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-gray-600 font-medium"
                             >
                               <span className="text-brand-green font-bold flex-shrink-0 mt-0.5">
                                 ✓
@@ -232,7 +232,7 @@ export default function PricelistPage() {
                       </div>
                     </div>
 
-                    <div className="px-6 pb-6 pt-2 sm:px-7 sm:pb-7 space-y-2">
+                    <div className="px-4 pb-4 pt-1 sm:px-7 sm:pb-7 space-y-2">
                       <Button
                         type="button"
                         variant="primary"

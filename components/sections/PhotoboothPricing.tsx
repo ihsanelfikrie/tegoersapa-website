@@ -63,6 +63,19 @@ export default function PhotoboothPricing({
   const [calcBaseDurationIdx, setCalcBaseDurationIdx] = useState<number>(1); // index 1: 3 Jam
   const [extraHoursCount, setExtraHoursCount] = useState<number>(1);
 
+  // Mobile optimization states: collapsible sections to reduce vertical scroll length on mobile
+  const [expandedFeatures, setExpandedFeatures] = useState<Record<string, boolean>>({});
+  const [showTableMobile, setShowTableMobile] = useState(false);
+  const [showCalcMobile, setShowCalcMobile] = useState(false);
+  const [showcaseTabMobile, setShowcaseTabMobile] = useState<"backdrop" | "layout">("backdrop");
+
+  const toggleFeatures = useCallback((pkgId: string) => {
+    setExpandedFeatures((prev) => ({
+      ...prev,
+      [pkgId]: !prev[pkgId],
+    }));
+  }, []);
+
   // Toast feedback state for copied text
   const [copiedToast, setCopiedToast] = useState<string | null>(null);
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -158,12 +171,12 @@ export default function PhotoboothPricing({
   const backdropNotes = BACKDROP_NOTES;
 
   return (
-    <div id="pricing-photobooth" className="space-y-16">
+    <div id="pricing-photobooth" className="space-y-8 sm:space-y-12 lg:space-y-16">
       {/* ─── Header & Sub-Category Filter ───────────────────────── */}
       {showCategoryHeader && (
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-gray-100 pb-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 border-b border-gray-100 pb-4 sm:pb-6">
           <div>
-            <div className="flex items-center gap-2 mb-1.5">
+            <div className="flex items-center gap-2 mb-1 sm:mb-1.5">
               <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green bg-brand-green/10 px-2.5 py-0.5 rounded-full border border-brand-green/20">
                 Katalog Resmi Photobooth
               </span>
@@ -171,19 +184,19 @@ export default function PhotoboothPricing({
                 Event & Party
               </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-brand-dark tracking-tight">
+            <h2 className="text-xl sm:text-3xl lg:text-4xl font-black text-brand-dark tracking-tight">
               Pilihan Paket Photobooth & Bajaj
             </h2>
-            <p className="mt-2 text-sm text-gray-600 max-w-xl font-medium">
-              Tersedia opsi <strong>Photobooth Reguler</strong> dan <strong>Bajaj Photobooth (Tegoer Keliling)</strong> dalam pilihan format <em>Unlimited Print</em> maupun <em>No Print</em> (soft file digital via QR Code).
+            <p className="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600 max-w-xl font-medium">
+              Tersedia opsi <strong>Photobooth Reguler</strong> dan <strong>Bajaj Photobooth (Tegoer Keliling)</strong> dalam pilihan format <em>Unlimited Print</em> maupun <em>No Print</em>.
             </p>
           </div>
 
           {/* Sub Filter Buttons */}
-          <div className="w-full sm:w-auto overflow-x-auto no-scrollbar flex items-center gap-1.5 p-1.5 bg-gray-100 rounded-2xl self-start md:self-auto -mx-1 px-1 sm:mx-0 sm:px-1.5">
+          <div className="w-full sm:w-auto overflow-x-auto no-scrollbar flex items-center gap-1.5 p-1 sm:p-1.5 bg-gray-100 rounded-2xl self-start md:self-auto -mx-1 px-1 sm:mx-0 sm:px-1.5">
             <button
               onClick={() => setActiveCategory("all")}
-              className={`whitespace-nowrap flex-shrink-0 px-3.5 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 min-h-[38px] ${
+              className={`whitespace-nowrap flex-shrink-0 px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 min-h-[34px] sm:min-h-[38px] cursor-pointer ${
                 activeCategory === "all"
                   ? "bg-white text-brand-dark shadow-xs"
                   : "text-gray-500 hover:text-brand-dark"
@@ -202,7 +215,7 @@ export default function PhotoboothPricing({
             </button>
             <button
               onClick={() => setActiveCategory("regular")}
-              className={`whitespace-nowrap flex-shrink-0 px-3.5 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 min-h-[38px] ${
+              className={`whitespace-nowrap flex-shrink-0 px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 min-h-[34px] sm:min-h-[38px] cursor-pointer ${
                 activeCategory === "regular"
                   ? "bg-white text-brand-dark shadow-xs"
                   : "text-gray-500 hover:text-brand-dark"
@@ -221,7 +234,7 @@ export default function PhotoboothPricing({
             </button>
             <button
               onClick={() => setActiveCategory("bajaj")}
-              className={`whitespace-nowrap flex-shrink-0 px-3.5 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 min-h-[38px] ${
+              className={`whitespace-nowrap flex-shrink-0 px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 min-h-[34px] sm:min-h-[38px] cursor-pointer ${
                 activeCategory === "bajaj"
                   ? "bg-white text-brand-dark shadow-xs"
                   : "text-gray-500 hover:text-brand-dark"
@@ -243,22 +256,22 @@ export default function PhotoboothPricing({
       )}
 
       {/* ─── Global Duration Quick Sync Bar ─────────────────────── */}
-      <div className="bg-gradient-to-r from-brand-sky/30 via-white to-brand-green/5 border border-brand-green/20 p-4 sm:p-5 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-brand-green/10 flex items-center justify-center text-lg text-brand-green flex-shrink-0">
+      <div className="bg-gradient-to-r from-brand-sky/30 via-white to-brand-green/5 border border-brand-green/20 p-3 sm:p-5 rounded-2xl sm:rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-brand-green/10 flex items-center justify-center text-base sm:text-lg text-brand-green flex-shrink-0">
             ⏱️
           </div>
           <div>
             <span className="text-xs sm:text-sm font-black text-brand-dark block">
               Sinkronkan Durasi Sesi Acara:
             </span>
-            <span className="text-xs text-gray-500 font-medium">
+            <span className="text-[11px] sm:text-xs text-gray-500 font-medium">
               Pilih estimasi durasi acara Anda untuk membandingkan harga semua paket secara serentak.
             </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pb-1 md:pb-0 -mx-2 px-2 sm:mx-0 sm:px-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pb-1 md:pb-0 -mx-1 px-1 sm:mx-0 sm:px-0">
           {[
             { label: "2 Jam", idx: 0 },
             { label: "3 Jam ★", idx: 1, note: "Paling Populer" },
@@ -270,9 +283,9 @@ export default function PhotoboothPricing({
               key={item.label}
               type="button"
               onClick={() => handleGlobalDurationChange(item.idx)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap flex-shrink-0 min-h-[38px] transition-all ${
+              className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold whitespace-nowrap flex-shrink-0 min-h-[34px] sm:min-h-[38px] transition-all cursor-pointer ${
                 globalDuration === item.idx
-                  ? "bg-brand-dark text-white shadow-sm scale-102 ring-2 ring-brand-green/30"
+                  ? "bg-brand-dark text-white shadow-xs scale-102 ring-2 ring-brand-green/30"
                   : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-100"
               }`}
             >
@@ -283,7 +296,7 @@ export default function PhotoboothPricing({
       </div>
 
       {/* ─── Package Cards Grid ─────────────────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
         {filteredPackages.map((pkg: PhotoboothPackage) => {
           const durationIdx = selectedDurations[pkg.id] ?? 1;
           const currentTier = pkg.durations[durationIdx] || pkg.durations[0];
@@ -311,7 +324,7 @@ export default function PhotoboothPricing({
             >
               <div>
                 {/* Visual Header / Cover Asset */}
-                <div className="relative w-full h-44 sm:h-48 overflow-hidden bg-brand-dark">
+                <div className="relative w-full h-36 sm:h-48 overflow-hidden bg-brand-dark">
                   <Image
                     src={
                       isBajaj
@@ -328,19 +341,19 @@ export default function PhotoboothPricing({
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-black/40 to-transparent" />
 
                   {/* Badges on image */}
-                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20">
+                  <div className="absolute top-3.5 left-3.5 right-3.5 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20">
                       {pkg.category}
                     </span>
 
                     <div className="flex items-center gap-1.5">
                       {pkg.isBestDeal && (
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-green text-white shadow-md animate-pulse">
+                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 sm:py-1 rounded-full bg-brand-green text-white shadow-md animate-pulse">
                           ★ Best Deal
                         </span>
                       )}
                       {isSelected && (
-                        <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-green text-white shadow-xs">
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 sm:py-1 rounded-full bg-brand-green text-white shadow-xs">
                           ✓ Terpilih
                         </span>
                       )}
@@ -348,26 +361,26 @@ export default function PhotoboothPricing({
                   </div>
 
                   {/* Title overlay */}
-                  <div className="absolute bottom-3 left-4 right-4">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-brand-green bg-brand-green/20 backdrop-blur-md px-2 py-0.5 rounded-md border border-brand-green/30 inline-block mb-1">
+                  <div className="absolute bottom-2.5 left-3.5 right-3.5 sm:bottom-3 sm:left-4 sm:right-4">
+                    <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-brand-green bg-brand-green/20 backdrop-blur-md px-2 py-0.5 rounded-md border border-brand-green/30 inline-block mb-0.5 sm:mb-1">
                       {pkg.type === "print" ? "Unlimited Print" : "Digital QR File"}
                     </span>
-                    <h3 className="text-xl sm:text-2xl font-black text-white tracking-wide">
+                    <h3 className="text-lg sm:text-2xl font-black text-white tracking-wide">
                       {pkg.nama}
                     </h3>
                   </div>
                 </div>
 
                 {/* Card Body */}
-                <div className="p-6 sm:p-7 pb-4">
-                  <p className="text-xs sm:text-sm text-gray-600 font-medium leading-relaxed">
+                <div className="p-4 sm:p-7 pb-3 sm:pb-4">
+                  <p className="text-xs sm:text-sm text-gray-600 font-medium leading-relaxed line-clamp-2 sm:line-clamp-none">
                     {pkg.description}
                   </p>
 
                   {/* Duration Picker Pills */}
-                  <div className="mt-5">
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="text-[11px] font-black uppercase tracking-wider text-gray-500">
+                  <div className="mt-4 sm:mt-5">
+                    <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+                      <label className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-gray-500">
                         Pilih Durasi Sesi:
                       </label>
                       <span className="text-[11px] font-bold text-brand-green">
@@ -375,7 +388,7 @@ export default function PhotoboothPricing({
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
+                    <div className="grid grid-cols-5 gap-1 sm:gap-2">
                       {pkg.durations.map((tier, idx) => {
                         const isActive = durationIdx === idx;
                         return (
@@ -383,9 +396,9 @@ export default function PhotoboothPricing({
                             key={tier.duration}
                             type="button"
                             onClick={() => handleDurationChange(pkg.id, idx)}
-                            className={`py-2 px-1 text-center rounded-xl text-xs sm:text-sm font-bold transition-all ${
+                            className={`py-1.5 sm:py-2 px-1 text-center rounded-xl text-xs sm:text-sm font-bold transition-all min-h-[34px] sm:min-h-[38px] cursor-pointer ${
                               isActive
-                                ? "bg-brand-dark text-white shadow-sm ring-2 ring-brand-green/30 scale-102"
+                                ? "bg-brand-dark text-white shadow-xs ring-2 ring-brand-green/30 scale-102"
                                 : "bg-gray-100 text-gray-600 hover:bg-gray-200/80"
                             }`}
                           >
@@ -397,23 +410,23 @@ export default function PhotoboothPricing({
                   </div>
 
                   {/* Price Display */}
-                  <div className="mt-6 pt-5 border-t border-gray-100 flex items-baseline justify-between bg-gray-50/70 p-4 rounded-2xl">
+                  <div className="mt-4 sm:mt-6 pt-3.5 sm:pt-5 border-t border-gray-100 flex items-baseline justify-between bg-gray-50/70 p-3 sm:p-4 rounded-xl sm:rounded-2xl">
                     <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-gray-400">
                           Total ({currentTier.duration})
                         </span>
-                        <span className="text-[10px] font-bold text-gray-500 bg-white px-2 py-0.5 rounded-md border border-gray-200">
+                        <span className="text-[9px] sm:text-[10px] font-bold text-gray-500 bg-white px-1.5 sm:px-2 py-0.5 rounded-md border border-gray-200">
                           ~Rp {approxPerHour.toLocaleString("id-ID")}/jam
                         </span>
                       </div>
-                      <span className="text-3xl sm:text-4xl font-black text-brand-green tracking-tight mt-0.5 block">
+                      <span className="text-2xl sm:text-4xl font-black text-brand-green tracking-tight mt-0.5 block">
                         {currentTier.harga}
                       </span>
                     </div>
 
                     <div className="text-right">
-                      <span className="text-[10px] font-semibold text-gray-400 block">
+                      <span className="text-[9px] sm:text-[10px] font-semibold text-gray-400 block">
                         Additional Hour
                       </span>
                       <span className="text-xs sm:text-sm font-bold text-brand-dark">
@@ -423,23 +436,37 @@ export default function PhotoboothPricing({
                   </div>
 
                   {/* Features List */}
-                  <div className="mt-6 space-y-2.5">
-                    <span className="text-[11px] font-black uppercase tracking-wider text-gray-400 block mb-2">
-                      Fasilitas Termasuk:
-                    </span>
-                    <ul className="space-y-2">
+                  <div className="mt-4 sm:mt-6 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-gray-400 block">
+                        Fasilitas Termasuk:
+                      </span>
+                      {pkg.fitur.length > 3 && (
+                        <button
+                          type="button"
+                          onClick={() => toggleFeatures(pkg.id)}
+                          className="md:hidden text-[11px] font-bold text-brand-green hover:underline flex items-center gap-1 cursor-pointer"
+                        >
+                          <span>{expandedFeatures[pkg.id] ? "Tutup ▲" : `+${pkg.fitur.length - 3} lainnya ▼`}</span>
+                        </button>
+                      )}
+                    </div>
+                    <ul className="space-y-1.5 sm:space-y-2">
                       {pkg.fitur.map((feature, idx) => {
+                        const isHiddenOnMobile = !expandedFeatures[pkg.id] && idx >= 3;
                         const isHighlight =
                           feature.toLowerCase().includes("unlimited print") ||
                           feature.toLowerCase().includes("bajaj");
                         return (
                           <li
                             key={idx}
-                            className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700 font-medium"
+                            className={`items-start gap-2 sm:gap-2.5 text-xs sm:text-sm text-gray-700 font-medium ${
+                              isHiddenOnMobile ? "hidden md:flex" : "flex"
+                            }`}
                           >
                             <span
                               className={`flex-shrink-0 mt-0.5 font-bold ${
-                                isHighlight ? "text-brand-green text-base" : "text-brand-green"
+                                isHighlight ? "text-brand-green text-sm sm:text-base" : "text-brand-green"
                               }`}
                             >
                               ✓
@@ -451,12 +478,23 @@ export default function PhotoboothPricing({
                         );
                       })}
                     </ul>
+
+                    {/* Mobile Quick Expand Button */}
+                    {pkg.fitur.length > 3 && !expandedFeatures[pkg.id] && (
+                      <button
+                        type="button"
+                        onClick={() => toggleFeatures(pkg.id)}
+                        className="md:hidden w-full py-1.5 text-center text-[11px] font-bold text-brand-green bg-brand-green/5 hover:bg-brand-green/10 rounded-xl transition-colors cursor-pointer mt-1"
+                      >
+                        Lihat {pkg.fitur.length - 3} Fasilitas Lainnya ▼
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="p-6 sm:p-7 pt-3 bg-gray-50/90 border-t border-gray-100 space-y-2.5">
+              <div className="p-4 sm:p-7 pt-3 bg-gray-50/90 border-t border-gray-100 space-y-2">
                 <Button
                   type="button"
                   variant="primary"
@@ -521,118 +559,155 @@ export default function PhotoboothPricing({
       </div>
 
       {/* ─── Complete Price Matrix Table ────────────────────────── */}
-      <div className="rounded-3xl border border-gray-200 bg-white p-6 sm:p-8 shadow-xs overflow-hidden">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+      <div className="rounded-2xl sm:rounded-3xl border border-gray-200 bg-white p-4 sm:p-8 shadow-xs overflow-hidden">
+        <div
+          onClick={() => setShowTableMobile((prev) => !prev)}
+          className="flex items-center justify-between gap-3 cursor-pointer md:cursor-default select-none"
+        >
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green block">
-              Ringkasan Perbandingan
-            </span>
-            <h3 className="text-xl sm:text-2xl font-black text-brand-dark">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green block">
+                Ringkasan Perbandingan
+              </span>
+              <span className="md:hidden text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-green/10 text-brand-green">
+                {showTableMobile ? "Tutup ▲" : "Lihat Tabel ▼"}
+              </span>
+            </div>
+            <h3 className="text-base sm:text-2xl font-black text-brand-dark mt-0.5">
               Tabel Daftar Harga Lengkap (2 – 6 Jam)
             </h3>
           </div>
-          <span className="text-xs font-bold text-gray-500 bg-gray-100 px-3.5 py-1.5 rounded-full self-start sm:self-auto">
-            Harga Transparan Sesuai Katalog
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold text-gray-500 bg-gray-100 px-3.5 py-1.5 rounded-full hidden sm:inline-block">
+              Harga Transparan Sesuai Katalog
+            </span>
+            <button
+              type="button"
+              className="md:hidden w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-600 transition-colors cursor-pointer"
+              aria-label={showTableMobile ? "Tutup tabel perbandingan" : "Buka tabel perbandingan"}
+            >
+              {showTableMobile ? "▲" : "▼"}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Swipe Hint */}
-        <div className="sm:hidden flex items-center gap-1.5 text-[11px] font-semibold text-brand-green bg-brand-green/10 px-3 py-1.5 rounded-xl mb-3 w-fit">
-          <span>Geser tabel ke samping untuk melihat semua durasi →</span>
-        </div>
+        {/* Collapsible Content: hidden on mobile unless toggled, always block on md+ */}
+        <div className={showTableMobile ? "block mt-4 sm:mt-6" : "hidden md:block md:mt-6"}>
+          {/* Mobile Swipe Hint */}
+          <div className="sm:hidden flex items-center gap-1.5 text-[11px] font-semibold text-brand-green bg-brand-green/10 px-3 py-1.5 rounded-xl mb-3 w-fit">
+            <span>Geser tabel ke samping untuk melihat semua durasi →</span>
+          </div>
 
-        <div className="overflow-x-auto -mx-6 sm:mx-0">
-          <table className="w-full text-left text-xs sm:text-sm border-collapse min-w-[640px]">
-            <thead>
-              <tr className="border-b-2 border-gray-100 text-brand-dark uppercase text-[11px] font-black tracking-wider bg-gray-50">
-                <th className="py-3 px-4">Paket & Layanan</th>
-                <th className="py-3 px-3 text-center">2 Jam</th>
-                <th className="py-3 px-3 text-center">3 Jam</th>
-                <th className="py-3 px-3 text-center">4 Jam</th>
-                <th className="py-3 px-3 text-center">5 Jam</th>
-                <th className="py-3 px-3 text-center">6 Jam</th>
-                <th className="py-3 px-4 text-center">Add. Hour</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100 font-medium">
-              <tr className="hover:bg-gray-50/70 transition-colors">
-                <td className="py-3.5 px-4 font-bold text-brand-dark">
-                  Photobooth Reguler (No Print)
-                  <span className="block text-[10px] text-gray-400 font-normal">Soft file digital QR Code</span>
-                </td>
-                <td className="py-3.5 px-3 text-center text-gray-700">Rp 1.500.000</td>
-                <td className="py-3.5 px-3 text-center text-gray-700">Rp 1.700.000</td>
-                <td className="py-3.5 px-3 text-center text-gray-700">Rp 1.900.000</td>
-                <td className="py-3.5 px-3 text-center text-gray-700">Rp 2.200.000</td>
-                <td className="py-3.5 px-3 text-center text-gray-700">Rp 2.500.000</td>
-                <td className="py-3.5 px-4 text-center text-brand-green font-bold">Rp 600.000/jam</td>
-              </tr>
-              <tr className="bg-brand-green/5 hover:bg-brand-green/10 transition-colors font-semibold">
-                <td className="py-3.5 px-4 font-black text-brand-dark">
-                  <span className="text-brand-green mr-1.5">★</span>
-                  Photobooth Reguler (Print)
-                  <span className="block text-[10px] text-brand-green font-bold">Unlimited Print (Best Deal)</span>
-                </td>
-                <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 2.300.000</td>
-                <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 2.800.000</td>
-                <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 3.500.000</td>
-                <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 4.200.000</td>
-                <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 4.900.000</td>
-                <td className="py-3.5 px-4 text-center text-brand-green font-black">Rp 600.000/jam</td>
-              </tr>
-              <tr className="hover:bg-gray-50/70 transition-colors">
-                <td className="py-3.5 px-4 font-bold text-brand-dark">
-                  Bajaj Photobooth (No Print)
-                  <span className="block text-[10px] text-gray-400 font-normal">Armada Tegoer Keliling • Soft file</span>
-                </td>
-                <td className="py-3.5 px-3 text-center text-gray-700">Rp 1.800.000</td>
-                <td className="py-3.5 px-3 text-center text-gray-700">Rp 2.000.000</td>
-                <td className="py-3.5 px-3 text-center text-gray-700">Rp 2.200.000</td>
-                <td className="py-3.5 px-3 text-center text-gray-700">Rp 2.500.000</td>
-                <td className="py-3.5 px-3 text-center text-gray-700">Rp 2.800.000</td>
-                <td className="py-3.5 px-4 text-center text-brand-green font-bold">Rp 600.000/jam</td>
-              </tr>
-              <tr className="bg-brand-green/5 hover:bg-brand-green/10 transition-colors font-semibold">
-                <td className="py-3.5 px-4 font-black text-brand-dark">
-                  <span className="text-brand-green mr-1.5">★</span>
-                  Bajaj Photobooth (Print)
-                  <span className="block text-[10px] text-brand-green font-bold">Armada Tegoer Keliling • Unlimited Print</span>
-                </td>
-                <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 2.600.000</td>
-                <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 3.100.000</td>
-                <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 3.800.000</td>
-                <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 4.500.000</td>
-                <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 5.200.000</td>
-                <td className="py-3.5 px-4 text-center text-brand-green font-black">Rp 600.000/jam</td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="overflow-x-auto -mx-4 sm:mx-0">
+            <table className="w-full text-left text-xs sm:text-sm border-collapse min-w-[640px]">
+              <thead>
+                <tr className="border-b-2 border-gray-100 text-brand-dark uppercase text-[11px] font-black tracking-wider bg-gray-50">
+                  <th className="py-3 px-4">Paket & Layanan</th>
+                  <th className="py-3 px-3 text-center">2 Jam</th>
+                  <th className="py-3 px-3 text-center">3 Jam</th>
+                  <th className="py-3 px-3 text-center">4 Jam</th>
+                  <th className="py-3 px-3 text-center">5 Jam</th>
+                  <th className="py-3 px-3 text-center">6 Jam</th>
+                  <th className="py-3 px-4 text-center">Add. Hour</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100 font-medium">
+                <tr className="hover:bg-gray-50/70 transition-colors">
+                  <td className="py-3.5 px-4 font-bold text-brand-dark">
+                    Photobooth Reguler (No Print)
+                    <span className="block text-[10px] text-gray-400 font-normal">Soft file digital QR Code</span>
+                  </td>
+                  <td className="py-3.5 px-3 text-center text-gray-700">Rp 1.500.000</td>
+                  <td className="py-3.5 px-3 text-center text-gray-700">Rp 1.700.000</td>
+                  <td className="py-3.5 px-3 text-center text-gray-700">Rp 1.900.000</td>
+                  <td className="py-3.5 px-3 text-center text-gray-700">Rp 2.200.000</td>
+                  <td className="py-3.5 px-3 text-center text-gray-700">Rp 2.500.000</td>
+                  <td className="py-3.5 px-4 text-center text-brand-green font-bold">Rp 600.000/jam</td>
+                </tr>
+                <tr className="bg-brand-green/5 hover:bg-brand-green/10 transition-colors font-semibold">
+                  <td className="py-3.5 px-4 font-black text-brand-dark">
+                    <span className="text-brand-green mr-1.5">★</span>
+                    Photobooth Reguler (Print)
+                    <span className="block text-[10px] text-brand-green font-bold">Unlimited Print (Best Deal)</span>
+                  </td>
+                  <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 2.300.000</td>
+                  <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 2.800.000</td>
+                  <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 3.500.000</td>
+                  <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 4.200.000</td>
+                  <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 4.900.000</td>
+                  <td className="py-3.5 px-4 text-center text-brand-green font-black">Rp 600.000/jam</td>
+                </tr>
+                <tr className="hover:bg-gray-50/70 transition-colors">
+                  <td className="py-3.5 px-4 font-bold text-brand-dark">
+                    Bajaj Photobooth (No Print)
+                    <span className="block text-[10px] text-gray-400 font-normal">Armada Tegoer Keliling • Soft file</span>
+                  </td>
+                  <td className="py-3.5 px-3 text-center text-gray-700">Rp 1.800.000</td>
+                  <td className="py-3.5 px-3 text-center text-gray-700">Rp 2.000.000</td>
+                  <td className="py-3.5 px-3 text-center text-gray-700">Rp 2.200.000</td>
+                  <td className="py-3.5 px-3 text-center text-gray-700">Rp 2.500.000</td>
+                  <td className="py-3.5 px-3 text-center text-gray-700">Rp 2.800.000</td>
+                  <td className="py-3.5 px-4 text-center text-brand-green font-bold">Rp 600.000/jam</td>
+                </tr>
+                <tr className="bg-brand-green/5 hover:bg-brand-green/10 transition-colors font-semibold">
+                  <td className="py-3.5 px-4 font-black text-brand-dark">
+                    <span className="text-brand-green mr-1.5">★</span>
+                    Bajaj Photobooth (Print)
+                    <span className="block text-[10px] text-brand-green font-bold">Armada Tegoer Keliling • Unlimited Print</span>
+                  </td>
+                  <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 2.600.000</td>
+                  <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 3.100.000</td>
+                  <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 3.800.000</td>
+                  <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 4.500.000</td>
+                  <td className="py-3.5 px-3 text-center text-brand-dark font-bold">Rp 5.200.000</td>
+                  <td className="py-3.5 px-4 text-center text-brand-green font-black">Rp 600.000/jam</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
       {/* ─── Interactive Extra Hours & Custom Duration Calculator ── */}
-      <div className="rounded-3xl border border-brand-green/30 bg-gradient-to-br from-brand-sky/20 via-white to-brand-green/10 p-6 sm:p-10 shadow-xs">
-        <div className="max-w-2xl mb-8">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green bg-brand-green/10 px-2.5 py-0.5 rounded-full border border-brand-green/20">
-              Interactive Estimator
-            </span>
-            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">
-              Rp 600.000 / Jam Tambahan
-            </span>
+      <div className="rounded-2xl sm:rounded-3xl border border-brand-green/30 bg-gradient-to-br from-brand-sky/20 via-white to-brand-green/10 p-4 sm:p-10 shadow-xs">
+        <div
+          onClick={() => setShowCalcMobile((prev) => !prev)}
+          className="flex items-center justify-between gap-3 cursor-pointer md:cursor-default select-none"
+        >
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green bg-brand-green/10 px-2.5 py-0.5 rounded-full border border-brand-green/20">
+                Interactive Estimator
+              </span>
+              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+                Rp 600rb / Jam Tambahan
+              </span>
+            </div>
+            <h3 className="text-base sm:text-3xl font-black text-brand-dark tracking-tight">
+              Kalkulator Tambahan Jam & Durasi Kustom
+            </h3>
+            <p className="hidden sm:block mt-2 text-xs sm:text-sm text-gray-600 font-medium leading-relaxed">
+              Punya jadwal acara panjang lebih dari 6 jam atau ingin menambah durasi operasional photobooth?
+              Hitung perkiraan biaya secara akurat dan transparan di bawah ini.
+            </p>
           </div>
-          <h3 className="text-2xl sm:text-3xl font-black text-brand-dark tracking-tight">
-            Kalkulator Tambahan Jam & Durasi Kustom
-          </h3>
-          <p className="mt-2 text-xs sm:text-sm text-gray-600 font-medium leading-relaxed">
-            Punya jadwal acara panjang lebih dari 6 jam atau ingin menambah durasi operasional photobooth?
-            Hitung perkiraan biaya secara akurat dan transparan di bawah ini.
-          </p>
+
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <button
+              type="button"
+              className="md:hidden text-xs font-bold px-3 py-1.5 rounded-xl bg-brand-green text-white shadow-xs cursor-pointer"
+              aria-label={showCalcMobile ? "Tutup kalkulator" : "Buka kalkulator"}
+            >
+              {showCalcMobile ? "Tutup ▲" : "Buka Kalkulator ▼"}
+            </button>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Kolom Kiri: Input Pilihan (7 cols) */}
-          <div className="lg:col-span-7 bg-white rounded-2xl p-5 sm:p-7 border border-gray-200/80 shadow-xs space-y-6">
+        {/* Calculator Body: hidden on mobile unless toggled, always block on md+ */}
+        <div className={showCalcMobile ? "block mt-5 sm:mt-8" : "hidden md:block md:mt-8"}>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+            {/* Kolom Kiri: Input Pilihan (7 cols) */}
+            <div className="lg:col-span-7 bg-white rounded-2xl p-4 sm:p-7 border border-gray-200/80 shadow-xs space-y-5 sm:space-y-6">
             {/* 1. Pilih Paket Dasar */}
             <div>
               <label className="block text-xs font-black uppercase tracking-wider text-brand-dark mb-2.5">
@@ -846,11 +921,41 @@ export default function PhotoboothPricing({
           </div>
         </div>
       </div>
+    </div>
 
       {/* ─── Interactive Backdrop & Layout Overlay Showcase ──────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Pilihan Backdrop Interaktif (Kiri 6 col) */}
-        <div className="lg:col-span-6 rounded-3xl border border-gray-200 bg-white p-6 sm:p-8 space-y-6">
+      <div>
+        {/* Mobile Segmented Control for Showcase */}
+        <div className="lg:hidden flex items-center gap-1.5 p-1 bg-gray-100 rounded-2xl mb-4">
+          <button
+            type="button"
+            onClick={() => setShowcaseTabMobile("backdrop")}
+            className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+              showcaseTabMobile === "backdrop"
+                ? "bg-white text-brand-dark shadow-xs"
+                : "text-gray-500 hover:text-brand-dark"
+            }`}
+          >
+            🎨 Warna Backdrop ({photoboothBackdrops.length})
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowcaseTabMobile("layout")}
+            className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+              showcaseTabMobile === "layout"
+                ? "bg-white text-brand-dark shadow-xs"
+                : "text-gray-500 hover:text-brand-dark"
+            }`}
+          >
+            🖼️ Layout STRIP & 4R
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+          {/* Pilihan Backdrop Interaktif (Kiri 6 col) */}
+          <div className={`lg:col-span-6 rounded-2xl sm:rounded-3xl border border-gray-200 bg-white p-5 sm:p-8 space-y-5 sm:space-y-6 ${
+            showcaseTabMobile === "backdrop" ? "block" : "hidden lg:block"
+          }`}>
           <div className="flex items-start justify-between gap-4">
             <div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green block">
@@ -930,7 +1035,9 @@ export default function PhotoboothPricing({
         </div>
 
         {/* Pilihan Layout Overlay (Kanan 6 col) */}
-        <div className="lg:col-span-6 rounded-3xl border border-gray-200 bg-white p-6 sm:p-8 space-y-6">
+        <div className={`lg:col-span-6 rounded-2xl sm:rounded-3xl border border-gray-200 bg-white p-5 sm:p-8 space-y-5 sm:space-y-6 ${
+          showcaseTabMobile === "layout" ? "block" : "hidden lg:block"
+        }`}>
           <div className="flex items-start justify-between gap-4">
             <div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green block">
@@ -1060,6 +1167,7 @@ export default function PhotoboothPricing({
           </button>
         </div>
       </div>
+    </div>
 
       {/* ─── Template Preview Modal ─────────────────────────────── */}
       {previewTemplateModal && (
@@ -1143,66 +1251,68 @@ export default function PhotoboothPricing({
       )}
 
       {/* ─── 6 Keunggulan Photobooth Tegoer Sapa ─────────────────── */}
-      <div className="rounded-3xl border border-gray-200 bg-gray-50/70 p-6 sm:p-10">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="text-brand-green text-xs font-bold tracking-[0.2em] uppercase">
+      <div className="rounded-2xl sm:rounded-3xl border border-gray-200 bg-gray-50/70 p-5 sm:p-10">
+        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
+          <span className="text-brand-green text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase">
             Mengapa Memilih Kami
           </span>
-          <h3 className="mt-2 text-2xl sm:text-3xl font-black text-brand-dark tracking-tight">
+          <h3 className="mt-1 sm:mt-2 text-xl sm:text-3xl font-black text-brand-dark tracking-tight">
             Kenapa Photobooth Tegoer Sapa?
           </h3>
-          <p className="mt-2 text-sm text-gray-500 font-medium">
+          <p className="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-500 font-medium">
             Kualitas visual prima dan pengalaman interaktif yang meninggalkan kesan mendalam untuk para tamu.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
           {photoboothAdvantages.map((adv, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-2xl bg-white border border-gray-100 shadow-xs hover:border-brand-green/30 transition-all"
+              className="p-3.5 sm:p-6 rounded-xl sm:rounded-2xl bg-white border border-gray-100 shadow-xs hover:border-brand-green/30 transition-all flex flex-col justify-between"
             >
-              <div className="w-10 h-10 rounded-xl bg-brand-green/10 flex items-center justify-center mb-4">
-                <span className="text-sm font-black text-brand-green tracking-wider">
-                  0{idx + 1}
-                </span>
+              <div>
+                <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-brand-green/10 flex items-center justify-center mb-2.5 sm:mb-4">
+                  <span className="text-xs sm:text-sm font-black text-brand-green tracking-wider">
+                    0{idx + 1}
+                  </span>
+                </div>
+                <h4 className="text-xs sm:text-base font-bold text-brand-dark mb-1 sm:mb-2 line-clamp-2">
+                  {adv.title}
+                </h4>
+                <p className="text-[11px] sm:text-sm text-gray-500 leading-relaxed font-medium line-clamp-3 sm:line-clamp-none">
+                  {adv.desc}
+                </p>
               </div>
-              <h4 className="text-base font-bold text-brand-dark mb-2">
-                {adv.title}
-              </h4>
-              <p className="text-xs sm:text-sm text-gray-500 leading-relaxed font-medium">
-                {adv.desc}
-              </p>
             </div>
           ))}
         </div>
       </div>
 
       {/* ─── Catatan Order & Ketentuan Payment ──────────────────── */}
-      <div className="rounded-3xl border border-brand-green/30 bg-white p-6 sm:p-10 shadow-sm">
-        <div className="max-w-2xl mb-8">
+      <div className="rounded-2xl sm:rounded-3xl border border-brand-green/30 bg-white p-5 sm:p-10 shadow-xs">
+        <div className="max-w-2xl mb-5 sm:mb-8">
           <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green block">
             Informasi Reservasi
           </span>
-          <h3 className="text-2xl sm:text-3xl font-black text-brand-dark mt-1">
+          <h3 className="text-xl sm:text-3xl font-black text-brand-dark mt-1">
             Catatan untuk Form Order & Payment
           </h3>
-          <p className="mt-2 text-sm text-gray-600 font-medium">
+          <p className="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600 font-medium">
             Panduan alur pemesanan dan ketentuan pembayaran jasa Photobooth Tegoer Sapa.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {photoboothOrderTerms.map((term) => (
             <div
               key={term.no}
-              className="p-6 rounded-2xl bg-gray-50/80 border border-gray-100 flex flex-col justify-between"
+              className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-gray-50/80 border border-gray-100 flex flex-col justify-between"
             >
               <div>
-                <span className="text-2xl font-black text-brand-green/40 block mb-2 font-mono">
+                <span className="text-xl sm:text-2xl font-black text-brand-green/40 block mb-1.5 sm:mb-2 font-mono">
                   {term.no}
                 </span>
-                <h4 className="text-base font-bold text-brand-dark mb-2">
+                <h4 className="text-sm sm:text-base font-bold text-brand-dark mb-1.5 sm:mb-2">
                   {term.title}
                 </h4>
                 <p className="text-xs text-gray-600 leading-relaxed font-medium">
