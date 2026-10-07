@@ -15,13 +15,47 @@ interface PhotoboothPricingProps {
   showCategoryHeader?: boolean;
 }
 
-const DURATIONS = [
-  { label: "2 Jam", idx: 0 },
-  { label: "3 Jam", idx: 1, popular: true },
-  { label: "4 Jam", idx: 2 },
-  { label: "5 Jam", idx: 3 },
-  { label: "6 Jam", idx: 4 },
+const BASE_PRESETS = [
+  { hours: 2, label: "2 Jam" },
+  { hours: 3, label: "3 Jam", popular: true },
+  { hours: 4, label: "4 Jam" },
+  { hours: 5, label: "5 Jam" },
+  { hours: 6, label: "6 Jam" },
+  { hours: 7, label: "7 Jam" },
+  { hours: 8, label: "8 Jam" },
 ];
+
+function getPackagePricing(pkg: PhotoboothPackage, hours: number) {
+  const exactTier = pkg.durations.find((d) => d.hours === hours);
+  if (exactTier) {
+    return {
+      hours,
+      durationLabel: `${hours} Jam`,
+      harga: exactTier.harga,
+      numericPrice: exactTier.numericPrice,
+      extraHours: 0,
+      extraCost: 0,
+    };
+  }
+
+  // Jika durasi melebihi tier dasar (6 jam), hitung jam tambahan
+  const base6 =
+    pkg.durations.find((d) => d.hours === 6) ||
+    pkg.durations[pkg.durations.length - 1];
+  const extraHours = Math.max(0, hours - 6);
+  const extraCost = extraHours * (pkg.additionalHourNumeric || 600000);
+  const totalNumeric = (base6?.numericPrice || 0) + extraCost;
+  const formattedHarga = `Rp ${totalNumeric.toLocaleString("id-ID")}`;
+
+  return {
+    hours,
+    durationLabel: `${hours} Jam`,
+    harga: formattedHarga,
+    numericPrice: totalNumeric,
+    extraHours,
+    extraCost,
+  };
+}
 
 export default function PhotoboothPricing({
   sourceUrl = "/pricelist",
@@ -33,8 +67,8 @@ export default function PhotoboothPricing({
   // Kategori: "all" (semua), "regular" (photobooth biasa), "bajaj" (bajaj keliling)
   const [activeCategory, setActiveCategory] = useState<"all" | "regular" | "bajaj">("all");
 
-  // Durasi serentak (default: index 1 -> 3 Jam, paling diminati)
-  const [durationIdx, setDurationIdx] = useState<number>(1);
+  // Durasi acara dalam jam (default: 3 Jam, paling diminati)
+  const [selectedHours, setSelectedHours] = useState<number>(3);
 
   // Filter paket berdasarkan kategori yang dipilih
   const filteredPackages = photoboothPackages.filter((pkg) => {
@@ -87,8 +121,8 @@ export default function PhotoboothPricing({
         </div>
       )}
 
-      {/* ─── Selector Durasi Acara (Tersinkronisasi & Simpel) ──────── */}
-      <div className="bg-brand-cream/50 border border-brand-green/20 p-3 sm:p-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      {/* ─── Selector Durasi Acara (Tersinkronisasi & Fleksibel) ───── */}
+      <div className="bg-brand-cream/50 border border-brand-green/20 p-3 sm:p-4 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-brand-green/10 text-brand-dark flex items-center justify-center shrink-0" aria-hidden="true">
             <svg className="w-4 h-4 text-brand-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
@@ -97,41 +131,83 @@ export default function PhotoboothPricing({
             </svg>
           </div>
           <div>
-            <span className="text-xs sm:text-sm font-black text-brand-dark block">
-              Pilih Durasi Acara
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs sm:text-sm font-black text-brand-dark block">
+                Pilih Durasi Acara
+              </span>
+              {selectedHours > 6 && (
+                <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-brand-green text-white shadow-xs">
+                  +{selectedHours - 6} Jam Tambahan
+                </span>
+              )}
+            </div>
             <span className="text-[11px] text-gray-500 font-medium">
-              Harga di bawah otomatis menyesuaikan durasi yang Anda pilih.
+              Harga otomatis disesuaikan (tersedia 2 s/d 12 jam operasional).
             </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5 sm:pb-0">
-          {DURATIONS.map((d) => (
-            <button
-              key={d.label}
-              type="button"
-              onClick={() => setDurationIdx(d.idx)}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all cursor-pointer ${
-                durationIdx === d.idx
-                  ? "bg-brand-dark text-white shadow-sm ring-2 ring-brand-green/30 scale-102"
-                  : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-100"
-              }`}
-            >
-              <span>{d.label}</span>
-              {d.popular && (
-                <span
-                  className={`text-[9px] font-black uppercase tracking-wider px-1.5 py-0.2 rounded-md ${
-                    durationIdx === d.idx
-                      ? "bg-brand-green text-white"
-                      : "bg-brand-green/15 text-brand-dark"
-                  }`}
-                >
-                  Favorit
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-0.5 md:pb-0">
+          <div className="flex items-center gap-1.5 shrink-0">
+            {BASE_PRESETS.map((d) => (
+              <button
+                key={d.hours}
+                type="button"
+                onClick={() => setSelectedHours(d.hours)}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all cursor-pointer ${
+                  selectedHours === d.hours
+                    ? "bg-brand-dark text-white shadow-sm ring-2 ring-brand-green/30 scale-102"
+                    : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-100"
+                }`}
+              >
+                <span>{d.label}</span>
+                {d.popular && (
+                  <span
+                    className={`text-[9px] font-black uppercase tracking-wider px-1.5 py-0.2 rounded-md ${
+                      selectedHours === d.hours
+                        ? "bg-brand-green text-white"
+                        : "bg-brand-green/15 text-brand-dark"
+                    }`}
+                  >
+                    Favorit
+                  </span>
+                )}
+              </button>
+            ))}
+
+            {selectedHours > 8 && (
+              <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-extrabold bg-brand-dark text-white shadow-sm ring-2 ring-brand-green/30 scale-102 whitespace-nowrap">
+                <span>{selectedHours} Jam</span>
+                <span className="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.2 rounded-md bg-brand-green text-white">
+                  Kustom
                 </span>
-              )}
+              </span>
+            )}
+          </div>
+
+          {/* Stepper Tambah/Kurangi Jam */}
+          <div className="flex items-center gap-1 pl-2 border-l border-brand-green/20 shrink-0">
+            <button
+              type="button"
+              onClick={() => setSelectedHours((prev) => Math.max(2, prev - 1))}
+              disabled={selectedHours <= 2}
+              className="w-8 h-8 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-black text-sm cursor-pointer"
+              title="Kurangi 1 jam"
+              aria-label="Kurangi 1 jam"
+            >
+              −
             </button>
-          ))}
+            <button
+              type="button"
+              onClick={() => setSelectedHours((prev) => Math.min(12, prev + 1))}
+              disabled={selectedHours >= 12}
+              className="inline-flex items-center gap-1 px-2.5 h-8 rounded-xl bg-brand-green hover:bg-brand-green/90 text-white font-extrabold text-xs transition-all shadow-xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+              title="Tambah 1 jam operasional"
+            >
+              <span className="text-sm font-black">+</span>
+              <span className="hidden sm:inline">Tambah Jam</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -144,13 +220,13 @@ export default function PhotoboothPricing({
         }`}
       >
         {filteredPackages.map((pkg: PhotoboothPackage) => {
-          const currentTier = pkg.durations[durationIdx] || pkg.durations[1];
+          const pricing = getPackagePricing(pkg, selectedHours);
           const isPrint = pkg.type === "print";
           const isSelected = selectedPackage?.id === pkg.id;
 
           // Template WhatsApp resmi
           const waMessage = encodeURIComponent(
-            `Halo kak Mau booking Photobooth Tegoer Sapa\n\nNama           : \nTanggal & Waktu: \nLokasi Acara   : \nInstagram      : \nPaket          : ${pkg.nama} (${currentTier.duration} - ${currentTier.harga})\n\nMohon info ketersediaan slot jadwalnya. Terima kasih!`
+            `Halo kak Mau booking Photobooth Tegoer Sapa\n\nNama           : \nTanggal & Waktu: \nLokasi Acara   : \nInstagram      : \nPaket          : ${pkg.nama} (${pricing.durationLabel}${pricing.extraHours > 0 ? ` [Paket 6 Jam + ${pricing.extraHours} Jam Tambahan]` : ""} - ${pricing.harga})\n\nMohon info ketersediaan slot jadwalnya. Terima kasih!`
           );
           const waLink = `https://api.whatsapp.com/send?phone=${waNumber}&text=${waMessage}`;
 
@@ -200,11 +276,20 @@ export default function PhotoboothPricing({
 
                 {/* Harga Utama */}
                 <div className="my-4 pt-3 border-t border-gray-100">
-                  <span className="text-2xl sm:text-3xl font-black text-brand-dark tracking-tight block">
-                    {currentTier.harga}
-                  </span>
-                  <span className="text-[11px] font-bold text-brand-green">
-                    Durasi {currentTier.duration} operasional
+                  <div className="flex items-baseline justify-between gap-2">
+                    <span className="text-2xl sm:text-3xl font-black text-brand-dark tracking-tight block">
+                      {pricing.harga}
+                    </span>
+                    {pricing.extraHours > 0 && (
+                      <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-brand-green/15 text-brand-dark border border-brand-green/20 shrink-0">
+                        +{pricing.extraHours} Jam Extra
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-[11px] font-bold text-brand-green block mt-0.5">
+                    {pricing.extraHours > 0
+                      ? `Durasi ${pricing.hours} Jam (Paket 6 Jam + ${pricing.extraHours} Jam Tambahan)`
+                      : `Durasi ${pricing.hours} Jam operasional`}
                   </span>
                 </div>
 
@@ -261,10 +346,15 @@ export default function PhotoboothPricing({
                     selectPackage(
                       {
                         id: pkg.id,
-                        nama: `${pkg.nama} (${currentTier.duration})`,
-                        harga: currentTier.harga,
+                        nama: `${pkg.nama} (${pricing.durationLabel}${pricing.extraHours > 0 ? ` + ${pricing.extraHours} Jam Extra` : ""})`,
+                        harga: pricing.harga,
                         kategori: pkg.category,
-                        fitur: pkg.fitur,
+                        fitur: [
+                          ...pkg.fitur,
+                          pricing.extraHours > 0
+                            ? `Durasi Operasional ${pricing.hours} Jam (Termasuk ${pricing.extraHours} Jam Tambahan)`
+                            : `Durasi Operasional ${pricing.hours} Jam`,
+                        ],
                       },
                       sourceUrl
                     );
@@ -279,16 +369,72 @@ export default function PhotoboothPricing({
         })}
       </div>
 
-      {/* ─── Catatan Tambahan Waktu (Jelas & Ringkas) ─────────────── */}
-      <div className="p-3.5 sm:p-4 rounded-2xl bg-gray-50 border border-gray-200/80 flex flex-col sm:flex-row items-center justify-center gap-2 text-center text-xs text-gray-600 font-medium">
-        <svg className="w-4 h-4 text-brand-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
-          <circle cx="12" cy="12" r="9" />
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
-        </svg>
-        <div>
-          <span>Butuh waktu lebih dari 6 jam? </span>
-          <strong className="text-brand-dark">Biaya tambahan waktu: Rp 600.000 / jam</strong>
-          <span> untuk semua jenis paket.</span>
+      {/* ─── Kontrol & Catatan Tambahan Waktu ─────────────── */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-brand-cream/60 via-white to-brand-cream/60 border border-brand-green/25 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex items-start sm:items-center gap-3 text-left">
+          <div className="w-9 h-9 rounded-xl bg-brand-green/15 text-brand-dark flex items-center justify-center shrink-0">
+            <svg className="w-5 h-5 text-brand-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+              <circle cx="12" cy="12" r="9" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
+            </svg>
+          </div>
+          <div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs sm:text-sm font-black text-brand-dark">
+                Butuh Waktu Lebih Panjang?
+              </span>
+              <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-brand-green/15 text-brand-dark border border-brand-green/20">
+                +Rp 600.000 / Jam
+              </span>
+            </div>
+            <p className="text-[11px] sm:text-xs text-gray-600 mt-0.5">
+              {selectedHours > 6 ? (
+                <span>
+                  Durasi saat ini: <strong className="text-brand-dark">{selectedHours} Jam</strong> (Paket 6 Jam + <strong>{selectedHours - 6} Jam tambahan</strong> senilai <strong>Rp {((selectedHours - 6) * 600000).toLocaleString("id-ID")}</strong>).
+                </span>
+              ) : (
+                <span>
+                  Perpanjangan waktu tersedia langsung untuk semua paket. Klik tombol tambah jam untuk menyesuaikan durasi acara Anda.
+                </span>
+              )}
+            </p>
+          </div>
+        </div>
+
+        {/* Stepper Tambahan Jam */}
+        <div className="flex items-center gap-2 self-stretch sm:self-auto justify-end shrink-0">
+          {selectedHours > 6 && (
+            <button
+              type="button"
+              onClick={() => setSelectedHours(3)}
+              className="text-[11px] font-bold text-gray-500 hover:text-brand-dark px-2.5 py-1.5 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer"
+            >
+              Reset ke 3 Jam
+            </button>
+          )}
+          <div className="inline-flex items-center gap-1.5 p-1 bg-white rounded-xl border border-gray-200 shadow-2xs">
+            <button
+              type="button"
+              onClick={() => setSelectedHours((prev) => Math.max(2, prev - 1))}
+              disabled={selectedHours <= 2}
+              className="w-8 h-8 rounded-lg bg-gray-50 hover:bg-gray-100 text-gray-700 flex items-center justify-center font-black text-sm disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
+              aria-label="Kurangi durasi 1 jam"
+            >
+              −
+            </button>
+            <span className="px-3 text-xs font-black text-brand-dark min-w-[70px] text-center">
+              {selectedHours} Jam
+            </span>
+            <button
+              type="button"
+              onClick={() => setSelectedHours((prev) => Math.min(12, prev + 1))}
+              disabled={selectedHours >= 12}
+              className="w-8 h-8 rounded-lg bg-brand-green hover:bg-brand-green/90 text-white flex items-center justify-center font-black text-sm disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-2xs cursor-pointer"
+              aria-label="Tambah durasi 1 jam"
+            >
+              +
+            </button>
+          </div>
         </div>
       </div>
 
