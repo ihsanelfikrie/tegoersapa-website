@@ -3,86 +3,41 @@
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap";
 import { navLinks, navCta, brand } from "@/lib/content";
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 
 /**
  * Navbar global — sesuai Bagian 5 AGENT.md.
- * - Responsive: hamburger menu di mobile (animasi GSAP timeline)
+ * - Responsive: hamburger menu di mobile (animasi CSS GPU snappier & smooth)
+ * - Accordion ringkas di mobile tanpa teks deskripsi panjang
  * - Active state via usePathname()
  * - next/link untuk semua navigasi internal
  * - Link eksternal (WhatsApp CTA) pakai rel="noopener noreferrer"
- * - Navbar shrink/glass saat scroll (ScrollTrigger toggleClass)
  */
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-
-  // Refs untuk elemen animasi
   const navbarRef = useRef<HTMLElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const hamburgerTopRef = useRef<HTMLSpanElement>(null);
-  const hamburgerMidRef = useRef<HTMLSpanElement>(null);
-  const hamburgerBotRef = useRef<HTMLSpanElement>(null);
-  const menuTlRef = useRef<gsap.core.Timeline | null>(null);
 
-  // Tutup mobile menu saat route berubah
-  const [prevPathname, setPrevPathname] = useState(pathname);
-  if (prevPathname !== pathname) {
-    setPrevPathname(pathname);
+  // Accordion sub-menu aktif di mobile (auto-expand jika sedang di rute terkait)
+  const [expandedSubMenu, setExpandedSubMenu] = useState<string | null>(() => {
+    if (pathname.startsWith("/photography")) return "Photography";
+    if (pathname.startsWith("/photobooth")) return "Photobooth";
+    return null;
+  });
+
+  // Reset menu & update default accordion saat navigasi berpindah
+  useEffect(() => {
     setIsOpen(false);
-  }
-
-  // GSAP: hamburger ↔ X animation + slide-down menu
-  useGSAP(
-    () => {
-      const menu = mobileMenuRef.current;
-      if (!menu) return;
-
-      // Set awal: menu tersembunyi
-      gsap.set(menu, { height: 0, opacity: 0, overflow: "hidden" });
-
-      const tl = gsap.timeline({ paused: true });
-
-      // Animasi hamburger → X
-      tl.to(hamburgerTopRef.current, { y: 8, rotate: 45, duration: 0.25, ease: "power2.inOut" }, 0)
-        .to(hamburgerMidRef.current, { opacity: 0, duration: 0.15 }, 0)
-        .to(hamburgerBotRef.current, { y: -8, rotate: -45, duration: 0.25, ease: "power2.inOut" }, 0);
-
-      // Slide-down menu dengan stagger pada link
-      tl.to(
-        menu,
-        { height: "auto", opacity: 1, duration: 0.35, ease: "power3.out" },
-        0.1,
-      );
-
-      tl.fromTo(
-        menu.querySelectorAll("a, button"),
-        { y: -12, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.06, duration: 0.3, ease: "power2.out" },
-        0.2,
-      );
-
-      menuTlRef.current = tl;
-    },
-    { scope: navbarRef },
-  );
-
-
-  // Toggle menu open/close
-  function toggleMenu() {
-    const tl = menuTlRef.current;
-    if (!tl) return;
-    if (isOpen) {
-      tl.reverse();
+    if (pathname.startsWith("/photography")) {
+      setExpandedSubMenu("Photography");
+    } else if (pathname.startsWith("/photobooth")) {
+      setExpandedSubMenu("Photobooth");
     } else {
-      tl.play();
+      setExpandedSubMenu(null);
     }
-    setIsOpen((prev) => !prev);
-  }
+  }, [pathname]);
 
   // Keyboard accessibility (Escape) dan Outside Click untuk menutup mobile menu
   useEffect(() => {
@@ -90,16 +45,12 @@ export default function Navbar() {
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        const tl = menuTlRef.current;
-        if (tl) tl.reverse();
         setIsOpen(false);
       }
     };
 
     const handleClickOutside = (e: MouseEvent) => {
       if (navbarRef.current && !navbarRef.current.contains(e.target as Node)) {
-        const tl = menuTlRef.current;
-        if (tl) tl.reverse();
         setIsOpen(false);
       }
     };
@@ -305,106 +256,168 @@ export default function Navbar() {
 
             {/* Hamburger — mobile */}
             <button
-              onClick={toggleMenu}
+              onClick={() => setIsOpen((prev) => !prev)}
               aria-label={isOpen ? "Tutup menu" : "Buka menu"}
               aria-expanded={isOpen}
               aria-controls="mobile-menu"
               id="navbar-hamburger"
-              className={[
-                "md:hidden flex flex-col justify-center items-center w-11 h-11 gap-0 p-2 rounded-full border border-b-[3px] transition-colors duration-200",
-                isDarkNav
-                  ? "bg-white/10 border-white/20 border-b-white/30 text-white"
-                  : "bg-white border-gray-200 border-b-gray-300 text-brand-dark",
-              ].join(" ")}
+              className="md:hidden flex flex-col justify-center items-center w-11 h-11 rounded-full border border-gray-200 border-b-[3px] border-b-gray-300 bg-white text-brand-dark transition-all duration-200 active:scale-95 shadow-sm"
             >
               <span
-                ref={hamburgerTopRef}
                 className={[
-                  "block w-6 h-0.5 rounded-full mb-1.5 transition-colors duration-200",
-                  isDarkNav ? "bg-white" : "bg-brand-dark",
+                  "block w-5 h-0.5 rounded-full bg-brand-dark transition-all duration-200 ease-out origin-center",
+                  isOpen ? "translate-y-[6px] rotate-45" : "mb-1",
                 ].join(" ")}
               />
               <span
-                ref={hamburgerMidRef}
                 className={[
-                  "block w-6 h-0.5 rounded-full mb-1.5 transition-colors duration-200",
-                  isDarkNav ? "bg-white" : "bg-brand-dark",
+                  "block w-5 h-0.5 rounded-full bg-brand-dark transition-all duration-150 ease-out",
+                  isOpen ? "opacity-0 scale-x-0" : "mb-1 opacity-100",
                 ].join(" ")}
               />
               <span
-                ref={hamburgerBotRef}
                 className={[
-                  "block w-6 h-0.5 rounded-full transition-colors duration-200",
-                  isDarkNav ? "bg-white" : "bg-brand-dark",
+                  "block w-5 h-0.5 rounded-full bg-brand-dark transition-all duration-200 ease-out origin-center",
+                  isOpen ? "-translate-y-[6px] -rotate-45" : "",
                 ].join(" ")}
               />
             </button>
           </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile menu — ringkas, cepat, dan smooth */}
         <div
-          ref={mobileMenuRef}
           id="mobile-menu"
-          style={{ display: isOpen ? "block" : "none" }}
-          className={[
-            "pointer-events-auto md:hidden overflow-hidden mt-2 rounded-3xl max-h-[80vh] overflow-y-auto no-scrollbar shadow-2xl transition-colors duration-200",
-            isDarkNav
-              ? "bg-[#002716]/95 backdrop-blur-xl border border-white/15 text-white"
-              : "bg-white/95 backdrop-blur-xl border border-gray-200 text-gray-800",
-          ].join(" ")}
           aria-hidden={!isOpen}
+          className={[
+            "pointer-events-auto md:hidden overflow-hidden mt-2 rounded-3xl max-h-[82vh] overflow-y-auto no-scrollbar shadow-2xl transition-all duration-200 ease-out origin-top",
+            "bg-white/95 backdrop-blur-xl border border-gray-200/90 text-gray-800",
+            isOpen
+              ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
+              : "opacity-0 -translate-y-2 scale-[0.98] pointer-events-none invisible",
+          ].join(" ")}
         >
-          <div className="px-4 pt-3 pb-5 flex flex-col gap-1">
+          <div className="px-3.5 pt-3 pb-4 flex flex-col gap-1">
             {navLinks.map((link) => {
               const active = isActive(link.href);
               const hasSub = Boolean(link.subItems && link.subItems.length > 0);
+              const isExpanded = expandedSubMenu === link.label;
 
               return (
                 <div key={link.href} className="flex flex-col">
-                  <div className="flex items-center justify-between">
+                  {hasSub ? (
+                    <div className="flex items-center justify-between rounded-xl hover:bg-gray-100/70 transition-colors">
+                      <Link
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className={[
+                          "flex-1 px-3.5 py-2.5 rounded-xl text-sm font-semibold tracking-wide transition-colors duration-150 flex items-center min-h-[42px]",
+                          active
+                            ? "bg-brand-green/20 text-brand-green font-bold"
+                            : "text-gray-700 hover:text-brand-dark",
+                        ].join(" ")}
+                        aria-current={active ? "page" : undefined}
+                      >
+                        {link.label}
+                      </Link>
+
+                      {/* Accordion toggle button */}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setExpandedSubMenu(isExpanded ? null : link.label);
+                        }}
+                        aria-label={`${isExpanded ? "Tutup" : "Buka"} sub-layanan ${link.label}`}
+                        aria-expanded={isExpanded}
+                        className={[
+                          "mr-1 px-2.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-150 flex items-center gap-1.5",
+                          isExpanded
+                            ? "bg-brand-green/15 text-brand-green"
+                            : "bg-gray-100 text-gray-600 hover:text-brand-dark hover:bg-gray-200/70",
+                        ].join(" ")}
+                      >
+                        <span className="text-[10px] font-bold text-brand-green">
+                          {link.subItems?.length}
+                        </span>
+                        <svg
+                          className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                            isExpanded ? "rotate-180 text-brand-green" : "text-gray-400"
+                          }`}
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2.5}
+                          aria-hidden="true"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                    </div>
+                  ) : (
                     <Link
                       href={link.href}
                       onClick={() => setIsOpen(false)}
                       className={[
-                        "flex-1 px-4 py-3 rounded-xl text-sm font-semibold tracking-wide transition-colors duration-150 min-h-[44px] flex items-center",
+                        "w-full px-3.5 py-2.5 rounded-xl text-sm font-semibold tracking-wide transition-colors duration-150 flex items-center justify-between min-h-[42px]",
                         active
                           ? "bg-brand-green/20 text-brand-green font-bold"
-                          : isDarkNav
-                          ? "text-white/90 hover:text-white hover:bg-white/10"
                           : "text-gray-700 hover:text-brand-dark hover:bg-gray-100/70",
                       ].join(" ")}
                       aria-current={active ? "page" : undefined}
                     >
-                      {link.label}
+                      <span>{link.label}</span>
+                      {link.href === "/links" && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-green text-white tracking-wider">
+                          BIO
+                        </span>
+                      )}
                     </Link>
-                  </div>
+                  )}
 
-                  {/* Sub-items in mobile menu */}
+                  {/* Sub-items accordion with smooth CSS grid transition */}
                   {hasSub && (
-                    <div className="pl-4 pr-1 py-1 space-y-1 mb-1 border-l-2 border-brand-green/30 ml-4 my-1">
-                      {link.subItems?.map((sub) => {
-                        const isSubActive = pathname === sub.href;
-
-                        return (
+                    <div
+                      className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out ${
+                        isExpanded
+                          ? "grid-rows-[1fr] opacity-100 my-1"
+                          : "grid-rows-[0fr] opacity-0 my-0 pointer-events-none"
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <div className="pl-3.5 pr-1 py-1 space-y-1 border-l-2 border-brand-green/30 ml-4 my-0.5">
                           <Link
-                            key={`${sub.label}-${sub.href}`}
-                            href={sub.href}
+                            href={link.href}
                             onClick={() => setIsOpen(false)}
-                            className={[
-                              "block px-3 py-2 rounded-lg text-xs font-medium transition-colors duration-150",
-                              isSubActive
-                                ? "bg-brand-green/15 text-brand-green font-bold"
-                                : isDarkNav
-                                ? "text-white/70 hover:text-brand-green hover:bg-white/5"
-                                : "text-gray-600 hover:text-brand-green hover:bg-gray-50",
-                            ].join(" ")}
+                            className="flex items-center justify-between px-3 py-1.5 rounded-lg text-xs font-bold text-brand-green bg-brand-green/10 hover:bg-brand-green/20 transition-colors"
                           >
-                            <span className="font-semibold block">{sub.label}</span>
-                            <span className="text-[10px] opacity-70 block">{sub.description}</span>
+                            <span>Semua Layanan {link.label}</span>
+                            <span aria-hidden="true">→</span>
                           </Link>
-                        );
-                      })}
+                          {link.subItems?.map((sub) => {
+                            const isSubActive = pathname === sub.href;
+
+                            return (
+                              <Link
+                                key={`${sub.label}-${sub.href}`}
+                                href={sub.href}
+                                onClick={() => setIsOpen(false)}
+                                className={[
+                                  "flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors duration-150",
+                                  isSubActive
+                                    ? "bg-brand-green/20 text-brand-green font-bold"
+                                    : "text-gray-600 hover:text-brand-dark hover:bg-gray-100/60",
+                                ].join(" ")}
+                              >
+                                <span className="truncate">{sub.label}</span>
+                                <span className="text-[10px] opacity-40 ml-2" aria-hidden="true">
+                                  ↗
+                                </span>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -412,12 +425,12 @@ export default function Navbar() {
             })}
 
             {/* CTA — mobile */}
-            <div className="mt-3">
+            <div className="mt-2 pt-2 border-t border-gray-100">
               <Button
                 href="/booking"
                 variant="primary"
                 size="md"
-                className="w-full button-beg-click"
+                className="w-full button-beg-click justify-center text-sm font-bold"
                 id="mobile-cta-booking"
                 onClick={() => setIsOpen(false)}
               >
