@@ -413,7 +413,7 @@ export default function Hero() {
       {/* ═══════════════════════════════════════════════════════════════════
           LAYOUT UTAMA: TEKS KIRI + MOSAIC KANAN
       ═══════════════════════════════════════════════════════════════════ */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12 sm:pt-24 sm:pb-20 lg:pt-28 lg:pb-28">
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 sm:pt-24 sm:pb-24 lg:pt-28 lg:pb-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-8 items-center">
 
           {/* ─── KOLOM KIRI: Teks ─────────────────────────────────────── */}
@@ -579,7 +579,7 @@ export default function Hero() {
       ═══════════════════════════════════════════════════════════════════ */}
       <div
         aria-hidden="true"
-        className="absolute bottom-0 left-0 right-0 w-full pointer-events-none select-none z-10 overflow-hidden leading-none translate-y-[1px]"
+        className="absolute bottom-0 left-0 right-0 w-full pointer-events-none select-none z-0 overflow-hidden leading-none translate-y-[1px]"
       >
         <div className="relative w-full h-28 sm:h-36 md:h-44 lg:h-48 xl:h-52">
           {/* Lengkungan Bukit Hijau dengan Garis Hitam Kartun */}
@@ -630,7 +630,7 @@ export default function Hero() {
             style={{ left: "38%", bottom: "32%", animationDelay: "-2.5s" }}
           />
 
-          {/* Rumpun Rumput 3: Tengah-Kanan bawah (3 bilah, berdampingan rapi dengan scroll indicator) */}
+          {/* Rumpun Rumput 3: Tengah-Kanan bawah (3 bilah) */}
           <GrassTuft3
             className="grass-tuft grass-sway-b absolute w-6 sm:w-8 lg:w-10 h-auto"
             style={{ left: "58%", bottom: "16%", animationDelay: "-1.2s" }}
@@ -656,28 +656,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ═══════════════════════════════════════════════════════════════════
-          SCROLL INDICATOR (DIPOSISIKAN ELEGAN DI ATAS RERUMPUTAN)
-      ═══════════════════════════════════════════════════════════════════ */}
-      <div
-        aria-hidden="true"
-        className="absolute bottom-2.5 sm:bottom-4 lg:bottom-6 left-1/2 -translate-x-1/2 z-20
-                   flex flex-col items-center gap-0.5 sm:gap-1 animate-bounce"
-      >
-        <span className="text-white text-[9px] sm:text-[10px] tracking-[0.25em] uppercase font-extrabold drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
-          Scroll
-        </span>
-        <div className="w-4 h-7 sm:w-5 sm:h-8 rounded-full border border-white/80 bg-black/25 backdrop-blur-xs flex items-start justify-center pt-1 shadow-sm">
-          <div className="w-1 h-2 rounded-full bg-white animate-[slideDown_1.5s_ease-in-out_infinite]" />
-        </div>
-      </div>
-
       <style>{`
-        @keyframes slideDown {
-          0%  { transform: translateY(0);    opacity: 1; }
-          80% { transform: translateY(10px); opacity: 0; }
-          100%{ transform: translateY(0);    opacity: 0; }
-        }
         @keyframes cloudFlow {
           from { transform: translate3d(-100%, 0, 0); }
           to   { transform: translate3d(100vw, 0, 0); }

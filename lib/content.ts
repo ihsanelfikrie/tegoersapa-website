@@ -827,12 +827,19 @@ export const galleryCategories = [
   {
     id: "photobox",
     label: "Photobox",
-    subs: [],
+    subs: [
+      { id: "sirkem", label: "Sirkem" },
+      { id: "kean", label: "Kean" },
+      { id: "hatara", label: "Hatara" },
+      { id: "nolima", label: "Nolima" },
+      { id: "aimee", label: "Aimee" },
+    ],
   },
 ] as const;
 
 // ─── Portfolio Preview & Gallery Photos ─────────────────────────────────────
 import rawGalleryPhotos from "./galleryData.json";
+import { getResolvedPhotoboxPhotos } from "./photoboxConfig";
 
 export type GalleryPhotoItem = {
   id: string;
@@ -848,7 +855,37 @@ export type GalleryPhotoItem = {
   alt: string;
 };
 
-export const galleryPhotos = rawGalleryPhotos as GalleryPhotoItem[];
+// Ambil item non-photobox dari database mentah
+const nonPhotoboxPhotos = (rawGalleryPhotos as GalleryPhotoItem[]).filter(
+  (item) => item.categorySlug !== "photobox"
+);
+
+function combineGalleryPhotos(
+  photobox: GalleryPhotoItem[],
+  others: GalleryPhotoItem[]
+): GalleryPhotoItem[] {
+  const result: GalleryPhotoItem[] = [];
+  const total = photobox.length + others.length;
+  let pbIdx = 0;
+  let otIdx = 0;
+
+  for (let i = 0; i < total; i++) {
+    if (i % 6 === 0 && pbIdx < photobox.length) {
+      result.push(photobox[pbIdx++]);
+    } else if (otIdx < others.length) {
+      result.push(others[otIdx++]);
+    } else if (pbIdx < photobox.length) {
+      result.push(photobox[pbIdx++]);
+    }
+  }
+
+  return result;
+}
+
+export const galleryPhotos: GalleryPhotoItem[] = combineGalleryPhotos(
+  getResolvedPhotoboxPhotos(),
+  nonPhotoboxPhotos
+);
 
 export type PortfolioPreviewItem = {
   id: string;

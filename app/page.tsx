@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
+import PhotoboxSpots from "@/components/sections/PhotoboxSpots";
 import FeaturedStories from "@/components/sections/FeaturedStories";
 import GalleryPreview from "@/components/sections/GalleryPreview";
 import OurStory from "@/components/sections/OurStory";
@@ -19,6 +20,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <PhotoboxSpots />
       <FeaturedStories />
       <GalleryPreview />
       <OurStory />

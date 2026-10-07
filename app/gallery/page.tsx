@@ -396,9 +396,17 @@ function GalleryContent() {
             >
               {/* Natural Image display with original proportions */}
               <div
+                style={{
+                  aspectRatio:
+                    item.width && item.height ? `${item.width} / ${item.height}` : undefined,
+                }}
                 className={[
                   "relative w-full overflow-hidden",
-                  item.aspectRatio === "landscape" ? "aspect-[3/2]" : "aspect-[2/3]",
+                  !item.width || !item.height
+                    ? item.aspectRatio === "landscape"
+                      ? "aspect-[3/2]"
+                      : "aspect-[2/3]"
+                    : "",
                 ].join(" ")}
               >
                 <Image
@@ -552,10 +560,23 @@ function GalleryContent() {
           >
             {/* Image Container */}
             <div className="relative w-full max-h-[46vh] sm:max-h-[72vh] flex items-center justify-center overflow-hidden rounded-2xl bg-black/40">
-              <div className={[
-                "relative max-w-full max-h-[46vh] sm:max-h-[72vh] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10",
-                activeImage.aspectRatio === "landscape" ? "w-[850px] aspect-[3/2]" : "w-[520px] aspect-[2/3]"
-              ].join(" ")}>
+              <div
+                style={{
+                  aspectRatio:
+                    activeImage.width && activeImage.height
+                      ? `${activeImage.width} / ${activeImage.height}`
+                      : undefined,
+                }}
+                className={[
+                  "relative max-w-full max-h-[46vh] sm:max-h-[72vh] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10",
+                  activeImage.aspectRatio === "landscape" ? "w-[850px]" : "w-[520px]",
+                  !activeImage.width || !activeImage.height
+                    ? activeImage.aspectRatio === "landscape"
+                      ? "aspect-[3/2]"
+                      : "aspect-[2/3]"
+                    : "",
+                ].join(" ")}
+              >
                 <Image
                   src={activeImage.image}
                   alt={activeImage.alt}

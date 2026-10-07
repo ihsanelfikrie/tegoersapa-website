@@ -42,3 +42,6 @@ next-env.d.ts
 
 # raw documents & assets
 *.pdf
+/PB KEAN/
+/PB SIRKEM/
+/hr logo  dan model box/
