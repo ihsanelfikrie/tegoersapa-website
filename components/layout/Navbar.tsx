@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { navLinks, navCta, brand } from "@/lib/content";
 import Image from "next/image";
 import Button from "@/components/ui/Button";
@@ -11,6 +11,7 @@ import Button from "@/components/ui/Button";
  * Navbar global — sesuai Bagian 5 AGENT.md.
  * - Responsive: hamburger menu di mobile (animasi CSS GPU snappier & smooth)
  * - Accordion ringkas di mobile tanpa teks deskripsi panjang
+ * - Easter egg: 3x klik logo untuk akses tersembunyi ke /links
  * - Active state via usePathname()
  * - next/link untuk semua navigasi internal
  * - Link eksternal (WhatsApp CTA) pakai rel="noopener noreferrer"
@@ -18,7 +19,48 @@ import Button from "@/components/ui/Button";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const navbarRef = useRef<HTMLElement>(null);
+
+  // Easter egg: hitung klik logo (klik 3 kali dalam interval 400ms untuk membuka /links)
+  const clickCountRef = useRef(0);
+  const clickTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    clickCountRef.current += 1;
+
+    if (clickTimerRef.current) {
+      clearTimeout(clickTimerRef.current);
+    }
+
+    if (clickCountRef.current >= 3) {
+      clickCountRef.current = 0;
+      if (typeof navigator !== "undefined" && navigator.vibrate) {
+        try {
+          navigator.vibrate(50);
+        } catch {
+          // ignore
+        }
+      }
+      router.push("/links");
+      return;
+    }
+
+    // Jika belum 3 klik berturut-turut, tunggu jeda (400ms); bila tidak ada klik susulan, navigasi ke beranda "/"
+    clickTimerRef.current = setTimeout(() => {
+      clickCountRef.current = 0;
+      router.push("/");
+    }, 400);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (clickTimerRef.current) {
+        clearTimeout(clickTimerRef.current);
+      }
+    };
+  }, []);
 
   // Accordion sub-menu aktif di mobile (auto-expand jika sedang di rute terkait)
   const [expandedSubMenu, setExpandedSubMenu] = useState<string | null>(() => {
@@ -84,9 +126,10 @@ export default function Navbar() {
         suppressHydrationWarning
       >
         <div className="relative flex items-center justify-between" suppressHydrationWarning>
-          {/* Logo — pill gelap dengan efek cel-shaded shimmer tajam (tanpa blur, konsisten dengan hero section) */}
+          {/* Logo — pill gelap dengan efek cel-shaded shimmer tajam (3x klik untuk masuk ke /links) */}
           <Link
             href="/"
+            onClick={handleLogoClick}
             className="pointer-events-auto group relative flex items-center h-11 px-5 rounded-full bg-brand-dark border-b-[3px] border-black/40 hover:border-b-brand-green/80 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.03] active:translate-y-0.5 active:scale-[0.97] overflow-hidden select-none"
             aria-label={`${brand.name} — kembali ke beranda`}
           >
@@ -373,11 +416,6 @@ export default function Navbar() {
                       aria-current={active ? "page" : undefined}
                     >
                       <span>{link.label}</span>
-                      {link.href === "/links" && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-green text-white tracking-wider">
-                          BIO
-                        </span>
-                      )}
                     </Link>
                   )}
 
