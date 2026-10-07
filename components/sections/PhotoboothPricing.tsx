@@ -233,11 +233,7 @@ export default function PhotoboothPricing({
           return (
             <div
               key={pkg.id}
-              className={`flex flex-col justify-between rounded-3xl p-5 sm:p-6 transition-all duration-200 border-2 ${
-                isPrint
-                  ? "bg-white border-brand-green shadow-md ring-4 ring-brand-green/10"
-                  : "bg-white border-gray-200 hover:border-gray-300 shadow-xs"
-              }`}
+              className="flex flex-col justify-between rounded-3xl p-5 sm:p-6 transition-all duration-200 border-2 border-gray-200 hover:border-gray-300 bg-white shadow-xs"
             >
               <div>
                 {/* Header Tag / Ribbon */}
