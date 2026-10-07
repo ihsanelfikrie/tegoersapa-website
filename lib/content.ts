@@ -66,7 +66,7 @@ export const navLinks: readonly NavItem[] = [
       },
       {
         label: "Bajaj Photobooth",
-        href: "/photobooth#pricing",
+        href: "/photobooth#bajaj-photobooth",
         description: "Armada ikonik Tegoer Keliling unik & viral",
       },
       {

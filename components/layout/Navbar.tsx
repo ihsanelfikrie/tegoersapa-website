@@ -206,7 +206,7 @@ export default function Navbar() {
 
                             return (
                               <Link
-                                key={sub.href}
+                                key={`${sub.label}-${sub.href}`}
                                 href={sub.href}
                                 className={[
                                   "block px-3 py-2.5 rounded-xl transition-all duration-150 group/item",
@@ -360,7 +360,7 @@ export default function Navbar() {
 
                         return (
                           <Link
-                            key={sub.href}
+                            key={`${sub.label}-${sub.href}`}
                             href={sub.href}
                             onClick={() => setIsOpen(false)}
                             className={[

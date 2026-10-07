@@ -277,7 +277,8 @@ export default function PhotoboothPage() {
               return (
                 <div
                   key={service.id}
-                  className={`service-card group flex flex-col justify-between p-5 sm:p-8 rounded-3xl border transition-all duration-300 ${
+                  id={service.id}
+                  className={`service-card group flex flex-col justify-between p-5 sm:p-8 rounded-3xl border scroll-mt-28 transition-all duration-300 ${
                     isUpcoming
                       ? "border-amber-200 bg-amber-50/30 hover:bg-white hover:border-amber-300 shadow-2xs"
                       : "border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30"
