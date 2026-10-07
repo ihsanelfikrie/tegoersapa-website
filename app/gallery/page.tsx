@@ -159,14 +159,14 @@ function GalleryContent() {
         <HeroClouds />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl flex flex-col items-center lg:items-start text-center lg:text-left mx-auto lg:mx-0">
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-center lg:text-left">
               <span className="hero-word">Galeri</span>{" "}
               <span className="hero-word hero-word-green">Portofolio</span>
             </h1>
-            <div className="w-16 h-1 rounded-full bg-brand-dark my-5" />
-            <p className="text-base sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-2xl">
+            <div className="w-16 h-1 rounded-full bg-brand-dark my-5 mx-auto lg:mx-0" />
+            <p className="text-base sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0">
               Arsip visual lengkap {galleryPhotos.length} momen berkesan yang telah kami abadikan — mulai dari photobooth resepsi & event meriah, photobox ekspresif, hingga fotografi pre-wedding dan wisuda kampus.
             </p>
           </div>

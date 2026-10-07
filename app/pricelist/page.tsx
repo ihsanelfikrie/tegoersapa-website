@@ -43,18 +43,18 @@ export default function PricelistPage() {
         <HeroClouds />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 backdrop-blur-xs border border-brand-green/20 text-xs font-bold text-brand-green mb-4">
+          <div className="max-w-3xl flex flex-col items-center lg:items-start text-center lg:text-left mx-auto lg:mx-0">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 backdrop-blur-xs border border-brand-green/20 text-xs font-bold text-brand-green mb-4 mx-auto lg:mx-0">
               <span>★</span>
               <span>Daftar Harga Resmi Tegoer Sapa</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-center lg:text-left">
               <span className="hero-word">Daftar</span>{" "}
               <span className="hero-word hero-word-green">Harga</span>
             </h1>
-            <div className="w-16 h-1 rounded-full bg-brand-dark my-5" />
-            <p className="text-base sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-2xl">
+            <div className="w-16 h-1 rounded-full bg-brand-dark my-5 mx-auto lg:mx-0" />
+            <p className="text-base sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0">
               Transparansi harga untuk layanan <strong>Photobooth Instan</strong>, armada unik <strong>Bajaj Photobooth</strong>, dan dokumentasi <strong>Outdoor Graduation</strong> di Banjarbaru, Kalimantan Selatan.
             </p>
           </div>

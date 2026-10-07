@@ -207,19 +207,19 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
         <HeroClouds />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl flex flex-col items-center lg:items-start text-center lg:text-left mx-auto lg:mx-0">
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-center lg:text-left">
               <span className="hero-word">Formulir</span>{" "}
               <span className="hero-word hero-word-green">Reservasi</span>
             </h1>
-            <div className="w-16 h-1 rounded-full bg-brand-dark my-5" />
-            <p className="text-base sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-2xl">
+            <div className="w-16 h-1 rounded-full bg-brand-dark my-5 mx-auto lg:mx-0" />
+            <p className="text-base sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0">
               Konfirmasikan paket dan add-on pilihan Anda. Data pilihan langsung tersimpan dan diteruskan ke tim Tegoer Sapa untuk penjadwalan.
             </p>
 
             {/* Steps indicator */}
-            <div className="mt-8 flex flex-wrap items-center gap-3 text-xs font-bold text-brand-dark">
+            <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3 text-xs font-bold text-brand-dark">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 text-brand-dark border border-brand-dark/15 shadow-2xs">
                 <span className="text-brand-green font-black">✓</span> 1. Pilih Paket
               </span>

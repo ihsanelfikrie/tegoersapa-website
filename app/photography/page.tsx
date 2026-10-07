@@ -148,21 +148,21 @@ export default function PhotographyPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
             
             {/* Teks Hero (Kiri) */}
-            <div className="lg:col-span-7 flex flex-col items-start">
+            <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
 
 
-              <h1 className="hero-anim text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.05]">
+              <h1 className="hero-anim text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.05] text-center lg:text-left">
                 <span className="hero-word">Photo</span>
                 <span className="hero-word hero-word-green ml-1.5 sm:ml-2">graphy</span>
               </h1>
 
-              <div className="hero-anim w-16 h-1 rounded-full bg-brand-dark my-6" />
+              <div className="hero-anim w-16 h-1 rounded-full bg-brand-dark my-6 mx-auto lg:mx-0" />
 
-              <p className="hero-anim text-base sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-xl">
+              <p className="hero-anim text-base sm:text-lg text-brand-dark/80 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
                 Mengabadikan setiap cerita, emosi, dan tradisi berharga dengan keahlian fotografi profesional dan estetika visual sinematik khas {brand.name}.
               </p>
 
-              <div className="hero-anim mt-8 flex flex-wrap items-center gap-3">
+              <div className="hero-anim mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3">
                 <Button
                   href="/pricelist"
                   variant="primary"

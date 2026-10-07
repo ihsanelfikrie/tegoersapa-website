@@ -120,7 +120,7 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb Nav */}
-          <nav aria-label="Breadcrumb" className="hero-fade mb-6 flex items-center gap-2 text-xs font-semibold text-brand-dark/60">
+          <nav aria-label="Breadcrumb" className="hero-fade mb-6 flex items-center justify-center lg:justify-start gap-2 text-xs font-semibold text-brand-dark/60">
             <Link href="/" className="hover:text-brand-dark transition-colors">
               Home
             </Link>
@@ -134,24 +134,24 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
             {/* Teks Pembuka (Kiri) */}
-            <div className="lg:col-span-7 flex flex-col items-start">
+            <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
 
-              <h1 className="hero-fade text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1]">
+              <h1 className="hero-fade text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] text-center lg:text-left">
                 <span className="hero-word">{data.title}</span>
               </h1>
 
-              <p className="hero-fade text-base sm:text-lg font-bold text-brand-dark/90 mt-3 leading-snug whitespace-pre-line">
+              <p className="hero-fade text-base sm:text-lg font-bold text-brand-dark/90 mt-3 leading-snug whitespace-pre-line text-center lg:text-left">
                 {data.subtitle}
               </p>
 
-              <div className="hero-fade w-16 h-1 rounded-full bg-brand-dark my-4" />
+              <div className="hero-fade w-16 h-1 rounded-full bg-brand-dark my-4 mx-auto lg:mx-0" />
 
-              <p className="hero-fade text-xs sm:text-sm text-brand-dark/80 font-bold uppercase tracking-wider max-w-xl">
+              <p className="hero-fade text-xs sm:text-sm text-brand-dark/80 font-bold uppercase tracking-wider max-w-xl mx-auto lg:mx-0">
                 {data.description}
               </p>
 
               {/* Highlight Bullets */}
-              <div className="hero-fade mt-5 space-y-2.5 max-w-xl">
+              <div className="hero-fade mt-5 space-y-2.5 max-w-xl mx-auto lg:mx-0 text-left">
                 {data.highlights.map((highlight, idx) => (
                   <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-brand-dark/90 font-medium">
                     <span className="text-brand-green font-bold flex-shrink-0 mt-0.5">✓</span>
@@ -162,21 +162,21 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
 
               {/* Tagline / Slogan */}
               {data.tagline && (
-                <p className="hero-fade mt-4 text-xs sm:text-sm font-semibold text-brand-dark/70 tracking-wide italic">
+                <p className="hero-fade mt-4 text-xs sm:text-sm font-semibold text-brand-dark/70 tracking-wide italic text-center lg:text-left mx-auto lg:mx-0">
                   &ldquo;{data.tagline}&rdquo;
                 </p>
               )}
 
               {/* Lokasi studio jika ada */}
               {data.studioAddress && (
-                <p className="hero-fade mt-3 text-xs sm:text-sm font-semibold text-brand-dark/80 flex items-center gap-1.5">
+                <p className="hero-fade mt-3 text-xs sm:text-sm font-semibold text-brand-dark/80 flex items-center justify-center lg:justify-start gap-1.5 mx-auto lg:mx-0">
                   <span aria-hidden="true">📍</span>
                   <span>{data.studioAddress}</span>
                 </p>
               )}
 
               {/* Action Buttons */}
-              <div className="hero-fade mt-8 flex flex-wrap items-center gap-3">
+              <div className="hero-fade mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3">
                 <Button
                   href="#packages"
                   variant="primary"
