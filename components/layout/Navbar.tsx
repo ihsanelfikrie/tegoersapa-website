@@ -137,7 +137,10 @@ export default function Navbar() {
             <span className="logo-sheen-cel" aria-hidden="true" />
 
             {/* Logo Image */}
-            <div className="relative z-10 flex items-center transition-transform duration-200 ease-out group-hover:scale-105 group-active:scale-95">
+            <div
+              className="relative z-10 flex items-center transition-transform duration-200 ease-out group-hover:scale-105 group-active:scale-95"
+              suppressHydrationWarning
+            >
               <Image
                 src="/brand/logo-1-baris.svg"
                 alt={brand.name}
@@ -160,7 +163,7 @@ export default function Navbar() {
               const hasSub = Boolean(link.subItems && link.subItems.length > 0);
 
               return (
-                <li key={link.href} className={hasSub ? "relative group" : ""}>
+                <li key={link.href} className={hasSub ? "relative group" : ""} suppressHydrationWarning>
                   <Link
                     href={link.href}
                     className={[
@@ -190,6 +193,7 @@ export default function Navbar() {
                   {hasSub && (
                     <div
                       className="absolute top-full left-0 pt-2 w-80 opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-all duration-200 ease-out z-50 transform origin-top -translate-y-1 group-hover:translate-y-0"
+                      suppressHydrationWarning
                     >
                       <div
                         className={[
@@ -198,9 +202,13 @@ export default function Navbar() {
                             ? "bg-brand-dark/95 border-white/10 text-white"
                             : "bg-white/95 border-gray-100 text-gray-900",
                         ].join(" ")}
+                        suppressHydrationWarning
                       >
-                        <div className="px-3 py-2 border-b border-white/10 mb-1.5 flex items-center justify-between">
-                          <div className="flex flex-col">
+                        <div
+                          className="px-3 py-2 border-b border-white/10 mb-1.5 flex items-center justify-between"
+                          suppressHydrationWarning
+                        >
+                          <div className="flex flex-col" suppressHydrationWarning>
                             <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-brand-green">
                               Layanan
                             </span>
@@ -246,7 +254,10 @@ export default function Navbar() {
                                     : "hover:bg-brand-green/10 text-gray-800 hover:text-brand-dark",
                                 ].join(" ")}
                               >
-                                <div className="text-xs font-bold tracking-wide flex items-center justify-between">
+                                <div
+                                  className="text-xs font-bold tracking-wide flex items-center justify-between"
+                                  suppressHydrationWarning
+                                >
                                   <span
                                     className={
                                       isSubActive
@@ -353,9 +364,12 @@ export default function Navbar() {
               const isExpanded = expandedSubMenu === link.label;
 
               return (
-                <div key={link.href} className="flex flex-col">
+                <div key={link.href} className="flex flex-col" suppressHydrationWarning>
                   {hasSub ? (
-                    <div className="flex items-center justify-between rounded-xl hover:bg-gray-100/70 transition-colors">
+                    <div
+                      className="flex items-center justify-between rounded-xl hover:bg-gray-100/70 transition-colors"
+                      suppressHydrationWarning
+                    >
                       <Link
                         href={link.href}
                         onClick={() => setIsOpen(false)}
@@ -422,14 +436,18 @@ export default function Navbar() {
                   {/* Sub-items accordion with smooth CSS grid transition */}
                   {hasSub && (
                     <div
+                      suppressHydrationWarning
                       className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out ${
                         isExpanded
                           ? "grid-rows-[1fr] opacity-100 my-1"
                           : "grid-rows-[0fr] opacity-0 my-0 pointer-events-none"
                       }`}
                     >
-                      <div className="overflow-hidden">
-                        <div className="pl-3.5 pr-1 py-1 space-y-1 border-l-2 border-brand-green/30 ml-4 my-0.5">
+                      <div className="overflow-hidden" suppressHydrationWarning>
+                        <div
+                          className="pl-3.5 pr-1 py-1 space-y-1 border-l-2 border-brand-green/30 ml-4 my-0.5"
+                          suppressHydrationWarning
+                        >
                           <Link
                             href={link.href}
                             onClick={() => setIsOpen(false)}
