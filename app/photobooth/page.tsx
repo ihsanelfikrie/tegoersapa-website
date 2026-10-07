@@ -303,8 +303,10 @@ export default function PhotoboothPage() {
                     {/* Coming Soon Top Badge on Photo */}
                     {isUpcoming && (
                       <div className="absolute top-3 right-3 z-10">
-                        <span className="px-3 py-1 rounded-full bg-amber-500 text-white text-[10px] font-black tracking-wider uppercase shadow-md flex items-center gap-1.5 animate-pulse">
-                          <span>★</span>
+                        <span className="px-3 py-1 rounded-full bg-brand-dark/90 backdrop-blur-md text-amber-300 border border-amber-400/30 text-[10px] font-black tracking-wider uppercase shadow-md flex items-center gap-1.5 whitespace-nowrap">
+                          <svg className="w-2.5 h-2.5 text-amber-400 shrink-0" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                            <path d="M8 0L9.79 6.21L16 8L9.79 9.79L8 16L6.21 9.79L0 8L6.21 6.21L8 0Z" />
+                          </svg>
                           <span>Coming Soon</span>
                         </span>
                       </div>

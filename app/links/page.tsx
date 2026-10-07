@@ -31,8 +31,11 @@ export default function LinksPage() {
 
       {/* Top Breadcrumb / Sub-bar */}
       <div className="w-full max-w-md flex justify-between items-center mb-5 relative z-20 px-1">
-        <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-white text-brand-dark border-2 border-brand-dark shadow-[0_2px_0_#002716]">
-          🔗 Hub Tautan Resmi
+        <span className="inline-flex items-center gap-1.5 text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-white text-brand-dark border-2 border-brand-dark shadow-[0_2px_0_#002716]">
+          <svg className="w-3.5 h-3.5 text-brand-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+          </svg>
+          <span>Hub Tautan Resmi</span>
         </span>
         <Link
           href="/"

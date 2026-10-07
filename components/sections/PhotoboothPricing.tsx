@@ -17,7 +17,7 @@ interface PhotoboothPricingProps {
 
 const DURATIONS = [
   { label: "2 Jam", idx: 0 },
-  { label: "3 Jam ★", idx: 1, popular: true },
+  { label: "3 Jam", idx: 1, popular: true },
   { label: "4 Jam", idx: 2 },
   { label: "5 Jam", idx: 3 },
   { label: "6 Jam", idx: 4 },
@@ -89,11 +89,16 @@ export default function PhotoboothPricing({
 
       {/* ─── Selector Durasi Acara (Tersinkronisasi & Simpel) ──────── */}
       <div className="bg-brand-cream/50 border border-brand-green/20 p-3 sm:p-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <span className="text-base">⏱️</span>
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl bg-brand-green/10 text-brand-dark flex items-center justify-center shrink-0" aria-hidden="true">
+            <svg className="w-4 h-4 text-brand-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+              <circle cx="12" cy="12" r="9" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
+            </svg>
+          </div>
           <div>
             <span className="text-xs sm:text-sm font-black text-brand-dark block">
-              Pilih Durasi Acara:
+              Pilih Durasi Acara
             </span>
             <span className="text-[11px] text-gray-500 font-medium">
               Harga di bawah otomatis menyesuaikan durasi yang Anda pilih.
@@ -107,13 +112,24 @@ export default function PhotoboothPricing({
               key={d.label}
               type="button"
               onClick={() => setDurationIdx(d.idx)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all cursor-pointer ${
                 durationIdx === d.idx
                   ? "bg-brand-dark text-white shadow-sm ring-2 ring-brand-green/30 scale-102"
                   : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-100"
               }`}
             >
-              {d.label}
+              <span>{d.label}</span>
+              {d.popular && (
+                <span
+                  className={`text-[9px] font-black uppercase tracking-wider px-1.5 py-0.2 rounded-md ${
+                    durationIdx === d.idx
+                      ? "bg-brand-green text-white"
+                      : "bg-brand-green/15 text-brand-dark"
+                  }`}
+                >
+                  Favorit
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -149,16 +165,24 @@ export default function PhotoboothPricing({
             >
               <div>
                 {/* Header Tag / Ribbon */}
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-gray-100 text-gray-600">
+                <div className="flex items-center justify-between gap-2 mb-3 min-w-0">
+                  <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-gray-100 text-gray-600 truncate min-w-0">
                     {pkg.category}
                   </span>
                   {isPrint ? (
-                    <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-brand-green text-white shadow-xs">
-                      ⭐ Paling Populer
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-brand-dark text-white border border-brand-green/30 whitespace-nowrap shrink-0 shadow-xs">
+                      <svg
+                        className="w-2.5 h-2.5 text-brand-green shrink-0"
+                        viewBox="0 0 16 16"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path d="M8 0L9.79 6.21L16 8L9.79 9.79L8 16L6.21 9.79L0 8L6.21 6.21L8 0Z" />
+                      </svg>
+                      <span>Paling Dipilih</span>
                     </span>
                   ) : (
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">
+                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-500 whitespace-nowrap shrink-0">
                       Hemat Digital
                     </span>
                   )}
@@ -256,10 +280,16 @@ export default function PhotoboothPricing({
       </div>
 
       {/* ─── Catatan Tambahan Waktu (Jelas & Ringkas) ─────────────── */}
-      <div className="p-3.5 sm:p-4 rounded-2xl bg-gray-50 border border-gray-200/80 text-center text-xs text-gray-600 font-medium">
-        <span>⏱️ Butuh waktu lebih dari 6 jam? </span>
-        <strong className="text-brand-dark">Biaya tambahan waktu: Rp 600.000 / jam</strong>
-        <span> untuk semua jenis paket.</span>
+      <div className="p-3.5 sm:p-4 rounded-2xl bg-gray-50 border border-gray-200/80 flex flex-col sm:flex-row items-center justify-center gap-2 text-center text-xs text-gray-600 font-medium">
+        <svg className="w-4 h-4 text-brand-green shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
+          <circle cx="12" cy="12" r="9" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
+        </svg>
+        <div>
+          <span>Butuh waktu lebih dari 6 jam? </span>
+          <strong className="text-brand-dark">Biaya tambahan waktu: Rp 600.000 / jam</strong>
+          <span> untuk semua jenis paket.</span>
+        </div>
       </div>
 
       {/* ─── Informasi Pendukung: Backdrop, Format Cetak, & Alur ─── */}
