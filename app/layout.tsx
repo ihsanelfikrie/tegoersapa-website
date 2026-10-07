@@ -16,13 +16,13 @@ const hossRound = localFont({
     { path: "../public/fonts/HossRound-Light.otf", weight: "300", style: "normal" },
     { path: "../public/fonts/HossRound-Regular.otf", weight: "400", style: "normal" },
     { path: "../public/fonts/HossRound-Medium.otf", weight: "500", style: "normal" },
-    { path: "../public/fonts/HossRound-Medium.otf", weight: "600", style: "normal" },
     { path: "../public/fonts/HossRound-Bold.otf", weight: "700", style: "normal" },
     { path: "../public/fonts/HossRound-Heavy.otf", weight: "800", style: "normal" },
     { path: "../public/fonts/HossRound-Black.otf", weight: "900", style: "normal" },
   ],
   variable: "--font-montserrat",
   display: "swap",
+  preload: true,
 });
 
 export const viewport: Viewport = {

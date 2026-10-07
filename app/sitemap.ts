@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tentang",
     "/kontak",
     "/booking",
+    "/links",
   ];
 
   return routes.map((route) => ({
