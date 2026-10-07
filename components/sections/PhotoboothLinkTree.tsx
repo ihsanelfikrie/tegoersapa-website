@@ -152,12 +152,12 @@ export function PhotoboothLinktreeCard({
 
       {/* Header Profile Info */}
       <div className="flex flex-col items-center text-center mb-6">
-        {/* Avatar Mascot Resmi Tegoer Sapa */}
+        {/* Avatar Logo Resmi Tegoer Sapa */}
         <div className="relative group">
-          <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-brand-dark bg-brand-sky shadow-[0_6px_0_#002716] group-hover:scale-105 transition-transform duration-200">
+          <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-brand-dark bg-brand-green shadow-[0_6px_0_#002716] group-hover:scale-105 transition-transform duration-200">
             <Image
               src={photoboothLinktree.avatar}
-              alt="Mascot Photobooth Tegoer Sapa"
+              alt="Logo Resmi Tegoer Sapa Photobooth"
               width={128}
               height={128}
               priority
