@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import Link from "next/link";
 import Button from "@/components/ui/Button";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";

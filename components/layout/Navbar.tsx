@@ -69,8 +69,10 @@ export default function Navbar() {
     return null;
   });
 
-  // Reset menu & update default accordion saat navigasi berpindah
-  useEffect(() => {
+  // Reset menu & update default accordion saat navigasi berpindah (pola React resmi tanpa cascading render)
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setIsOpen(false);
     if (pathname.startsWith("/photography")) {
       setExpandedSubMenu("Photography");
@@ -79,7 +81,7 @@ export default function Navbar() {
     } else {
       setExpandedSubMenu(null);
     }
-  }, [pathname]);
+  }
 
   // Keyboard accessibility (Escape) dan Outside Click untuk menutup mobile menu
   useEffect(() => {

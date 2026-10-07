@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { pricelistPackages, type PricePackage } from "@/lib/content";
 import { generateWhatsAppLink } from "@/lib/whatsapp";
 import { useBooking } from "@/lib/BookingContext";
@@ -13,12 +13,25 @@ import GrassyHill from "@/components/ui/GrassyHill";
 import Button from "@/components/ui/Button";
 import PhotoboothPricing from "@/components/sections/PhotoboothPricing";
 
-export default function PricelistPage() {
+function PricelistContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { selectedPackage, selectPackage } = useBooking();
 
+  const tabParam = searchParams.get("tab");
+  const initialTab = tabParam === "graduation" ? "graduation" : "photobooth";
+
   // Tab state: "photobooth" or "graduation"
-  const [activeTab, setActiveTab] = useState<"photobooth" | "graduation">("photobooth");
+  const [activeTab, setActiveTab] = useState<"photobooth" | "graduation">(initialTab);
+
+  // Sync tab saat parameter URL berubah
+  const [prevTabParam, setPrevTabParam] = useState(tabParam);
+  if (prevTabParam !== tabParam) {
+    setPrevTabParam(tabParam);
+    if (tabParam === "graduation" || tabParam === "photobooth") {
+      setActiveTab(tabParam);
+    }
+  }
 
   // Sub-filter for outdoor graduation on mobile
   const [gradFilter, setGradFilter] = useState<"all" | "solo" | "duo" | "group">("all");
@@ -29,21 +42,6 @@ export default function PricelistPage() {
     if (gradFilter === "group") return pkg.id === "outdoor-unity" || pkg.id === "outdoor-framely";
     return true;
   });
-
-  // Read URL query / hash on client mount
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      const tabParam = params.get("tab");
-      if (tabParam === "graduation") {
-        setActiveTab("graduation");
-      } else if (tabParam === "photobooth") {
-        setActiveTab("photobooth");
-      } else if (window.location.hash.includes("graduation")) {
-        setActiveTab("graduation");
-      }
-    }
-  }, []);
 
   return (
     <div className="bg-white min-h-screen text-black">
@@ -342,10 +340,18 @@ export default function PricelistPage() {
             </Link>.
           </p>
           <p className="text-xs text-gray-400">
-            © {new Date().getFullYear()} Tegoer Sapa • Banjarbaru, Kalimantan Selatan.
+            © 2026 Tegoer Sapa • Banjarbaru, Kalimantan Selatan.
           </p>
         </div>
       </section>
     </div>
+  );
+}
+
+export default function PricelistPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-brand-sky" />}>
+      <PricelistContent />
+    </Suspense>
   );
 }

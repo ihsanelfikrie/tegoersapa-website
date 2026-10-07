@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect, Suspense, useMemo, useCallback } from "react";
+import { useState, useEffect, Suspense, useMemo, useCallback, useSyncExternalStore } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
 import { galleryPhotos, galleryCategories, type GalleryPhotoItem } from "@/lib/content";
 import HeroClouds from "@/components/ui/HeroClouds";
@@ -21,27 +20,18 @@ function GalleryContent() {
 
   // Pagination mobile agar tidak perlu scroll terlalu jauh (12 foto per halaman)
   const MOBILE_PAGE_SIZE = 12;
-  const [mounted, setMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [visibleCount, setVisibleCount] = useState(MOBILE_PAGE_SIZE);
   const [touchStart, setTouchStart] = useState<number | null>(null);
 
-  // Deteksi mobile (desktop tetap tampil penuh setelah mount)
-  useEffect(() => {
-    setMounted(true);
-    const checkMobile = () => {
-      const mob = window.innerWidth < 768;
-      setIsMobile(mob);
-      if (!mob) {
-        setVisibleCount(999);
-      } else {
-        setVisibleCount(MOBILE_PAGE_SIZE);
-      }
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  // Deteksi mobile secara reaktif via useSyncExternalStore (SSR-safe, tanpa cascading render)
+  const isMobile = useSyncExternalStore(
+    (callback) => {
+      window.addEventListener("resize", callback);
+      return () => window.removeEventListener("resize", callback);
+    },
+    () => window.innerWidth < 768,
+    () => false
+  );
 
   const [prevParams, setPrevParams] = useState({ kat: paramKat, sub: paramSub });
   if (prevParams.kat !== paramKat || prevParams.sub !== paramSub) {
@@ -50,12 +40,13 @@ function GalleryContent() {
     if (paramSub) setActiveSub(paramSub);
   }
 
-  // Reset pagination saat filter/search berubah pada mobile
-  useEffect(() => {
-    if (isMobile) {
-      setVisibleCount(MOBILE_PAGE_SIZE);
-    }
-  }, [activeCategory, activeSub, searchQuery, isMobile]);
+  // Reset pagination saat filter/search berubah pada mobile (render-time adjustment)
+  const [prevFilterKey, setPrevFilterKey] = useState("");
+  const filterKey = `${activeCategory}-${activeSub}-${searchQuery}`;
+  if (prevFilterKey !== filterKey) {
+    setPrevFilterKey(filterKey);
+    setVisibleCount(MOBILE_PAGE_SIZE);
+  }
 
   const currentCategoryData = galleryCategories.find((c) => c.id === activeCategory);
 
@@ -91,13 +82,13 @@ function GalleryContent() {
     });
   }, [activeCategory, activeSub, searchQuery]);
 
-  // Items yang ditampilkan saat ini (SSR & initial hydration render 12 foto identik, setelah mount di desktop langsung 999)
+  // Items yang ditampilkan saat ini (di desktop langsung tampil penuh, di mobile dipaginasi per 12 foto)
   const displayedItems = useMemo(() => {
-    if (mounted && !isMobile) return filteredItems;
+    if (!isMobile) return filteredItems;
     return filteredItems.slice(0, visibleCount);
-  }, [filteredItems, visibleCount, mounted, isMobile]);
+  }, [filteredItems, visibleCount, isMobile]);
 
-  const hasMore = mounted ? isMobile && visibleCount < filteredItems.length : false;
+  const hasMore = isMobile && visibleCount < filteredItems.length;
   const remainingCount = Math.max(0, filteredItems.length - visibleCount);
 
   // Counts for tabs
