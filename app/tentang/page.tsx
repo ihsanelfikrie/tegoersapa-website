@@ -99,7 +99,7 @@ export default function TentangPage() {
           <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
             <Button
               href="/kontak"
-              variant="dark"
+              variant="primary"
               size="md"
               className="w-full sm:w-auto"
             >

@@ -206,7 +206,7 @@ export default function GalleryPreview() {
           <div className="flex-shrink-0 self-center md:self-auto">
             <Button
               href="/gallery"
-              variant="dark"
+              variant="primary"
               size="sm"
             >
               <span>View All Work</span>
@@ -280,7 +280,7 @@ export default function GalleryPreview() {
         <div ref={footerCtaRef} className="mt-14 text-center px-4 sm:px-0">
           <Button
             href="/gallery"
-            variant="dark"
+            variant="primary"
             size="lg"
             className="w-full sm:w-auto"
           >

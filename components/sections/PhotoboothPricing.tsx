@@ -58,7 +58,7 @@ export default function PhotoboothPricing({
   const [copiedToast, setCopiedToast] = useState<string | null>(null);
 
   const handleCopyPackage = (pkg: PhotoboothPackage, tier: { duration: string; harga: string }) => {
-    const text = `📸 Paket Tegoer Sapa: ${pkg.nama}\n⏱️ Durasi: ${tier.duration} (${tier.harga})\n🎨 Kategori: ${pkg.category} (${pkg.type === "print" ? "Unlimited Print" : "Digital No Print"})\n✨ Fitur Utama:\n${pkg.fitur.slice(0, 5).map((f) => ` • ${f}`).join("\n")}\n\nInfo selengkapnya: https://tegoersapa.com/pricelist?tab=photobooth`;
+    const text = `*Paket Tegoer Sapa*: ${pkg.nama}\n• Durasi: ${tier.duration} (${tier.harga})\n• Kategori: ${pkg.category} (${pkg.type === "print" ? "Unlimited Print" : "Digital No Print"})\n• Fitur Utama:\n${pkg.fitur.slice(0, 5).map((f) => `  - ${f}`).join("\n")}\n\nInfo selengkapnya: https://tegoersapa.com/pricelist?tab=photobooth`;
     if (typeof navigator !== "undefined" && navigator.clipboard) {
       navigator.clipboard.writeText(text);
       setCopiedToast(`Rincian ${pkg.nama} berhasil disalin!`);
@@ -419,7 +419,7 @@ export default function PhotoboothPricing({
               <div className="p-6 sm:p-7 pt-3 bg-gray-50/90 border-t border-gray-100 space-y-2.5">
                 <Button
                   type="button"
-                  variant={isSelected ? "primary" : pkg.isBestDeal ? "primary" : "dark"}
+                  variant="primary"
                   size="md"
                   className="w-full"
                   onClick={() => {
@@ -1091,7 +1091,7 @@ export default function PhotoboothPricing({
               </p>
               <Button
                 type="button"
-                variant="dark"
+                variant="primary"
                 size="sm"
                 onClick={() => setPreviewTemplateModal(null)}
               >

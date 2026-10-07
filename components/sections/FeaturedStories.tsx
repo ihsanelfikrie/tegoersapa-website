@@ -161,7 +161,7 @@ export default function FeaturedStories() {
           <div className="flex-shrink-0 self-center md:self-auto">
             <Button
               href="/gallery"
-              variant="dark"
+              variant="primary"
               size="sm"
             >
               <span>View All Work</span>
@@ -218,7 +218,7 @@ export default function FeaturedStories() {
               <div className="mt-5 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200/80 flex items-center justify-between">
                 <Button
                   href={mainStory.href}
-                  variant="dark"
+                  variant="primary"
                   size="md"
                 >
                   <span>View Story</span>
@@ -283,7 +283,7 @@ export default function FeaturedStories() {
                   <div className="mt-2.5 sm:mt-3">
                     <Button
                       href={story.href}
-                      variant="dark"
+                      variant="primary"
                       size="sm"
                       className="text-xs py-1.5 px-3.5"
                     >

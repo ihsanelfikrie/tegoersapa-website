@@ -100,7 +100,7 @@ export default function OurStory() {
 
             <Button
               href="/tentang"
-              variant="dark"
+              variant="primary"
               size="md"
               className="mx-auto lg:mx-0"
             >

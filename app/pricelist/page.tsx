@@ -235,7 +235,7 @@ export default function PricelistPage() {
                     <div className="px-6 pb-6 pt-2 sm:px-7 sm:pb-7 space-y-2">
                       <Button
                         type="button"
-                        variant={isSelected ? "primary" : "dark"}
+                        variant="primary"
                         size="md"
                         className="w-full"
                         onClick={() => {

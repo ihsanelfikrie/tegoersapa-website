@@ -93,7 +93,7 @@ export default function AboutPreview() {
             </p>
             <Button
               href="/tentang"
-              variant="dark"
+              variant="primary"
               size="md"
             >
               <span>Selengkapnya Tentang Kami</span>

@@ -117,7 +117,7 @@ export default function BehindTheLens() {
           <div className="flex-shrink-0">
             <Button
               href="/tentang"
-              variant="dark"
+              variant="primary"
               size="sm"
             >
               <span>See More</span>

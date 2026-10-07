@@ -377,7 +377,7 @@ export default function PhotoboothPage() {
                   <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
                     <Button
                       href={service.exploreHref}
-                      variant="dark"
+                      variant="primary"
                       size="sm"
                     >
                       <span>Explore Work</span>
@@ -444,7 +444,7 @@ export default function PhotoboothPage() {
             <div className="mt-6 md:mt-0 text-center md:text-left">
               <Button
                 href="/gallery?kategori=photobooth"
-                variant="dark"
+                variant="primary"
                 size="sm"
               >
                 <span>Lihat Semua di Gallery</span>

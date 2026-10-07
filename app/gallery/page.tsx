@@ -396,7 +396,7 @@ function GalleryContent() {
               Tidak ditemukan foto untuk filter atau pencarian &ldquo;{searchQuery}&rdquo;. Silakan ubah kata kunci atau reset filter.
             </p>
             <Button
-              variant="dark"
+              variant="primary"
               size="sm"
               onClick={() => {
                 setActiveCategory("all");

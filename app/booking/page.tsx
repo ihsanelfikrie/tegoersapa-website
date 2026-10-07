@@ -126,14 +126,14 @@ export default function BookingPage() {
     const cleanCatatan = formData.catatan.replace(/[<>]/g, "").trim();
 
     const photoboothDetailsText = isPhotobooth
-      ? `\n🎨 PREFERENSI PHOTOBOOTH:
+      ? `\nPREFERENSI PHOTOBOOTH:
 • Pilihan Backdrop: ${photoboothPrefs.backdrop}
 • Format Layout / Cetak: ${photoboothPrefs.layout}`
       : "";
 
     return `Halo Tegoer Sapa, saya ingin melakukan reservasi / booking:
 
-📋 DETAIL PEMESAN
+*DETAIL PEMESAN*
 • Nama: ${cleanNama}
 • No. WhatsApp: ${cleanWhatsapp}
 • Tanggal Acara: ${formData.tanggal || "[Tanggal Belum Dipilih]"}
@@ -141,17 +141,17 @@ export default function BookingPage() {
 • Lokasi / Venue: ${cleanLokasi || "Studio / Belum Ditentukan"}
 • Instagram: ${cleanInstagram ? `@${cleanInstagram}` : "-"}
 
-📦 PAKET YANG DIPILIH
+*PAKET YANG DIPILIH*
 • Paket: ${selectedPackage.nama} (${selectedPackage.kategori || "Dokumentasi"})
 • Harga Paket: ${selectedPackage.harga}${photoboothDetailsText}
 
-➕ ADD-ON OPSIONAL
+*ADD-ON OPSIONAL*
 ${addOnLines}
 
-💰 ESTIMASI TOTAL BIAYA:
+*ESTIMASI TOTAL BIAYA*
 ${totalCalculation.totalText}
 
-📝 Catatan Tambahan:
+*Catatan Tambahan*
 ${cleanCatatan || "-"}
 
 Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kasih!`;
@@ -265,14 +265,14 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button
                 href="/photography/wedding#packages"
-                variant="dark"
+                variant="primary"
                 size="sm"
               >
                 <span>Pilih Paket Wedding</span>
               </Button>
               <Button
                 href="/photography/graduation#packages"
-                variant="dark"
+                variant="primary"
                 size="sm"
               >
                 <span>Pilih Paket Wisuda</span>

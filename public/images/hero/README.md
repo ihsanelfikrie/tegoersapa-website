@@ -1,4 +1,4 @@
-# 📸 Cara Mengganti Foto Hero Section
+# Cara Mengganti Foto Hero Section
 
 ## Letak File
 Taruh foto kamu di folder:

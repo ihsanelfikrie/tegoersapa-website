@@ -290,7 +290,7 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
             <div className="mt-6 md:mt-0 text-center md:text-left">
               <Button
                 href="/gallery"
-                variant="dark"
+                variant="primary"
                 size="sm"
               >
                 <span>Lihat Semua di Galeri</span>
@@ -606,7 +606,7 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
                     ) : (
                       <Button
                         type="button"
-                        variant={isSelected ? "primary" : "dark"}
+                        variant="primary"
                         size="md"
                         className="w-full"
                         onClick={() => {
@@ -798,7 +798,7 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
                   ) : (
                     <Button
                       href="#packages"
-                      variant="dark"
+                      variant="primary"
                       size="md"
                       className="w-full sm:w-auto"
                     >
