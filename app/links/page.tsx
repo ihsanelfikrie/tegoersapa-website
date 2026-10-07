@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PhotoboothLinktreeCard } from "@/components/sections/PhotoboothLinkTree";
+import HeroClouds from "@/components/ui/HeroClouds";
+import GrassyHill from "@/components/ui/GrassyHill";
+import PhotoboothLinktreeCard from "@/components/sections/PhotoboothLinkTree";
 
 export const metadata: Metadata = {
-  title: "Photobooth 🔗 Link-ByTS | Tegoer Sapa",
-  description: "Respect the moment, every second matter. Hub tautan resmi pemesanan, request frame, kendala photobox, dan media sosial Tegoer Sapa Photobooth.",
+  title: "Hub Tautan Resmi Photobooth | Tegoer Sapa",
+  description:
+    "Hub tautan resmi Tegoer Sapa Photobooth Banjarbaru: Booking Photobooth, Request Frame, Kendala Photobox, Instagram, TikTok & Website.",
   openGraph: {
-    title: "Photobooth — Tegoer Sapa",
+    title: "Hub Tautan Resmi — Tegoer Sapa Photobooth",
     description: "Respect the moment, every second matter.",
     url: "https://tegoersapa.com/links",
     images: [
@@ -22,41 +25,42 @@ export const metadata: Metadata = {
 
 export default function LinksPage() {
   return (
-    <main className="min-h-screen bg-[#06140d] bg-[radial-gradient(ellipse_at_top,_#0f3223_0%,_#05120b_70%,_#020905_100%)] text-white flex flex-col justify-between items-center px-4 py-8 sm:py-12 relative overflow-hidden">
-      {/* Decorative background glow circles */}
-      <div
-        aria-hidden="true"
-        className="absolute top-10 left-1/2 -translate-x-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none"
-      />
+    <div className="relative min-h-screen bg-brand-sky text-brand-dark overflow-x-hidden flex flex-col justify-between items-center px-4 pt-6 pb-32 sm:pb-40">
+      {/* Floating Animated Clouds Background */}
+      <HeroClouds />
 
-      {/* Top Bar Navigation */}
-      <div className="w-full max-w-md flex justify-between items-center mb-6 relative z-10">
+      {/* Top Header Bar Navigation */}
+      <header className="w-full max-w-md flex justify-between items-center mb-6 relative z-20 px-1">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-white/10 hover:bg-white text-white hover:text-brand-dark transition-all duration-200"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full font-black text-xs sm:text-sm bg-white text-brand-dark border-2 border-brand-dark shadow-[0_3px_0_#002716] hover:translate-y-0.5 hover:shadow-[0_1px_0_#002716] active:translate-y-1 active:shadow-none transition-all duration-150"
+          aria-label="Kembali ke website utama Tegoer Sapa"
         >
           <span>←</span>
           <span>Website Utama</span>
         </Link>
         <Link
           href="/tentang"
-          className="text-xs font-semibold text-emerald-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-black bg-white/90 hover:bg-white text-brand-dark border-2 border-brand-dark shadow-[0_3px_0_#002716] hover:translate-y-0.5 hover:shadow-[0_1px_0_#002716] active:translate-y-1 active:shadow-none transition-all duration-150"
         >
-          Tentang Kami
+          <span>Tentang Kami</span>
         </Link>
-      </div>
+      </header>
 
-      {/* Centered Linktree Card */}
-      <div className="w-full max-w-md my-auto relative z-10">
+      {/* Centered Tactile Linktree Card */}
+      <main className="w-full max-w-md my-auto relative z-20">
         <PhotoboothLinktreeCard />
-      </div>
+      </main>
 
-      {/* Footer Branding */}
-      <footer className="mt-8 relative z-10 text-center">
-        <p className="text-xs text-white/40 font-medium">
-          Tegoer Sapa • Banjarbaru, Kalimantan Selatan
+      {/* Footer Branding text above Grassy Hill */}
+      <footer className="mt-8 relative z-20 text-center">
+        <p className="text-xs font-black text-brand-dark/80 tracking-wide drop-shadow-xs">
+          Tegoer Sapa Photobooth • Banjarbaru, Kalimantan Selatan
         </p>
       </footer>
-    </main>
+
+      {/* Signature Animated Cartoon Grassy Hill at bottom */}
+      <GrassyHill className="h-28 sm:h-36 md:h-44" />
+    </div>
   );
 }

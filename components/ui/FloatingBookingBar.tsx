@@ -11,8 +11,8 @@ export default function FloatingBookingBar() {
   const { selectedPackage, selectedAddOns, totalCalculation, isHydrated, clearAll } =
     useBooking();
 
-  // Don't render on /booking page or if no package is selected, or before hydration
-  if (!isHydrated || !selectedPackage || pathname === "/booking") {
+  // Don't render on /booking, /links, or if no package is selected, or before hydration
+  if (!isHydrated || !selectedPackage || pathname === "/booking" || pathname === "/links" || pathname === "/link") {
     return null;
   }
 

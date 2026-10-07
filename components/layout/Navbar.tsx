@@ -121,6 +121,11 @@ export default function Navbar() {
   // Navbar berupa pill melayang di atas konten: pill terang untuk menu, pill gelap untuk logo.
   const isDarkNav = false;
 
+  // Halaman khusus bio-link / linktree memiliki top bar sticker tersendiri
+  if (pathname === "/links" || pathname === "/link") {
+    return null;
+  }
+
   return (
     <header
       ref={navbarRef}

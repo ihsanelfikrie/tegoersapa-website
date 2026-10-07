@@ -157,7 +157,7 @@ export default function OurStory() {
                 <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span>
               </Button>
               <Button
-                href="/tentang#linktree"
+                href="/links"
                 variant="stroke"
                 size="md"
                 className="w-full sm:w-auto text-xs"

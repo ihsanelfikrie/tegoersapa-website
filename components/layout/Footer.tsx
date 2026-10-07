@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { brand, contact } from "@/lib/content";
 
 /**
@@ -13,6 +14,13 @@ import { brand, contact } from "@/lib/content";
  * 4. Siluet bukit gelombang (wave dunes) di bagian dasar dan teks hak cipta terpusat di tengah.
  */
 export default function Footer() {
+  const pathname = usePathname();
+
+  // Halaman khusus bio-link / linktree menggunakan pemandangan hero mandiri
+  if (pathname === "/links" || pathname === "/link") {
+    return null;
+  }
+
   return (
     <footer className="relative w-full overflow-hidden bg-[#002716]">
       {/* ─── 1. TOP BRAND TAGLINE BANNER (Transisi Halus: Putih -> Hijau Muda -> Emerald Green) ─── */}
