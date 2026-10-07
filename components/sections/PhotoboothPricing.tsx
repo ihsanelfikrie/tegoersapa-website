@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   photoboothPackages,
@@ -15,15 +16,7 @@ interface PhotoboothPricingProps {
   showCategoryHeader?: boolean;
 }
 
-const BASE_PRESETS = [
-  { hours: 2, label: "2 Jam" },
-  { hours: 3, label: "3 Jam", popular: true },
-  { hours: 4, label: "4 Jam" },
-  { hours: 5, label: "5 Jam" },
-  { hours: 6, label: "6 Jam" },
-  { hours: 7, label: "7 Jam" },
-  { hours: 8, label: "8 Jam" },
-];
+const DURATION_PRESETS = [2, 3, 4, 5, 6] as const;
 
 function getPackagePricing(pkg: PhotoboothPackage, hours: number) {
   const exactTier = pkg.durations.find((d) => d.hours === hours);
@@ -67,7 +60,7 @@ export default function PhotoboothPricing({
   // Kategori: "all" (semua), "regular" (photobooth biasa), "bajaj" (bajaj keliling)
   const [activeCategory, setActiveCategory] = useState<"all" | "regular" | "bajaj">("all");
 
-  // Durasi acara dalam jam (default: 3 Jam, paling diminati)
+  // Durasi acara dalam jam (default: 3 Jam, paling umum dipilih)
   const [selectedHours, setSelectedHours] = useState<number>(3);
 
   // Filter paket berdasarkan kategori yang dipilih
@@ -82,136 +75,67 @@ export default function PhotoboothPricing({
 
   return (
     <div id="pricing-photobooth" className="space-y-6 sm:space-y-8">
-      {/* ─── Header & Kategori Filter ───────────────────────────── */}
+      {/* ─── Header & Filter Controls ───────────────────────────── */}
       {showCategoryHeader && (
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-3 border-b border-gray-100">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-4 border-b border-gray-100">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green bg-brand-green/10 px-2.5 py-0.5 rounded-full border border-brand-green/20">
-              Katalog Resmi
-            </span>
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-brand-dark tracking-tight mt-1.5">
-              Paket Photobooth & Bajaj
+            <h2 className="text-2xl sm:text-3xl font-black text-brand-dark tracking-tight">
+              Paket Photobooth &amp; Bajaj
             </h2>
-            <p className="text-xs sm:text-sm text-gray-500 font-medium mt-0.5">
-              Pilih tipe booth dan durasi acara Anda di bawah ini:
+            <p className="text-xs sm:text-sm text-gray-500 font-medium mt-1">
+              Pilihan cetak fisik instan unlimited &amp; soft file QR untuk acaramu.
             </p>
           </div>
 
-          {/* Filter Tab Kategori */}
-          <div className="flex items-center gap-1 p-1 bg-gray-100 rounded-2xl self-start sm:self-auto">
-            {[
-              { id: "all", label: "Semua (4)" },
-              { id: "regular", label: "Reguler (2)" },
-              { id: "bajaj", label: "Bajaj (2)" },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setActiveCategory(tab.id as typeof activeCategory)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  activeCategory === tab.id
-                    ? "bg-brand-dark text-white shadow-xs"
-                    : "text-gray-500 hover:text-brand-dark"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+          {/* Controls: Tipe Booth & Durasi (Clean, Modern & Flat) */}
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+            {/* Filter Tab Kategori */}
+            <div className="inline-flex p-1 bg-gray-100 rounded-xl">
+              {[
+                { id: "all", label: "Semua" },
+                { id: "regular", label: "Reguler" },
+                { id: "bajaj", label: "Bajaj" },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveCategory(tab.id as typeof activeCategory)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                    activeCategory === tab.id
+                      ? "bg-brand-dark text-white shadow-xs"
+                      : "text-gray-500 hover:text-brand-dark"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Segmented Selector Durasi (2 - 6 Jam sesuai pricelist) */}
+            <div className="inline-flex items-center p-1 bg-gray-100 rounded-xl">
+              <span className="text-[11px] font-bold text-gray-400 pl-2.5 pr-1.5 hidden sm:inline">
+                Durasi:
+              </span>
+              {DURATION_PRESETS.map((hrs) => (
+                <button
+                  key={hrs}
+                  type="button"
+                  onClick={() => setSelectedHours(hrs)}
+                  className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                    selectedHours === hrs
+                      ? "bg-brand-dark text-white shadow-xs"
+                      : "text-gray-600 hover:text-brand-dark"
+                  }`}
+                >
+                  {hrs} Jam
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       )}
 
-      {/* ─── Selector Durasi Acara (Tersinkronisasi & Fleksibel) ───── */}
-      <div className="bg-brand-cream/50 border border-brand-green/20 p-3 sm:p-4 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-brand-green/10 text-brand-dark flex items-center justify-center shrink-0" aria-hidden="true">
-            <svg className="w-4 h-4 text-brand-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
-              <circle cx="12" cy="12" r="9" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
-            </svg>
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs sm:text-sm font-black text-brand-dark block">
-                Pilih Durasi Acara
-              </span>
-              {selectedHours > 6 && (
-                <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-brand-green text-white shadow-xs">
-                  +{selectedHours - 6} Jam Tambahan
-                </span>
-              )}
-            </div>
-            <span className="text-[11px] text-gray-500 font-medium">
-              Harga otomatis disesuaikan (tersedia 2 s/d 12 jam operasional).
-            </span>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-0.5 md:pb-0">
-          <div className="flex items-center gap-1.5 shrink-0">
-            {BASE_PRESETS.map((d) => (
-              <button
-                key={d.hours}
-                type="button"
-                onClick={() => setSelectedHours(d.hours)}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all cursor-pointer ${
-                  selectedHours === d.hours
-                    ? "bg-brand-dark text-white shadow-sm ring-2 ring-brand-green/30 scale-102"
-                    : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-100"
-                }`}
-              >
-                <span>{d.label}</span>
-                {d.popular && (
-                  <span
-                    className={`text-[9px] font-black uppercase tracking-wider px-1.5 py-0.2 rounded-md ${
-                      selectedHours === d.hours
-                        ? "bg-brand-green text-white"
-                        : "bg-brand-green/15 text-brand-dark"
-                    }`}
-                  >
-                    Favorit
-                  </span>
-                )}
-              </button>
-            ))}
-
-            {selectedHours > 8 && (
-              <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-extrabold bg-brand-dark text-white shadow-sm ring-2 ring-brand-green/30 scale-102 whitespace-nowrap">
-                <span>{selectedHours} Jam</span>
-                <span className="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.2 rounded-md bg-brand-green text-white">
-                  Kustom
-                </span>
-              </span>
-            )}
-          </div>
-
-          {/* Stepper Tambah/Kurangi Jam */}
-          <div className="flex items-center gap-1 pl-2 border-l border-brand-green/20 shrink-0">
-            <button
-              type="button"
-              onClick={() => setSelectedHours((prev) => Math.max(2, prev - 1))}
-              disabled={selectedHours <= 2}
-              className="w-8 h-8 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-black text-sm cursor-pointer"
-              title="Kurangi 1 jam"
-              aria-label="Kurangi 1 jam"
-            >
-              −
-            </button>
-            <button
-              type="button"
-              onClick={() => setSelectedHours((prev) => Math.min(12, prev + 1))}
-              disabled={selectedHours >= 12}
-              className="inline-flex items-center gap-1 px-2.5 h-8 rounded-xl bg-brand-green hover:bg-brand-green/90 text-white font-extrabold text-xs transition-all shadow-xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-              title="Tambah 1 jam operasional"
-            >
-              <span className="text-sm font-black">+</span>
-              <span className="hidden sm:inline">Tambah Jam</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* ─── Kartu Paket Harga (Jelas, Terbaca, Tanpa Kerumitan) ───── */}
+      {/* ─── Kartu Paket Harga ────────────────────────────────────── */}
       <div
         className={`grid gap-4 sm:gap-6 ${
           filteredPackages.length === 2
@@ -236,28 +160,14 @@ export default function PhotoboothPricing({
               className="flex flex-col justify-between rounded-3xl p-5 sm:p-6 transition-all duration-200 border-2 border-gray-200 hover:border-gray-300 bg-white shadow-xs"
             >
               <div>
-                {/* Header Tag / Ribbon */}
+                {/* Header Tag */}
                 <div className="flex items-center justify-between gap-2 mb-3 min-w-0">
                   <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-gray-100 text-gray-600 truncate min-w-0">
                     {pkg.category}
                   </span>
-                  {isPrint ? (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-brand-dark text-white border border-brand-green/30 whitespace-nowrap shrink-0 shadow-xs">
-                      <svg
-                        className="w-2.5 h-2.5 text-brand-green shrink-0"
-                        viewBox="0 0 16 16"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path d="M8 0L9.79 6.21L16 8L9.79 9.79L8 16L6.21 9.79L0 8L6.21 6.21L8 0Z" />
-                      </svg>
-                      <span>Paling Dipilih</span>
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-500 whitespace-nowrap shrink-0">
-                      Hemat Digital
-                    </span>
-                  )}
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-brand-green/10 text-brand-green">
+                    {isPrint ? "Unlimited Print" : "Soft File QR"}
+                  </span>
                 </div>
 
                 {/* Nama Paket */}
@@ -437,26 +347,41 @@ export default function PhotoboothPricing({
       {/* ─── Informasi Pendukung: Backdrop, Format Cetak, & Alur ─── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
         {/* 1. Backdrop */}
-        <div className="p-4 sm:p-5 rounded-2xl bg-white border border-gray-200">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-brand-green block mb-1">
-            Fasilitas Gratis
-          </span>
-          <h4 className="text-sm font-black text-brand-dark mb-2">
-            5 Pilihan Warna Backdrop
-          </h4>
-          <div className="flex items-center gap-2 mt-2">
-            {photoboothBackdrops.map((b) => (
-              <span
-                key={b.id}
-                title={b.name}
-                className="w-6 h-6 rounded-full border border-black/20 shadow-2xs"
-                style={{ backgroundColor: b.colorHex }}
-              />
-            ))}
+        <div className="p-4 sm:p-5 rounded-2xl bg-white border border-gray-200 flex flex-col justify-between">
+          <div>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-brand-green block mb-1">
+              Fasilitas Gratis
+            </span>
+            <h4 className="text-sm font-black text-brand-dark mb-1">
+              5 Pilihan Backdrop
+            </h4>
+            <p className="text-[11px] text-gray-500 font-medium mb-3">
+              Kain satin premium elegan untuk melengkapi tema acaramu:
+            </p>
+
+            {/* 5 Real Visual Backdrop Swatches */}
+            <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
+              {photoboothBackdrops.map((b) => (
+                <div
+                  key={b.id}
+                  className="group/backdrop flex flex-col items-center text-center"
+                >
+                  <div className="relative w-full aspect-square rounded-xl overflow-hidden border border-gray-200 bg-gray-50 transition-transform duration-200 group-hover/backdrop:scale-105 shadow-2xs">
+                    <Image
+                      src={b.image}
+                      alt={`Pilihan Backdrop ${b.name}`}
+                      fill
+                      sizes="80px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <span className="text-[9px] sm:text-[10px] font-bold text-gray-700 mt-1 leading-tight truncate w-full">
+                    {b.name}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
-          <p className="text-[11px] text-gray-500 font-medium mt-2">
-            Merah, Forest Green, High School Blue, Classic Navy, & Warm Cream.
-          </p>
         </div>
 
         {/* 2. Format Cetak */}

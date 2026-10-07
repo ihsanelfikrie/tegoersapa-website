@@ -87,7 +87,7 @@ Sensasi berfoto unik langsung di dalam armada Bajaj hijau ikonik Tegoer Sapa!
 ---
 
 ### C. Pilihan Backdrop & Layout Overlay
-- **Pilihan Backdrop:** Merah, Hijau, Biru High School, Biru Navy, Cream
+- **Pilihan Backdrop:** Merah, Pink, Gold / Champagne, Hijau, Biru
 - **Layout Overlay STRIP Photo Print (2R):** 2 pcs per cetak, Special Custom Design (Template A1 – A10)
 - **Layout Overlay 4R Photo Print:** 1 pcs per cetak, Special Custom Design (Template B1 – B9)
 

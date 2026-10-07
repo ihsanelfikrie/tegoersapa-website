@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tegoer Sapa — Website Redesign
 
-## Getting Started
+> *"Respect The Moment, Every Second Matters"*
 
-First, run the development server:
+Website resmi **Tegoer Sapa** — studio jasa photobooth, photobox, dan professional photography untuk berbagai kebutuhan event (wedding, birthday, graduation, corporate gathering, studio photoshoot, dan Bajaj Photobooth 'Tegoer Keliling').
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🚀 Tech Stack
+
+- **Framework:** [Next.js 16](https://nextjs.org) (App Router, Webpack build)
+- **Library UI:** [React 19](https://react.dev)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com) + Custom CSS Theme Tokens
+- **Animasi:** [GSAP 3](https://gsap.com) + `@gsap/react` (ScrollTrigger, Flip)
+- **Bahasa:** TypeScript 5
+
+---
+
+## 📁 Struktur Direktori
+
+```text
+tegoersapa-website/
+├── app/                  # Route & halaman Next.js App Router
+│   ├── booking/          # Halaman booking terpadu
+│   ├── gallery/          # Halaman galeri foto & filter dinamis
+│   ├── kontak/           # Halaman kontak resmi
+│   ├── link(s)/          # Tautan cepat / Linktree photobooth & studio
+│   ├── photobooth/       # Halaman layanan photobooth & bajaj photobooth
+│   ├── photography/      # Halaman layanan fotografi profesional
+│   ├── pricelist/        # Halaman daftar harga paket
+│   └── tentang/          # Halaman profil & cerita Tegoer Sapa
+├── components/           # Komponen React modular
+│   ├── layout/           # Navbar, Footer
+│   ├── sections/         # Section halaman (Hero, Services, Stories, dll.)
+│   └── ui/               # Primitif UI (Button, Cursor, Marquee, dll.)
+├── docs/                 # Dokumentasi proyek & referensi harga
+│   ├── pricelist.md      # Data paket harga resmi
+│   └── references/       # Berkas referensi mentah (katalog PDF)
+├── lib/                  # Utilitas, konfigurasi animasi, & data konten
+│   ├── content.ts        # Data sentral teks & paket layanan
+│   ├── gsap.ts           # Inisialisasi plugin GSAP
+│   └── whatsapp.ts       # Generator pesan & deep-link WhatsApp
+└── public/               # Asset statis publik
+    ├── brand/            # Logo & maskot vektor
+    ├── fonts/            # Custom web fonts (Hoss Round)
+    └── images/           # Foto galeri, pricelist, & photobooth
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Menjalankan Proyek Lokal
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Instal dependensi:**
+   ```bash
+   npm install
+   ```
 
-## Learn More
+2. **Jalankan development server:**
+   ```bash
+   npm run dev
+   ```
+   Buka [http://localhost:3000](http://localhost:3000) di browser.
 
-To learn more about Next.js, take a look at the following resources:
+3. **Build untuk produksi:**
+   ```bash
+   npm run build
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Linting kode:**
+   ```bash
+   npm run lint
+   ```

@@ -121,7 +121,7 @@ function PricelistContent() {
         {/* ─── TAB 2: OUTDOOR GRADUATION PRICELIST ──────────────── */}
         {activeTab === "graduation" && (
           <div className="animate-in fade-in duration-300 space-y-12">
-            {/* Info Note according to pricelist.md */}
+            {/* Info Note according to docs/pricelist.md */}
             <div className="p-4 sm:p-5 rounded-2xl bg-brand-cream/60 border border-brand-green/20 max-w-3xl mx-auto flex items-start gap-3.5 text-xs sm:text-sm text-brand-dark">
               <span className="w-5 h-5 rounded-full bg-brand-green/15 text-brand-green flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5">
                 i

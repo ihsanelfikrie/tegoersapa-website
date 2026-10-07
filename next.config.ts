@@ -11,7 +11,7 @@ const cspHeader = `
   object-src 'none';
   base-uri 'self';
   form-action 'self' https://api.whatsapp.com https://wa.me;
-  frame-src 'none';
+  frame-src 'self' https://www.google.com https://maps.google.com;
   frame-ancestors 'none';
   manifest-src 'self';
   worker-src 'self' blob:;

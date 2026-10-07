@@ -15,14 +15,41 @@ export type PhotoboxVenueSlug = "sirkem" | "kean" | "hatara" | "nolima" | "aimee
 export interface PhotoboxVenueMeta {
   id: PhotoboxVenueSlug;
   label: string;
+  mapsUrl?: string;
+  address?: string;
 }
 
 export const PHOTOBOX_VENUES: readonly PhotoboxVenueMeta[] = [
-  { id: "sirkem", label: "Sirkem" },
-  { id: "kean", label: "Kean" },
-  { id: "hatara", label: "Hatara" },
-  { id: "nolima", label: "Nolima" },
-  { id: "aimee", label: "Aimee" },
+  {
+    id: "sirkem",
+    label: "Sirkem",
+    mapsUrl: "https://maps.app.goo.gl/GPzjBY3dBXuUr5ESA",
+    address: "Loktabat Utara, Banjarbaru",
+  },
+  {
+    id: "kean",
+    label: "Kean",
+    mapsUrl: "https://share.google/ypoJPLN7wFOWoAoF0",
+    address: "Banjarbaru, Kalimantan Selatan",
+  },
+  {
+    id: "hatara",
+    label: "Hatara",
+    mapsUrl: "https://maps.app.goo.gl/vi8YYLQFtV66T2Ft9",
+    address: "Guntung Paikat, Banjarbaru",
+  },
+  {
+    id: "nolima",
+    label: "Nolima",
+    mapsUrl: "https://share.google/qLC2FpGFKW0oyvTpm",
+    address: "Banjarmasin, Kalimantan Selatan",
+  },
+  {
+    id: "aimee",
+    label: "Aimee",
+    mapsUrl: "https://share.google/5MfvXeEBPDw0aRFjW",
+    address: "Banjarbaru, Kalimantan Selatan",
+  },
 ] as const;
 
 export interface PhotoboxCustomPhoto {

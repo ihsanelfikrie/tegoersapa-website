@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useBooking } from "@/lib/BookingContext";
-import { contact } from "@/lib/content";
+import { contact, photoboothBackdrops } from "@/lib/content";
 import HeroClouds from "@/components/ui/HeroClouds";
 import GrassyHill from "@/components/ui/GrassyHill";
 import Button from "@/components/ui/Button";
@@ -688,28 +689,36 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                             Pilihan Backdrop & Format Cetak (Opsional)
                           </h4>
                         </div>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-green/10 text-brand-green border border-brand-green/20">
-                          Katalog Resmi
-                        </span>
                       </div>
 
                       <div>
                         <label className="block text-xs font-bold text-brand-dark mb-1.5">
                           Pilihan Warna Backdrop:
                         </label>
-                        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                          {["Merah", "Hijau", "Biru High School", "Biru Navy", "Cream"].map((color) => (
+                        <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
+                          {photoboothBackdrops.map((b) => (
                             <button
-                              key={color}
+                              key={b.id}
                               type="button"
-                              onClick={() => setPhotoboothPrefs((prev) => ({ ...prev, backdrop: color }))}
-                              className={`py-2 px-1 text-center rounded-xl text-xs font-bold transition-all ${
-                                photoboothPrefs.backdrop === color
+                              onClick={() => setPhotoboothPrefs((prev) => ({ ...prev, backdrop: b.name }))}
+                              className={`p-1.5 rounded-xl flex flex-col items-center text-center transition-all ${
+                                photoboothPrefs.backdrop === b.name
                                   ? "bg-brand-dark text-white ring-2 ring-brand-green shadow-xs"
-                                  : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-100"
+                                  : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
                               }`}
                             >
-                              {color}
+                              <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-1">
+                                <Image
+                                  src={b.image}
+                                  alt={b.name}
+                                  fill
+                                  sizes="60px"
+                                  className="object-cover"
+                                />
+                              </div>
+                              <span className="text-[9px] sm:text-[10px] font-bold truncate w-full">
+                                {b.name}
+                              </span>
                             </button>
                           ))}
                         </div>

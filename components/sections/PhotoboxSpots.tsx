@@ -13,7 +13,8 @@ const photoboxVenues = [
     model: "/images/venues/sirkem-box.webp",
     href: "/gallery?kategori=photobox&sub=sirkem",
     tag: "Warkop Sirkem",
-    delay: "0s",
+    city: "Banjarbaru",
+    mapsUrl: "https://maps.app.goo.gl/GPzjBY3dBXuUr5ESA",
   },
   {
     id: "kean",
@@ -23,7 +24,8 @@ const photoboxVenues = [
     model: "/images/venues/kean-box.webp",
     href: "/gallery?kategori=photobox&sub=kean",
     tag: "Kéan Coffee",
-    delay: "0.5s",
+    city: "Banjarbaru",
+    mapsUrl: "https://share.google/ypoJPLN7wFOWoAoF0",
   },
   {
     id: "hatara",
@@ -33,7 +35,8 @@ const photoboxVenues = [
     model: "/images/venues/hatara-box.webp",
     href: "/gallery?kategori=photobox&sub=hatara",
     tag: "Hatara Coffee",
-    delay: "1.0s",
+    city: "Banjarbaru",
+    mapsUrl: "https://maps.app.goo.gl/vi8YYLQFtV66T2Ft9",
   },
   {
     id: "aimee",
@@ -43,7 +46,8 @@ const photoboxVenues = [
     model: "/images/venues/aime-box.webp",
     href: "/gallery?kategori=photobox&sub=aimee",
     tag: "Aime Coffee",
-    delay: "1.5s",
+    city: "Banjarbaru",
+    mapsUrl: "https://share.google/5MfvXeEBPDw0aRFjW",
   },
   {
     id: "nolima",
@@ -53,93 +57,108 @@ const photoboxVenues = [
     model: "/images/venues/nolima-box.webp",
     href: "/gallery?kategori=photobox&sub=nolima",
     tag: "NoLima",
-    delay: "2.0s",
+    city: "Banjarmasin",
+    mapsUrl: "https://share.google/qLC2FpGFKW0oyvTpm",
   },
 ] as const;
 
 export default function PhotoboxSpots() {
   return (
     <section
-      className="relative bg-white py-12 sm:py-18 lg:py-24 border-b border-gray-100 overflow-hidden"
+      id="photobox-spots"
+      className="relative bg-white pt-24 sm:pt-20 lg:pt-24 pb-28 sm:pb-20 lg:pb-24 border-b border-gray-100 overflow-hidden scroll-mt-24"
       aria-label="Lokasi Photobox Tegoer Sapa"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* ─── Headline persis seperti referensi ───────────────────── */}
+        {/* ─── Headline: Aman dari Overlap Navbar Floating di Layar HP ─── */}
         <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-          <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-black tracking-tight text-[#0f432a]">
-            Photobox Kami Tersedia di
+          <h2 className="text-xl sm:text-3xl lg:text-[40px] font-black tracking-tight text-[#0f432a] leading-snug px-2">
+            Temukan Spot Photobox di{" "}
+            <span className="text-[#1eab73] block sm:inline mt-0.5 sm:mt-0">
+              Coffee Shop Favoritmu
+            </span>
           </h2>
+          <p className="mt-2 text-xs sm:text-sm text-gray-500 font-medium max-w-md mx-auto px-4">
+            Hadir di 5 titik hangout pilihan di Banjarbaru &amp; Banjarmasin
+          </p>
         </div>
 
-        {/* ─── 5 3D Model Box & Venue Logo Grid ───────────────────── */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 sm:gap-6 lg:gap-8 items-end justify-center">
+        {/* ─── 5 3D Model Box & Logo Grid: Grounded & Proporsional di Mobile & Desktop ─── */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-9 sm:gap-6 lg:gap-8 items-end justify-center">
           {photoboxVenues.map((venue, idx) => (
-            <Link
+            <div
               key={venue.id}
-              href={venue.href}
               className={[
-                "group relative flex flex-col items-center justify-end text-center cursor-pointer transition-all duration-300",
-                idx === 4 ? "col-span-2 sm:col-span-1 max-w-[240px] sm:max-w-none mx-auto w-full" : "",
+                "group relative flex flex-col items-center justify-end text-center transition-all duration-300",
+                idx === 4
+                  ? "col-span-2 sm:col-span-1 max-w-[145px] sm:max-w-none mx-auto w-full"
+                  : "",
               ].join(" ")}
             >
-              {/* 3D Isometric Booth Model */}
-              <div className="relative w-full aspect-square max-w-[190px] sm:max-w-[220px] lg:max-w-[240px] flex items-center justify-center mb-3 sm:mb-5">
-                <div
-                  className="booth-float-anim relative w-full h-full flex items-center justify-center"
-                  style={{ animationDelay: venue.delay }}
-                >
+              {/* 3D Booth & Logo (Klik untuk ke Galeri) */}
+              <Link
+                href={venue.href}
+                className="w-full flex flex-col items-center justify-end cursor-pointer focus:outline-none"
+                aria-label={`Buka galeri photobox ${venue.name}`}
+              >
+                {/* 3D Isometric Booth Model (Statis & Bersih Tanpa Shadow) */}
+                <div className="relative w-full aspect-square max-w-[140px] xs:max-w-[145px] sm:max-w-[190px] lg:max-w-[220px] flex items-center justify-center mb-2.5 sm:mb-4">
+                  {/* Booth 3D Statis (Tanpa Animasi Floating Melayang Naik-Turun & Tanpa Shadow) */}
+                  <div className="relative w-full h-full flex items-center justify-center">
+                    <Image
+                      src={venue.model}
+                      alt={`Model 3D Photobox ${venue.name}`}
+                      fill
+                      sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 20vw"
+                      className="object-contain group-hover:scale-105 transition-transform duration-300 ease-out"
+                      priority={idx < 2}
+                    />
+                  </div>
+                </div>
+
+                {/* Venue Logo Container */}
+                <div className="relative w-full h-8 sm:h-11 flex items-center justify-center px-1 my-0.5">
                   <Image
-                    src={venue.model}
-                    alt={`Model 3D Photobox ${venue.name}`}
+                    src={venue.logo}
+                    alt={`Logo ${venue.name}`}
                     fill
-                    sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 20vw"
-                    className="object-contain group-hover:scale-108 group-hover:-translate-y-2 transition-transform duration-500 ease-out"
-                    priority={idx < 3}
+                    sizes="180px"
+                    className="object-contain transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
-              </div>
+              </Link>
 
-              {/* Venue Logo Container */}
-              <div className="relative w-full h-11 sm:h-14 flex items-center justify-center px-2">
-                <Image
-                  src={venue.logo}
-                  alt={`Logo ${venue.name}`}
-                  fill
-                  sizes="180px"
-                  className="object-contain transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
-
-              {/* Micro Hover Cue */}
-              <span className="mt-2 text-[11px] font-bold text-[#1eab73] opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-1 group-hover:translate-y-0 inline-flex items-center gap-1">
-                <span>Buka Galeri</span>
-                <span>→</span>
-              </span>
-            </Link>
+              {/* Teks Link Google Maps di Bawah Logo */}
+              <a
+                href={venue.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 text-[11px] sm:text-xs font-bold text-[#1eab73] hover:text-[#0f432a] hover:underline transition-colors inline-flex items-center gap-1 py-0.5"
+                title={`Buka rute ${venue.name} di Google Maps`}
+              >
+                <span>Buka di Google Maps</span>
+                <span className="text-[10px] sm:text-[11px]">↗</span>
+              </a>
+            </div>
           ))}
         </div>
-      </div>
 
-      <style jsx>{`
-        @keyframes boothFloat {
-          0%,
-          100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-6px);
-          }
-        }
-        .booth-float-anim {
-          animation: boothFloat 4.2s ease-in-out infinite;
-          will-change: transform;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .booth-float-anim {
-            animation: none !important;
-          }
-        }
-      `}</style>
+        {/* ─── Paragraf Teks & CTA (Aman dari Tutupan Floating Booking Bar) ─── */}
+        <div className="mt-12 sm:mt-16 text-center max-w-2xl mx-auto px-4">
+          <p className="text-xs sm:text-sm md:text-base text-gray-600 font-medium leading-relaxed">
+            Abadikan momen seru bareng teman, pasangan, atau keluarga di bilik photobox privat kami. Cetak foto instan dalam hitungan detik dengan berbagai pilihan desain strip frame eksklusif.
+          </p>
+          <div className="mt-5 sm:mt-6 flex items-center justify-center">
+            <Link
+              href="/gallery?kategori=photobox"
+              className="inline-flex items-center gap-2 px-6 py-2.5 sm:py-3 rounded-full bg-[#0f432a] hover:bg-[#1eab73] text-white text-xs sm:text-sm font-bold shadow-xs hover:shadow-md transition-all duration-300"
+            >
+              <span>Lihat Semua Foto Photobox</span>
+              <span>→</span>
+            </Link>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

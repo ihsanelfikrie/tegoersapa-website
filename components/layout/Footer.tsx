@@ -23,72 +23,30 @@ export default function Footer() {
 
   return (
     <footer className="relative w-full overflow-hidden bg-[#002716]">
-      {/* ─── 1. TOP BRAND TAGLINE BANNER (Transisi Halus: Putih -> Hijau Muda -> Emerald Green) ─── */}
+      {/* ─── 1. TOP BRAND TAGLINE BANNER ─── */}
       <section
-        className="relative text-white pt-10 sm:pt-16 lg:pt-24 pb-8 sm:pb-14 lg:pb-16 overflow-hidden text-center"
+        className="relative text-white pt-10 sm:pt-14 lg:pt-18 pb-8 sm:pb-12 lg:pb-14 overflow-hidden text-center"
         style={{
           background:
-            "linear-gradient(to bottom, #ffffff 0%, #edf9f3 5%, #a8eed0 12%, #38ca86 20%, #039255 28%, #027443 38%, #015e36 52%, #015330 75%, #015330 100%)",
+            pathname === "/"
+              ? "#0f432a"
+              : "linear-gradient(to bottom, #ffffff 0%, #edf9f3 5%, #a8eed0 12%, #38ca86 20%, #039255 28%, #027443 38%, #015e36 52%, #015330 75%, #015330 100%)",
         }}
       >
-        {/* Ambient Decorative Looping Ribbon / Torus Graphic ("Melingkar" sesuai referensi) */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
-          <svg
-            className="w-full h-full min-w-[900px] object-cover -translate-x-1/2 sm:translate-x-0 left-1/2 sm:left-0 absolute top-0"
-            viewBox="0 0 1440 380"
-            fill="none"
-            preserveAspectRatio="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <linearGradient id="melingkarGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.20" />
-                <stop offset="50%" stopColor="#c3f4f7" stopOpacity="0.14" />
-                <stop offset="100%" stopColor="#3aaa35" stopOpacity="0.08" />
-              </linearGradient>
-              <linearGradient id="melingkarGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.18" />
-                <stop offset="60%" stopColor="#ffffff" stopOpacity="0.10" />
-                <stop offset="100%" stopColor="#3aaa35" stopOpacity="0.05" />
-              </linearGradient>
-            </defs>
-
-            {/* Pita tabung melengkung dari kiri */}
-            <path
-              d="M-80,-20 C180,120 340,240 680,280"
-              stroke="url(#melingkarGrad1)"
-              strokeWidth="110"
-              strokeLinecap="round"
-            />
-            {/* Busur penyambung di belakang */}
-            <path
-              d="M480,260 C700,330 900,280 1060,200"
-              stroke="url(#melingkarGrad1)"
-              strokeWidth="95"
-              strokeLinecap="round"
-            />
-            {/* Lingkaran cincin melingkar besar di sisi kanan */}
-            <ellipse
-              cx="1080"
-              cy="130"
-              rx="220"
-              ry="165"
-              transform="rotate(-18 1080 130)"
-              stroke="url(#melingkarGrad2)"
-              strokeWidth="110"
-            />
-          </svg>
-        </div>
-
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 z-10 py-2 sm:py-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] font-black text-white tracking-tight leading-tight sm:leading-snug max-w-2xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.18)]">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] font-black text-white tracking-tight leading-tight sm:leading-snug max-w-2xl mx-auto">
             &ldquo;{brand.tagline}&rdquo;
           </h2>
         </div>
       </section>
 
       {/* ─── 2. DRAMATIC DIPPING CURVE TRANSITION ───────────────────────── */}
-      <div className="relative w-full overflow-hidden leading-none -mt-px bg-[#015330]">
+      <div
+        className={[
+          "relative w-full overflow-hidden leading-none -mt-px",
+          pathname === "/" ? "bg-[#0f432a]" : "bg-[#015330]",
+        ].join(" ")}
+      >
         <svg
           viewBox="0 0 1440 140"
           fill="none"

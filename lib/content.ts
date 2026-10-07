@@ -595,14 +595,45 @@ export type PhotoboothBackdrop = {
   name: string;
   colorHex: string;
   previewBg: string;
+  image: string;
 };
 
 export const photoboothBackdrops: PhotoboothBackdrop[] = [
-  { id: "merah", name: "Merah", colorHex: "#991B1B", previewBg: "from-red-800 to-red-950" },
-  { id: "hijau", name: "Hijau", colorHex: "#064E3B", previewBg: "from-emerald-800 to-emerald-950" },
-  { id: "biru-highschool", name: "Biru High School", colorHex: "#1D4ED8", previewBg: "from-blue-600 to-sky-900" },
-  { id: "biru-navy", name: "Biru Navy", colorHex: "#0F172A", previewBg: "from-slate-900 to-indigo-950" },
-  { id: "cream", name: "Cream", colorHex: "#E2D9C8", previewBg: "from-amber-100 to-stone-300" },
+  {
+    id: "merah",
+    name: "Merah",
+    colorHex: "#991B1B",
+    previewBg: "from-red-800 to-red-950",
+    image: "/images/photobooth/backdrops/backdrop-1.png",
+  },
+  {
+    id: "pink",
+    name: "Pink",
+    colorHex: "#DB2777",
+    previewBg: "from-pink-500 to-rose-700",
+    image: "/images/photobooth/backdrops/backdrop-2.png",
+  },
+  {
+    id: "gold",
+    name: "Gold / Champagne",
+    colorHex: "#D97706",
+    previewBg: "from-amber-500 to-yellow-800",
+    image: "/images/photobooth/backdrops/backdrop-3.png",
+  },
+  {
+    id: "hijau",
+    name: "Hijau",
+    colorHex: "#064E3B",
+    previewBg: "from-emerald-800 to-emerald-950",
+    image: "/images/photobooth/backdrops/backdrop-4.png",
+  },
+  {
+    id: "biru",
+    name: "Biru",
+    colorHex: "#1D4ED8",
+    previewBg: "from-blue-600 to-sky-900",
+    image: "/images/photobooth/backdrops/backdrop-5.png",
+  },
 ];
 
 // Pilihan Layout Overlay
@@ -708,7 +739,7 @@ export type PricePackage = {
 };
 
 export const pricelistPackages: PricePackage[] = [
-  // ── Outdoor Graduation (Lengkap sesuai pricelist.md) ───────────────────
+  // ── Outdoor Graduation (Lengkap sesuai docs/pricelist.md) ───────────────────
   {
     id: "outdoor-basic",
     nama: "Basic",
