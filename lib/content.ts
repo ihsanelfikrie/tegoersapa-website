@@ -79,10 +79,16 @@ export const navLinks: readonly NavItem[] = [
         href: "/photobooth#services",
         description: "Photobox instan & layanan inovasi coming soon",
       },
+      {
+        label: "Hub Tautan Resmi (Bio Link)",
+        href: "/links",
+        description: "Pemesanan, request frame, kendala photobox, & medsos",
+      },
     ],
   },
   { label: "Pricelist", href: "/pricelist" },
   { label: "Gallery", href: "/gallery" },
+  { label: "Links", href: "/links" },
   { label: "Tentang", href: "/tentang" },
   { label: "Kontak", href: "/kontak" },
 ] as const;

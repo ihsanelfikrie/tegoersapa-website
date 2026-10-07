@@ -25,27 +25,22 @@ export const metadata: Metadata = {
 
 export default function LinksPage() {
   return (
-    <div className="relative min-h-screen bg-brand-sky text-brand-dark overflow-x-hidden flex flex-col justify-between items-center px-4 pt-6 pb-32 sm:pb-40">
+    <div className="relative min-h-screen bg-brand-sky text-brand-dark overflow-x-hidden flex flex-col justify-between items-center px-4 pt-24 sm:pt-28 md:pt-32 pb-32 sm:pb-40">
       {/* Floating Animated Clouds Background */}
       <HeroClouds />
 
-      {/* Top Header Bar Navigation */}
-      <header className="w-full max-w-md flex justify-between items-center mb-6 relative z-20 px-1">
+      {/* Top Breadcrumb / Sub-bar */}
+      <div className="w-full max-w-md flex justify-between items-center mb-5 relative z-20 px-1">
+        <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-white text-brand-dark border-2 border-brand-dark shadow-[0_2px_0_#002716]">
+          🔗 Hub Tautan Resmi
+        </span>
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full font-black text-xs sm:text-sm bg-white text-brand-dark border-2 border-brand-dark shadow-[0_3px_0_#002716] hover:translate-y-0.5 hover:shadow-[0_1px_0_#002716] active:translate-y-1 active:shadow-none transition-all duration-150"
-          aria-label="Kembali ke website utama Tegoer Sapa"
+          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-white/90 hover:bg-white text-brand-dark border-2 border-brand-dark shadow-[0_2px_0_#002716] hover:translate-y-0.5 active:translate-y-1 transition-all"
         >
-          <span>←</span>
-          <span>Website Utama</span>
+          <span>← Beranda</span>
         </Link>
-        <Link
-          href="/tentang"
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-black bg-white/90 hover:bg-white text-brand-dark border-2 border-brand-dark shadow-[0_3px_0_#002716] hover:translate-y-0.5 hover:shadow-[0_1px_0_#002716] active:translate-y-1 active:shadow-none transition-all duration-150"
-        >
-          <span>Tentang Kami</span>
-        </Link>
-      </header>
+      </div>
 
       {/* Centered Tactile Linktree Card */}
       <main className="w-full max-w-md my-auto relative z-20">

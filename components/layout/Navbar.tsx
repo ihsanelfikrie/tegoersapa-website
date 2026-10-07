@@ -121,11 +121,6 @@ export default function Navbar() {
   // Navbar berupa pill melayang di atas konten: pill terang untuk menu, pill gelap untuk logo.
   const isDarkNav = false;
 
-  // Halaman khusus bio-link / linktree memiliki top bar sticker tersendiri
-  if (pathname === "/links" || pathname === "/link") {
-    return null;
-  }
-
   return (
     <header
       ref={navbarRef}
@@ -160,7 +155,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop navigation links */}
-          <ul className="pointer-events-auto hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2 p-1.5 rounded-full bg-white border border-gray-200 border-b-[3px] border-b-gray-300">
+          <ul className="pointer-events-auto hidden md:flex items-center gap-0.5 lg:gap-1 absolute left-1/2 -translate-x-1/2 p-1.5 rounded-full bg-white border border-gray-200 border-b-[3px] border-b-gray-300">
             {navLinks.map((link) => {
               const active = isActive(link.href);
               const hasSub = Boolean(link.subItems && link.subItems.length > 0);
@@ -170,7 +165,7 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     className={[
-                      "px-3.5 py-2 rounded-full text-sm font-semibold tracking-wide transition-colors duration-200 flex items-center gap-1.5",
+                      "px-2.5 lg:px-3.5 py-1.5 lg:py-2 rounded-full text-xs lg:text-sm font-semibold tracking-wide transition-colors duration-200 flex items-center gap-1 lg:gap-1.5",
                       active
                         ? "bg-brand-dark text-white"
                         : "text-brand-dark hover:bg-brand-green/15",
