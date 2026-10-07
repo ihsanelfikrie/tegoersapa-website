@@ -596,6 +596,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                         id="tanggal"
                         name="tanggal"
                         min={todayDate}
+                        suppressHydrationWarning
                         value={formData.tanggal}
                         onChange={handleChange}
                         className={[
