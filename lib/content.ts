@@ -75,9 +75,9 @@ export const navLinks: readonly NavItem[] = [
         description: "Pricelist resmi No Print & Unlimited Print (2–6 Jam)",
       },
       {
-        label: "Photobox & Mingle",
+        label: "Photobox & Upcoming (Mingle / Barcode)",
         href: "/photobooth#services",
-        description: "Self-photo box & fotografer keliling",
+        description: "Photobox instan & layanan inovasi coming soon",
       },
     ],
   },
@@ -201,17 +201,17 @@ export const services = [
   },
   {
     id: "mingle-photobooth",
-    title: "Mingle Photobooth",
+    title: "Mingle Photobooth (Coming Soon)",
     description:
-      "Fotografer keliling interaktif di tengah tamu undangan dengan cetak instan atau digital sharing langsung di tempat.",
-    href: "/photobooth#mingle",
+      "Fotografer keliling interaktif di tengah tamu undangan dengan cetak instan atau digital sharing langsung di tempat (Segera Hadir).",
+    href: "/photobooth#services",
   },
   {
     id: "photo-barcode",
-    title: "Photo Barcode",
+    title: "Photo Barcode (Coming Soon)",
     description:
-      "Solusi akses dan unduh hasil foto acara secara cepat, praktis, dan instan via scan barcode personal.",
-    href: "/photobooth#barcode",
+      "Solusi akses dan unduh hasil foto acara secara cepat, praktis, dan instan via scan barcode personal (Segera Hadir).",
+    href: "/photobooth#services",
   },
 ] as const;
 
@@ -307,6 +307,8 @@ export type PhotoboothCategoryDetail = {
   galleryFilter: { kategori: string; sub?: string };
   whatsappMessage: string;
   waNumber: string;
+  isUpcoming?: boolean;
+  upcomingBadge?: string;
 };
 
 export const photoboothDetails: PhotoboothCategoryDetail[] = [
@@ -366,8 +368,10 @@ export const photoboothDetails: PhotoboothCategoryDetail[] = [
     tag: "Roaming Photo",
     title: "Mingle Photobooth",
     subtitle: "Fotografer Keliling Aktif Menjangkau Setiap Sudut Acara",
+    isUpcoming: true,
+    upcomingBadge: "Coming Soon",
     description:
-      "Fotografer keliling yang menyapa tamu langsung di meja atau area standing party. Mengabadikan momen interaksi spontan tanpa membuat tamu harus mengantre di satu titik booth tertentu.",
+      "Fotografer keliling yang menyapa tamu langsung di meja atau area standing party. Mengabadikan momen interaksi spontan tanpa membuat tamu harus mengantre di satu titik booth tertentu (Segera Hadir).",
     highlights: [
       "Fotografer mobile menjelajah ke seluruh area tamu undangan",
       "Tangkap momen candid, tawa ceria, dan interaksi hangat tanpa jeda",
@@ -375,7 +379,7 @@ export const photoboothDetails: PhotoboothCategoryDetail[] = [
       "Sangat ideal untuk resepsi pernikahan besar, gala dinner, dan corporate gathering",
     ],
     galleryFilter: { kategori: "photobooth", sub: "event" },
-    whatsappMessage: "Halo kak, mau konsultasi Mingle Photobooth untuk event",
+    whatsappMessage: "Halo kak, mau tanya informasi layanan Mingle Photobooth yang akan segera hadir",
     waNumber: "6281350655747",
   },
   {
@@ -383,8 +387,10 @@ export const photoboothDetails: PhotoboothCategoryDetail[] = [
     tag: "Digital Live Sharing",
     title: "Photo Barcode",
     subtitle: "Unduh Soft File Foto Acara Secara Real-Time via Scan Barcode",
+    isUpcoming: true,
+    upcomingBadge: "Coming Soon",
     description:
-      "Solusi praktis dan ramah lingkungan bagi tamu acara untuk mengakses seluruh dokumentasi foto mereka. Cukup arahkan kamera smartphone ke QR barcode personal atau display banner untuk mengunduh foto beresolusi tinggi langsung.",
+      "Solusi praktis dan ramah lingkungan bagi tamu acara untuk mengakses seluruh dokumentasi foto mereka. Cukup arahkan kamera smartphone ke QR barcode personal atau display banner untuk mengunduh foto beresolusi tinggi langsung (Segera Hadir).",
     highlights: [
       "Sistem cloud hosting live yang langsung update begitu foto diambil",
       "Scan QR barcode cepat dari kamera ponsel tanpa perlu download aplikasi",
@@ -392,7 +398,7 @@ export const photoboothDetails: PhotoboothCategoryDetail[] = [
       "Dashboard gallery acara yang rapi, aman, dan mudah dibagikan",
     ],
     galleryFilter: { kategori: "photobooth" },
-    whatsappMessage: "Halo kak, mau tanya layanan Photo Barcode untuk acara kami",
+    whatsappMessage: "Halo kak, mau tanya informasi layanan Photo Barcode yang akan segera hadir",
     waNumber: "6281350655747",
   },
 ];

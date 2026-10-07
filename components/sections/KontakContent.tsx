@@ -41,6 +41,11 @@ export default function KontakContent() {
       wa: contact.whatsapp[1].raw,
       msg: "Halo kak Mau tanya kustomisasi layout dan frame overlay photobooth",
     },
+    {
+      label: "🚀 Info Mingle & Barcode (Upcoming)",
+      wa: contact.whatsapp[1].raw,
+      msg: "Halo kak Mau tanya info rilis & pre-order layanan Mingle Photobooth & Photo Barcode Tegoer Sapa",
+    },
   ];
 
   return (
@@ -124,7 +129,7 @@ export default function KontakContent() {
               Photobooth & Bajaj
             </h2>
             <p className="text-xs text-gray-500 mt-2 font-medium leading-relaxed">
-              Pemesanan cetak instan wedding & birthday, armada Bajaj Tegoer Keliling, self-photo photobox, dan photo barcode.
+              Pemesanan cetak instan wedding & birthday, armada Bajaj Tegoer Keliling, self-photo photobox, serta info layanan upcoming (Mingle & Barcode).
             </p>
 
             <div className="mt-4 p-3 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-between">

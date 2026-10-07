@@ -52,6 +52,7 @@ const photoboothServices = [
     exploreHref: "/gallery?kategori=photobooth&sub=event",
     categoryLabel: "Mingle",
     image: "/images/pricelist/photobox-red-curtain.webp",
+    isUpcoming: true,
   },
   {
     id: "photo-barcode",
@@ -62,6 +63,7 @@ const photoboothServices = [
     exploreHref: "/gallery?kategori=photobooth",
     categoryLabel: "Barcode",
     image: "/images/pricelist/photobox-reguler.webp",
+    isUpcoming: true,
   },
 ] as const;
 
@@ -197,29 +199,43 @@ export default function PhotoboothPage() {
 
             {/* Visual Mosaic Preview (Kanan) */}
             <div className="lg:col-span-5 grid grid-cols-2 gap-3.5">
-              {photoboothServices.map((svc, idx) => (
-                <div
-                  key={svc.id}
-                  className={`hero-anim relative aspect-[4/3] rounded-2xl overflow-hidden bg-white/90 backdrop-blur-xs ring-1 ring-brand-dark/10 shadow-sm hover:shadow-md transition-shadow p-4 flex flex-col justify-between group ${
-                    idx === 0 ? "sm:col-span-2 sm:aspect-[2.2/1]" : ""
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-brand-green bg-brand-green/10 px-2 py-0.5 rounded-full border border-brand-green/20">
-                      {svc.categoryLabel}
-                    </span>
-                    <span className="text-[10px] font-bold text-brand-dark/40">
-                      0{idx + 1}
-                    </span>
-                  </div>
+              {photoboothServices.map((svc, idx) => {
+                const isUpcoming = Boolean("isUpcoming" in svc && svc.isUpcoming);
+                return (
+                  <div
+                    key={svc.id}
+                    className={`hero-anim relative aspect-[4/3] rounded-2xl overflow-hidden bg-white/90 backdrop-blur-xs ring-1 ring-brand-dark/10 shadow-sm hover:shadow-md transition-shadow p-4 flex flex-col justify-between group ${
+                      idx === 0 ? "sm:col-span-2 sm:aspect-[2.2/1]" : ""
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-[9px] font-bold uppercase tracking-widest text-brand-green bg-brand-green/10 px-2 py-0.5 rounded-full border border-brand-green/20">
+                        {svc.categoryLabel}
+                      </span>
+                      {isUpcoming ? (
+                        <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
+                          Coming Soon
+                        </span>
+                      ) : (
+                        <span className="text-[10px] font-bold text-brand-dark/40">
+                          0{idx + 1}
+                        </span>
+                      )}
+                    </div>
 
-                  <div>
-                    <h2 className="text-brand-dark text-sm font-bold tracking-wide leading-tight">
-                      {svc.title}
-                    </h2>
+                    <div>
+                      <h2 className="text-brand-dark text-sm font-bold tracking-wide leading-tight">
+                        {svc.title}
+                      </h2>
+                      {isUpcoming && (
+                        <span className="text-[10px] text-amber-700 font-bold block mt-0.5">
+                          Segera Hadir
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
           </div>
@@ -256,12 +272,16 @@ export default function PhotoboothPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {photoboothServices.map((service, index) => {
               const isFeaturedWide = index === 4;
+              const isUpcoming = Boolean("isUpcoming" in service && service.isUpcoming);
+
               return (
                 <div
                   key={service.id}
-                  className={`service-card group flex flex-col justify-between p-5 sm:p-8 rounded-3xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30 transition-all duration-300 ${
-                    isFeaturedWide ? "md:col-span-2" : ""
-                  }`}
+                  className={`service-card group flex flex-col justify-between p-5 sm:p-8 rounded-3xl border transition-all duration-300 ${
+                    isUpcoming
+                      ? "border-amber-200 bg-amber-50/30 hover:bg-white hover:border-amber-300 shadow-2xs"
+                      : "border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/30"
+                  } ${isFeaturedWide ? "md:col-span-2" : ""}`}
                 >
                 <div>
                   {/* Photo Visual Slot (Konsisten dengan style existing) */}
@@ -278,6 +298,16 @@ export default function PhotoboothPage() {
                     <span className="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-brand-green/90 text-white text-[10px] font-bold tracking-wider uppercase z-10">
                       {service.categoryLabel}
                     </span>
+
+                    {/* Coming Soon Top Badge on Photo */}
+                    {isUpcoming && (
+                      <div className="absolute top-3 right-3 z-10">
+                        <span className="px-3 py-1 rounded-full bg-amber-500 text-white text-[10px] font-black tracking-wider uppercase shadow-md flex items-center gap-1.5 animate-pulse">
+                          <span>★</span>
+                          <span>Coming Soon</span>
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex items-center gap-3 mb-2">
@@ -287,6 +317,11 @@ export default function PhotoboothPage() {
                     <span className="text-xs font-bold uppercase tracking-wider text-brand-green">
                       {service.tag}
                     </span>
+                    {isUpcoming && (
+                      <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
+                        Segera Hadir
+                      </span>
+                    )}
                   </div>
 
                   <h3 className="text-xl sm:text-2xl font-bold text-brand-dark tracking-tight">
@@ -296,34 +331,72 @@ export default function PhotoboothPage() {
                   <p className="mt-3 text-sm text-gray-500 leading-relaxed font-medium">
                     {service.description}
                   </p>
+
+                  {isUpcoming && (
+                    <div className="mt-4 p-3 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 font-medium flex items-center gap-2">
+                      <span className="text-base flex-shrink-0">🚀</span>
+                      <span>
+                        Layanan ini sedang dipersiapkan dan akan segera diluncurkan sebagai inovasi baru Tegoer Sapa!
+                      </span>
+                    </div>
+                  )}
                 </div>
 
-                {/* Tombol Explore Work */}
-                <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
-                  <Button
-                    href={service.exploreHref}
-                    variant="dark"
-                    size="sm"
-                  >
-                    <span>Explore Work</span>
-                    <svg
-                      className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
+                {/* Tombol Action / Explore */}
+                {isUpcoming ? (
+                  <div className="mt-8 pt-5 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <Button
+                      href={`https://api.whatsapp.com/send?phone=6281350655747&text=${encodeURIComponent(
+                        `Halo kak Mau tanya info peluncuran & pre-order layanan ${service.title} (Coming Soon) Tegoer Sapa`
+                      )}`}
+                      variant="stroke"
+                      size="sm"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </Button>
+                      <span>Tanya Info Rilis via WA</span>
+                      <span>↗</span>
+                    </Button>
 
-                  <Link
-                    href="#pricing"
-                    className="text-xs font-semibold text-gray-400 hover:text-brand-dark transition-colors"
-                  >
-                    Lihat Paket & Harga →
-                  </Link>
-                </div>
+                    <div className="flex items-center gap-3">
+                      <Link
+                        href={service.exploreHref}
+                        className="text-xs font-semibold text-gray-500 hover:text-brand-dark transition-colors"
+                      >
+                        Lihat Contoh Foto →
+                      </Link>
+                      <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
+                        Upcoming
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between">
+                    <Button
+                      href={service.exploreHref}
+                      variant="dark"
+                      size="sm"
+                    >
+                      <span>Explore Work</span>
+                      <svg
+                        className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2.5}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </Button>
+
+                    <Link
+                      href="#pricing"
+                      className="text-xs font-semibold text-gray-400 hover:text-brand-dark transition-colors"
+                    >
+                      Lihat Paket & Harga →
+                    </Link>
+                  </div>
+                )}
               </div>
             );
           })}
