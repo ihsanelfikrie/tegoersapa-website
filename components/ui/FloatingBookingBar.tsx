@@ -79,7 +79,7 @@ export default function FloatingBookingBar() {
               href="/booking"
               variant="primary"
               size="sm"
-              className="py-1.5 px-3.5 text-xs font-bold"
+              className="py-1.5 px-3.5 text-xs font-bold button-beg-click"
             >
               <span>Booking</span>
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

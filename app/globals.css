@@ -479,6 +479,145 @@ body {
   border-bottom-width: 4px;
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   EFEK TOMBOL "MINTA DIPENCET" (Playful Idle Attention Wiggle & Pulse)
+   Membuat tombol booking bergerak-gerak sendiri secara berkala:
+   melompat kecil, bergoyang lucu kiri-kanan, memancarkan aura radar hijau,
+   dan memancarkan kilau halus seolah memanggil pengguna untuk memencetnya.
+═══════════════════════════════════════════════════════════════════ */
+.button-beg-click {
+  animation: begClickWiggle 4s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  transform-origin: center bottom;
+  position: relative;
+  will-change: transform, box-shadow;
+}
+
+/* Kilauan cahaya yang menyapu tombol saat bergerak */
+.button-beg-click::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  z-index: 3;
+  animation: begClickGleam 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes begClickWiggle {
+  0%, 100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    box-shadow: 0 4px 14px rgba(31, 174, 119, 0.25), 0 0 0 0 rgba(31, 174, 119, 0.5);
+  }
+  /* Tahap 1: Gerakan Menggoyang (Wiggle Jiggle) - memanggil perhatian */
+  2% {
+    /* Anticipation: sedikit menekan ke bawah */
+    transform: translateY(1px) scale(1.02, 0.98) rotate(0deg);
+  }
+  4% {
+    /* Melompat naik & miring ke kiri */
+    transform: translateY(-4px) scale(1.06, 1.02) rotate(-4deg);
+    box-shadow: 0 8px 22px rgba(31, 174, 119, 0.4), 0 0 0 5px rgba(31, 174, 119, 0.35);
+  }
+  6% {
+    /* Goyang ke kanan */
+    transform: translateY(-4px) scale(1.06, 1.02) rotate(4deg);
+    box-shadow: 0 8px 22px rgba(31, 174, 119, 0.4), 0 0 0 9px rgba(31, 174, 119, 0.25);
+  }
+  8% {
+    /* Goyang kiri lebih kecil */
+    transform: translateY(-3px) scale(1.04, 1.01) rotate(-2.5deg);
+    box-shadow: 0 6px 18px rgba(31, 174, 119, 0.3), 0 0 0 13px rgba(31, 174, 119, 0.12);
+  }
+  10% {
+    /* Goyang kanan lebih kecil */
+    transform: translateY(-2px) scale(1.02) rotate(1.5deg);
+    box-shadow: 0 4px 14px rgba(31, 174, 119, 0.22), 0 0 0 16px rgba(31, 174, 119, 0);
+  }
+  12% {
+    transform: translateY(-1px) scale(1.01) rotate(-0.8deg);
+  }
+  14% {
+    /* Mendarat dan sedikit membal */
+    transform: translateY(1px) scale(1.01, 0.99) rotate(0deg);
+  }
+  16% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  /* Tahap 2: Diam sejenak (istirahat natural) */
+  17%, 52% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    box-shadow: 0 4px 14px rgba(31, 174, 119, 0.2), 0 0 0 0 rgba(31, 174, 119, 0);
+  }
+  /* Tahap 3: Denyut memanggil kedua (Playful Heartbeat Bounce) */
+  55% {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 8px 20px rgba(31, 174, 119, 0.35), 0 0 0 5px rgba(31, 174, 119, 0.3);
+  }
+  58% {
+    transform: translateY(1px) scale(0.99);
+    box-shadow: 0 4px 12px rgba(31, 174, 119, 0.25), 0 0 0 10px rgba(31, 174, 119, 0.1);
+  }
+  61% {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 16px rgba(31, 174, 119, 0.3), 0 0 0 14px rgba(31, 174, 119, 0);
+  }
+  65% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    box-shadow: 0 4px 14px rgba(31, 174, 119, 0.2), 0 0 0 0 rgba(31, 174, 119, 0);
+  }
+  /* Tahap 4: Istirahat sebelum siklus berikutnya */
+  66%, 99% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes begClickGleam {
+  0%, 2% {
+    left: -120%;
+  }
+  14% {
+    left: 220%;
+  }
+  100% {
+    left: 220%;
+  }
+}
+
+/* Pause animasi saat user mengarahkan kursor agar mudah dipencet */
+@media (hover: hover) {
+  .button-beg-click:hover {
+    animation-play-state: paused;
+    transform: translateY(-2px) scale(1.03) !important;
+    box-shadow: 0 10px 24px rgba(31, 174, 119, 0.4) !important;
+  }
+  .button-beg-click:hover::after {
+    animation-play-state: paused;
+  }
+}
+
+/* Saat ditekan (klik / tap) */
+.button-beg-click:active {
+  animation: none !important;
+  transform: translateY(2px) scale(0.98) !important;
+  box-shadow: 0 2px 6px rgba(31, 174, 119, 0.25) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button-beg-click,
+  .button-beg-click::after {
+    animation: none !important;
+  }
+}
+
 /* ── Navbar Logo Cel-Shaded Crisp Sheen (Sama seperti Teks Hero — Tanpa Blur) ── */
 .logo-sheen-cel {
   position: absolute;

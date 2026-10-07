@@ -857,6 +857,7 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
                 href={data.cta.bookingUrl}
                 variant="primary"
                 size="lg"
+                className="button-beg-click"
               >
                 <span>{data.cta.buttonLabel}</span>
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

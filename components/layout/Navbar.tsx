@@ -264,15 +264,15 @@ export default function Navbar() {
           <div className="pointer-events-auto flex items-center gap-3">
             {/* CTA — desktop only (disembunyikan di mobile agar navbar bersih) */}
             <div className="hidden md:block">
-              <Link
+              <Button
                 href="/booking"
                 id="navbar-cta-booking"
-                data-block="button"
-                className="button button--primary text-sm font-bold tracking-wide px-5 h-11"
+                variant="primary"
+                size="md"
+                className="button-beg-click text-sm font-bold tracking-wide px-5 h-11"
               >
-                <span className="button__flair" aria-hidden="true" />
-                <span className="button__label">{navCta.label}</span>
-              </Link>
+                <span>{navCta.label}</span>
+              </Button>
             </div>
 
             {/* Hamburger — mobile */}
@@ -389,11 +389,11 @@ export default function Navbar() {
                 href="/booking"
                 variant="primary"
                 size="md"
-                className="w-full"
+                className="w-full button-beg-click"
                 id="mobile-cta-booking"
                 onClick={() => setIsOpen(false)}
               >
-                {navCta.label}
+                <span>{navCta.label}</span>
               </Button>
             </div>
           </div>
