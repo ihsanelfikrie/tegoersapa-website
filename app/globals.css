@@ -184,6 +184,11 @@ body {
   animation-delay: -45s;
 }
 
+.cloud-flow-c {
+  animation-duration: 85s;
+  animation-delay: -25s;
+}
+
 /* ─── Animasi Rerumputan Alami (Organic Breeze / Wind Sway) ───────────── */
 @keyframes grassBreezeA {
   0% {

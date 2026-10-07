@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { heroHome, heroPhotos, type HeroPhoto } from "@/lib/content";
 import Button from "@/components/ui/Button";
 
@@ -129,6 +129,11 @@ export default function Hero() {
   // Mosaic & decor refs
   const mosaicRef = useRef<HTMLDivElement>(null);
   const decorRef  = useRef<HTMLDivElement>(null);
+
+  // Cloud Parallax refs (GSAP ScrollTrigger Multi-Layer)
+  const cloud1Ref = useRef<HTMLDivElement>(null);
+  const cloud2Ref = useRef<HTMLDivElement>(null);
+  const cloud3Ref = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
@@ -289,6 +294,59 @@ export default function Hero() {
         base.addEventListener("touchstart", onEnter, { passive: true });
         base.addEventListener("touchend", onLeave, { passive: true });
       });
+
+      // ── 4. Multi-Layer Cloud Parallax (GSAP ScrollTrigger) ────────────
+      const mm = gsap.matchMedia();
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        // Layer 1 (Awan Atas / Foreground): Bergerak lebih cepat ke atas dan melebar ke kiri
+        if (cloud1Ref.current) {
+          gsap.to(cloud1Ref.current, {
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top top",
+              end: "bottom top",
+              scrub: 1.2,
+            },
+            y: -190,
+            x: -60,
+            scale: 1.08,
+            ease: "none",
+          });
+        }
+
+        // Layer 2 (Awan Bawah / Midground): Bergerak sedang ke atas dan bergeser ke kanan
+        if (cloud2Ref.current) {
+          gsap.to(cloud2Ref.current, {
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top top",
+              end: "bottom top",
+              scrub: 1.2,
+            },
+            y: -120,
+            x: 70,
+            opacity: 0.65,
+            ease: "none",
+          });
+        }
+
+        // Layer 3 (Awan Jauh / Background): Bergerak perlahan untuk efek kedalaman langit
+        if (cloud3Ref.current) {
+          gsap.to(cloud3Ref.current, {
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top top",
+              end: "bottom top",
+              scrub: 1.2,
+            },
+            y: -65,
+            x: 35,
+            opacity: 0.4,
+            ease: "none",
+          });
+        }
+      });
     },
     { scope: containerRef },
   );
@@ -307,24 +365,50 @@ export default function Hero() {
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none select-none overflow-hidden"
       >
-        {/* Awan atas — proporsional & anggun, tidak menutupi area teks */}
-        <Image
-          src="/brand/awan.svg"
-          alt=""
-          width={677}
-          height={408}
-          unoptimized
-          className="cloud-flow cloud-flow-a absolute top-2 sm:top-4 lg:top-6 left-0 w-[22rem] sm:w-[30rem] lg:w-[40rem] max-w-none pointer-events-none opacity-95"
-        />
-        {/* Awan bawah — melayang anggun di atas lengkungan bukit rumput */}
-        <Image
-          src="/brand/awan.svg"
-          alt=""
-          width={677}
-          height={408}
-          unoptimized
-          className="cloud-flow cloud-flow-b absolute bottom-14 sm:bottom-20 lg:bottom-24 left-0 w-[16rem] sm:w-[22rem] lg:w-[28rem] max-w-none pointer-events-none opacity-90"
-        />
+        {/* Layer 3: Awan Jauh / Background — melayang tenang di ketinggian langit */}
+        <div
+          ref={cloud3Ref}
+          className="absolute top-12 sm:top-16 lg:top-20 left-0 w-full pointer-events-none will-change-transform"
+        >
+          <Image
+            src="/brand/awan.svg"
+            alt=""
+            width={677}
+            height={408}
+            unoptimized
+            className="cloud-flow cloud-flow-c w-[14rem] sm:w-[20rem] lg:w-[26rem] max-w-none pointer-events-none opacity-60"
+          />
+        </div>
+
+        {/* Layer 1: Awan Atas / Foreground — proporsional & anggun, tidak menutupi area teks */}
+        <div
+          ref={cloud1Ref}
+          className="absolute top-2 sm:top-4 lg:top-6 left-0 w-full pointer-events-none will-change-transform"
+        >
+          <Image
+            src="/brand/awan.svg"
+            alt=""
+            width={677}
+            height={408}
+            unoptimized
+            className="cloud-flow cloud-flow-a w-[22rem] sm:w-[30rem] lg:w-[40rem] max-w-none pointer-events-none opacity-95"
+          />
+        </div>
+
+        {/* Layer 2: Awan Bawah / Midground — melayang anggun di atas lengkungan bukit rumput */}
+        <div
+          ref={cloud2Ref}
+          className="absolute bottom-14 sm:bottom-20 lg:bottom-24 left-0 w-full pointer-events-none will-change-transform"
+        >
+          <Image
+            src="/brand/awan.svg"
+            alt=""
+            width={677}
+            height={408}
+            unoptimized
+            className="cloud-flow cloud-flow-b w-[16rem] sm:w-[22rem] lg:w-[28rem] max-w-none pointer-events-none opacity-90"
+          />
+        </div>
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════
@@ -611,12 +695,17 @@ export default function Hero() {
           animation-duration: 70s;
           animation-delay: -45s; /* Beda fase 35s (tepat 50% siklus), awan selalu berjarak 180° sehingga tidak akan pernah tumpang tindih */
         }
+        .cloud-flow-c {
+          animation-duration: 85s;
+          animation-delay: -25s;
+        }
         @media (prefers-reduced-motion: reduce) {
           .cloud-flow {
             animation: none !important;
           }
           .cloud-flow-a { transform: translateX(15vw); }
           .cloud-flow-b { transform: translateX(65vw); }
+          .cloud-flow-c { transform: translateX(40vw); }
         }
       `}</style>
     </section>
