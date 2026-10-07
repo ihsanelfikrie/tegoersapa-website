@@ -191,7 +191,10 @@ export default function ClientStories() {
               {/* Client Profile Footer */}
               <div className="mt-5 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200/70 flex items-center gap-3">
                 {/* Avatar Initial Slot */}
-                <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold text-xs flex-shrink-0 ring-2 ring-brand-green/20 group-hover:bg-brand-green transition-colors">
+                <div
+                  className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-brand-dark text-white flex items-center justify-center font-bold text-xs flex-shrink-0 ring-2 ring-brand-green/20 group-hover:bg-brand-green transition-colors"
+                  suppressHydrationWarning
+                >
                   {item.initials}
                 </div>
 

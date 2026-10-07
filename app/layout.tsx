@@ -188,6 +188,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* Anti-extension DOM mutation guard (menetralisir atribut bis_skin_checked dari ekstensi pihak ketiga agar tidak memicu console error saat hidrasi) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var o=Element.prototype.setAttribute;Element.prototype.setAttribute=function(n,v){if(n==='bis_skin_checked')return;return o.apply(this,arguments)};var c=function(){var els=document.querySelectorAll('[bis_skin_checked]');for(var i=0;i<els.length;i++){els[i].removeAttribute('bis_skin_checked')}};c();if(typeof MutationObserver!=='undefined'){new MutationObserver(function(m){for(var i=0;i<m.length;i++){if(m[i].type==='attributes'&&m[i].attributeName==='bis_skin_checked'&&m[i].target){m[i].target.removeAttribute('bis_skin_checked')}}}).observe(document.documentElement,{subtree:true,attributes:true,attributeFilter:['bis_skin_checked'])}}catch(e){}})();`,
+          }}
+        />
       </head>
       <body className="min-h-screen flex flex-col antialiased" suppressHydrationWarning>
         <BookingProvider>
