@@ -392,16 +392,17 @@ function GalleryContent() {
             <p className="text-xs sm:text-sm text-gray-500 max-w-sm mx-auto mb-6">
               Tidak ditemukan foto untuk filter atau pencarian &ldquo;{searchQuery}&rdquo;. Silakan ubah kata kunci atau reset filter.
             </p>
-            <button
+            <Button
+              variant="dark"
+              size="sm"
               onClick={() => {
                 setActiveCategory("all");
                 setActiveSub("all");
                 setSearchQuery("");
               }}
-              className="px-5 py-2.5 bg-brand-dark hover:bg-black text-white rounded-full text-xs font-bold transition-all"
             >
-              Tampilkan Semua {galleryPhotos.length} Foto
-            </button>
+              <span>Tampilkan Semua {galleryPhotos.length} Foto</span>
+            </Button>
           </div>
         )}
       </section>

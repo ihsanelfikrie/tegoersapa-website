@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import Button from "@/components/ui/Button";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { brand } from "@/lib/content";
@@ -114,21 +115,14 @@ export default function BehindTheLens() {
           </div>
 
           <div className="flex-shrink-0">
-            <Link
+            <Button
               href="/tentang"
-              className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-brand-green hover:text-brand-dark transition-colors duration-300"
+              variant="dark"
+              size="sm"
             >
               <span>See More</span>
-              <svg
-                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
+              <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+            </Button>
           </div>
         </div>
 
@@ -187,13 +181,15 @@ export default function BehindTheLens() {
 
               {/* Bottom Action */}
               <div className="mt-5 sm:mt-8 pt-4 sm:pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
-                <Link
+                <Button
                   href="/tentang"
-                  className="inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-bold tracking-wide bg-brand-green hover:bg-brand-green/90 text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-full transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto"
+                  variant="primary"
+                  size="md"
+                  className="w-full sm:w-auto"
                 >
                   <span>See More</span>
-                  <span aria-hidden="true">→</span>
-                </Link>
+                  <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+                </Button>
 
                 <span className="text-xs font-medium text-white/40 text-center sm:text-right">
                   {brand.name} Studio

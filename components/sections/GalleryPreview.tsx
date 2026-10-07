@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
+import Button from "@/components/ui/Button";
 
 // ─── Data Portfolio Terpilih (Sesuai 100% dengan Visual Foto Asli) ─────────
 const ourWorkItems = [
@@ -203,21 +204,14 @@ export default function GalleryPreview() {
           </div>
 
           <div className="flex-shrink-0 self-center md:self-auto">
-            <Link
+            <Button
               href="/gallery"
-              className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-brand-green hover:text-brand-dark transition-colors duration-300"
+              variant="dark"
+              size="sm"
             >
               <span>View All Work</span>
-              <svg
-                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
+              <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+            </Button>
           </div>
         </div>
 
@@ -284,21 +278,15 @@ export default function GalleryPreview() {
 
         {/* ─── Bottom Centered CTA: View All Work ───────────────────── */}
         <div ref={footerCtaRef} className="mt-14 text-center px-4 sm:px-0">
-          <Link
+          <Button
             href="/gallery"
-            className="inline-flex justify-center items-center gap-2 bg-brand-dark hover:bg-brand-green text-white font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-all duration-300 hover:-translate-y-0.5 w-full sm:w-auto"
+            variant="dark"
+            size="lg"
+            className="w-full sm:w-auto"
           >
             <span>View All Work</span>
-            <svg
-              className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.5}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </Link>
+            <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+          </Button>
         </div>
 
       </div>

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
+import Button from "@/components/ui/Button";
 import { brand } from "@/lib/content";
 
 /**
@@ -97,21 +98,15 @@ export default function OurStory() {
               Bagi kami, <span className="text-brand-dark font-bold">&ldquo;{brand.tagline}&rdquo;</span> adalah komitmen mutlak. Kami berfokus pada kualitas visual berkelas, tata cahaya yang presisi, serta suasana sesi foto yang santai dan ramah bagi setiap klien.
             </p>
 
-            <Link
+            <Button
               href="/tentang"
-              className="group inline-flex items-center gap-2 bg-brand-dark hover:bg-brand-green text-white font-bold tracking-wide text-xs sm:text-sm px-6 py-3 sm:px-7 sm:py-3.5 rounded-full transition-all duration-300 hover:-translate-y-0.5 mx-auto lg:mx-0"
+              variant="dark"
+              size="md"
+              className="mx-auto lg:mx-0"
             >
               <span>Selengkapnya Tentang Kami</span>
-              <svg
-                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
+              <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+            </Button>
           </div>
 
           {/* ─── KOLOM KANAN: Visual & Brand Values ─────────────────── */}

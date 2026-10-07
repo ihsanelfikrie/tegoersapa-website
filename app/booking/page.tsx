@@ -261,18 +261,20 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link
+              <Button
                 href="/photography/wedding#packages"
-                className="px-5 py-3 rounded-2xl bg-brand-dark hover:bg-brand-green text-white font-bold text-xs tracking-wide transition-all"
+                variant="dark"
+                size="sm"
               >
-                Pilih Paket Wedding
-              </Link>
-              <Link
+                <span>Pilih Paket Wedding</span>
+              </Button>
+              <Button
                 href="/photography/graduation#packages"
-                className="px-5 py-3 rounded-2xl bg-brand-dark hover:bg-brand-green text-white font-bold text-xs tracking-wide transition-all"
+                variant="dark"
+                size="sm"
               >
-                Pilih Paket Wisuda
-              </Link>
+                <span>Pilih Paket Wisuda</span>
+              </Button>
               <button
                 type="button"
                 onClick={() => {
@@ -280,17 +282,18 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                     "Mohon maaf, layanan Studio Professional saat ini sedang tidak tersedia untuk booking."
                   );
                 }}
-                className="px-5 py-3 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 font-bold text-xs tracking-wide transition-all hover:bg-amber-100 cursor-pointer inline-flex items-center gap-1.5"
+                className="px-5 py-2.5 rounded-full bg-amber-50 border border-amber-300 text-amber-900 font-bold text-xs tracking-wide transition-all hover:bg-amber-100 cursor-pointer inline-flex items-center gap-1.5"
               >
                 <span>Paket Studio (Tidak Tersedia)</span>
                 <span aria-hidden="true">⚠️</span>
               </button>
-              <Link
+              <Button
                 href="/pricelist"
-                className="px-5 py-3 rounded-2xl border border-gray-300 hover:border-brand-green text-gray-700 hover:text-brand-green font-bold text-xs tracking-wide transition-all"
+                variant="stroke"
+                size="sm"
               >
-                Lihat Semua Pricelist
-              </Link>
+                <span>Lihat Semua Pricelist</span>
+              </Button>
             </div>
           </div>
         ) : (
@@ -835,12 +838,14 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                           <span>Studio Sedang Tidak Tersedia</span>
                           <span aria-hidden="true">⚠️</span>
                         </button>
-                        <Link
+                        <Button
                           href="/pricelist"
-                          className="w-full inline-flex items-center justify-center gap-1.5 py-3 rounded-full bg-brand-green text-white font-bold text-xs tracking-wide hover:bg-brand-green/90 transition-colors shadow-sm"
+                          variant="primary"
+                          size="sm"
+                          className="w-full"
                         >
                           <span>Pilih Paket Lain yang Tersedia →</span>
-                        </Link>
+                        </Button>
                       </div>
                     ) : (
                       <Button

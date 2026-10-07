@@ -286,21 +286,14 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
             </div>
 
             <div className="mt-6 md:mt-0 text-center md:text-left">
-              <Link
+              <Button
                 href="/gallery"
-                className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-brand-green hover:text-brand-dark transition-colors duration-300"
+                variant="dark"
+                size="sm"
               >
-                <span>Lihat Semua Koleksi di Galeri Utama</span>
-                <svg
-                  className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2.5}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
+                <span>Lihat Semua di Galeri</span>
+                <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+              </Button>
             </div>
           </div>
 
@@ -848,37 +841,38 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             {data.id === "studio" ? (
-              <button
+              <Button
                 type="button"
+                variant="stroke"
+                size="lg"
                 onClick={() => {
                   alert("Mohon maaf, layanan Studio Professional saat ini sedang tidak tersedia untuk booking.");
                 }}
-                className="inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-amber-950 font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-all duration-200 hover:-translate-y-0.5 border-b-[3px] border-black/20 cursor-pointer"
               >
                 <span>Studio Sedang Tidak Tersedia</span>
                 <span aria-hidden="true">⚠️</span>
-              </button>
+              </Button>
             ) : (
-              <a
+              <Button
                 href={data.cta.bookingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-green/90 text-white font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-all duration-200 hover:-translate-y-0.5 border-b-[3px] border-black/20"
+                variant="primary"
+                size="lg"
               >
                 <span>{data.cta.buttonLabel}</span>
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
-              </a>
+              </Button>
             )}
 
-            <Link
+            <Button
               href="/pricelist"
-              className="inline-flex items-center gap-2 border border-white/20 hover:border-brand-green text-white font-bold text-sm tracking-wide px-8 py-4 rounded-full transition-colors duration-200 hover:bg-white/5"
+              variant="stroke"
+              size="lg"
             >
               <span>Lihat Paket Tersedia</span>
               <span aria-hidden="true">→</span>
-            </Link>
+            </Button>
           </div>
         </div>
       </section>

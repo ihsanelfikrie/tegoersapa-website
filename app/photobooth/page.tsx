@@ -440,21 +440,14 @@ export default function PhotoboothPage() {
               </p>
             </div>
             <div className="mt-6 md:mt-0 text-center md:text-left">
-              <Link
+              <Button
                 href="/gallery?kategori=photobooth"
-                className="group inline-flex items-center gap-2 text-sm font-bold text-brand-green hover:text-brand-dark transition-colors duration-300"
+                variant="dark"
+                size="sm"
               >
                 <span>Lihat Semua di Gallery</span>
-                <svg
-                  className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2.5}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </Link>
+                <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+              </Button>
             </div>
           </div>
 
