@@ -76,12 +76,14 @@ export default function Navbar() {
     <header
       ref={navbarRef}
       className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
+      suppressHydrationWarning
     >
       <nav
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 lg:pt-5"
         aria-label="Navigasi utama"
+        suppressHydrationWarning
       >
-        <div className="relative flex items-center justify-between">
+        <div className="relative flex items-center justify-between" suppressHydrationWarning>
           {/* Logo — pill gelap dengan efek cel-shaded shimmer tajam (tanpa blur, konsisten dengan hero section) */}
           <Link
             href="/"
@@ -106,7 +108,10 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop navigation links */}
-          <ul className="pointer-events-auto hidden md:flex items-center gap-0.5 lg:gap-1 absolute left-1/2 -translate-x-1/2 p-1.5 rounded-full bg-white border border-gray-200 border-b-[3px] border-b-gray-300">
+          <ul
+            className="pointer-events-auto hidden md:flex items-center gap-0.5 lg:gap-1 absolute left-1/2 -translate-x-1/2 p-1.5 rounded-full bg-white border border-gray-200 border-b-[3px] border-b-gray-300"
+            suppressHydrationWarning
+          >
             {navLinks.map((link) => {
               const active = isActive(link.href);
               const hasSub = Boolean(link.subItems && link.subItems.length > 0);
@@ -179,7 +184,7 @@ export default function Navbar() {
                           </Link>
                         </div>
 
-                        <div className="space-y-0.5">
+                        <div className="space-y-0.5" suppressHydrationWarning>
                           {link.subItems?.map((sub) => {
                             const isSubActive = pathname === sub.href;
 
@@ -289,6 +294,7 @@ export default function Navbar() {
         <div
           id="mobile-menu"
           aria-hidden={!isOpen}
+          suppressHydrationWarning
           className={[
             "pointer-events-auto md:hidden overflow-hidden mt-2 rounded-3xl max-h-[82vh] overflow-y-auto no-scrollbar shadow-2xl transition-all duration-200 ease-out origin-top",
             "bg-white/95 backdrop-blur-xl border border-gray-200/90 text-gray-800",

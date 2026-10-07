@@ -21,24 +21,26 @@ function GalleryContent() {
 
   // Pagination mobile agar tidak perlu scroll terlalu jauh (12 foto per halaman)
   const MOBILE_PAGE_SIZE = 12;
+  const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [visibleCount, setVisibleCount] = useState(MOBILE_PAGE_SIZE);
   const [touchStart, setTouchStart] = useState<number | null>(null);
 
-  // Deteksi mobile (desktop tetap tampil penuh seperti semula)
+  // Deteksi mobile (desktop tetap tampil penuh setelah mount)
   useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-      if (!mobile) {
+    setMounted(true);
+    const checkMobile = () => {
+      const mob = window.innerWidth < 768;
+      setIsMobile(mob);
+      if (!mob) {
         setVisibleCount(999);
       } else {
         setVisibleCount(MOBILE_PAGE_SIZE);
       }
     };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const [prevParams, setPrevParams] = useState({ kat: paramKat, sub: paramSub });
@@ -89,13 +91,13 @@ function GalleryContent() {
     });
   }, [activeCategory, activeSub, searchQuery]);
 
-  // Items yang ditampilkan saat ini (paginated di mobile, full di desktop)
+  // Items yang ditampilkan saat ini (SSR & initial hydration render 12 foto identik, setelah mount di desktop langsung 999)
   const displayedItems = useMemo(() => {
-    if (!isMobile) return filteredItems;
+    if (mounted && !isMobile) return filteredItems;
     return filteredItems.slice(0, visibleCount);
-  }, [filteredItems, visibleCount, isMobile]);
+  }, [filteredItems, visibleCount, mounted, isMobile]);
 
-  const hasMore = isMobile && visibleCount < filteredItems.length;
+  const hasMore = mounted ? isMobile && visibleCount < filteredItems.length : false;
   const remainingCount = Math.max(0, filteredItems.length - visibleCount);
 
   // Counts for tabs
@@ -211,7 +213,7 @@ function GalleryContent() {
   }, [activeImage, filteredItems]);
 
   return (
-    <div className="bg-white min-h-screen text-black">
+    <div className="bg-white min-h-screen text-black" suppressHydrationWarning>
       {/* ─── Hero Header ────────────────────────────────────────── */}
       <section className="relative pt-24 sm:pt-32 pb-14 sm:pb-28 lg:pb-36 bg-brand-sky text-brand-dark overflow-hidden">
         {/* Floating Clouds Background */}
@@ -363,7 +365,7 @@ function GalleryContent() {
       </section>
 
       {/* ─── Gallery Grid / Masonry ─────────────────────────────── */}
-      <section className="py-6 sm:py-12 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <section className="py-6 sm:py-12 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8" suppressHydrationWarning>
         {/* Results Counter */}
         <div className="flex items-center justify-between mb-4 sm:mb-8 pb-2.5 sm:pb-3 border-b border-gray-100">
           <p className="text-xs sm:text-sm font-semibold text-gray-500">
@@ -391,7 +393,10 @@ function GalleryContent() {
         </div>
 
         {/* Masonry Columns: 2 kolom di mobile agar ringkas & hemat scroll, 3-4 kolom di desktop */}
-        <div className="columns-2 sm:columns-2 lg:columns-3 xl:columns-4 gap-2.5 sm:gap-5 space-y-2.5 sm:space-y-5">
+        <div
+          className="columns-2 sm:columns-2 lg:columns-3 xl:columns-4 gap-2.5 sm:gap-5 space-y-2.5 sm:space-y-5"
+          suppressHydrationWarning
+        >
           {displayedItems.map((item, index) => (
             <div
               key={item.id}
