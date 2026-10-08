@@ -4,7 +4,6 @@ import PhotoboxSpots from "@/components/sections/PhotoboxSpots";
 import FeaturedStories from "@/components/sections/FeaturedStories";
 import TrustOrbit from "@/components/sections/TrustOrbit";
 import GalleryPreview from "@/components/sections/GalleryPreview";
-import OurStory from "@/components/sections/OurStory";
 import ClientStories from "@/components/sections/ClientStories";
 
 export const metadata: Metadata = {
@@ -24,7 +23,6 @@ export default function HomePage() {
       <PhotoboxSpots />
       <FeaturedStories />
       <GalleryPreview />
-      <OurStory />
       <ClientStories />
       <TrustOrbit />
     </>
