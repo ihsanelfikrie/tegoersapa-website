@@ -42,7 +42,7 @@ export const PHOTOBOX_VENUES: readonly PhotoboxVenueMeta[] = [
     id: "nolima",
     label: "Nolima",
     mapsUrl: "https://share.google/qLC2FpGFKW0oyvTpm",
-    address: "Banjarmasin, Kalimantan Selatan",
+    address: "Banjarbaru, Kalimantan Selatan",
   },
   {
     id: "aimee",

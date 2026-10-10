@@ -197,8 +197,8 @@ export default function PhotoboothPage() {
               </div>
             </div>
 
-            {/* Visual Mosaic Preview (Kanan) */}
-            <div className="lg:col-span-5 grid grid-cols-2 gap-3.5">
+            {/* Visual Mosaic Preview (Kanan — Desktop Only) */}
+            <div className="hidden lg:grid lg:col-span-5 grid-cols-2 gap-3.5">
               {photoboothServices.map((svc, idx) => {
                 const isUpcoming = Boolean("isUpcoming" in svc && svc.isUpcoming);
                 return (
@@ -395,10 +395,10 @@ export default function PhotoboothPage() {
                     </Button>
 
                     <Link
-                      href="#pricing"
+                      href={service.id === "photobox" ? "#photobox" : "#pricing"}
                       className="text-xs font-semibold text-gray-400 hover:text-brand-dark transition-colors"
                     >
-                      Lihat Paket & Harga →
+                      {service.id === "photobox" ? "Lihat Detail Photobox ↓" : "Lihat Paket & Harga →"}
                     </Link>
                   </div>
                 )}
@@ -410,7 +410,318 @@ export default function PhotoboothPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          2.5. DAFTAR HARGA & OPSI PAKET PHOTOBOOTH (Katalog Resmi)
+          2.5. DETAIL PHOTOBOX TEGOER SAPA (Bilik Foto Mandiri & 5 Titik Spot)
+      ═══════════════════════════════════════════════════════════════ */}
+      <section
+        id="photobox"
+        className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gray-50/70 text-black border-t border-gray-100 scroll-mt-20"
+        aria-label="Detail Layanan Photobox Tegoer Sapa"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header Section */}
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+            <span className="text-brand-green text-xs font-bold tracking-[0.2em] uppercase">
+              Bilik Foto Privat Mandiri
+            </span>
+            <h2 className="mt-3 text-3xl sm:text-5xl font-black text-brand-dark tracking-tight">
+              Photobox Tegoer Sapa
+            </h2>
+            <div aria-hidden="true" className="mx-auto mt-4 w-12 h-1 rounded-full bg-brand-green" />
+            <p className="mt-4 text-sm sm:text-base text-gray-500 font-medium leading-relaxed">
+              Bebas berekspresi tanpa rasa canggung di bilik foto privat modern kami. Dilengkapi wireless remote shutter, monitor preview real-time, cetak instan anti luntur dalam hitungan detik, dan akses soft file digital via scan QR code.
+            </p>
+          </div>
+
+          {/* 4 Fitur Unggulan Bilik Photobox */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-10 sm:mb-14">
+            <div className="p-5 sm:p-6 rounded-2xl bg-white border border-gray-200/90 shadow-2xs hover:border-brand-green/40 transition-colors">
+              <div className="w-10 h-10 rounded-xl bg-brand-green/10 text-brand-dark flex items-center justify-center font-black text-lg mb-3.5">
+                📸
+              </div>
+              <h3 className="text-base font-black text-brand-dark tracking-tight mb-1.5">
+                Wireless Remote Shutter
+              </h3>
+              <p className="text-xs text-gray-500 font-medium leading-relaxed">
+                Kendali pemotretan mandiri di tangan Anda. Atur momen dan pose terbaik bersama teman atau pasangan tanpa fotografer yang melihat.
+              </p>
+            </div>
+
+            <div className="p-5 sm:p-6 rounded-2xl bg-white border border-gray-200/90 shadow-2xs hover:border-brand-green/40 transition-colors">
+              <div className="w-10 h-10 rounded-xl bg-brand-green/10 text-brand-dark flex items-center justify-center font-black text-lg mb-3.5">
+                🖥️
+              </div>
+              <h3 className="text-base font-black text-brand-dark tracking-tight mb-1.5">
+                Monitor Live Preview
+              </h3>
+              <p className="text-xs text-gray-500 font-medium leading-relaxed">
+                Layar preview jernih di dalam bilik untuk cek pose secara real-time sebelum dan sesudah jepretan, lengkap dengan timer hitung mundur.
+              </p>
+            </div>
+
+            <div className="p-5 sm:p-6 rounded-2xl bg-white border border-gray-200/90 shadow-2xs hover:border-brand-green/40 transition-colors">
+              <div className="w-10 h-10 rounded-xl bg-brand-green/10 text-brand-dark flex items-center justify-center font-black text-lg mb-3.5">
+                🖨️
+              </div>
+              <h3 className="text-base font-black text-brand-dark tracking-tight mb-1.5">
+                Cetak Dye-Sub Anti Air
+              </h3>
+              <p className="text-xs text-gray-500 font-medium leading-relaxed">
+                Kertas foto premium lab studio beresolusi tinggi. Hasil cetak strip fisik keluar kering, anti air, dan anti pudar dalam hitungan detik.
+              </p>
+            </div>
+
+            <div className="p-5 sm:p-6 rounded-2xl bg-white border border-gray-200/90 shadow-2xs hover:border-brand-green/40 transition-colors">
+              <div className="w-10 h-10 rounded-xl bg-brand-green/10 text-brand-dark flex items-center justify-center font-black text-lg mb-3.5">
+                📲
+              </div>
+              <h3 className="text-base font-black text-brand-dark tracking-tight mb-1.5">
+                Soft File QR Code Instan
+              </h3>
+              <p className="text-xs text-gray-500 font-medium leading-relaxed">
+                Langsung scan barcode QR di layar bilik untuk mengunduh seluruh file asli resolusi tinggi dan animasi GIF bergerak ke smartphone Anda.
+              </p>
+            </div>
+          </div>
+
+          {/* 2 Opsi Pengalaman Photobox (Grid 2 Kolom) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
+            {/* Opsi 1: Datang ke 5 Spot Kafe */}
+            <div className="lg:col-span-7 rounded-3xl bg-white border-2 border-gray-200 p-6 sm:p-8 flex flex-col justify-between shadow-xs">
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md bg-brand-green/10 text-brand-dark">
+                    Self-Service • Buka Setiap Hari
+                  </span>
+                  <span className="text-xs font-bold text-gray-400">
+                    Tanpa Perlu Booking
+                  </span>
+                </div>
+
+                <h3 className="text-2xl font-black text-brand-dark tracking-tight mb-2">
+                  1. Nongkrong &amp; Foto di 5 Coffee Shop
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-500 font-medium leading-relaxed mb-5">
+                  Kunjungi bilik photobox kami yang tersedia secara permanen di titik hangout favorit Banjarbaru (Banjarmasin segera hadir). Cukup bayar per sesi (Rp 25.000 – Rp 35.000) langsung di mesin via QRIS atau Cash.
+                </p>
+
+                {/* List 5 Spot Kafe */}
+                <div className="space-y-2.5 mb-6">
+                  <span className="text-xs font-black uppercase tracking-wider text-brand-dark block">
+                    5 Titik Lokasi Bilik Photobox (Banjarbaru):
+                  </span>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                    <div className="p-3 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-between">
+                      <div>
+                        <span className="font-bold text-brand-dark block">Warkop Sirkem</span>
+                        <span className="text-[11px] text-gray-500 font-medium">Loktabat Utara, Banjarbaru</span>
+                      </div>
+                      <a
+                        href="https://maps.app.goo.gl/GPzjBY3dBXuUr5ESA"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-black text-brand-green hover:underline shrink-0 ml-2"
+                      >
+                        Maps ↗
+                      </a>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-between">
+                      <div>
+                        <span className="font-bold text-brand-dark block">Kéan Coffee</span>
+                        <span className="text-[11px] text-gray-500 font-medium">Pusat Kota, Banjarbaru</span>
+                      </div>
+                      <a
+                        href="https://share.google/ypoJPLN7wFOWoAoF0"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-black text-brand-green hover:underline shrink-0 ml-2"
+                      >
+                        Maps ↗
+                      </a>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-between">
+                      <div>
+                        <span className="font-bold text-brand-dark block">Hatara Coffee</span>
+                        <span className="text-[11px] text-gray-500 font-medium">Guntung Paikat, Banjarbaru</span>
+                      </div>
+                      <a
+                        href="https://maps.app.goo.gl/vi8YYLQFtV66T2Ft9"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-black text-brand-green hover:underline shrink-0 ml-2"
+                      >
+                        Maps ↗
+                      </a>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-between">
+                      <div>
+                        <span className="font-bold text-brand-dark block">Aime Coffee</span>
+                        <span className="text-[11px] text-gray-500 font-medium">Banjarbaru Kota</span>
+                      </div>
+                      <a
+                        href="https://share.google/5MfvXeEBPDw0aRFjW"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-black text-brand-green hover:underline shrink-0 ml-2"
+                      >
+                        Maps ↗
+                      </a>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-between sm:col-span-2">
+                      <div>
+                        <span className="font-bold text-brand-dark block">NoLima Coffee</span>
+                        <span className="text-[11px] text-gray-500 font-medium">Banjarbaru (Twin Photobox)</span>
+                      </div>
+                      <a
+                        href="https://share.google/qLC2FpGFKW0oyvTpm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-black text-brand-green hover:underline shrink-0 ml-2"
+                      >
+                        Maps ↗
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Upcoming Banjarmasin Notice */}
+                  <div className="mt-3 p-3 rounded-xl bg-amber-50/80 border border-amber-200/80 flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm">📍</span>
+                      <span className="text-[11px] font-medium text-amber-900">
+                        <strong>Banjarmasin:</strong> Spot bilik foto sedang disiapkan (Upcoming)!
+                      </span>
+                    </div>
+                    <a
+                      href="https://wa.me/6285187834710?text=Halo%20Tegoer%20Sapa,%20saya%20mau%20rekomendasi%20spot%20photobox%20di%20Banjarmasin"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[11px] font-black text-amber-900 hover:text-brand-dark underline shrink-0 ml-2"
+                    >
+                      Rekomendasikan Kafe ↗
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-gray-100 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/gallery?kategori=photobox"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-brand-dark hover:bg-brand-green text-white text-xs font-bold transition-all shadow-xs"
+                >
+                  <span>Lihat Galeri Foto Cetak</span>
+                  <span>→</span>
+                </Link>
+                <Link
+                  href="/#photobox-spots"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-brand-dark text-xs font-bold transition-all"
+                >
+                  <span>Buka Peta Interaktif di Beranda</span>
+                  <span>↗</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Opsi 2: Sewa Bilik Photobox untuk Event */}
+            <div className="lg:col-span-5 rounded-3xl bg-[#0f432a] text-white p-6 sm:p-8 flex flex-col justify-between shadow-md">
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md bg-[#1eab73]/20 text-[#1eab73] border border-[#1eab73]/30">
+                    Private Event &amp; Party
+                  </span>
+                  <span className="text-xs font-bold text-white/70">
+                    Unlimited Print
+                  </span>
+                </div>
+
+                <h3 className="text-2xl font-black text-white tracking-tight mb-2">
+                  2. Sewa Bilik Photobox ke Lokasi Acara
+                </h3>
+                <p className="text-xs sm:text-sm text-white/80 font-medium leading-relaxed mb-5">
+                  Hadirkan keseruan bilik foto privat mandiri langsung ke pesta pernikahan, ulang tahun, gathering perusahaan, atau festival Anda.
+                </p>
+
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 mb-6 space-y-2.5 text-xs">
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-[#1eab73] font-black">✓</span>
+                    <span className="text-white/90">Unlimited cetak foto strip fisik untuk seluruh tamu acara</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-[#1eab73] font-black">✓</span>
+                    <span className="text-white/90">Free custom template frame eksklusif bertuliskan nama &amp; tema acara</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-[#1eab73] font-black">✓</span>
+                    <span className="text-white/90">Bilik fisik privat dengan touch monitor preview &amp; remote clicker</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-[#1eab73] font-black">✓</span>
+                    <span className="text-white/90">Instant soft file QR code download langsung di layar</span>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-[#1eab73] font-black">✓</span>
+                    <span className="text-white/90">1–2 Kru operator standby memastikan operasional lancar</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-white/10 space-y-2">
+                <Button
+                  href={`https://api.whatsapp.com/send?phone=6281350655747&text=${encodeURIComponent(
+                    "Halo kak Mau tanya info sewa bilik Photobox Tegoer Sapa untuk event\n\nNama           : \nTanggal & Waktu: \nLokasi Acara   : \nEstimasi Tamu  : \n\nMohon info ketersediaan slot & pricelistnya. Terima kasih!"
+                  )}`}
+                  variant="primary"
+                  size="md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full text-center justify-center"
+                >
+                  <span>Chat WhatsApp Sewa Event ↗</span>
+                </Button>
+                <Button
+                  href="#pricing"
+                  variant="stroke"
+                  size="md"
+                  className="w-full text-center justify-center text-white border-white/20 hover:bg-white/10"
+                >
+                  <span>Cek Paket di Daftar Harga ↓</span>
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Banner Bantuan Kendala Soft File */}
+          <div className="mt-8 rounded-2xl bg-amber-50/80 border border-amber-200/80 p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+            <div className="flex items-center gap-3">
+              <span className="w-9 h-9 rounded-xl bg-amber-200/80 text-amber-900 flex items-center justify-center font-black text-sm shrink-0">
+                ⚡
+              </span>
+              <div>
+                <span className="font-bold text-amber-900 block text-xs sm:text-sm">
+                  Butuh Bantuan Unduh Soft File Photobox?
+                </span>
+                <span className="text-amber-800/80 font-medium">
+                  Jika barcode QR saat berfoto di kafe mengalami kendala jaringan, tim CS kami siap mengirimkan ulang soft file foto Anda.
+                </span>
+              </div>
+            </div>
+            <a
+              href="https://api.whatsapp.com/send?phone=62881080518887&text=Halo%20kak%20boleh%20minta%20soft%20file%20photobox%0ATanggal%20%3A%0AJam%20%3A%0AContoh%C2%A0Photonya%C2%A0%3A"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-bold whitespace-nowrap transition-colors shadow-2xs shrink-0"
+            >
+              Hubungi CS Photobox ↗
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          2.6. DAFTAR HARGA & OPSI PAKET PHOTOBOOTH & PHOTOBOX
       ═══════════════════════════════════════════════════════════════ */}
       <section
         id="pricing"

@@ -203,7 +203,7 @@ export default function GalleryPreview() {
             </p>
           </div>
 
-          <div className="flex-shrink-0 self-center md:self-auto">
+          <div className="hidden md:flex flex-shrink-0 self-center md:self-auto">
             <Button
               href="/gallery"
               variant="primary"
@@ -224,7 +224,7 @@ export default function GalleryPreview() {
             <Link
               key={item.id}
               href={item.href}
-              className="gallery-preview-card group relative block aspect-square sm:aspect-[4/3] overflow-hidden rounded-2xl sm:rounded-3xl bg-brand-dark ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-md"
+              className="gallery-preview-card group relative block aspect-square sm:aspect-[4/3] overflow-hidden rounded-2xl sm:rounded-3xl bg-brand-dark ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-1 active:scale-[0.98] shadow-sm hover:shadow-md"
             >
               {/* Background Cover Photo */}
               <div className="absolute inset-0 overflow-hidden">
@@ -258,19 +258,15 @@ export default function GalleryPreview() {
                 {item.category}
               </span>
 
-              {/* Hover / Active Overlay dengan Tombol "View Work →" */}
+              {/* Hover Overlay Desktop Only — 1 Tombol Elegan "Lihat Karya →" */}
               <div
-                className="absolute inset-0 bg-brand-dark/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30 flex items-end justify-between p-6 pointer-events-none"
+                className="hidden md:flex absolute inset-0 bg-brand-dark/30 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-all duration-300 z-30 items-center justify-center p-4 pointer-events-none"
                 aria-hidden="true"
               >
-                <div className="flex items-center gap-2 text-white font-bold text-xs bg-brand-green px-4 py-2 rounded-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 shadow-md">
-                  <span>View Work</span>
+                <div className="flex items-center gap-2 text-white font-bold text-xs bg-brand-green px-4 py-2 rounded-full transform scale-90 group-hover:scale-100 transition-transform duration-300 shadow-lg shadow-brand-green/30">
+                  <span>Lihat Karya</span>
                   <span aria-hidden="true">→</span>
                 </div>
-
-                <span className="text-[11px] font-semibold text-white/90 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full">
-                  Galeri Portfolio
-                </span>
               </div>
             </Link>
           ))}

@@ -183,6 +183,8 @@ export default function RootLayout({
       <head>
         <link rel="dns-prefetch" href="https://api.whatsapp.com" />
         <link rel="dns-prefetch" href="https://wa.me" />
+        <link rel="dns-prefetch" href="https://maps.app.goo.gl" />
+        <link rel="dns-prefetch" href="https://share.google" />
         <link rel="preconnect" href="https://api.whatsapp.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
@@ -195,11 +197,11 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen flex flex-col antialiased" suppressHydrationWarning>
+      <body className="min-h-screen flex flex-col antialiased overflow-x-hidden" suppressHydrationWarning>
         <BookingProvider>
           <GlobalButtonFlair />
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 w-full overflow-x-hidden">{children}</main>
           <Footer />
           <FloatingBookingBar />
         </BookingProvider>

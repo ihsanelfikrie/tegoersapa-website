@@ -581,6 +581,7 @@ function GalleryContent() {
                   src={activeImage.image}
                   alt={activeImage.alt}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 850px"
                   className="object-contain"
                   priority
                 />

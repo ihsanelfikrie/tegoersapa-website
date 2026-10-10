@@ -236,8 +236,8 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
               </div>
             </div>
 
-            {/* Foto Utama Relevan (Kanan) */}
-            <div className="lg:col-span-5">
+            {/* Foto Utama Relevan (Kanan — Desktop Only) */}
+            <div className="hidden lg:block lg:col-span-5">
               <div className="hero-fade relative aspect-[4/3] rounded-3xl overflow-hidden bg-white/90 backdrop-blur-xs ring-1 ring-brand-dark/10 p-6 flex flex-col justify-between group shadow-xl">
                 {/* Decorative Camera Frame */}
                 <div className="relative z-10 flex items-center justify-between">
@@ -407,6 +407,7 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
                   src={activeImage.image}
                   alt={activeImage.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 800px"
                   className="object-cover"
                 />
               ) : (

@@ -134,7 +134,7 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/(favicon\\.ico|icon\\.png|apple-icon\\.png)",
+        source: "/(favicon\\.ico|icon\\.png|apple-icon\\.png|manifest\\.webmanifest)",
         headers: [
           {
             key: "Cache-Control",

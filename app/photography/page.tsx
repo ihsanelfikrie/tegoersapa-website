@@ -184,8 +184,8 @@ export default function PhotographyPage() {
               </div>
             </div>
 
-            {/* Visual Mosaic Preview (Kanan) */}
-            <div className="lg:col-span-5 grid grid-cols-2 gap-3.5">
+            {/* Visual Mosaic Preview (Kanan — Desktop Only) */}
+            <div className="hidden lg:grid lg:col-span-5 grid-cols-2 gap-3.5">
               {photographyServices.map((svc, idx) => (
                 <div
                   key={svc.id}
