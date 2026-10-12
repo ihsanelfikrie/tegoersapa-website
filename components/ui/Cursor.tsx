@@ -14,8 +14,9 @@ export default function Cursor() {
   const dotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Hanya aktif di non-touch device
+    // Hanya aktif di non-touch device dan jika user tidak prefer reduced motion
     if (!window.matchMedia("(pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const ring = ringRef.current;
     const dot = dotRef.current;
@@ -44,13 +45,13 @@ export default function Cursor() {
 
     // Membesar saat hover link / button
     function onOver(e: MouseEvent) {
-      if ((e.target as HTMLElement).closest("a, button")) {
+      if ((e.target as Element)?.closest?.("a, button")) {
         gsap.to(ring, { scale: 2.5, duration: 0.3, ease: "power2.out" });
         gsap.to(dot,  { scale: 0,   duration: 0.2 });
       }
     }
     function onOut(e: MouseEvent) {
-      if ((e.target as HTMLElement).closest("a, button")) {
+      if ((e.target as Element)?.closest?.("a, button")) {
         gsap.to(ring, { scale: 1, duration: 0.3, ease: "power2.out" });
         gsap.to(dot,  { scale: 1, duration: 0.2 });
       }

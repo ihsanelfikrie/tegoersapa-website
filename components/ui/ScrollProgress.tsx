@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap } from "@/lib/gsap";
 
 /**
  * Scroll progress bar — thin 2px line di top viewport yang tumbuh kiri→kanan
- * seiring user scroll, menggunakan GSAP set dengan scaleX.
+ * seiring user scroll, menggunakan hardware-accelerated transform scaleX.
  */
 export default function ScrollProgress() {
   const barRef = useRef<HTMLDivElement>(null);
@@ -14,11 +13,21 @@ export default function ScrollProgress() {
     const bar = barRef.current;
     if (!bar) return;
 
+    let ticking = false;
+
     function update() {
-      const scrollTop = window.scrollY;
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = total > 0 ? scrollTop / total : 0;
-      gsap.set(bar, { scaleX: progress, transformOrigin: "left center" });
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (bar) {
+            const scrollTop = window.scrollY;
+            const total = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = total > 0 ? Math.min(Math.max(scrollTop / total, 0), 1) : 0;
+            bar.style.transform = `scaleX(${progress})`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     }
 
     window.addEventListener("scroll", update, { passive: true });
@@ -29,11 +38,11 @@ export default function ScrollProgress() {
   return (
     <div
       aria-hidden="true"
-      className="fixed top-0 left-0 right-0 h-[2px] z-[100]"
+      className="fixed top-0 left-0 right-0 h-[2px] z-[100] pointer-events-none"
     >
       <div
         ref={barRef}
-        className="h-full w-full bg-brand-green origin-left"
+        className="h-full w-full bg-brand-green origin-left will-change-transform"
         style={{ transform: "scaleX(0)" }}
       />
     </div>

@@ -35,6 +35,7 @@ export default function AboutPreview() {
             stagger: 0.15,
             duration: 0.8,
             ease: "power2.out",
+            clearProps: "transform",
             scrollTrigger: {
               trigger: textRef.current,
               start: "top 80%",
@@ -54,6 +55,7 @@ export default function AboutPreview() {
             x: 0,
             duration: 0.8,
             ease: "power2.out",
+            clearProps: "transform",
             scrollTrigger: {
               trigger: visualRef.current,
               start: "top 80%",

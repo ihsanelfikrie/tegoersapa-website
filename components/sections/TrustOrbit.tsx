@@ -16,12 +16,6 @@ const allOrbitLogos: OrbitItem[] = Array.from({ length: 24 }, (_, i) => ({
   alt: `Partner & Klien Tegoer Sapa ${i + 1}`,
 }));
 
-// Distribusi 24 logo ke 4 lintasan orbit konsentris
-const track1Items = allOrbitLogos.slice(0, 4); // 4 items (Inner)
-const track2Items = allOrbitLogos.slice(4, 10); // 6 items (Mid-Inner)
-const track3Items = allOrbitLogos.slice(10, 17); // 7 items (Mid-Outer)
-const track4Items = allOrbitLogos.slice(17, 24); // 7 items (Outer)
-
 export default function TrustOrbit() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isHoveredRef = useRef<boolean>(false);
@@ -44,7 +38,9 @@ export default function TrustOrbit() {
           : isTablet
           ? Math.min(520, Math.max(440, Math.round(w * 0.6)))
           : 580;
-        setDimensions({ width: w, height: h });
+        setDimensions((prev) =>
+          prev.width === w && prev.height === h ? prev : { width: w, height: h }
+        );
       }
     };
 
@@ -98,37 +94,18 @@ export default function TrustOrbit() {
 
     // Sudut offset per logo pada tiap track
     const trackAssignments = [
-      { count: track1Items.length, speedIdx: 0, a: radii.t1.a, b: radii.t1.b, startIdx: 0 },
-      { count: track2Items.length, speedIdx: 1, a: radii.t2.a, b: radii.t2.b, startIdx: 4 },
-      { count: track3Items.length, speedIdx: 2, a: radii.t3.a, b: radii.t3.b, startIdx: 10 },
-      { count: track4Items.length, speedIdx: 3, a: radii.t4.a, b: radii.t4.b, startIdx: 17 },
+      { count: 4, speedIdx: 0, a: radii.t1.a, b: radii.t1.b, startIdx: 0, step: (Math.PI * 2) / 4 },
+      { count: 6, speedIdx: 1, a: radii.t2.a, b: radii.t2.b, startIdx: 4, step: (Math.PI * 2) / 6 },
+      { count: 7, speedIdx: 2, a: radii.t3.a, b: radii.t3.b, startIdx: 10, step: (Math.PI * 2) / 7 },
+      { count: 7, speedIdx: 3, a: radii.t4.a, b: radii.t4.b, startIdx: 17, step: (Math.PI * 2) / 7 },
     ];
 
-    let animId: number;
-    let lastTime = performance.now();
-    let currentSpeedMultiplier = 1.0;
+    const centerX = width / 2;
+    const centerY = height / 2;
 
-    const tick = (now: number) => {
-      const dt = Math.min(0.1, (now - lastTime) / 1000);
-      lastTime = now;
-
-      // Perlambat secara halus saat kursor menyorot area orbit
-      const targetMultiplier = isHoveredRef.current ? 0.2 : 1.0;
-      currentSpeedMultiplier += (targetMultiplier - currentSpeedMultiplier) * 0.08;
-
-      if (!prefersReducedMotion) {
-        for (let t = 0; t < 4; t++) {
-          currentAngles[t] += speeds[t] * dt * currentSpeedMultiplier;
-        }
-      }
-
-      const centerX = width / 2;
-      const centerY = height / 2;
-
-      // Update posisi setiap logo di DOM
-      trackAssignments.forEach(({ count, speedIdx, a, b, startIdx }) => {
-        const baseAngle = currentAngles[speedIdx];
-        const step = (Math.PI * 2) / count;
+    const renderPositions = (angles: number[]) => {
+      trackAssignments.forEach(({ count, speedIdx, a, b, startIdx, step }) => {
+        const baseAngle = angles[speedIdx];
 
         for (let i = 0; i < count; i++) {
           const nodeIdx = startIdx + i;
@@ -142,6 +119,30 @@ export default function TrustOrbit() {
           el.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
         }
       });
+    };
+
+    if (prefersReducedMotion) {
+      renderPositions(currentAngles);
+      return;
+    }
+
+    let animId: number;
+    let lastTime = performance.now();
+    let currentSpeedMultiplier = 1.0;
+
+    const tick = (now: number) => {
+      const dt = Math.min(0.1, (now - lastTime) / 1000);
+      lastTime = now;
+
+      // Perlambat secara halus saat kursor menyorot area orbit
+      const targetMultiplier = isHoveredRef.current ? 0.2 : 1.0;
+      currentSpeedMultiplier += (targetMultiplier - currentSpeedMultiplier) * 0.08;
+
+      for (let t = 0; t < 4; t++) {
+        currentAngles[t] += speeds[t] * dt * currentSpeedMultiplier;
+      }
+
+      renderPositions(currentAngles);
 
       animId = requestAnimationFrame(tick);
     };

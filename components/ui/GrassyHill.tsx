@@ -39,6 +39,7 @@ export function GrassTuft3({ className = "", style }: { className?: string; styl
 
 interface GrassyHillProps {
   className?: string;
+  containerClassName?: string;
   children?: React.ReactNode;
 }
 
@@ -49,12 +50,13 @@ interface GrassyHillProps {
  */
 export default function GrassyHill({
   className = "h-24 sm:h-32 md:h-36 lg:h-44",
+  containerClassName = "z-10",
   children,
 }: GrassyHillProps) {
   return (
     <div
       aria-hidden="true"
-      className="absolute bottom-0 left-0 right-0 w-full pointer-events-none select-none z-10 overflow-hidden leading-none translate-y-[1px]"
+      className={`absolute bottom-0 left-0 right-0 w-full pointer-events-none select-none overflow-hidden leading-none translate-y-[1px] ${containerClassName}`}
     >
       <div className={`relative w-full ${className}`}>
         {/* Lengkungan Bukit Hijau dengan Garis Hitam Kartun */}

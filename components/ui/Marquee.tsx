@@ -15,6 +15,8 @@ const ITEMS = [
   "Pre-Wedding",
 ];
 
+const MARQUEE_ITEMS = [...ITEMS, ...ITEMS];
+
 /**
  * Infinite horizontal scroll ticker (marquee) menggunakan GSAP xPercent.
  * Item diduplikasi agar loop seamless saat xPercent mencapai -50%.
@@ -27,6 +29,8 @@ export default function Marquee() {
     const track = trackRef.current;
     if (!track) return;
 
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     const anim = gsap.to(track, {
       xPercent: -50,
       ease: "none",
@@ -34,15 +38,22 @@ export default function Marquee() {
       repeat: -1,
     });
 
-    // Pause on hover, resume on leave
+    // Slow down on hover, resume on leave
     const wrapper = track.parentElement;
+    const handleEnter = () => anim.timeScale(0.3);
+    const handleLeave = () => anim.timeScale(1);
+
     if (wrapper) {
-      wrapper.addEventListener("mouseenter", () => anim.timeScale(0.3));
-      wrapper.addEventListener("mouseleave", () => anim.timeScale(1));
+      wrapper.addEventListener("mouseenter", handleEnter);
+      wrapper.addEventListener("mouseleave", handleLeave);
     }
 
     return () => {
       anim.kill();
+      if (wrapper) {
+        wrapper.removeEventListener("mouseenter", handleEnter);
+        wrapper.removeEventListener("mouseleave", handleLeave);
+      }
     };
   }, []);
 
@@ -56,7 +67,7 @@ export default function Marquee() {
         className="flex items-center will-change-transform"
         style={{ width: "max-content" }}
       >
-        {[...ITEMS, ...ITEMS].map((item, i) => (
+        {MARQUEE_ITEMS.map((item, i) => (
           <span key={i} className="inline-flex items-center gap-0 flex-shrink-0">
             <span className="text-white/35 text-[11px] font-bold tracking-[0.25em] uppercase whitespace-nowrap px-8">
               {item}

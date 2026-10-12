@@ -8,6 +8,21 @@ import HeroClouds from "@/components/ui/HeroClouds";
 import GrassyHill from "@/components/ui/GrassyHill";
 import Button from "@/components/ui/Button";
 
+const CATEGORY_COUNTS: Record<string, number> = (() => {
+  const counts: Record<string, number> = {
+    all: galleryPhotos.length,
+    professional: 0,
+    photobooth: 0,
+    photobox: 0,
+  };
+  galleryPhotos.forEach((item) => {
+    if (counts[item.categorySlug] !== undefined) {
+      counts[item.categorySlug]++;
+    }
+  });
+  return counts;
+})();
+
 function GalleryContent() {
   const searchParams = useSearchParams();
   const paramKat = searchParams.get("kategori");
@@ -92,20 +107,7 @@ function GalleryContent() {
   const remainingCount = Math.max(0, filteredItems.length - visibleCount);
 
   // Counts for tabs
-  const categoryCounts = useMemo(() => {
-    const counts: Record<string, number> = {
-      all: galleryPhotos.length,
-      professional: 0,
-      photobooth: 0,
-      photobox: 0,
-    };
-    galleryPhotos.forEach((item) => {
-      if (counts[item.categorySlug] !== undefined) {
-        counts[item.categorySlug]++;
-      }
-    });
-    return counts;
-  }, []);
+  const categoryCounts = CATEGORY_COUNTS;
 
   // Subcategory counts within current active category
   const subCategoryCounts = useMemo(() => {

@@ -45,8 +45,9 @@ export default function Services() {
       );
 
       // ── 2. SplitText word-by-word reveal pada heading ───────────────────
+      let split: SplitText | null = null;
       if (headingRef.current) {
-        const split = new SplitText(headingRef.current, { type: "words" });
+        split = new SplitText(headingRef.current, { type: "words" });
         gsap.fromTo(
           split.words,
           { opacity: 0, y: 30, skewY: 3 },
@@ -87,22 +88,11 @@ export default function Services() {
             },
           }
         );
-
-        // ── 4. GSAP hover lift per card ─────────────────────────────────
-        const cards = cardsRef.current.querySelectorAll<HTMLAnchorElement>("a");
-        cards.forEach((card) => {
-          const yTo = gsap.quickTo(card, "y", { duration: 0.35, ease: "power2.out" });
-
-          card.addEventListener("mouseenter", () => {
-            yTo(-8);
-            gsap.to(card, { scale: 1.01, duration: 0.35, ease: "power2.out", overwrite: "auto" });
-          });
-          card.addEventListener("mouseleave", () => {
-            yTo(0);
-            gsap.to(card, { scale: 1, duration: 0.35, ease: "power2.out", overwrite: "auto" });
-          });
-        });
       }
+
+      return () => {
+        split?.revert();
+      };
     },
     { scope: sectionRef }
   );
@@ -137,7 +127,7 @@ export default function Services() {
             <Link
               key={service.id}
               href={service.href}
-              className="group flex flex-col justify-between p-6 sm:p-7 rounded-2xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/20 transition-colors duration-300"
+              className="group flex flex-col justify-between p-6 sm:p-7 rounded-2xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-brand-green/20 hover:-translate-y-2 hover:shadow-lg transition-all duration-300"
             >
               <div>
                 <span className="font-black text-3xl sm:text-4xl text-brand-green/20 group-hover:text-brand-green/40 transition-colors duration-300">

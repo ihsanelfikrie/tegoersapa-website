@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useBooking } from "@/lib/BookingContext";
@@ -8,6 +8,56 @@ import { contact, photoboothBackdrops } from "@/lib/content";
 import HeroClouds from "@/components/ui/HeroClouds";
 import GrassyHill from "@/components/ui/GrassyHill";
 import Button from "@/components/ui/Button";
+
+const STUDIO_PACKAGE_IDS = new Set([
+  "personal",
+  "family",
+  "group",
+  "indoor-graduation",
+  "prewed",
+  "indoor-grad",
+]);
+
+function checkIsPhotobooth(
+  pkg: { kategori?: string; id?: string; sourceUrl?: string } | null
+): boolean {
+  if (!pkg) return false;
+  const kat = pkg.kategori?.toLowerCase() || "";
+  const id = pkg.id?.toLowerCase() || "";
+  const url = pkg.sourceUrl?.toLowerCase() || "";
+  return (
+    kat.includes("photobooth") ||
+    kat.includes("photobox") ||
+    kat.includes("bajaj") ||
+    id.includes("photobooth") ||
+    id.includes("photobox") ||
+    id.includes("bajaj") ||
+    id.startsWith("pb-") ||
+    id.includes("mingle") ||
+    url.includes("photobooth")
+  );
+}
+
+function checkIsStudio(pkg: { kategori?: string; id?: string } | null): boolean {
+  if (!pkg) return false;
+  const kat = pkg.kategori?.toLowerCase() || "";
+  const id = pkg.id?.toLowerCase() || "";
+  return kat.includes("studio") || id.includes("studio") || STUDIO_PACKAGE_IDS.has(id);
+}
+
+function isSafeInternalUrl(url?: string): boolean {
+  return Boolean(url && url.startsWith("/") && !url.startsWith("//") && !url.includes("javascript:"));
+}
+
+const PHOTOBOOTH_LAYOUT_OPTIONS = [
+  { label: "STRIP Photo Print (2R • 2 pcs)", val: "STRIP (2 pcs)" },
+  { label: "4R Photo Print Postcard (1 pcs)", val: "4R Postcard (1 pcs)" },
+] as const;
+
+const BASE_INPUT_CLASS =
+  "w-full px-4 py-3 rounded-2xl border text-base sm:text-sm text-black placeholder:text-gray-400 font-medium transition-all focus:outline-none focus:ring-2";
+const NORMAL_INPUT_CLASS = `${BASE_INPUT_CLASS} border-gray-200 focus:border-brand-green focus:ring-brand-green/20 bg-gray-50/50 focus:bg-white`;
+const ERROR_INPUT_CLASS = `${BASE_INPUT_CLASS} border-red-400 focus:ring-red-300 bg-red-50/30`;
 
 export default function BookingPage() {
   const {
@@ -42,15 +92,17 @@ export default function BookingPage() {
   const [copiedDraftToast, setCopiedDraftToast] = useState(false);
   const todayDate = new Date().toISOString().split("T")[0];
 
-  // Sync saved customerInfo to formData on hydration
-  const [prevCustomerInfo, setPrevCustomerInfo] = useState(customerInfo);
-  if (customerInfo && customerInfo !== prevCustomerInfo) {
-    setPrevCustomerInfo(customerInfo);
-    setFormData((prev) => ({
-      ...prev,
-      ...customerInfo,
-    }));
-  }
+  // Sync saved customerInfo to formData on hydration once
+  const hydratedRef = useRef(false);
+  useEffect(() => {
+    if (isHydrated && customerInfo && !hydratedRef.current) {
+      hydratedRef.current = true;
+      setFormData((prev) => ({
+        ...prev,
+        ...customerInfo,
+      }));
+    }
+  }, [isHydrated, customerInfo]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -85,30 +137,9 @@ export default function BookingPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Determine if chosen package is Photobooth / Bajaj
-  const isPhotobooth = Boolean(
-    selectedPackage &&
-      (selectedPackage.kategori?.toLowerCase().includes("photobooth") ||
-        selectedPackage.kategori?.toLowerCase().includes("photobox") ||
-        selectedPackage.kategori?.toLowerCase().includes("bajaj") ||
-        selectedPackage.id?.toLowerCase().includes("photobooth") ||
-        selectedPackage.id?.toLowerCase().includes("photobox") ||
-        selectedPackage.id?.toLowerCase().includes("bajaj") ||
-        selectedPackage.id?.toLowerCase().startsWith("pb-") ||
-        selectedPackage.id?.toLowerCase().includes("mingle") ||
-        selectedPackage.sourceUrl?.includes("photobooth"))
-  );
-
-  // Determine if chosen package is Studio
-  const isStudioPackage = Boolean(
-    selectedPackage &&
-      (selectedPackage.kategori?.toLowerCase().includes("studio") ||
-        selectedPackage.id?.toLowerCase().includes("studio") ||
-        selectedPackage.id === "indoor-grad" ||
-        ["personal", "family", "group", "indoor-graduation", "prewed"].includes(
-          selectedPackage.id
-        ))
-  );
+  // Determine if chosen package is Photobooth / Studio
+  const isPhotobooth = checkIsPhotobooth(selectedPackage);
+  const isStudioPackage = checkIsStudio(selectedPackage);
 
   // Live builder for formatted WhatsApp message
   const buildWhatsAppMessage = () => {
@@ -187,9 +218,6 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
   };
 
   // Determine back URL for "Ubah Pilihan" (hardened against open-redirect)
-  const isSafeInternalUrl = (url?: string) =>
-    Boolean(url && url.startsWith("/") && !url.startsWith("//") && !url.includes("javascript:"));
-
   const safeSourceUrl = isSafeInternalUrl(selectedPackage?.sourceUrl)
     ? selectedPackage!.sourceUrl
     : "/photography/wedding#packages";
@@ -542,12 +570,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       value={formData.nama}
                       onChange={handleChange}
                       placeholder="Contoh: Rian Pratama & Sarah"
-                      className={[
-                        "w-full px-4 py-3 rounded-2xl border text-base sm:text-sm text-black placeholder:text-gray-400 font-medium transition-all focus:outline-none focus:ring-2",
-                        errors.nama
-                          ? "border-red-400 focus:ring-red-300 bg-red-50/30"
-                          : "border-gray-200 focus:border-brand-green focus:ring-brand-green/20 bg-gray-50/50 focus:bg-white",
-                      ].join(" ")}
+                      className={errors.nama ? ERROR_INPUT_CLASS : NORMAL_INPUT_CLASS}
                     />
                     {errors.nama && (
                       <p className="mt-1 text-xs text-red-500 font-semibold">{errors.nama}</p>
@@ -571,12 +594,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       value={formData.whatsapp}
                       onChange={handleChange}
                       placeholder="Contoh: 081234567890"
-                      className={[
-                        "w-full px-4 py-3 rounded-2xl border text-base sm:text-sm text-black placeholder:text-gray-400 font-medium transition-all focus:outline-none focus:ring-2",
-                        errors.whatsapp
-                          ? "border-red-400 focus:ring-red-300 bg-red-50/30"
-                          : "border-gray-200 focus:border-brand-green focus:ring-brand-green/20 bg-gray-50/50 focus:bg-white",
-                      ].join(" ")}
+                      className={errors.whatsapp ? ERROR_INPUT_CLASS : NORMAL_INPUT_CLASS}
                     />
                     {errors.whatsapp && (
                       <p className="mt-1 text-xs text-red-500 font-semibold">{errors.whatsapp}</p>
@@ -600,12 +618,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                         suppressHydrationWarning
                         value={formData.tanggal}
                         onChange={handleChange}
-                        className={[
-                          "w-full px-4 py-3 rounded-2xl border text-base sm:text-sm text-black font-medium transition-all focus:outline-none focus:ring-2",
-                          errors.tanggal
-                            ? "border-red-400 focus:ring-red-300 bg-red-50/30"
-                            : "border-gray-200 focus:border-brand-green focus:ring-brand-green/20 bg-gray-50/50 focus:bg-white",
-                        ].join(" ")}
+                        className={errors.tanggal ? ERROR_INPUT_CLASS : NORMAL_INPUT_CLASS}
                       />
                       {errors.tanggal && (
                         <p className="mt-1 text-xs text-red-500 font-semibold">{errors.tanggal}</p>
@@ -627,7 +640,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                         value={formData.waktu}
                         onChange={handleChange}
                         placeholder="Contoh: 09.00 WIB / Siang"
-                        className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-base sm:text-sm text-black placeholder:text-gray-400 font-medium bg-gray-50/50 focus:bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all"
+                        className={NORMAL_INPUT_CLASS}
                       />
                     </div>
                   </div>
@@ -648,7 +661,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       value={formData.lokasi}
                       onChange={handleChange}
                       placeholder="Contoh: Gedung Bina Satria Banjarbaru / Studio Tegoer Sapa"
-                      className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-base sm:text-sm text-black placeholder:text-gray-400 font-medium bg-gray-50/50 focus:bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all"
+                      className={NORMAL_INPUT_CLASS}
                     />
                   </div>
 
@@ -672,7 +685,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                         value={formData.instagram}
                         onChange={handleChange}
                         placeholder="username_instagram"
-                        className="w-full pl-9 pr-4 py-3 rounded-2xl border border-gray-200 text-base sm:text-sm text-black placeholder:text-gray-400 font-medium bg-gray-50/50 focus:bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all"
+                        className={`${NORMAL_INPUT_CLASS} pl-9 pr-4`}
                       />
                     </div>
                   </div>
@@ -729,10 +742,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                           Format Layout / Ukuran Cetak:
                         </label>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                          {[
-                            { label: "STRIP Photo Print (2R • 2 pcs)", val: "STRIP (2 pcs)" },
-                            { label: "4R Photo Print Postcard (1 pcs)", val: "4R Postcard (1 pcs)" },
-                          ].map((item) => (
+                          {PHOTOBOOTH_LAYOUT_OPTIONS.map((item) => (
                             <button
                               key={item.val}
                               type="button"
@@ -767,7 +777,7 @@ Mohon konfirmasi ketersediaan slot tanggal & instruksi pembayaran DP. Terima kas
                       value={formData.catatan}
                       onChange={handleChange}
                       placeholder="Ceritakan gambaran konsep acara, adat yang dipakai, atau request tambahan lainnya..."
-                      className="w-full px-4 py-3 rounded-2xl border border-gray-200 text-base sm:text-sm text-black placeholder:text-gray-400 font-medium bg-gray-50/50 focus:bg-white focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20 transition-all resize-none"
+                      className={`${NORMAL_INPUT_CLASS} resize-none`}
                     />
                   </div>
 

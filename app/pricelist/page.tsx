@@ -19,19 +19,8 @@ function PricelistContent() {
   const { selectedPackage, selectPackage } = useBooking();
 
   const tabParam = searchParams.get("tab");
-  const initialTab = tabParam === "graduation" ? "graduation" : "photobooth";
-
-  // Tab state: "photobooth" or "graduation"
-  const [activeTab, setActiveTab] = useState<"photobooth" | "graduation">(initialTab);
-
-  // Sync tab saat parameter URL berubah
-  const [prevTabParam, setPrevTabParam] = useState(tabParam);
-  if (prevTabParam !== tabParam) {
-    setPrevTabParam(tabParam);
-    if (tabParam === "graduation" || tabParam === "photobooth") {
-      setActiveTab(tabParam);
-    }
-  }
+  const [selectedTab, setSelectedTab] = useState<"photobooth" | "graduation" | null>(null);
+  const activeTab = selectedTab ?? (tabParam === "graduation" ? "graduation" : "photobooth");
 
   // Sub-filter for outdoor graduation on mobile
   const [gradFilter, setGradFilter] = useState<"all" | "solo" | "duo" | "group">("all");
@@ -74,7 +63,7 @@ function PricelistContent() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mb-6 sm:mb-12 bg-gray-50/80 border border-gray-200/80 p-1.5 sm:p-2.5 rounded-2xl sm:rounded-3xl">
           <div className="flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto">
             <button
-              onClick={() => setActiveTab("photobooth")}
+              onClick={() => setSelectedTab("photobooth")}
               className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-200 cursor-pointer ${
                 activeTab === "photobooth"
                   ? "bg-brand-dark text-white shadow-md scale-101"
@@ -88,7 +77,7 @@ function PricelistContent() {
             </button>
 
             <button
-              onClick={() => setActiveTab("graduation")}
+              onClick={() => setSelectedTab("graduation")}
               className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-200 cursor-pointer ${
                 activeTab === "graduation"
                   ? "bg-brand-dark text-white shadow-md scale-101"

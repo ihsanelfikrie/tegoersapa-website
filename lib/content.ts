@@ -956,7 +956,7 @@ export type ServicePagePackage = {
   isPlaceholder?: boolean;
   placeholderNote?: string;
   fitur: string[];
-  whatsappUrl: string;
+  whatsappUrl?: string;
 };
 
 export type ServicePageGalleryItem = {
@@ -1064,8 +1064,6 @@ export const photographyDetailPages: Record<
           "Seluruh soft file resolusi tinggi via Google Drive",
           "+ Penyesuaian lokasi prosesi di Banjarbaru & sekitarnya",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Traditional%20Photography%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0ALokasi%20Acara%20%3A%0AJenis%20Adat%20%3A%0APaket%20%3A%20Half-Day%20Traditional",
       },
       {
         id: "trad-fullday",
@@ -1082,8 +1080,6 @@ export const photographyDetailPages: Record<
           "Cetak album kolase eksklusif / opsi 5R",
           "Flashdisk / Cloud link all high-resolution files",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Traditional%20Photography%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0ALokasi%20Acara%20%3A%0AJenis%20Adat%20%3A%0APaket%20%3A%20Full-Day%20Traditional",
       },
       {
         id: "trad-custom",
@@ -1097,8 +1093,6 @@ export const photographyDetailPages: Record<
           "Opsi cetak kanvas & pigura elegan",
           "Dukungan dokumentasi multi-hari atau luar kota",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20konsultasi%20paket%20Custom%20Traditional%20Photography%0A%0ANama%20%3A%0ATanggal%20Acara%20%3A%0ACatatan%20%3A",
       },
     ],
     cta: {
@@ -1178,8 +1172,6 @@ export const photographyDetailPages: Record<
           "1 Album Magazine",
           "Semua File dalam Flashdisk",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Paket%20Wedding%20Tegoer%20Sapa%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0ALokasi%20Acara%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Janji%20(Wedding%20Photo%20-%20Rp%203.750.000)",
       },
       {
         id: "wedding-selaras",
@@ -1195,8 +1187,6 @@ export const photographyDetailPages: Record<
           "1 Album Magnetik + 120 Foto Cetak",
           "Semua File dalam Flashdisk",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Paket%20Wedding%20Tegoer%20Sapa%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0ALokasi%20Acara%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Selaras%20(Wedding%20Photo%20-%20Rp%204.750.000)",
       },
 
       // ── WEDDING VIDEO ───────────────────────────────────────────────────
@@ -1212,8 +1202,6 @@ export const photographyDetailPages: Record<
           "1 Video Sinematik (1–2 Menit)",
           "File dalam Flashdisk",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Paket%20Wedding%20Tegoer%20Sapa%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0ALokasi%20Acara%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Kenang%20(Wedding%20Video%20-%20Rp%202.000.000)",
       },
 
       // ── WEDDING PHOTO & VIDEO ───────────────────────────────────────────
@@ -1232,8 +1220,6 @@ export const photographyDetailPages: Record<
           "1 Album Magazine",
           "File dalam Flashdisk",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Paket%20Wedding%20Tegoer%20Sapa%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0ALokasi%20Acara%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Langkah%20(Wedding%20Photo%20%26%20Video%20-%20Rp%205.250.000)",
       },
       {
         id: "wedding-bersama",
@@ -1252,8 +1238,6 @@ export const photographyDetailPages: Record<
           "1 Album Magnetik + 120 Foto Cetak",
           "File dalam Flashdisk",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Paket%20Wedding%20Tegoer%20Sapa%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0ALokasi%20Acara%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Bersama%20(Wedding%20Photo%20%26%20Video%20-%20Rp%206.950.000)",
       },
 
       // ── PRE-WEDDING PHOTO ───────────────────────────────────────────────
@@ -1270,8 +1254,6 @@ export const photographyDetailPages: Record<
           "20 Foto Edited",
           "File dalam Flashdisk",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Paket%20Pre-Wedding%20Tegoer%20Sapa%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0ALokasi%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Tetap%20(Pre-Wedding%20Photo%20-%20Rp%201.500.000)",
       },
       {
         id: "prewed-awal",
@@ -1286,8 +1268,6 @@ export const photographyDetailPages: Record<
           "40 Foto Edited",
           "File dalam Flashdisk",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Paket%20Pre-Wedding%20Tegoer%20Sapa%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0ALokasi%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Awal%20(Pre-Wedding%20Photo%20-%20Rp%202.250.000)",
       },
 
       // ── PRE-WEDDING VIDEO ───────────────────────────────────────────────
@@ -1302,8 +1282,6 @@ export const photographyDetailPages: Record<
           "1 Video Sinematik (1–2 Menit)",
           "File dalam Flashdisk",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Paket%20Pre-Wedding%20Tegoer%20Sapa%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0ALokasi%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Suara%20(Pre-Wedding%20Video%20-%20Rp%201.750.000)",
       },
       {
         id: "prewed-kita",
@@ -1321,8 +1299,6 @@ export const photographyDetailPages: Record<
           "1 Video Sinematik (1–2 Menit)",
           "File dalam Flashdisk",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Paket%20Pre-Wedding%20Tegoer%20Sapa%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0ALokasi%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Kita%20(Pre-Wedding%20Photo%20%26%20Video%20-%20Rp%203.550.000)",
       },
     ],
     addOns: [
@@ -1331,72 +1307,54 @@ export const photographyDetailPages: Record<
         nama: "Extra Hour Photo (3 Jam)",
         harga: "Rp 800.000",
         keterangan: "Tambahan waktu pemotretan foto hingga 3 jam",
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20tanya%20Add-On%20Wedding%3A%20Extra%20Hour%20Photo%20(3%20Jam)%20-%20Rp%20800.000",
       },
       {
         id: "extra-hour-video",
         nama: "Extra Hour Video (3 Jam)",
         harga: "Rp 800.000",
         keterangan: "Tambahan waktu perekaman video hingga 3 jam",
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20tanya%20Add-On%20Wedding%3A%20Extra%20Hour%20Video%20(3%20Jam)%20-%20Rp%20800.000",
       },
       {
         id: "extra-day-photo",
         nama: "Extra Day Photo",
         harga: "Rp 1.500.000",
         keterangan: "Dokumentasi foto ekstra untuk hari terpisah (prosesi adat/malam bainai)",
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20tanya%20Add-On%20Wedding%3A%20Extra%20Day%20Photo%20-%20Rp%201.500.000",
       },
       {
         id: "extra-day-video",
         nama: "Extra Day Video",
         harga: "Rp 1.500.000",
         keterangan: "Dokumentasi video ekstra untuk hari terpisah",
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20tanya%20Add-On%20Wedding%3A%20Extra%20Day%20Video%20-%20Rp%201.500.000",
       },
       {
         id: "extra-day-photo-video",
         nama: "Extra Day Photo & Video",
         harga: "Rp 2.500.000",
         keterangan: "Dokumentasi lengkap foto dan video untuk hari terpisah",
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20tanya%20Add-On%20Wedding%3A%20Extra%20Day%20Photo%20%26%20Video%20-%20Rp%202.500.000",
       },
       {
         id: "magazine-album-20",
         nama: "Magazine Album 20 Sheets",
         harga: "Rp 1.500.000",
         keterangan: "Album magazine cetak lab eksklusif 20 lembar kualitas premium tahan lama",
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20tanya%20Add-On%20Wedding%3A%20Magazine%20Album%2020%20Sheets%20-%20Rp%201.500.000",
       },
       {
         id: "photo-prints-14rj",
         nama: "Photo Prints 14RJ + Minimalist Frame",
         harga: "Rp 250.000",
         keterangan: "Cetak foto 14RJ premium lengkap dengan pigura minimalis modern",
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20tanya%20Add-On%20Wedding%3A%20Photo%20Prints%2014RJ%20%2B%20Minimalist%20Frame%20-%20Rp%20250.000",
       },
       {
         id: "photo-prints-16rj",
         nama: "Photo Prints 16RJ + Minimalist Frame",
         harga: "Rp 250.000",
         keterangan: "Cetak foto 16RJ premium lengkap dengan pigura minimalis modern",
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20tanya%20Add-On%20Wedding%3A%20Photo%20Prints%2016RJ%20%2B%20Minimalist%20Frame%20-%20Rp%20250.000",
       },
       {
         id: "photo-scan-barcode",
         nama: "Photo Scan Barcode (6 Jam)",
         harga: "Rp 1.500.000",
         keterangan: "Live cloud access scan QR barcode untuk unduh foto acara langsung selama 6 jam",
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20tanya%20Add-On%20Wedding%3A%20Photo%20Scan%20Barcode%20(6%20Jam)%20-%20Rp%201.500.000",
       },
     ],
     cta: {
@@ -1471,8 +1429,6 @@ export const photographyDetailPages: Record<
           "20 foto edit",
           "Semua soft file",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Outdoor%20Graduation%0A%0ANama%20%3A%0AUniversitas%20%3A%0ATanggal%20%26%20Waktu%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Basic",
       },
       {
         id: "outdoor-premium",
@@ -1490,8 +1446,6 @@ export const photographyDetailPages: Record<
           "50 foto edit",
           "Semua soft file",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Outdoor%20Graduation%0A%0ANama%20%3A%0AUniversitas%20%3A%0ATanggal%20%26%20Waktu%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Premium",
       },
       {
         id: "outdoor-homie",
@@ -1499,6 +1453,7 @@ export const photographyDetailPages: Record<
         harga: "Rp 600.000",
         image: "/images/pricelist/outdoor-homie.webp",
         kategori: "Outdoor Graduation",
+        badge: "Favorit Bestie",
         isPlaceholder: false,
         fitur: [
           "2 graduate",
@@ -1508,8 +1463,6 @@ export const photographyDetailPages: Record<
           "20 foto edit",
           "Semua soft file",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Outdoor%20Graduation%0A%0ANama%20%3A%0AUniversitas%20%3A%0ATanggal%20%26%20Waktu%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Homie",
       },
       {
         id: "outdoor-bestie",
@@ -1527,8 +1480,6 @@ export const photographyDetailPages: Record<
           "50 foto edit",
           "Semua soft file",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Outdoor%20Graduation%0A%0ANama%20%3A%0AUniversitas%20%3A%0ATanggal%20%26%20Waktu%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Bestie",
       },
       {
         id: "outdoor-unity",
@@ -1546,8 +1497,6 @@ export const photographyDetailPages: Record<
           "20 foto edit",
           "Semua soft file",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Outdoor%20Graduation%0A%0ANama%20%3A%0AUniversitas%20%3A%0ATanggal%20%26%20Waktu%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Unity",
       },
       {
         id: "outdoor-framely",
@@ -1566,8 +1515,6 @@ export const photographyDetailPages: Record<
           "50 foto edit",
           "Semua soft file",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Outdoor%20Graduation%0A%0ANama%20%3A%0AUniversitas%20%3A%0ATanggal%20%26%20Waktu%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Framely",
       },
       {
         id: "indoor-grad",
@@ -1586,8 +1533,6 @@ export const photographyDetailPages: Record<
           "Semua soft file",
           "+Rp35.000/orang tambahan",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Profesional%20Photo%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Indoor%20Graduation%0AJumlah%20Orang%20%3A",
       },
     ],
     cta: {
@@ -1661,8 +1606,6 @@ export const photographyDetailPages: Record<
           "5 Lembar Cetak 5R",
           "All Soft File",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Profesional%20Photo%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Personal",
       },
       {
         id: "family",
@@ -1678,8 +1621,6 @@ export const photographyDetailPages: Record<
           "5 Lembar Cetak 5R",
           "All Soft File",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Profesional%20Photo%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Family%0AJumlah%20Orang%20%3A",
       },
       {
         id: "group",
@@ -1694,8 +1635,6 @@ export const photographyDetailPages: Record<
           "Cetak 5R per Orang",
           "All Soft File",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Profesional%20Photo%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Group%0AJumlah%20Orang%20%3A",
       },
       {
         id: "indoor-graduation",
@@ -1710,8 +1649,6 @@ export const photographyDetailPages: Record<
           "Cetak 5R per Orang",
           "All Soft File",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Profesional%20Photo%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Indoor%20Graduation%0AJumlah%20Orang%20%3A",
       },
       {
         id: "prewed",
@@ -1726,8 +1663,6 @@ export const photographyDetailPages: Record<
           "5 Lembar Cetak 5R",
           "All Soft File",
         ],
-        whatsappUrl:
-          "https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20booking%20Profesional%20Photo%0A%0ANama%20%3A%0ATanggal%20%26%20Waktu%20%3A%0AInstagram%20%3A%0APaket%20%3A%20Prewed%2FPoswed",
       },
     ],
     cta: {

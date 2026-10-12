@@ -29,11 +29,6 @@ html {
   max-width: 100vw;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-}
 
 body {
   background-color: #ffffff;
@@ -68,6 +63,10 @@ body {
 
 /* ── Aksesibilitas: reduced-motion ───────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
@@ -75,6 +74,21 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  .cloud-flow,
+  .grass-sway-a,
+  .grass-sway-b,
+  .grass-sway-c,
+  .button-beg-click,
+  .hero-shimmer-char,
+  .logo-sheen-cel {
+    animation: none !important;
+  }
+
+  .cloud-flow-a { transform: translateX(15vw); }
+  .cloud-flow-b { transform: translateX(65vw); }
+  .cloud-flow-c { transform: translateX(40vw); }
+  .button__flair { display: none !important; }
 }
 
 /* ── Judul hero bergaya sticker/kartun: flat solid color, outline hitam tegas & 3D shadow ── */
@@ -289,17 +303,6 @@ body {
   transform: rotate(12deg) skewX(8deg) scale(1.06);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .cloud-flow,
-  .grass-sway-a,
-  .grass-sway-b,
-  .grass-sway-c {
-    animation: none !important;
-  }
-  .cloud-flow-a { transform: translateX(15vw); }
-  .cloud-flow-b { transform: translateX(65vw); }
-  .button__flair { display: none !important; }
-}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    SISTEM TOMBOL 3D TIMBUL + GSAP MAGNETIC FLAIR HOVER
@@ -377,23 +380,8 @@ body {
   pointer-events: none;
 }
 
-/* ── VARIANT 1: Primary Green (Tombol Utama, seperti "Booking Sekarang") ── */
-.button--primary {
-  background-color: #1fae77;
-  color: #ffffff;
-  border-color: rgba(0, 0, 0, 0.1);
-  border-bottom-color: #126b48;
-}
-
-.button--primary .button__flair:before {
-  background-color: #002716; /* Warna brand dark yang mekar dari posisi kursor */
-}
-
-.button--primary:hover {
-  color: #ffffff;
-}
-
-/* ── VARIANT 2: Dark Brand Button (Sekarang Seragam: Hijau Muda Sebelum Hover, Hijau Tua Saat Hover) ── */
+/* ── VARIANT 1 & 2: Primary & Dark Brand Button (Hijau Muda Sebelum Hover, Hijau Tua Saat Hover) ── */
+.button--primary,
 .button--dark {
   background-color: #1fae77;
   color: #ffffff;
@@ -401,10 +389,12 @@ body {
   border-bottom-color: #126b48;
 }
 
+.button--primary .button__flair:before,
 .button--dark .button__flair:before {
   background-color: #002716; /* Hijau tua mekar saat hover */
 }
 
+.button--primary:hover,
 .button--dark:hover {
   color: #ffffff;
 }
@@ -570,11 +560,6 @@ body {
   transform: translateY(2px) scale(0.98) !important;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .button-beg-click {
-    animation: none !important;
-  }
-}
 
 /* ── Navbar Logo Cel-Shaded Crisp Sheen (Sama seperti Teks Hero — Tanpa Blur) ── */
 .logo-sheen-cel {

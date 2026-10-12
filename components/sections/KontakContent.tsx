@@ -4,6 +4,39 @@ import React, { useState } from "react";
 import { contact } from "@/lib/content";
 import Button from "@/components/ui/Button";
 
+const quickInquiries = [
+  {
+    label: "Tanya Jadwal Wedding",
+    wa: contact.whatsapp[0].raw,
+    msg: "Halo kak Mau tanya ketersediaan jadwal foto wedding dokumentasi Tegoer Sapa",
+  },
+  {
+    label: "Tanya Jadwal Wisuda",
+    wa: contact.whatsapp[0].raw,
+    msg: "Halo kak Mau tanya slot jadwal foto wisuda outdoor di Banjarbaru",
+  },
+  {
+    label: "Sewa Photobooth Event",
+    wa: contact.whatsapp[1].raw,
+    msg: "Halo kak Mau konsultasi sewa photobooth instan untuk acara kami",
+  },
+  {
+    label: "Booking Bajaj Keliling",
+    wa: contact.whatsapp[1].raw,
+    msg: "Halo kak Mau booking Bajaj Photobooth Tegoer Keliling untuk event",
+  },
+  {
+    label: "Custom Frame Overlay",
+    wa: contact.whatsapp[1].raw,
+    msg: "Halo kak Mau tanya kustomisasi layout dan frame overlay photobooth",
+  },
+  {
+    label: "Info Mingle & Barcode",
+    wa: contact.whatsapp[1].raw,
+    msg: "Halo kak Mau tanya info rilis & pre-order layanan Mingle Photobooth & Photo Barcode Tegoer Sapa",
+  },
+];
+
 export default function KontakContent() {
   const [copiedToast, setCopiedToast] = useState<string | null>(null);
 
@@ -14,39 +47,6 @@ export default function KontakContent() {
       setTimeout(() => setCopiedToast(null), 3000);
     }
   };
-
-  const quickInquiries = [
-    {
-      label: "Tanya Jadwal Wedding",
-      wa: contact.whatsapp[0].raw,
-      msg: "Halo kak Mau tanya ketersediaan jadwal foto wedding dokumentasi Tegoer Sapa",
-    },
-    {
-      label: "Tanya Jadwal Wisuda",
-      wa: contact.whatsapp[0].raw,
-      msg: "Halo kak Mau tanya slot jadwal foto wisuda outdoor di Banjarbaru",
-    },
-    {
-      label: "Sewa Photobooth Event",
-      wa: contact.whatsapp[1].raw,
-      msg: "Halo kak Mau konsultasi sewa photobooth instan untuk acara kami",
-    },
-    {
-      label: "Booking Bajaj Keliling",
-      wa: contact.whatsapp[1].raw,
-      msg: "Halo kak Mau booking Bajaj Photobooth Tegoer Keliling untuk event",
-    },
-    {
-      label: "Custom Frame Overlay",
-      wa: contact.whatsapp[1].raw,
-      msg: "Halo kak Mau tanya kustomisasi layout dan frame overlay photobooth",
-    },
-    {
-      label: "Info Mingle & Barcode",
-      wa: contact.whatsapp[1].raw,
-      msg: "Halo kak Mau tanya info rilis & pre-order layanan Mingle Photobooth & Photo Barcode Tegoer Sapa",
-    },
-  ];
 
   return (
     <div className="space-y-16">

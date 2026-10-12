@@ -21,6 +21,15 @@ interface PhotoboothPricingProps {
 
 const DURATION_PRESETS = [2, 3, 4, 5, 6] as const;
 
+const CATEGORY_TABS = [
+  { id: "all", label: "Semua" },
+  { id: "regular", label: "Reguler" },
+  { id: "bajaj", label: "Bajaj" },
+  { id: "photobox", label: "Photobox" },
+] as const;
+
+const PHOTOBOOTH_WA_NUMBER = "6281350655747";
+
 function getPackagePricing(pkg: PhotoboothPackage, hours: number) {
   const exactTier = pkg.durations.find((d) => d.hours === hours);
   if (exactTier) {
@@ -53,6 +62,16 @@ function getPackagePricing(pkg: PhotoboothPackage, hours: number) {
   };
 }
 
+function getWaBookingUrl(
+  pkg: PhotoboothPackage,
+  pricing: ReturnType<typeof getPackagePricing>,
+  waNumber: string
+) {
+  const extraText = pricing.extraHours > 0 ? ` [Paket 6 Jam + ${pricing.extraHours} Jam Tambahan]` : "";
+  const msg = `Halo kak Mau booking Photobooth Tegoer Sapa\n\nNama           : \nTanggal & Waktu: \nLokasi Acara   : \nInstagram      : \nPaket          : ${pkg.nama} (${pricing.durationLabel}${extraText} - ${pricing.harga})\n\nMohon info ketersediaan slot jadwalnya. Terima kasih!`;
+  return `https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(msg)}`;
+}
+
 export default function PhotoboothPricing({
   sourceUrl = "/pricelist",
   showCategoryHeader = true,
@@ -77,23 +96,47 @@ export default function PhotoboothPricing({
     return true;
   });
 
-  // Nomor resmi WhatsApp Photobooth
-  const waNumber = "6281350655747";
+  const handleSelectPackage = (pkg: PhotoboothPackage, pricing: ReturnType<typeof getPackagePricing>) => {
+    selectPackage(
+      {
+        id: pkg.id,
+        nama: `${pkg.nama} (${pricing.durationLabel}${pricing.extraHours > 0 ? ` + ${pricing.extraHours} Jam Extra` : ""})`,
+        harga: pricing.harga,
+        kategori: pkg.category,
+        fitur: [
+          ...pkg.fitur,
+          pricing.extraHours > 0
+            ? `Durasi Operasional ${pricing.hours} Jam (Termasuk ${pricing.extraHours} Jam Tambahan)`
+            : `Durasi Operasional ${pricing.hours} Jam`,
+        ],
+      },
+      sourceUrl
+    );
+    router.push("/booking");
+  };
 
   // GSAP: Numeric Punch saat ganti jam durasi
   useEffect(() => {
     if (!cardsGridRef.current) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const prices = cardsGridRef.current.querySelectorAll(".price-numeric");
     if (prices.length > 0) {
       gsap.fromTo(
         prices,
         { scale: 0.94, opacity: 0.65 },
-        { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2)", stagger: 0.03 }
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.35,
+          ease: "back.out(2)",
+          stagger: 0.03,
+          clearProps: "all",
+        }
       );
     }
   }, [selectedHours]);
 
-  // GSAP: Stagger Entrance Reveal & Smooth Hover Lift
+  // GSAP: Stagger Entrance Reveal (clearProps agar CSS hover lift bekerja tanpa konflik)
   useGSAP(
     () => {
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -111,14 +154,9 @@ export default function PhotoboothPricing({
               stagger: 0.08,
               duration: 0.6,
               ease: "power2.out",
+              clearProps: "transform",
             }
           );
-
-          cards.forEach((card) => {
-            const yTo = gsap.quickTo(card, "y", { duration: 0.3, ease: "power2.out" });
-            card.addEventListener("mouseenter", () => yTo(-6));
-            card.addEventListener("mouseleave", () => yTo(0));
-          });
         }
       }
     },
@@ -143,16 +181,11 @@ export default function PhotoboothPricing({
           <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
             {/* Filter Tab Kategori */}
             <div className="inline-flex p-1 bg-gray-100 rounded-xl max-w-full overflow-x-auto no-scrollbar">
-              {[
-                { id: "all", label: "Semua" },
-                { id: "regular", label: "Reguler" },
-                { id: "bajaj", label: "Bajaj" },
-                { id: "photobox", label: "Photobox" },
-              ].map((tab) => (
+              {CATEGORY_TABS.map((tab) => (
                 <button
                   key={tab.id}
                   type="button"
-                  onClick={() => setActiveCategory(tab.id as typeof activeCategory)}
+                  onClick={() => setActiveCategory(tab.id)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                     activeCategory === tab.id
                       ? "bg-brand-dark text-white shadow-xs"
@@ -207,17 +240,13 @@ export default function PhotoboothPricing({
               const isSelected = selectedPackage?.id === pkg.id;
               const isBajaj = pkg.category === "Bajaj Photobooth";
 
-              // Template WhatsApp resmi
-              const waMessage = encodeURIComponent(
-                `Halo kak Mau booking Photobooth Tegoer Sapa\n\nNama           : \nTanggal & Waktu: \nLokasi Acara   : \nInstagram      : \nPaket          : ${pkg.nama} (${pricing.durationLabel}${pricing.extraHours > 0 ? ` [Paket 6 Jam + ${pricing.extraHours} Jam Tambahan]` : ""} - ${pricing.harga})\n\nMohon info ketersediaan slot jadwalnya. Terima kasih!`
-              );
-              const waLink = `https://api.whatsapp.com/send?phone=${waNumber}&text=${waMessage}`;
+              const waLink = getWaBookingUrl(pkg, pricing, PHOTOBOOTH_WA_NUMBER);
 
               return (
                 <div
                   key={pkg.id}
                   className={[
-                    "pricing-card group relative flex flex-col justify-between rounded-3xl p-5 sm:p-6 transition-all duration-300",
+                    "pricing-card group relative flex flex-col justify-between rounded-3xl p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1.5",
                     isPrint
                       ? "bg-gradient-to-b from-[#fbfdfb] via-white to-[#f7faf8] border-2 border-[#1eab73]/40 shadow-xs hover:shadow-md hover:border-[#1eab73]"
                       : "bg-white border-2 border-gray-200/90 hover:border-gray-300 shadow-2xs hover:shadow-xs",
@@ -358,24 +387,7 @@ export default function PhotoboothPricing({
                           ? "hover:border-[#0f432a] hover:text-[#0f432a] border-gray-300"
                           : ""
                       }`}
-                      onClick={() => {
-                        selectPackage(
-                          {
-                            id: pkg.id,
-                            nama: `${pkg.nama} (${pricing.durationLabel}${pricing.extraHours > 0 ? ` + ${pricing.extraHours} Jam Extra` : ""})`,
-                            harga: pricing.harga,
-                            kategori: pkg.category,
-                            fitur: [
-                              ...pkg.fitur,
-                              pricing.extraHours > 0
-                                ? `Durasi Operasional ${pricing.hours} Jam (Termasuk ${pricing.extraHours} Jam Tambahan)`
-                                : `Durasi Operasional ${pricing.hours} Jam`,
-                            ],
-                          },
-                          sourceUrl
-                        );
-                        router.push("/booking");
-                      }}
+                      onClick={() => handleSelectPackage(pkg, pricing)}
                     >
                       <span>{isSelected ? "✓ Paket Dipilih" : "Pilih Paket Ini"}</span>
                     </Button>
@@ -625,7 +637,7 @@ export default function PhotoboothPricing({
 
               <div className="space-y-2 pt-3 border-t border-brand-green/20">
                 <a
-                  href={`https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(
+                  href={`https://api.whatsapp.com/send?phone=${PHOTOBOOTH_WA_NUMBER}&text=${encodeURIComponent(
                     "Halo kak Mau tanya info & konsultasi paket Sewa Bilik Photobox Event Tegoer Sapa\n\nNama           : \nTanggal & Waktu: \nLokasi Acara   : \nEstimasi Tamu  : \n\nMohon info penawarannya yaa. Terima kasih!"
                   )}`}
                   target="_blank"

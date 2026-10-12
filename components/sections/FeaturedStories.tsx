@@ -54,6 +54,9 @@ const featuredStories = [
   },
 ] as const;
 
+const mainStory = featuredStories[0];
+const supportingStories = featuredStories.slice(1);
+
 export default function FeaturedStories() {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -76,6 +79,7 @@ export default function FeaturedStories() {
             stagger: 0.12,
             duration: 0.7,
             ease: "power2.out",
+            clearProps: "transform",
             scrollTrigger: {
               trigger: headerRef.current,
               start: "top 80%",
@@ -96,6 +100,7 @@ export default function FeaturedStories() {
             scale: 1,
             duration: 0.8,
             ease: "power3.out",
+            clearProps: "transform",
             scrollTrigger: {
               trigger: mainCardRef.current,
               start: "top 82%",
@@ -116,6 +121,7 @@ export default function FeaturedStories() {
             stagger: 0.12,
             duration: 0.75,
             ease: "power2.out",
+            clearProps: "transform",
             scrollTrigger: {
               trigger: subCardsRef.current,
               start: "top 82%",
@@ -127,9 +133,6 @@ export default function FeaturedStories() {
     },
     { scope: sectionRef }
   );
-
-  const mainStory = featuredStories[0];
-  const supportingStories = featuredStories.slice(1);
 
   return (
     <section

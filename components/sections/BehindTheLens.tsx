@@ -33,6 +33,7 @@ export default function BehindTheLens() {
             stagger: 0.12,
             duration: 0.75,
             ease: "power2.out",
+            clearProps: "all",
             scrollTrigger: {
               trigger: headerRef.current,
               start: "top 80%",
@@ -52,6 +53,7 @@ export default function BehindTheLens() {
             opacity: 1,
             duration: 1.1,
             ease: "power3.inOut",
+            clearProps: "clipPath",
             scrollTrigger: {
               trigger: mainVisualRef.current,
               start: "top 82%",
@@ -72,6 +74,7 @@ export default function BehindTheLens() {
             stagger: 0.15,
             duration: 1.0,
             ease: "power3.inOut",
+            clearProps: "clipPath",
             scrollTrigger: {
               trigger: subVisualsRef.current,
               start: "top 82%",

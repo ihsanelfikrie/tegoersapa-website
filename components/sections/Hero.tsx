@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { heroHome, heroPhotos, type HeroPhoto } from "@/lib/content";
 import Button from "@/components/ui/Button";
+import GrassyHill from "@/components/ui/GrassyHill";
 
 
 // ─── Sub-komponen: satu slot foto dalam mosaic ───────────────────────────────
@@ -74,43 +75,6 @@ function PhotoSlot({
         {photo.category}
       </span>
     </div>
-  );
-}
-
-// ─── Sub-komponen: Rumpun rumput kartun 4 bilah (lebar) ──────────────────────
-function GrassTuft4({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg
-      viewBox="0 0 60 30"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      style={style}
-      aria-hidden="true"
-    >
-      <path d="M 12 25 L 2 11" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
-      <path d="M 18 21 L 24 3" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
-      <path d="M 40 20 L 39 1" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
-      <path d="M 46 25 L 56 12" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-// ─── Sub-komponen: Rumpun rumput kartun 3 bilah (kompak) ────────────────────
-function GrassTuft3({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg
-      viewBox="0 0 36 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      style={style}
-      aria-hidden="true"
-    >
-      <path d="M 8 23 L 1 13" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
-      <path d="M 14 24 L 12 1" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
-      <path d="M 20 25 L 30 14" stroke="#000000" strokeWidth="3.5" strokeLinecap="round" />
-    </svg>
   );
 }
 
@@ -205,7 +169,6 @@ export default function Hero() {
       });
 
       // ── 2. Animasi Loop Lompat Per-Huruf Bergantian Setiap 5 Detik ────────
-      // Wave jump teratur yang PASTI mulai dari "T", "e", "g", "o", "e", "r", lalu "S", "a", "p", "a"
       const charKeys = [
         "t-0", "t-1", "t-2", "t-3", "t-4", "t-5",
         "s-0", "s-1", "s-2", "s-3"
@@ -214,20 +177,20 @@ export default function Hero() {
       const jumpTl = gsap.timeline({
         repeat: -1,
         repeatDelay: 5,
-        delay: 2.2, // Jeda nyaman setelah seluruh animasi masuk mendarat, agar lompatan "Te" terlihat jelas
+        delay: 2.2,
       });
+
+      const cleanups: Array<() => void> = [];
 
       charKeys.forEach((key, index) => {
         const base = containerRef.current?.querySelector<HTMLElement>(`[data-char="${key}"]`);
         const shim = containerRef.current?.querySelector<HTMLElement>(`[data-char-shim="${key}"]`);
         if (!base) return;
         const targets = shim ? [base, shim] : [base];
-        const tilt = (index % 2 === 0 ? 7 : -7);
-        // Jeda ritme natural saat berpindah dari kata "Tegoer" (idx 0-5) ke "Sapa" (idx 6-9)
+        const tilt = index % 2 === 0 ? 7 : -7;
         const wordOffset = index >= 6 ? 0.08 : 0;
         const startTime = index * 0.11 + wordOffset;
 
-        // Gelombang lompatan ceria (wave jump) per huruf bergantian, dimulai dari T & e
         jumpTl
           .to(
             targets,
@@ -292,13 +255,19 @@ export default function Hero() {
         base.addEventListener("mouseleave", onLeave);
         base.addEventListener("touchstart", onEnter, { passive: true });
         base.addEventListener("touchend", onLeave, { passive: true });
+
+        cleanups.push(() => {
+          base.removeEventListener("mouseenter", onEnter);
+          base.removeEventListener("mouseleave", onLeave);
+          base.removeEventListener("touchstart", onEnter);
+          base.removeEventListener("touchend", onLeave);
+        });
       });
 
       // ── 4. Multi-Layer Cloud Parallax (GSAP ScrollTrigger) ────────────
       const mm = gsap.matchMedia();
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        // Layer 1 (Awan Atas / Foreground): Bergerak lebih cepat ke atas dan melebar ke kiri
         if (cloud1Ref.current) {
           gsap.to(cloud1Ref.current, {
             scrollTrigger: {
@@ -314,7 +283,6 @@ export default function Hero() {
           });
         }
 
-        // Layer 2 (Awan Bawah / Midground): Bergerak sedang ke atas dan bergeser ke kanan
         if (cloud2Ref.current) {
           gsap.to(cloud2Ref.current, {
             scrollTrigger: {
@@ -330,7 +298,6 @@ export default function Hero() {
           });
         }
 
-        // Layer 3 (Awan Jauh / Background): Bergerak perlahan untuk efek kedalaman langit
         if (cloud3Ref.current) {
           gsap.to(cloud3Ref.current, {
             scrollTrigger: {
@@ -346,8 +313,12 @@ export default function Hero() {
           });
         }
       });
+
+      return () => {
+        cleanups.forEach((cleanup) => cleanup());
+      };
     },
-    { scope: containerRef },
+    { scope: containerRef }
   );
 
   return (
@@ -572,120 +543,11 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ═══════════════════════════════════════════════════════════════════
-          BUKIT RERUMPUTAN KARTUN (RESPONSIF DENGAN CSS / SVG VECTOR)
-          Didesain presisi persis seperti referensi: lengkung bukit hijau,
-          outline hitam kartun tebal, dan rumpun rumput tersebar alami.
-      ═══════════════════════════════════════════════════════════════════ */}
-      <div
-        aria-hidden="true"
-        className="absolute bottom-0 left-0 right-0 w-full pointer-events-none select-none z-0 overflow-hidden leading-none translate-y-[1px]"
-      >
-        <div className="relative w-full h-28 sm:h-36 md:h-44 lg:h-48 xl:h-52">
-          {/* Lengkungan Bukit Hijau dengan Garis Hitam Kartun */}
-          <svg
-            viewBox="0 0 1440 220"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-            className="absolute inset-0 w-full h-full block"
-          >
-            {/* Bidang Rumput Hijau Segar */}
-            <path
-              d="M -10,128 Q 720,-16 1450,96 L 1450,225 L -10,225 Z"
-              fill="#1eab73"
-            />
-            {/* Outline Hitam Tegas Khas Kartun & Sticker */}
-            <path
-              d="M -10,128 Q 720,-16 1450,96"
-              fill="none"
-              stroke="#000000"
-              strokeWidth="4.5"
-              strokeLinecap="round"
-              vectorEffect="non-scaling-stroke"
-            />
-          </svg>
-
-          {/* Rumpun Rumput 1: Kiri bawah (4 bilah) */}
-          <GrassTuft4
-            className="grass-tuft grass-sway-a absolute w-9 sm:w-11 lg:w-14 h-auto"
-            style={{ left: "3.5%", bottom: "15%", animationDelay: "0s" }}
-          />
-
-          {/* Rumpun Rumput Tambahan Kiri (Layar Menengah/Besar) */}
-          <GrassTuft3
-            className="grass-tuft grass-sway-b hidden md:block absolute w-6 sm:w-8 lg:w-10 h-auto"
-            style={{ left: "14%", bottom: "28%", animationDelay: "-1.8s" }}
-          />
-
-          {/* Rumpun Rumput 2: Lereng Kiri atas (4 bilah) */}
-          <GrassTuft4
-            className="grass-tuft grass-sway-c absolute w-9 sm:w-11 lg:w-14 h-auto"
-            style={{ left: "24%", bottom: "44%", animationDelay: "-0.9s" }}
-          />
-
-          {/* Rumpun Rumput Tambahan Tengah-Kiri (Layar Besar) */}
-          <GrassTuft3
-            className="grass-tuft grass-sway-a hidden lg:block absolute w-6 sm:w-8 lg:w-10 h-auto"
-            style={{ left: "38%", bottom: "32%", animationDelay: "-2.5s" }}
-          />
-
-          {/* Rumpun Rumput 3: Tengah-Kanan bawah (3 bilah) */}
-          <GrassTuft3
-            className="grass-tuft grass-sway-b absolute w-6 sm:w-8 lg:w-10 h-auto"
-            style={{ left: "58%", bottom: "16%", animationDelay: "-1.2s" }}
-          />
-
-          {/* Rumpun Rumput Tambahan Puncak Kanan (Layar Menengah/Besar) */}
-          <GrassTuft3
-            className="grass-tuft grass-sway-c hidden md:block absolute w-6 sm:w-8 lg:w-10 h-auto"
-            style={{ left: "67%", bottom: "50%", animationDelay: "-3.1s" }}
-          />
-
-          {/* Rumpun Rumput 4: Lereng Kanan atas (4 bilah) */}
-          <GrassTuft4
-            className="grass-tuft grass-sway-a absolute w-9 sm:w-11 lg:w-14 h-auto"
-            style={{ left: "77%", bottom: "42%", animationDelay: "-0.5s" }}
-          />
-
-          {/* Rumpun Rumput 5: Kanan bawah (3 bilah) */}
-          <GrassTuft3
-            className="grass-tuft grass-sway-b absolute w-6 sm:w-8 lg:w-10 h-auto"
-            style={{ left: "93%", bottom: "14%", animationDelay: "-2.1s" }}
-          />
-        </div>
-      </div>
-
-      <style>{`
-        @keyframes cloudFlow {
-          from { transform: translate3d(-100%, 0, 0); }
-          to   { transform: translate3d(100vw, 0, 0); }
-        }
-        .cloud-flow {
-          animation: cloudFlow 70s linear infinite;
-          will-change: transform;
-        }
-        .cloud-flow-a {
-          animation-duration: 70s;
-          animation-delay: -10s;
-        }
-        .cloud-flow-b {
-          animation-duration: 70s;
-          animation-delay: -45s; /* Beda fase 35s (tepat 50% siklus), awan selalu berjarak 180° sehingga tidak akan pernah tumpang tindih */
-        }
-        .cloud-flow-c {
-          animation-duration: 85s;
-          animation-delay: -25s;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .cloud-flow {
-            animation: none !important;
-          }
-          .cloud-flow-a { transform: translateX(15vw); }
-          .cloud-flow-b { transform: translateX(65vw); }
-          .cloud-flow-c { transform: translateX(40vw); }
-        }
-      `}</style>
+      {/* ─── 4. BOTTOM HILL DECORATION (Lengkung Bukit Kartun Hijau) ─── */}
+      <GrassyHill
+        className="h-28 sm:h-36 md:h-44 lg:h-48 xl:h-52"
+        containerClassName="z-0"
+      />
     </section>
   );
 }

@@ -765,7 +765,7 @@ export default function ServiceDetailPage({ data }: ServiceDetailPageProps) {
                         <a
                           href={
                             addon.whatsappUrl ||
-                            `https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20tanya%20Add-On%20Wedding%3A%20${encodeURIComponent(addon.nama)}`
+                            `https://api.whatsapp.com/send?phone=6282254092927&text=Halo%20kak%20Mau%20tanya%20Add-On%20Wedding%3A%20${encodeURIComponent(`${addon.nama} - ${addon.harga}`)}`
                           }
                           target="_blank"
                           rel="noopener noreferrer"

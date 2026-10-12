@@ -114,7 +114,6 @@ export default function Navbar() {
   }
 
   // Navbar berupa pill melayang di atas konten: pill terang untuk menu, pill gelap untuk logo.
-  const isDarkNav = false;
 
   return (
     <header
@@ -198,39 +197,24 @@ export default function Navbar() {
                       suppressHydrationWarning
                     >
                       <div
-                        className={[
-                          "p-2.5 rounded-2xl border transition-colors duration-200",
-                          isDarkNav
-                            ? "bg-brand-dark/95 border-white/10 text-white"
-                            : "bg-white/95 border-gray-100 text-gray-900",
-                        ].join(" ")}
+                        className="p-2.5 rounded-2xl border border-gray-100 bg-white/95 text-gray-900 shadow-xl transition-colors duration-200"
                         suppressHydrationWarning
                       >
                         <div
-                          className="px-3 py-2 border-b border-white/10 mb-1.5 flex items-center justify-between"
+                          className="px-3 py-2 border-b border-gray-100 mb-1.5 flex items-center justify-between"
                           suppressHydrationWarning
                         >
                           <div className="flex flex-col" suppressHydrationWarning>
                             <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-brand-green">
                               Layanan
                             </span>
-                            <span
-                              className={[
-                                "text-xs font-black tracking-wide mt-0.5",
-                                isDarkNav ? "text-white" : "text-brand-dark",
-                              ].join(" ")}
-                            >
+                            <span className="text-xs font-black tracking-wide mt-0.5 text-brand-dark">
                               {link.label}
                             </span>
                           </div>
                           <Link
                             href={link.href}
-                            className={[
-                              "text-[11px] font-bold transition-all duration-150 flex items-center gap-1 px-2.5 py-1 rounded-full",
-                              isDarkNav
-                                ? "bg-white/10 hover:bg-brand-green text-white/80 hover:text-white"
-                                : "bg-gray-100 hover:bg-brand-green text-gray-600 hover:text-white",
-                            ].join(" ")}
+                            className="text-[11px] font-bold transition-all duration-150 flex items-center gap-1 px-2.5 py-1 rounded-full bg-gray-100 hover:bg-brand-green text-gray-600 hover:text-white"
                           >
                             <span>Lihat Semua</span>
                             <span aria-hidden="true">→</span>
@@ -248,11 +232,7 @@ export default function Navbar() {
                                 className={[
                                   "block px-3 py-2.5 rounded-xl transition-all duration-150 group/item",
                                   isSubActive
-                                    ? isDarkNav
-                                      ? "bg-white/15 text-white"
-                                      : "bg-brand-green/15 text-brand-dark"
-                                    : isDarkNav
-                                    ? "hover:bg-white/10 text-white/90 hover:text-white"
+                                    ? "bg-brand-green/15 text-brand-dark"
                                     : "hover:bg-brand-green/10 text-gray-800 hover:text-brand-dark",
                                 ].join(" ")}
                               >
@@ -280,12 +260,7 @@ export default function Navbar() {
                                     ↗
                                   </span>
                                 </div>
-                                <p
-                                  className={[
-                                    "text-[11px] font-medium leading-snug mt-0.5",
-                                    isDarkNav ? "text-white/50" : "text-gray-500",
-                                  ].join(" ")}
-                                >
+                                <p className="text-[11px] font-medium leading-snug mt-0.5 text-gray-500">
                                   {sub.description}
                                 </p>
                               </Link>

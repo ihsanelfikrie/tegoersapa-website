@@ -73,6 +73,7 @@ const featuredPhotoboothWork = portfolioPreview.filter((item) =>
 );
 
 export default function PhotoboothPage() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const servicesRef = useRef<HTMLElement>(null);
   const featuredRef = useRef<HTMLElement>(null);
@@ -94,6 +95,7 @@ export default function PhotoboothPage() {
             stagger: 0.12,
             duration: 0.8,
             ease: "power3.out",
+            clearProps: "transform",
           }
         );
       }
@@ -110,6 +112,7 @@ export default function PhotoboothPage() {
             stagger: 0.12,
             duration: 0.75,
             ease: "power2.out",
+            clearProps: "transform",
             scrollTrigger: {
               trigger: servicesRef.current,
               start: "top 80%",
@@ -132,6 +135,7 @@ export default function PhotoboothPage() {
             stagger: 0.1,
             duration: 0.7,
             ease: "power2.out",
+            clearProps: "transform",
             scrollTrigger: {
               trigger: featuredRef.current,
               start: "top 82%",
@@ -141,11 +145,11 @@ export default function PhotoboothPage() {
         );
       }
     },
-    { scope: heroRef }
+    { scope: containerRef }
   );
 
   return (
-    <div className="bg-white min-h-screen text-black">
+    <div ref={containerRef} className="bg-white min-h-screen text-black">
       {/* ═══════════════════════════════════════════════════════════════
           1. BAGIAN PEMBUKA (HERO)
       ═══════════════════════════════════════════════════════════════ */}

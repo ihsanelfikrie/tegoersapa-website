@@ -15,6 +15,21 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
+const VARIANT_CLASSES: Record<NonNullable<ButtonProps["variant"]>, string> = {
+  primary: "button--primary",
+  dark: "button--dark",
+  stroke: "button--stroke",
+  outline: "button--outline",
+  orange: "button--orange",
+  white: "button--white",
+};
+
+const SIZE_CLASSES: Record<NonNullable<ButtonProps["size"]>, string> = {
+  sm: "button--sm",
+  md: "",
+  lg: "button--lg",
+};
+
 /**
  * Button — Komponen Tombol Tegoer Sapa dengan Efek 3D Timbul & GSAP Hover Flair.
  * Mendukung navigasi Next.js Link atau tombol HTML standar.
@@ -41,25 +56,10 @@ export default function Button({
     }
   }, []);
 
-  const variantClass = {
-    primary: "button--primary",
-    dark: "button--dark",
-    stroke: "button--stroke",
-    outline: "button--outline",
-    orange: "button--orange",
-    white: "button--white",
-  }[variant];
-
-  const sizeClass = {
-    sm: "button--sm",
-    md: "",
-    lg: "button--lg",
-  }[size];
-
   const combinedClass = [
     "button",
-    variantClass,
-    sizeClass,
+    VARIANT_CLASSES[variant],
+    SIZE_CLASSES[size],
     className,
   ].filter(Boolean).join(" ");
 
@@ -71,7 +71,7 @@ export default function Button({
   );
 
   if (href) {
-    const isExternal = href.startsWith("http") || href.startsWith("https://wa.me") || href.startsWith("mailto:");
+    const isExternal = href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("tel:") || href.startsWith("//");
     if (isExternal) {
       return (
         <a

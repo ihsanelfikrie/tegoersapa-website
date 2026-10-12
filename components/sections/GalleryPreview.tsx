@@ -86,6 +86,7 @@ export default function GalleryPreview() {
             stagger: 0.12,
             duration: 0.75,
             ease: "power2.out",
+            clearProps: "all",
             scrollTrigger: {
               trigger: headerRef.current,
               start: "top 82%",
@@ -121,6 +122,7 @@ export default function GalleryPreview() {
               duration: 1.0,
               ease: "power3.inOut",
               delay: (i % 2) * 0.08,
+              clearProps: "clipPath",
             }
           );
 
@@ -129,7 +131,7 @@ export default function GalleryPreview() {
             tl.fromTo(
               img,
               { scale: 1.22 },
-              { scale: 1, duration: 1.3, ease: "power2.out" },
+              { scale: 1, duration: 1.3, ease: "power2.out", clearProps: "transform" },
               "<"
             );
           }
@@ -139,7 +141,7 @@ export default function GalleryPreview() {
             tl.fromTo(
               info,
               { opacity: 0, y: 12 },
-              { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+              { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", clearProps: "all" },
               "-=0.45"
             );
           }
@@ -148,7 +150,7 @@ export default function GalleryPreview() {
             tl.fromTo(
               badge,
               { opacity: 0, scale: 0.85 },
-              { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.5)" },
+              { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.5)", clearProps: "all" },
               "-=0.4"
             );
           }
@@ -165,6 +167,7 @@ export default function GalleryPreview() {
             y: 0,
             duration: 0.6,
             ease: "power2.out",
+            clearProps: "all",
             scrollTrigger: {
               trigger: footerCtaRef.current,
               start: "top 90%",
