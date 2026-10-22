@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense, useMemo, useCallback, useSyncExternalStore } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
+// Gallery Page — auto re-evaluated with updated photobox collections
 import { galleryPhotos, galleryCategories, type GalleryPhotoItem } from "@/lib/content";
 import HeroClouds from "@/components/ui/HeroClouds";
 import GrassyHill from "@/components/ui/GrassyHill";

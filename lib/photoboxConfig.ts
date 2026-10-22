@@ -88,11 +88,11 @@ function createVenuePhotos(
 }
 
 export const photoboxManualAssignments: Record<PhotoboxVenueSlug, PhotoboxEntry[]> = {
-  sirkem: createVenuePhotos("sirkem", "Sirkem", 9),
-  kean: createVenuePhotos("kean", "Kean", 21, [8, 21]),
-  hatara: [],
-  nolima: [],
-  aimee: [],
+  sirkem: createVenuePhotos("sirkem", "Sirkem", 20),
+  kean: createVenuePhotos("kean", "Kean", 20, [8, 20]),
+  hatara: createVenuePhotos("hatara", "Hatara", 20, [8, 12, 18]),
+  nolima: createVenuePhotos("nolima", "Nolima", 19),
+  aimee: createVenuePhotos("aimee", "Aimee", 20),
 };
 
 /**

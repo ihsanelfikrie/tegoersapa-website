@@ -870,6 +870,7 @@ export const galleryCategories = [
 
 // ─── Portfolio Preview & Gallery Photos ─────────────────────────────────────
 import rawGalleryPhotos from "./galleryData.json";
+// Re-resolved photobox photos per venue assignments
 import { getResolvedPhotoboxPhotos } from "./photoboxConfig";
 
 export type GalleryPhotoItem = {

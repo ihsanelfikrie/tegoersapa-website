@@ -1,79 +1,76 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
-import { heroHome, heroPhotos, type HeroPhoto } from "@/lib/content";
+import { heroHome } from "@/lib/content";
 import Button from "@/components/ui/Button";
 import GrassyHill from "@/components/ui/GrassyHill";
 
-
-// ─── Sub-komponen: satu slot foto dalam mosaic ───────────────────────────────
-function PhotoSlot({
-  photo,
+// ─── Sub-komponen: Maskot Interaktif Hero (Bertapak di Tanah & Berkedip) ───────
+function HeroMascot({
   className = "",
 }: {
-  photo: HeroPhoto;
   className?: string;
 }) {
+  const [isBlinking, setIsBlinking] = useState(false);
+  const [isWiggling, setIsWiggling] = useState(false);
+
+  useEffect(() => {
+    // Siklus teratur: 3 detik mata terbuka, 3 detik mata berkedip
+    const intervalId = setInterval(() => {
+      setIsBlinking((prev) => !prev);
+    }, 3000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const handleClick = () => {
+    setIsWiggling(true);
+    setTimeout(() => {
+      setIsWiggling(false);
+    }, 450);
+  };
+
   return (
     <div
-      className={[
-        "relative overflow-hidden rounded-2xl group",
-        "ring-1 ring-white/10",
-        className,
-      ].join(" ")}
-      aria-label={photo.alt}
+      onClick={handleClick}
+      className={`group relative cursor-pointer select-none origin-bottom transition-transform duration-300 ${
+        isWiggling ? "scale-105 -rotate-2" : "hover:scale-[1.02]"
+      } ${className}`}
+      title="Maskot Resmi Tegoer Sapa — Bertapak di atas bukit, klik untuk bertegur sapa!"
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          handleClick();
+        }
+      }}
     >
-      {photo.placeholder ? (
-        <div
-          className="absolute inset-0 bg-brand-dark
-                      flex flex-col items-center justify-center gap-3 select-none"
-          aria-hidden="true"
-        >
-          <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-            <svg
-              className="w-6 h-6 text-white/30"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1.5}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round"
-                d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
-              />
-              <path strokeLinecap="round" strokeLinejoin="round"
-                d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
-              />
-            </svg>
-          </div>
-          <span className="text-white/20 text-[10px] font-semibold tracking-[0.15em] uppercase text-center px-3">
-            Foto Segera Hadir
-          </span>
-        </div>
-      ) : (
+      {/* Frame Gambar Maskot Berdiri (Clean 2D Cartoon, tanpa drop-shadow blur) */}
+      <div className="relative w-full aspect-[712/870]">
+        {/* Pose 1: Mata Terbuka — Layer dasar permanen, tidak pernah memudar agar tidak tembus/kedip putih */}
         <Image
-          src={photo.src}
-          alt={photo.alt}
+          src="/brand/maskot-hero.webp"
+          alt="Maskot Tegoer Sapa Berdiri di Tanah"
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 35vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          priority={photo.id === "hero-photo-1"}
+          sizes="(max-width: 640px) 300px, (max-width: 1024px) 420px, 520px"
+          className="object-contain select-none pointer-events-none opacity-100"
+          priority
         />
-      )}
-
-      <div
-        className="absolute inset-0 bg-black/30 pointer-events-none"
-        aria-hidden="true"
-      />
-      <span
-        className="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg
-                   bg-brand-green/90
-                   text-white text-[10px] font-bold tracking-[0.1em] uppercase"
-      >
-        {photo.category}
-      </span>
+        {/* Pose 2: Mata Berkedip — Overlay di atas Pose 1, muncul saat berkedip tanpa flash putih */}
+        <Image
+          src="/brand/maskot-hero-2.webp"
+          alt="Maskot Tegoer Sapa Berkedip"
+          fill
+          sizes="(max-width: 640px) 300px, (max-width: 1024px) 420px, 520px"
+          className={`object-contain select-none pointer-events-none transition-opacity duration-75 ${
+            isBlinking ? "opacity-100" : "opacity-0"
+          }`}
+          priority
+        />
+      </div>
     </div>
   );
 }
@@ -83,15 +80,14 @@ export default function Hero() {
   const containerRef = useRef<HTMLElement>(null);
 
   // Teks refs
-  const word1Ref    = useRef<HTMLSpanElement>(null);   // "TEGOER" inner span
-  const word2Ref    = useRef<HTMLSpanElement>(null);   // "SAPA" inner span
-  const dividerRef  = useRef<HTMLDivElement>(null);
-  const taglineRef  = useRef<HTMLParagraphElement>(null);
-  const ctaRef      = useRef<HTMLDivElement>(null);
+  const word1Ref   = useRef<HTMLSpanElement>(null);   // "TEGOER" inner span
+  const word2Ref   = useRef<HTMLSpanElement>(null);   // "SAPA" inner span
+  const dividerRef = useRef<HTMLDivElement>(null);
+  const taglineRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef     = useRef<HTMLDivElement>(null);
 
-  // Mosaic & decor refs
-  const mosaicRef = useRef<HTMLDivElement>(null);
-  const decorRef  = useRef<HTMLDivElement>(null);
+  // Decor refs
+  const decorRef = useRef<HTMLDivElement>(null);
 
   // Cloud Parallax refs (GSAP ScrollTrigger Multi-Layer)
   const cloud1Ref = useRef<HTMLDivElement>(null);
@@ -106,8 +102,10 @@ export default function Hero() {
       gsap.set(taglineRef.current, { opacity: 0, y: 24 });
       gsap.set(ctaRef.current?.children ?? [], { opacity: 0, y: 20 });
 
-      const photoSlots = mosaicRef.current?.querySelectorAll(".photo-slot");
-      if (photoSlots) gsap.set(photoSlots, { opacity: 0, x: 48, scale: 0.95 });
+      const mascotUnit = containerRef.current?.querySelector(".hero-mascot-unit");
+      const mascotShadow = containerRef.current?.querySelector(".hero-mascot-shadow");
+      if (mascotUnit) gsap.set(mascotUnit, { opacity: 0, scale: 0.8, y: 30 });
+      if (mascotShadow) gsap.set(mascotShadow, { opacity: 0, scale: 0.6 });
 
       // ── Cascade Reveal Karakter Judul Utama "Tegoer Sapa" ───────────────
       const heroChars = containerRef.current?.querySelectorAll(".hero-char");
@@ -140,7 +138,7 @@ export default function Hero() {
 
       tl
         // Background gradient fade in
-        .to(decorRef.current,  { opacity: 1, duration: 1.2, ease: "power1.out" }, 0)
+        .to(decorRef.current, { opacity: 1, duration: 1.2, ease: "power1.out" }, 0)
 
         // Garis divider scale dari kiri
         .to(dividerRef.current, { scaleX: 1, opacity: 1, duration: 0.55 }, 0.6)
@@ -151,21 +149,46 @@ export default function Hero() {
         // CTA buttons stagger
         .to(ctaRef.current?.children ?? [], { opacity: 1, y: 0, stagger: 0.12, duration: 0.55 }, 0.95)
 
-        // Foto mosaic — slide dari kanan dengan stagger
-        .to(photoSlots ?? [], { opacity: 1, x: 0, scale: 1, stagger: 0.13, duration: 0.8, ease: "expo.out" }, 0.35);
+        // Maskot Tegoer Sapa — bounce mendarat menapak di atas bukit
+        .to(
+          mascotUnit ?? [],
+          { opacity: 1, scale: 1, y: 0, duration: 0.95, ease: "back.out(1.4)" },
+          0.45
+        )
+        .to(
+          mascotShadow ?? [],
+          { opacity: 1, scale: 1, duration: 0.75, ease: "power2.out" },
+          0.55
+        );
 
-      // ── Floating loop foto setelah entrance selesai ─────────────────────
+      // ── Animasi Goyang Tipis (Gentle Sway) & Breathing Maskot Bertapak di Bukit ─
       tl.call(() => {
-        const slots = mosaicRef.current?.querySelectorAll(".photo-slot");
-        if (!slots || slots.length === 0) return;
-        gsap.to(Array.from(slots), {
-          y: -12,
-          stagger: { each: 0.5, from: "start" },
-          duration: 2.8,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-        });
+        if (mascotUnit) {
+          gsap.set(mascotUnit, { transformOrigin: "50% 100%" });
+
+          // 1. Goyang tipis ke kiri dan ke kanan secara menggemaskan
+          gsap.fromTo(
+            mascotUnit,
+            { rotation: -2 },
+            {
+              rotation: 2,
+              duration: 2.8,
+              ease: "sine.inOut",
+              yoyo: true,
+              repeat: -1,
+            }
+          );
+
+          // 2. Nafas tipis selaras (kaki selalu menjejak tanah)
+          gsap.to(mascotUnit, {
+            scaleY: 1.015,
+            scaleX: 0.992,
+            duration: 2.2,
+            ease: "sine.inOut",
+            yoyo: true,
+            repeat: -1,
+          });
+        }
       });
 
       // ── 2. Animasi Loop Lompat Per-Huruf Bergantian Setiap 5 Detik ────────
@@ -324,7 +347,7 @@ export default function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[92vh] sm:min-h-screen flex items-center overflow-hidden bg-brand-sky"
+      className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-between overflow-hidden bg-brand-sky"
       aria-labelledby="hero-title"
     >
       {/* ═══════════════════════════════════════════════════════════════════
@@ -382,15 +405,15 @@ export default function Hero() {
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════
-          LAYOUT UTAMA: TEKS KIRI + MOSAIC KANAN
+          LAYOUT UTAMA: TEKS KIRI + MASKOT BERTAPAK DI ATAS BUKIT KANAN
       ═══════════════════════════════════════════════════════════════════ */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 sm:pt-24 sm:pb-24 lg:pt-28 lg:pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-8 items-center">
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 lg:pt-28 pb-10 sm:pb-12 lg:pb-[148px] xl:pb-[168px] flex-1 flex flex-col justify-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center lg:items-end w-full">
 
-          {/* ─── KOLOM KIRI: Teks ─────────────────────────────────────── */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full">
+          {/* ─── KOLOM KIRI: Teks (7 kolom di desktop) ────────────────── */}
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:col-span-7 py-4 lg:py-6">
 
-            {/* Judul utama (Diberi ukuran lebih besar dan gagah di mobile) */}
+            {/* Judul utama (Diberi ukuran lebih besar dan gagah) */}
             <h1
               id="hero-title"
               className="font-black leading-[0.98] sm:leading-[1.02] tracking-tight sm:tracking-normal text-[clamp(4.25rem,18.5vw,7.5rem)] sm:text-[clamp(5.25rem,15vw,7.5rem)] lg:text-[7.5rem] mb-3 sm:mb-5 select-none text-center lg:text-left w-full"
@@ -512,41 +535,39 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ─── KOLOM KANAN: Mosaic foto ─────────────────────────────── */}
-          <div
-            ref={mosaicRef}
-            className="hidden lg:grid relative"
-            aria-label="Preview hasil foto Tegoer Sapa"
-            style={{
-              gridTemplateColumns: "3fr 2fr",
-              gridTemplateRows: "240px 200px",
-              gap: "12px",
-            }}
-          >
-            {/* SLOT 0 — besar kiri, span 2 baris */}
-            <div className="photo-slot row-span-2" style={{ gridColumn: "1", gridRow: "1 / 3" }}>
-              <PhotoSlot photo={heroPhotos[0]} className="h-full w-full" />
+          {/* ─── KOLOM KANAN: MASKOT BERTAPAK DI ATAS BUKIT HIJAU (5 kolom di desktop) ─── */}
+          <div className="lg:col-span-5 flex flex-col items-center justify-end relative z-20 self-end mt-4 sm:mt-6 lg:mt-0 translate-y-16 sm:translate-y-20 lg:translate-y-24 xl:translate-y-28">
+            {/* Wrapper Maskot Bertapak di Atas Tanah Bukit */}
+            <div className="relative flex flex-col items-center justify-end w-full max-w-[320px] sm:max-w-[380px] md:max-w-[420px] lg:max-w-[460px] xl:max-w-[500px]">
+              
+              {/* Maskot Unit dengan Posisi Menjejak Tanah */}
+              <div className="relative z-10 w-full hero-mascot-unit">
+                <HeroMascot className="w-full h-full" />
+              </div>
+
+              {/* Bayangan Flat Tanah — Rata Horizontal & Lebih Bulat (Tanpa Efek Blur) */}
+              <div
+                className="hero-mascot-shadow pointer-events-none select-none relative z-0"
+                style={{
+                  width: "74%",
+                  maxWidth: "340px",
+                  height: "28px",
+                  backgroundColor: "rgba(8, 55, 32, 0.22)", // Bayangan flat transparan lembut, natural di rumput
+                  borderRadius: "100%",
+                  margin: "-16px auto 0",
+                  transform: "translateX(2%)", // Rata horizontal murni (0 derajat)
+                }}
+                aria-hidden="true"
+              />
             </div>
-
-            {/* SLOT 1 — kecil kanan atas */}
-            <div className="photo-slot" style={{ gridColumn: "2", gridRow: "1" }}>
-              <PhotoSlot photo={heroPhotos[1]} className="h-full w-full" />
-            </div>
-
-            {/* SLOT 2 — kecil kanan bawah */}
-            <div className="photo-slot" style={{ gridColumn: "2", gridRow: "2" }}>
-              <PhotoSlot photo={heroPhotos[2]} className="h-full w-full" />
-            </div>
-
-
           </div>
         </div>
       </div>
 
       {/* ─── 4. BOTTOM HILL DECORATION (Lengkung Bukit Kartun Hijau) ─── */}
       <GrassyHill
-        className="h-28 sm:h-36 md:h-44 lg:h-48 xl:h-52"
-        containerClassName="z-0"
+        className="h-32 sm:h-40 md:h-48 lg:h-52 xl:h-60"
+        containerClassName="z-10"
       />
     </section>
   );
